@@ -22,6 +22,6 @@ mix.react('resources/js/app.js', 'public/js')
     // .postCss("resources/css/tail.css", "public/css", [
     //     require("tailwindcss"),
     // ])
-    // .reactCSSModules();
+    // .reactCSSModules(); 
 
     
