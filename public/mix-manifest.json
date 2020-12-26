@@ -1,8 +1,11 @@
 {
+    "/js/app.js": "/js/app.js",
+    "/js/modules.css": "/js/modules.css",
+    "/js/modules.js": "/js/modules.js",
     "/css/app.css": "/css/app.css",
-    "/css/tail.css": "/css/tail.css",
     "/css/reset.css": "/css/reset.css",
     "/css/nav.css": "/css/nav.css",
     "/css/formation.css": "/css/formation.css",
-    "/css/accueil.css": "/css/accueil.css"
+    "/css/accueil.css": "/css/accueil.css",
+    "/css/tail.css": "/css/tail.css"
 }
