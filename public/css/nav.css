@@ -1,0 +1,18 @@
+ul.nav {
+  border-bottom: solid 1px #cecece;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+  font-size: medium;
+}
+
+ul.nav li a {
+  font-size: 1.2rem;
+  color: #4d4d4d;
+}
+
+.active {
+  border-bottom: solid 1px #00177a;
+}
+

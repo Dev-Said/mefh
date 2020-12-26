@@ -1,0 +1,18 @@
+ul.nav{
+    border-bottom: solid 1px rgb(206, 206, 206);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding-right: 3%;
+    height: 130px;
+    font-size: medium;
+}
+
+ul.nav li a{
+    font-size: 1.2rem;
+    color: rgb(77, 77, 77);
+}
+
+.active{
+    border-bottom: solid 1px rgb(0, 23, 122);
+}
