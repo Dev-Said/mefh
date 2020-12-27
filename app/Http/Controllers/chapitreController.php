@@ -38,6 +38,7 @@ class chapitreController extends Controller
      */
     public function show(chapitre $chapitre)
     {
+        // $chapitre = chapitre::where('id', '10');
         return $chapitre;
     }
 

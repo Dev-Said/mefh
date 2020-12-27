@@ -34424,6 +34424,32 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/js/components/modules/modules.scss":
+/*!******************************************************!*\
+  !*** ./resources/js/components/modules/modules.scss ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/videos/video.scss":
+/*!***************************************************!*\
+  !*** ./resources/js/components/videos/video.scss ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/tail.css":
 /*!********************************!*\
   !*** ./resources/css/tail.css ***!
@@ -66871,6 +66897,8 @@ if (false) {} else {
 /******/ 			["./resources/sass/formation.scss"],
 /******/ 			["./resources/sass/nav.scss"],
 /******/ 			["./resources/sass/reset.scss"],
+/******/ 			["./resources/js/components/modules/modules.scss"],
+/******/ 			["./resources/js/components/videos/video.scss"],
 /******/ 			["./resources/css/tail.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
