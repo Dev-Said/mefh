@@ -25,7 +25,7 @@ class ModuleFactory extends Factory
             'titre' => $this->faker->sentence(3, true),
             'description' => $this->faker->sentence(6, true),
             'num' => $this->faker->unique(true)->numberBetween(1, 100),
-            'formations_id' => $this->faker->numberBetween(1, 30),
+            'formations_id' => '1',
             'quizs_id' => $this->faker->numberBetween(1, 30),
         ];
     }

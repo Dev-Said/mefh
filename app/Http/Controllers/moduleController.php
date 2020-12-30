@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class moduleController extends Controller
 {
@@ -14,7 +16,13 @@ class moduleController extends Controller
      */
     public function index()
     {
-        return module::all();
+        // return module::all();
+
+        return DB::table('modules')
+             ->join('chapitres', 'modules.id', '=', 'chapitres.modules_id')
+             ->select('modules.*', 'chapitres.*')
+             ->get();
+
     }
 
     /**

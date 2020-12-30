@@ -20,6 +20,7 @@ mix.js('resources/js/app.js', 'public/js').react()
     .sass('resources/sass/reset.scss', 'public/css')
     .sass('resources/js/components/modules/modules.scss', 'public/css')
     .sass('resources/js/components/videos/video.scss', 'public/css')
+    .sass('resources/js/components/accordeon/accordeon.scss', 'public/css')
     .postCss("resources/css/tail.css", "public/css", [
         require("tailwindcss"),
     ]);

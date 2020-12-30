@@ -15,7 +15,7 @@ class FormationTableSeeder extends Seeder
     public function run()
     {
         formation::factory()
-        ->times(30)
+        ->times(1)
         ->create();
     }
 }

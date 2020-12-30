@@ -15,7 +15,7 @@ class ChapitreTableSeeder extends Seeder
     public function run()
     {
         chapitre::factory()
-        ->times(150)
+        ->times(55)
         ->create();
     }
 }

@@ -1,23 +1,29 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactPlayer from 'react-player';
 
 
-//conposant pour afficher une video
-const Video = (props) => {
 
-    return <>
+const Video = () => {
 
-     <div className="vid">
-        <video width="400" height="222" controls="controls">
-            <source src="./storage/videos/learn.mp4" type="video/mp4" />
-            {/* <source src="learn.webm" type="video/webm" />
-            <source src="learn.ogv" type="video/ogg" /> */}
-            Ici l'alternative à la vidéo : un lien de téléchargement, un message, etc.
-        </video>
-     </div>
+    return (
+        <ReactPlayer
+            pip={false}
+            config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+            // Disable right click
+            onContextMenu={e => e.preventDefault()}
+            className="player-wrapper"
+            url="./storage/videos/learn.mp4"
+            controls={true}
+            playbackRate={1}
+            width="1200px"
+            height="700px"
+        />
+    )
 
-</>
-}
+
+
+};
+
 
 export default Video;
 
