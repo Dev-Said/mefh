@@ -50,7 +50,12 @@
         "noImplicitAny": false,
         "react-player": "^2.7.2",
         "react-prism": "^4.3.2",
+        "react-redux": "^7.2.2",
+        "react-router": "^5.2.0",
+        "react-router-dom": "^5.2.0",
         "reactstrap": "^8.8.1",
+        "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
         "stylelint": "^13.8.0",
         "video-react": "^0.14.1"
     },

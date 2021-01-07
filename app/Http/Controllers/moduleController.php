@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\chapitre;
 use App\Models\module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +19,21 @@ class moduleController extends Controller
     {
         // return module::all();
 
-        return DB::table('modules')
-             ->join('chapitres', 'modules.id', '=', 'chapitres.modules_id')
-             ->select('modules.*', 'chapitres.*')
-             ->get();
+        // $modulesAll = module::all();
+
+        // $chapitresAll = chapitre::all()->groupBy('modules_id');
+
+        // return ['modulesAll' => $modulesAll, 'chapitresAll' => $chapitresAll ];
+
+        $data = DB::table('modules')
+        ->join('chapitres', 'modules.id', '=', 'chapitres.modules_id')
+        ->select('modules.titre as modtitre','modules.id as modid', 'chapitres.*')
+        ->orderBy('modules.id', 'asc')
+        ->orderBy('chapitres.id', 'asc')
+        ->get();
+
+
+        return $data->groupBy('modules_id');
 
     }
 
