@@ -17,11 +17,9 @@ class CreateModulesTable extends Migration
             $table->id();
             $table->string('titre', 255);
             $table->text('description');
-            $table->integer('num');
-            $table->unsignedBigInteger('formations_id');
-            $table->foreign('formations_id')->references('id')->on('formations')->onDelete('cascade');
-            $table->unsignedBigInteger('quizs_id');
-            $table->foreign('quizs_id')->references('id')->on('quizs')->onDelete('cascade');
+            $table->integer('ordre');
+            $table->unsignedBigInteger('formation_id');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
             $table->timestamps();
         });
     }

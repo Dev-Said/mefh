@@ -4,6 +4,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   width: auto;
-  height: auto;
-  background-color: #bbaf0c;
+  height: calc(100vh - 130px);
+  background-color: black;
 }

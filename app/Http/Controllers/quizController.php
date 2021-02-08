@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\quiz;
+use App\Models\Quiz;
+use App\Models\Module;
+use App\Models\Remember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class quizController extends Controller
+class QuizController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,22 @@ class quizController extends Controller
      */
     public function index()
     {
-        return quiz::all();
+        $quizzes = Quiz::all();
+        return view('quizzes.list', ['quizzes' => $quizzes]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $quiz = Quiz::all('module_id');
+        //on envoie seulement les modules qui n'ont pas de quiz
+        //pour leur en attribuer un
+        $modules = Module::whereNotIn('id', $quiz)->get();
+        return view('quizzes.form', ['modules' => $modules]);
     }
 
     /**
@@ -25,46 +43,80 @@ class quizController extends Controller
      */
     public function store(Request $request)
     {
-        if (quiz::create($request->all())) {
-            return response()->json(['insert succes'], 200);
-        }
+        $quiz = new Quiz;
+        $quiz->titre = $request->has('titre') &&
+            strlen($request->titre) ? $request->titre : 'unknown';
+        $quiz->module_id = $request->has('module_id') &&
+            strlen($request->module_id) ? $request->module_id : 'unknown';
+
+        $quiz->save();
+
+         return redirect('questions/create');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\quiz  $quiz
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function show(quiz $quiz)
+    public function show(Quiz $quiz)
     {
-        return $quiz;
+        return view('quizzes.one', ['quiz' => $quiz]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Quiz  $quiz
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Quiz $quiz)
+    {
+        $quizzes = Quiz::all('module_id');
+        //on envoie seulement les modules qui n'ont pas de quiz
+        //pour leur en attribuer un
+        $modules = Module::whereNotIn('id', $quizzes)->get();
+        return view('quizzes.edit', ['quiz' => $quiz, 'modules' => $modules]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\quiz  $quiz
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, quiz $quiz)
+    public function update(Request $request, Quiz $quiz)
     {
-        if ($quiz->update($request->all())) {
-            return response()->json(['update succes'], 200);
-        }
+        $quiz->titre = $request->has('titre') &&
+            strlen($request->titre) ? $request->titre : $quiz->titre;
+        $quiz->module_id = $request->has('module_id') &&
+            strlen($request->module_id) ? $request->module_id : $quiz->module_id;
+
+        $quiz->save();
+
+        return redirect('questions/edit');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\quiz  $quiz
+     * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function destroy(quiz $quiz)
+    public function destroy(Quiz $quiz)
     {
-        if ($quiz->delete()) {
-            return response()->json(['delete succes'], 200);
-        }
+        $quiz->delete();
+       
+        return redirect('/quizzes');
+    }
+
+
+
+    public function quiz($id)
+    {
+        $quiz = Quiz::find($id);
+        return view('quizzes.quiz', ['quiz' => $quiz]);
     }
 }

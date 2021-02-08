@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\quiz_user_reponse;
+use App\Models\User;
+use App\Models\Reponse;
 use Illuminate\Database\Seeder;
 
-class Quiz_user_reponseTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +15,8 @@ class Quiz_user_reponseTableSeeder extends Seeder
      */
     public function run()
     {
-        quiz_user_reponse::factory()
-        ->times(100)
-        ->create();
+        User::factory()
+            ->times(5)
+            ->create();
     }
 }

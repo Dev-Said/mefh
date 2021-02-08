@@ -18,11 +18,11 @@ class CreateChapitresTable extends Migration
             $table->string('titre', 255);
             $table->string('titre_video', 255);
             $table->text('description');
-            $table->integer('num');
+            $table->integer('ordre');
             $table->string('url_video', 255);
             $table->string('duree', 30);
-            $table->unsignedBigInteger('modules_id');
-            $table->foreign('modules_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->unsignedBigInteger('module_id');
+            $table->foreign('module_id')->references('id')->on('module')->onDelete('cascade');
             $table->timestamps();
         });
     }

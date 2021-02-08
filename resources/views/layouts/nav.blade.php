@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -11,10 +10,14 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Unna:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    
+
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
     <link rel="stylesheet" type="text/css" href="css/app.css" />
@@ -36,10 +39,14 @@
 <body class="antialiased">
 
     <ul class="nav">
+        <div class="logo">
+            <img src="/storage/images/M.png" alt="logo">
+        </div>
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>
         <li class="nav-item {{ 'formation' == request()->path() ? 'active' : '' }}">
+            <!-- <a class="nav-link" href="formation"><button id="buttonAccueil">Suivre la formation</button></a> -->
             <a class="nav-link" href="formation">Formation</a>
         </li>
         <li class="nav-item {{ 'questions' == request()->path() ? 'active' : '' }}">
@@ -54,8 +61,8 @@
         <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="contact">Contact</a>
         </li>
-        <li class="nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="register">Connexion</a>
+        <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
+            <a class="nav-link" href="register"><button id="buttonconnex">Inscription</button></a>
         </li>
     </ul>
 

@@ -17,9 +17,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
+        'sexe',
         'email',
         'password',
+        'admin'
     ];
 
     /**
@@ -40,4 +43,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function reponses()
+    {
+        return $this->belongsToMany(Reponse::class)->withTimestamps();
+    }
+
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class)->withTimestamps();;
+    }
+
 }

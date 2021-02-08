@@ -15,13 +15,14 @@
     </div>
     @foreach ($modules as $module)
     <div class="card-formation">
+    <img class="img_formation" src="storage/images/loris.jpg" alt="femme">
         <div class="sous-card-formation">
             <a href="modules"><h3>Module {{ $loop->index + 1 }}</h3></a>
             <h2>{{ $module->titre }}</h2>
             <!-- <p>{{ $module->description }}</p> -->
         </div>
 
-        <img class="img_formation" src="storage/images/loris.jpg" alt="femme">
+        
     </div>
     @endforeach
 </div>

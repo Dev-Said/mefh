@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\quiz;
+use App\Models\Quiz;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class QuizFactory extends Factory
@@ -12,7 +12,7 @@ class QuizFactory extends Factory
      *
      * @var string
      */
-    protected $model = quiz::class;
+    protected $model = Quiz::class;
 
     /**
      * Define the model's default state.
@@ -21,9 +21,10 @@ class QuizFactory extends Factory
      */
     public function definition()
     {
+        static $i = 1;
         return [
-            'titre' => $this->faker->sentence(3, true),
-            'modules_id' => $this->faker->numberBetween(1, 10)
+            'titre' => 'Quiz du module ' . $i,
+            'module_id' => $i++,
         ];
     }
 }

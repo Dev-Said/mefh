@@ -6,13 +6,11 @@ import { connect } from 'react-redux';
 class Video extends Component {
     render() {
         const { url_video } = this.props;
-        // console.log(url_video);
 
         return (
             <ReactPlayer className="player-wrapper"
                 pip={false}
                 config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-                // Disable right click
                 onContextMenu={e => e.preventDefault()}
                 url={"./storage/videos/" + url_video}
                 controls={true}

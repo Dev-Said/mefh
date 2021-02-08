@@ -11999,17 +11999,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Accordion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Accordion */ "./node_modules/@material-ui/core/esm/Accordion/Accordion.js");
-/* harmony import */ var _material_ui_core_AccordionDetails__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core/AccordionDetails */ "./node_modules/@material-ui/core/esm/AccordionDetails/AccordionDetails.js");
-/* harmony import */ var _material_ui_core_AccordionSummary__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/AccordionSummary */ "./node_modules/@material-ui/core/esm/AccordionSummary/AccordionSummary.js");
-/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
-/* harmony import */ var _material_ui_icons_ExpandMore__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/icons/ExpandMore */ "./node_modules/@material-ui/icons/ExpandMore.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_module_module_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/module/module.actions */ "./resources/js/components/redux/module/module.actions.js");
-/* harmony import */ var _redux_module_module_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../redux/module/module.types */ "./resources/js/components/redux/module/module.types.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
-/* harmony import */ var _modulesItems_selectedListItems__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../modulesItems/selectedListItems */ "./resources/js/components/modulesItems/selectedListItems.jsx");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Accordion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Accordion */ "./node_modules/@material-ui/core/esm/Accordion/Accordion.js");
+/* harmony import */ var _material_ui_core_AccordionDetails__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/AccordionDetails */ "./node_modules/@material-ui/core/esm/AccordionDetails/AccordionDetails.js");
+/* harmony import */ var _material_ui_core_AccordionSummary__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/AccordionSummary */ "./node_modules/@material-ui/core/esm/AccordionSummary/AccordionSummary.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
+/* harmony import */ var _material_ui_icons_ExpandMore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/icons/ExpandMore */ "./node_modules/@material-ui/icons/ExpandMore.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
+/* harmony import */ var _modulesItems_selectedListItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modulesItems/selectedListItems */ "./resources/js/components/modulesItems/selectedListItems.jsx");
 
 
 
@@ -12031,32 +12028,40 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- // import Link from '@material-ui/core/Link';
 
 
 
- // import 'accordeon.css';
 
-
-
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__.default)(function (theme) {
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
   return {
     root: {
       width: '70%',
       maxWidth: '70%',
       height: 'calc(100vh - 130px)',
-      maxHeight: '100vh',
-      overflow: 'auto',
-      backgroundColor: '#fafafa'
+      maxHeight: 'calc(100vh - 130px)',
+      overflow: 'scroll',
+      '&::-webkit-scrollbar': {
+        width: '0',
+        height: '0'
+      },
+      backgroundColor: '#fdfdfd',
+      boxShadow: '0 0 0 0 '
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
       flexBasis: '90.33%',
-      flexShrink: 0
+      flexShrink: 0,
+      fontweight: 'bold',
+      color: '#000000',
+      boxShadow: '0 0 0 0 '
     },
-    typo: {
-      fontweight: 900,
-      color: '#c10412'
+    summary: {
+      backgroundColor: '#ffffff',
+      height: 'calc((100vh - 130px) / 11)'
+    },
+    detail: {
+      backgroundColor: '#ff0006',
+      height: '300px'
     }
   };
 });
@@ -12076,32 +12081,32 @@ var ControlledAccordions = function ControlledAccordions(props) {
   };
 
   var handleClick = function handleClick(url_video) {
-    // console.log(url_video);
-    _redux_store__WEBPACK_IMPORTED_MODULE_5__.default.dispatch({
+    _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
       type: 'GET_VIDEO',
       url_video: url_video
     });
   };
 
-  var vid = 'learn.mp4';
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
-    children: [console.log(props.modules), props.modules.map(function (module, index) {
+    children: props.modules.map(function (module, index) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_Accordion__WEBPACK_IMPORTED_MODULE_8__.default, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_Accordion__WEBPACK_IMPORTED_MODULE_5__.default, {
           expanded: expanded === 'panel' + index,
           onChange: handleChange('panel' + index),
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_AccordionSummary__WEBPACK_IMPORTED_MODULE_9__.default, {
-            expandIcon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ExpandMore__WEBPACK_IMPORTED_MODULE_10__.default, {}),
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_AccordionSummary__WEBPACK_IMPORTED_MODULE_6__.default, {
+            className: classes.summary,
+            expandIcon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ExpandMore__WEBPACK_IMPORTED_MODULE_7__.default, {}),
             "aria-controls": "panel1bh-content",
             id: "panel1bh-header",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_11__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__.default, {
               className: classes.heading,
               children: 'Module ' + ++index + '  -    ' + module[0].modtitre
             })
           }), module.map(function (chapitre) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_AccordionDetails__WEBPACK_IMPORTED_MODULE_12__.default, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_modulesItems_selectedListItems__WEBPACK_IMPORTED_MODULE_6__.default, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_AccordionDetails__WEBPACK_IMPORTED_MODULE_9__.default, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_modulesItems_selectedListItems__WEBPACK_IMPORTED_MODULE_3__.default, {
+                className: classes.detail,
                 description: chapitre.description,
                 handleClick: handleClick,
                 chapitre: chapitre.url_video
@@ -12110,28 +12115,10 @@ var ControlledAccordions = function ControlledAccordions(props) {
           })]
         })
       }, module[0].id);
-    })]
+    })
   });
 };
 
-{
-  /* <div className={classes.root}>
-  {props.chapitres.map((chapitre, index) => <li key={chapitre.id}>
-   <Accordion expanded={expanded === 'panel' + index} onChange={handleChange('panel' + index)}>
-     <AccordionSummary
-       expandIcon={<ExpandMoreIcon />}
-       aria-controls="panel1bh-content"
-       id="panel1bh-header">
-       <Typography className={classes.heading}>{++index + '   ' + chapitre.titre}</Typography>
-     </AccordionSummary>
-     <AccordionDetails>
-       <Typography className={classes.typo} onClick={() => handleClick(chapitre.url_video)}>
-         {chapitre.description}</Typography>
-     </AccordionDetails>
-   </Accordion>
-  </li>)}
-  </div> */
-}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ControlledAccordions);
 
 /***/ }),
@@ -12229,29 +12216,6 @@ react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ListeChapitres_ListeChapitres__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_videos_Video__WEBPACK_IMPORTED_MODULE_3__.default, {})]
   })
 }), document.getElementById('modules'));
-
-/***/ }),
-
-/***/ "./resources/js/components/redux/module/module.actions.js":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/redux/module/module.actions.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getVideo": () => /* binding */ getVideo
-/* harmony export */ });
-/* harmony import */ var _module_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module.types */ "./resources/js/components/redux/module/module.types.js");
-
-var getVideo = function getVideo(url) {
-  return {
-    type: _module_types__WEBPACK_IMPORTED_MODULE_0__.ModulesActionTypes.GET_VIDEO,
-    url_video: url
-  } // ,alert('props')
-  ;
-};
 
 /***/ }),
 
@@ -12413,8 +12377,7 @@ var Video = /*#__PURE__*/function (_Component) {
   _createClass(Video, [{
     key: "render",
     value: function render() {
-      var url_video = this.props.url_video; // console.log(url_video);
-
+      var url_video = this.props.url_video;
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_2__.default, {
         className: "player-wrapper",
         pip: false,
@@ -12424,8 +12387,7 @@ var Video = /*#__PURE__*/function (_Component) {
               controlsList: 'nodownload'
             }
           }
-        } // Disable right click
-        ,
+        },
         onContextMenu: function onContextMenu(e) {
           return e.preventDefault();
         },

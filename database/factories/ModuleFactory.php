@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\module;
+use App\Models\Module;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ModuleFactory extends Factory
@@ -12,7 +12,7 @@ class ModuleFactory extends Factory
      *
      * @var string
      */
-    protected $model = module::class;
+    protected $model = Module::class;
 
     /**
      * Define the model's default state.
@@ -21,12 +21,12 @@ class ModuleFactory extends Factory
      */
     public function definition()
     {
+        static $i = 1;
         return [
             'titre' => $this->faker->sentence(3, true),
-            'description' => $this->faker->sentence(6, true),
-            'num' => $this->faker->unique(true)->numberBetween(1, 100),
-            'formations_id' => '1',
-            'quizs_id' => $this->faker->numberBetween(1, 30),
+            'description' => $this->faker->sentence(4, true),
+            'ordre' => $i++,
+            'formation_id' => '1',
         ];
     }
 }
