@@ -3,9 +3,10 @@
 @section('content')
 
 <div class="edit">
-<h2>Ajouter un module</h2>
+
     <form action="/modules" method="post">
         @csrf
+        <h2>Ajouter un module</h2>
         <label for="titre">Titre</label>
         <input type="text" name="titre" id="titre" required>
         <label for="description">Description</label>

@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class chapitre extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'titre',
+        'fichier_video',
+        'description',
+        'ordre',
+        'duree',
+        'module_id',
+    ];
+
+
+
+    public function module()
+    {
+        return $this->belongsTo(module::class);
+    }
 }

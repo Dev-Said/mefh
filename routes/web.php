@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReponseController;
+use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleResController;
@@ -37,9 +38,7 @@ Route::view('/certificat', 'certificat');
 Route::view('/contact', 'contact');
 Route::view('/connexion', 'connexion');
 
-Route::get('/modules', function () {
-    return view('modules');
-});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -48,6 +47,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+Route::resource('chapitres', ChapitreController::class);
 Route::resource('modules', ModuleResController::class);
 Route::resource('questions', QuestionController::class);
 Route::resource('quizzes', QuizController::class);
@@ -57,6 +57,9 @@ Route::resource('users', UserController::class);
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::resource('chapitres', ChapitreController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]);
     Route::resource('modules', ModuleResController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
@@ -82,5 +85,9 @@ Route::group(['middleware' => ['auth']], function () {
         Auth::logout();
         return redirect('/users');
     });
+
+    // Route::get('/modules', function () {
+    //     return view('modules');
+    // });
 
 });

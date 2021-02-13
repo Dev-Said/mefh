@@ -16,8 +16,9 @@ class Question extends Model
      */
     protected $fillable = [
         'question',
+        'type',
         'ordre',
-        'module_id',
+        'quiz_id',
     ];
 
     public function reponses()

@@ -26,4 +26,9 @@ class Module extends Model
         return $this->hasOne(Question::class);
     }
 
+    public function chapitres()
+    {
+        return $this->hasMany(chapitre::class);
+    }
+
 }

@@ -17,7 +17,7 @@ class CreateQuizzesTable extends Migration
             $table->id();
             $table->string('titre', 255);
             $table->unsignedBigInteger('module_id')->unique();
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('restrict');
             $table->timestamps();
         });
     }

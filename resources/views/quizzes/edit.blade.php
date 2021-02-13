@@ -7,20 +7,40 @@
     <form action="/quizzes/{{ $quiz->id }}" method="post">
         @csrf
         @method('put')
-        <label for="titre">Titre</label>
+        <h1>Quiz : {{ $quiz->titre }}</h1>
+        <label for="titre">Modifier le titre</label>
         <input type="text" name="titre" id="titre" value="{{ $quiz->titre }}" required>
-
-        <label for="module_id">Liste des modules qui n'ont pas de quiz</label>
-        <p> <select name="module_id" id="module_id" required>
-                <option value=""></option>
-                @foreach($modules as $module)
-                <option value="{{ $module->id }}">{{ $module->titre }}</option>
-                @endforeach
-            </select>
-        </p>
-
-         <input type="submit">
+        <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+        <input type="submit" value="Confirmer">
     </form>
+
+
+    @foreach($quiz->questions as $question)
+    <div class="formQuiz">
+        <h3>{{ $question->question }}</h3>
+        <form action="/questions/{{ $question->id }}" method="post" class="endRight">
+            @csrf
+            @method('delete')
+            <input type="submit" value="Supprimer" name="delete" class="supp">
+        </form>
+    </div>
+    @foreach($question->reponses as $reponse)
+    <div class="formQuiz">
+        <!-- permet d'ajouter un chiffre différent à la fin du name pour différencier les checkbox
+            et permettre d'envoyer plusieurs réponses pour une même question -->
+        <div style="display: none;">{{ $name = $question->type == 'radio' ? '' : '_' . $loop->index }}</div>
+        <input type="{{ $question->type }}" name="{{ $reponse->question_id . $name }}" id="{{ $reponse->id }}" value="{{ $reponse->id }}">
+        <label for="{{ $reponse->id }}">{{ $reponse->reponse }}</label>
+        <form action="/reponses/{{ $reponse->id }}" method="post" class="endRight">
+            @csrf
+            @method('delete')
+            <input type="submit" value="Supprimer" name="delete" class="supp">
+        </form>
+    </div>
+    @endforeach
+    @endforeach
+
+
 
 </div>
 

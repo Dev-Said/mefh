@@ -73,11 +73,9 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
-        $quizzes = Quiz::all('module_id');
-        //on envoie seulement les modules qui n'ont pas de quiz
-        //pour leur en attribuer un
-        $modules = Module::whereNotIn('id', $quizzes)->get();
-        return view('quizzes.edit', ['quiz' => $quiz, 'modules' => $modules]);
+        $questions = $quiz->questions;
+
+        return view('quizzes.edit', ['quiz' => $quiz, 'questions' => $questions]);
     }
 
     /**
@@ -91,8 +89,8 @@ class QuizController extends Controller
     {
         $quiz->titre = $request->has('titre') &&
             strlen($request->titre) ? $request->titre : $quiz->titre;
-        $quiz->module_id = $request->has('module_id') &&
-            strlen($request->module_id) ? $request->module_id : $quiz->module_id;
+        // $quiz->module_id = $request->has('module_id') &&
+        //     strlen($request->module_id) ? $request->module_id : $quiz->module_id;
 
         $quiz->save();
 

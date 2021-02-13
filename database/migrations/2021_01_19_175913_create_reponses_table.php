@@ -18,7 +18,7 @@ class CreateReponsesTable extends Migration
             $table->text('reponse');
             $table->boolean('is_correct');
             $table->unsignedBigInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('restrict');
             $table->timestamps();
         });
     }

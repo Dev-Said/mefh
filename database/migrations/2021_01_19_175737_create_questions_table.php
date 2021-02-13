@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->string('type', 25);
             $table->integer('ordre');
             $table->unsignedBigInteger('quiz_id');
-            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('restrict');
             $table->timestamps();
         });
     }

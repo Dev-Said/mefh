@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\module;
 use App\Models\chapitre;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+// use Illuminate\Http\UploadedFile;
+// use Illuminate\Support\Facades\Storage;
 
-class chapitreController extends Controller
+
+class ChapitreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +20,22 @@ class chapitreController extends Controller
      */
     public function index()
     {
-        return chapitre::all();
+        $chapitres = chapitre::all();
+        return view('chapitres.list', ['chapitres' => $chapitres]);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+        $chapitresCount = Chapitre::all()->max('ordre') + 1;
+        return view('chapitres.form', ['chapitresCount' => $chapitresCount]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -23,11 +43,21 @@ class chapitreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        if (chapitre::create($request->all())) {
-            return response()->json(['insert succes'], 200);
+        $validated = $request->validated();
+
+        $chapitre = new chapitre;
+        $chapitre->titre = Arr::get($validated, 'titre');
+        $chapitre->description = Arr::get($validated, 'description');
+        $chapitre->ordre = Arr::get($validated, 'ordre');
+        $chapitre->module_id = Arr::get($validated, 'module_id');
+        if ($request->hasFile('fichier_video')) {
+            $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');
         }
+        $chapitre->save();
+
+        return back();
     }
 
     /**
@@ -43,17 +73,33 @@ class chapitreController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\chapitre  $chapitre
+     * @return \Illuminate\Http\Chapitre
+     */
+    public function edit(Chapitre $chapitre)
+    {
+        // dd($chapitre->module_id);
+        $modules = module::all();
+        // dd($module);
+        return view('chapitres.edit', ['chapitre' => $chapitre, 
+                                        'modules' => $modules]);
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, chapitre $chapitre)
+    public function update(StorePostRequest $request, chapitre $chapitre)
     {
-        if ($chapitre->update($request->all())) {
-            return response()->json(['update succes'], 200);
-        }
+        $chapitre->update($request->all());
+
+        return back();
     }
 
     /**
@@ -64,8 +110,9 @@ class chapitreController extends Controller
      */
     public function destroy(chapitre $chapitre)
     {
-        if ($chapitre->delete()) {
-            return response()->json(['delete succes'], 200);
-        }
+        $chapitre->delete();
+
+        return back();
     }
+
 }

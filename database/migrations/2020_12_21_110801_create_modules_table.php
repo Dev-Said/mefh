@@ -19,7 +19,7 @@ class CreateModulesTable extends Migration
             $table->text('description');
             $table->integer('ordre');
             $table->unsignedBigInteger('formation_id');
-            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('restrict');
             $table->timestamps();
         });
     }

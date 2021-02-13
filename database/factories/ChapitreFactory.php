@@ -23,12 +23,10 @@ class ChapitreFactory extends Factory
     {
         return [
             'titre' => $this->faker->sentence(3, true),
-            'titre_video' => $this->faker->sentence(3, true),
+            'fichier_video' => $this->faker->sentence(3, true),
             'description' => $this->faker->sentence(6, true),
-            'num' => $this->faker->unique(true)->numberBetween($min = 1, $max = 150),
-            'url_video' => $this->faker->url,
-            'duree' => '26:35',
-            'modules_id' => $this->faker->numberBetween(1, 11),
+            'ordre' => $this->faker->unique(true)->numberBetween($min = 1, $max = 150),
+            'module_id' => $this->faker->numberBetween(1, 11),
         ];
     }
 }

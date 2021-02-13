@@ -119,12 +119,14 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            flex-wrap: nowrap;
         }
 
         label {
             font-size: 14px;
             font-weight: bold;
             margin-left: 5px;
+            margin-bottom: 10px;
             color: #5b5b5b;
             width: auto;
             /* border: solid red 1px; */
@@ -138,9 +140,10 @@
             left: 15%;
             border: #e0e0e0 solid 1px;
             border-radius: 5px;
-            width: auto;
+            width: 600px;
             height: auto;
             display: flex;
+            flex-direction: column;
             
         }
 
@@ -149,7 +152,7 @@
         .edit select {
             margin: 0;
             padding-left: 10px;
-            width: 400px;
+            width: 100%;
             height: 45px;
             border: #e1e1e1 solid 1px;
             border-radius: 5px;
@@ -159,7 +162,6 @@
             height: 45px;
             min-width: 90px;
             border-radius: 5px;
-            display: block;
         }
 
         .supp {
@@ -172,10 +174,21 @@
             color: white;
         }
 
-        .formQuiz input {
-            margin: 15px 0;
-            width: auto;
-            height: 20px;
+        .formquiz {
+            width: 100%;
+        }
+
+        .formQuiz {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .formQuiz input[type=submit] {
+            margin: 0;
+            width: 60px;
+            height: 30px;
             border: #e1e1e1 solid 1px;
         }
         #quizform {
@@ -183,15 +196,14 @@
             flex-direction: column;
         }
 
-        .formquiz {
-            width: 100%;
+        .endRight {
+            margin-left: auto;
         }
 
-        .edit input[type=radio] {
+        .edit input[type=radio],
+        .edit input[type=checkbox] {
             height: 18px;
-            width: 20px;
-            /* margin-right: 5px; */
-            border: solid red 1px;
+            width: 20px; 
         }
 
         .divradio{
@@ -221,6 +233,9 @@
                 </a>
                 <a href="/modules">
                     <li class="{{ 'modules' == request()->path() ? 'active' : '' }}">Modules</li>
+                </a>
+                <a href="/chapitres">
+                    <li class="{{ 'chapitres' == request()->path() ? 'active' : '' }}">Chapitres</li>
                 </a>
                 <a href="/quizzes">
                     <li class="{{ 'quizzes' == request()->path() ? 'active' : '' }}">Quiz</li>

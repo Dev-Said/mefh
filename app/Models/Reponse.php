@@ -17,10 +17,9 @@ class Reponse extends Model
      * @var array
      */
     protected $fillable = [
-        'type',
-        'text',
+        'reponse',
         'is_correct',
-        'questions_id',
+        'question_id',
     ];
 
     public function users()

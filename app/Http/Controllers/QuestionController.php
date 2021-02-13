@@ -58,7 +58,7 @@ class QuestionController extends Controller
         $question->save();
 
         //----------------------------------------------
-        return redirect('/questions');
+        return redirect('/reponses/create');
     }
 
     /**
@@ -114,6 +114,11 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        $reponses = $question->reponses;
+        foreach ($reponses as $reponse){
+            $reponse->delete();
+        }
+        
         $question->delete();
 
         return redirect('/questions');

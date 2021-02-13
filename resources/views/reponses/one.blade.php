@@ -9,7 +9,9 @@
         {{$reponse->is_correct === 0 ? 'Faux' : 'Vrais'}}
     </td>
     <td>
-        {{$reponse->question->question}}
+        @isset( $reponse->question->question ) 
+            {{ $reponse->question->question }}
+            @endisset 
     </td>
 
     @if(Auth::check())

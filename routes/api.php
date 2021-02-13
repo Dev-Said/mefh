@@ -31,11 +31,8 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
-Route::apiResource('chapitre', chapitreController::class);
-Route::apiResource('formation', formationController::class);
-Route::apiResource('module', moduleController::class);
-Route::apiResource('quiz_question', quiz_questionController::class);
-Route::apiResource('quiz_reponse_option', quiz_reponse_optionController::class);
-Route::apiResource('quiz_user_reponse', quiz_user_reponseController::class);
-Route::apiResource('quiz', quizController::class);
-Route::apiResource('user', UserController::class);
+// Route::apiResource('chapitre', chapitreController::class);
+// Route::apiResource('formation', formationController::class);
+// Route::apiResource('module', moduleController::class);
+// Route::apiResource('quiz', quizController::class);
+// Route::apiResource('user', UserController::class);

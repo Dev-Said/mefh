@@ -16,9 +16,9 @@ class CreateReponseUserTable extends Migration
         Schema::create('reponse_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('reponse_id');
-            $table->foreign('reponse_id')->references('id')->on('reponses')->onDelete('cascade');
+            $table->foreign('reponse_id')->references('id')->on('reponses')->onDelete('restrict');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->timestamps();
         });
     }

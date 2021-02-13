@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\formation;
 use Illuminate\Http\Request;
 
-class formationController extends Controller
+class FormationController extends Controller
 {
     /**
      * Display a listing of the resource.

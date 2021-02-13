@@ -16,13 +16,11 @@ class CreateChapitresTable extends Migration
         Schema::create('chapitres', function (Blueprint $table) {
             $table->id();
             $table->string('titre', 255);
-            $table->string('titre_video', 255);
+            $table->string('fichier_video', 255)->nullable();
             $table->text('description');
             $table->integer('ordre');
-            $table->string('url_video', 255);
-            $table->string('duree', 30);
             $table->unsignedBigInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('module')->onDelete('cascade');
+            $table->foreign('module_id')->references('id')->on('module')->onDelete('restrict');
             $table->timestamps();
         });
     }
