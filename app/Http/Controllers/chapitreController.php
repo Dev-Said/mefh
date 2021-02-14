@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\module;
 use App\Models\chapitre;
 use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use App\Http\Requests\StorePostRequest;
-// use Illuminate\Http\UploadedFile;
-// use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorePostChapitreRequest;
+use App\Http\Requests\StoreUpadateChapitreRequest;
 
 
 class ChapitreController extends Controller
@@ -43,7 +42,7 @@ class ChapitreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(StorePostChapitreRequest $request)
     {
         $validated = $request->validated();
 
@@ -83,8 +82,10 @@ class ChapitreController extends Controller
         // dd($chapitre->module_id);
         $modules = module::all();
         // dd($module);
-        return view('chapitres.edit', ['chapitre' => $chapitre, 
-                                        'modules' => $modules]);
+        return view('chapitres.edit', [
+            'chapitre' => $chapitre,
+            'modules' => $modules
+        ]);
     }
 
 
@@ -95,9 +96,30 @@ class ChapitreController extends Controller
      * @param  \App\Models\chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePostRequest $request, chapitre $chapitre)
+    public function update(StoreUpadateChapitreRequest $request, chapitre $chapitre)
     {
-        $chapitre->update($request->all());
+
+        $validated = $request->validated();  
+        //si il y a un fichier vidéo alors on efface l'ancien
+        if ($request->hasFile('fichier_video')) {
+            Storage::delete('public/' . $chapitre->fichier_video);
+        } else {
+            $chapitre->fichier_video = $chapitre->fichier_video;
+        }
+
+        //$validate est un tableau d'où on récupère chaque champ validé
+        $chapitre->titre = Arr::get($validated, 'titre');
+        $chapitre->description = Arr::get($validated, 'description');
+        $chapitre->ordre = Arr::get($validated, 'ordre');
+        $chapitre->module_id = Arr::get($validated, 'module_id');
+
+        // si il y a un fichier vidéo alors on le stock dans storage et on 
+        //récupère son chemin
+        if ($request->hasFile('fichier_video')) {
+            $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');
+        }
+
+        $chapitre->save();
 
         return back();
     }
@@ -110,9 +132,9 @@ class ChapitreController extends Controller
      */
     public function destroy(chapitre $chapitre)
     {
+        Storage::delete('public/' . $chapitre->fichier_video);
         $chapitre->delete();
 
         return back();
     }
-
 }

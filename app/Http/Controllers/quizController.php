@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\Module;
 use App\Models\Remember;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreQuizRequest;
 
 class QuizController extends Controller
 {
@@ -41,17 +43,17 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuizRequest $request)
     {
-        $quiz = new Quiz;
-        $quiz->titre = $request->has('titre') &&
-            strlen($request->titre) ? $request->titre : 'unknown';
-        $quiz->module_id = $request->has('module_id') &&
-            strlen($request->module_id) ? $request->module_id : 'unknown';
+        $validated = $request->validated();
+
+        $quiz = new quiz;
+        $quiz->titre = Arr::get($validated, 'titre');
+        $quiz->module_id = Arr::get($validated, 'module_id');
 
         $quiz->save();
 
-         return redirect('questions/create');
+        return redirect('questions/create');
     }
 
     /**
@@ -85,17 +87,18 @@ class QuizController extends Controller
      * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Quiz $quiz)
+    public function update(StoreQuizRequest $request, Quiz $quiz)
     {
-        $quiz->titre = $request->has('titre') &&
-            strlen($request->titre) ? $request->titre : $quiz->titre;
-        // $quiz->module_id = $request->has('module_id') &&
-        //     strlen($request->module_id) ? $request->module_id : $quiz->module_id;
+        $validated = $request->validated();
+
+        $quiz->titre = Arr::get($validated, 'titre');
+        $quiz->module_id = Arr::get($validated, 'module_id');
 
         $quiz->save();
 
-        return redirect('questions/edit');
-    }
+        return redirect('questions/create');
+
+     }
 
     /**
      * Remove the specified resource from storage.

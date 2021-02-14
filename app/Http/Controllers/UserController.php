@@ -132,7 +132,6 @@ class UserController extends Controller
     }
 
 
-
     public function reponseUser(Request $request)
     {
         //on récupère les id des questions du quiz dont l'id est = à quiz_id

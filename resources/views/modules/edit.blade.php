@@ -7,12 +7,11 @@
         @csrf
         @method('put')
         <label for="titre">Titre</label>
-        <input type="text" name="titre" id="titre" value="{{ $module->titre }}" required>
+        <input type="text" name="titre" id="titre" value="{{ $module->titre }}">
         <label for="description">Description</label>
-        <input type="description" name="description" id="description" value="{{ $module->description }}" required>
-        <label for="ordre">Ordre</label>
-        <input type="number" name="ordre" id="ordre" value="{{ $module->ordre }}" required>
-        <input type="hidden" name="formations_id" id="formations_id" value="1">
+        <input type="description" name="description" id="description" value="{{ $module->description }}">
+        <input type="hidden" name="ordre" value="{{ $module->ordre }}">
+        <input type="hidden" name="formation_id" value="{{ $module->formation_id }}">
         <input type="submit">
     </form>
 

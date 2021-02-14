@@ -12,7 +12,7 @@
         <label for="description">Description</label>
         <input type="text" name="description" id="description" required>
         <input type="hidden" name="ordre" id="ordre" value="{{ $modulesCount }}">
-        <input type="hidden" name="formation_id">
+        <input type="hidden" name="formation_id" value="1">
         <input type="submit">
     </form>
 

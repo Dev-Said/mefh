@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\Reponse;
 use App\Models\Question;
 use App\Models\Remember;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreReponseRequest;
 
 class ReponseController extends Controller
 {
@@ -40,15 +42,15 @@ class ReponseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreReponseRequest $request)
     {
-        $reponse = new Reponse;
-        $reponse->reponse = $request->has('reponse') &&
-            strlen($request->reponse) ? $request->reponse : 'unknown';
-        $reponse->is_correct = $request->has('is_correct') &&
-            strlen($request->is_correct) ? $request->is_correct : 'unknown';
-        $reponse->question_id = $request->has('question_id') &&
-            strlen($request->question_id) ? $request->question_id : 'unknown';
+        $validated = $request->validated();
+
+        $reponse = new reponse;
+        $reponse->reponse = Arr::get($validated, 'reponse');
+        $reponse->is_correct = Arr::get($validated, 'is_correct');
+        $reponse->question_id = Arr::get($validated, 'question_id');
+
         $reponse->save();
 
         return redirect('/reponses/create');
@@ -83,18 +85,18 @@ class ReponseController extends Controller
      * @param  \App\Models\Reponse  $reponse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reponse $reponse)
+    public function update(StoreReponseRequest $request, Reponse $reponse)
     {
-        $reponse->reponse = $request->has('reponse') &&
-            strlen($request->reponse) ? $request->reponse : $reponse->reponse;
-        $reponse->is_correct = $request->has('is_correct') &&
-            strlen($request->is_correct) ? $request->is_correct : $reponse->is_correct;
-        $reponse->question_id = $request->has('question_id') &&
-            strlen($request->question_id) ? $request->question_id : $reponse->question_id;
+        $validated = $request->validated();
+
+        $reponse = new reponse;
+        $reponse->reponse = Arr::get($validated, 'reponse');
+        $reponse->is_correct = Arr::get($validated, 'is_correct');
+        $reponse->question_id = Arr::get($validated, 'question_id');
 
         $reponse->save();
 
-         return redirect('/reponses');
+        return redirect('/reponses');
     }
 
     /**
@@ -109,6 +111,4 @@ class ReponseController extends Controller
 
         return redirect('/reponses');
     }
-
-
 }

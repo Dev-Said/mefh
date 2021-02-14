@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\formation;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreFormationRequest;
 
 class FormationController extends Controller
 {
@@ -23,11 +25,18 @@ class FormationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFormationRequest $request)
     {
-        if (formation::create($request->all())) {
-            return response()->json(['insert succes'], 200);
-        }
+        $validated = $request->validated();
+
+        $formation = new formation;
+        $formation->titre = Arr::get($validated, 'titre');
+        $formation->description = Arr::get($validated, 'description');
+
+        $formation->save();
+
+        return back();
+
     }
 
     /**
@@ -48,11 +57,16 @@ class FormationController extends Controller
      * @param  \App\Models\formation  $formation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, formation $formation)
+    public function update(StoreFormationRequest $request, formation $formation)
     {
-        if ($formation->update($request->all())) {
-            return response()->json(['update succes'], 200);
-        }
+        $validated = $request->validated();
+
+        $formation->titre = Arr::get($validated, 'titre');
+        $formation->description = Arr::get($validated, 'description');
+
+        $formation->save();
+
+        return back();
     }
 
     /**
@@ -63,8 +77,6 @@ class FormationController extends Controller
      */
     public function destroy(formation $formation)
     {
-        if ($formation->delete()) {
-            return response()->json(['delete succes'], 200);
-        }
+        $formation->delete();
     }
 }

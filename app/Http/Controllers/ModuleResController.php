@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use App\Http\Requests\StoreModuleRequest;
 
 
 class ModuleResController extends Controller
@@ -37,16 +38,16 @@ class ModuleResController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreModuleRequest $request)
     {
-        $module = new Module;
-        $module->titre = $request->has('titre') &&
-            strlen($request->titre) ? $request->titre : 'unknown';
-        $module->description = $request->has('description') &&
-            strlen($request->description) ? $request->description : 'unknown';
-        $module->ordre = $request->has('ordre') &&
-            strlen($request->ordre) ? $request->ordre : 'unknown';
-        $module->formation_id = 1;
+        $validated = $request->validated();
+
+        $module = new module;
+        $module->titre = Arr::get($validated, 'titre');
+        $module->description = Arr::get($validated, 'description');
+        $module->ordre = Arr::get($validated, 'ordre');
+        $module->formation_id = Arr::get($validated, 'formation_id');
+
         $module->save();
 
         return redirect('/modules');
@@ -82,16 +83,14 @@ class ModuleResController extends Controller
      * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Module $module)
-    {
-        $module->titre = $request->has('titre') &&
-            strlen($request->titre) ? $request->titre : $module->titre;
-        $module->description = $request->has('description') &&
-            strlen($request->description) ? $request->description : $module->description;
-        $module->ordre = $request->has('ordre') &&
-            strlen($request->ordre) ? $request->ordre : $module->ordre;
-        $module->formation_id = $request->has('formation_id') &&
-            strlen($request->formation_id) ? $request->formation_id : $module->formation_id;
+    public function update(StoreModuleRequest $request, Module $module)
+    { 
+        $validated = $request->validated();
+
+        $module->titre = Arr::get($validated, 'titre');
+        $module->description = Arr::get($validated, 'description');
+        $module->ordre = Arr::get($validated, 'ordre');
+        $module->formation_id = Arr::get($validated, 'formation_id');
 
         $module->save();
 

@@ -16,7 +16,7 @@ class Quiz extends Model
      */
     protected $fillable = [
         'titre',
-        'modules_id',
+        'module_id',
     ];
 
     public function questions()

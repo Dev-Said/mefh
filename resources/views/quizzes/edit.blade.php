@@ -9,7 +9,10 @@
         @method('put')
         <h1>Quiz : {{ $quiz->titre }}</h1>
         <label for="titre">Modifier le titre</label>
-        <input type="text" name="titre" id="titre" value="{{ $quiz->titre }}" required>
+        <input type="text" name="titre" id="titre" value="{{ $quiz->titre }}">
+        @error('titre')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
         <input type="submit" value="Confirmer">
     </form>

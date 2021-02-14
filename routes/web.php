@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route::get('/modules', function () {
     //     return view('modules');
-    // });
+    // });  
 
 });
+

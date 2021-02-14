@@ -6,8 +6,10 @@ use App\Models\Quiz;
 use App\Models\Reponse;
 use App\Models\Question;
 use App\Models\Remember;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -43,21 +45,18 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuestionRequest $request)
     {
-        //Question------------------------------------
+        $validated = $request->validated();
+
         $question = new Question;
-        $question->question = $request->has('question') &&
-            strlen($request->question) ? $request->question : 'unknown';
-            $question->type = $request->has('type') &&
-            strlen($request->type) ? $request->type : 'unknown';
-        $question->ordre = $request->has('ordre') &&
-            strlen($request->ordre) ? $request->ordre : 'unknown';
-        $question->quiz_id = $request->has('quiz_id') &&
-            strlen($request->quiz_id) ? $request->quiz_id : 'unknown';
+        $question->question = Arr::get($validated, 'question');
+        $question->type = Arr::get($validated, 'type');
+        $question->ordre = Arr::get($validated, 'ordre');
+        $question->quiz_id = Arr::get($validated, 'quiz_id');
+
         $question->save();
 
-        //----------------------------------------------
         return redirect('/reponses/create');
     }
 
@@ -90,16 +89,14 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(StoreQuestionRequest $request, Question $question)
     {
-        $question->question = $request->has('question') &&
-            strlen($request->question) ? $request->question : $question->question;
-            $question->type = $request->has('type') &&
-            strlen($request->type) ? $request->type : 'unknown';
-            $question->ordre = $request->has('ordre') &&
-            strlen($request->ordre) ? $request->ordre : $question->ordre;
-        $question->quiz_id = $request->has('quiz_id') &&
-            strlen($request->quiz_id) ? $request->quiz_id : $question->quiz_id;
+        $validated = $request->validated();
+
+        $question->question = Arr::get($validated, 'question');
+        $question->type = Arr::get($validated, 'type');
+        $question->ordre = Arr::get($validated, 'ordre');
+        $question->quiz_id = Arr::get($validated, 'quiz_id');
 
         $question->save();
 

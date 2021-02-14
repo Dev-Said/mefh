@@ -22,9 +22,8 @@ class FaqFactory extends Factory
     public function definition()
     {
         return [
-            'theme' => $this->faker->sentence(2, true),
-            'intitule' => $this->faker->sentence(3, true),
-            'text' => $this->faker->sentence(8, true),
+            'question' => $this->faker->sentence(5, true),
+            'reponse' => $this->faker->sentence(18, true),
         ];
     }
 }

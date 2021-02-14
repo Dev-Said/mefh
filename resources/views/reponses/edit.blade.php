@@ -14,7 +14,7 @@
             <option value="{{ $reponse->type === 'checkbox' ? 'radio' : 'checkbox' }}">{{ $reponse->type === 'checkbox' ? 'Choix unique' : 'Choix multiple' }}</option>
         </select>
         <label for="reponse">reponse</label>
-        <input type="reponse" name="reponse" id="reponse" value="{{ $reponse->reponse }}" required>
+        <input type="text" name="reponse" id="reponse" value="{{ $reponse->reponse }}" required>
         <label for="is_correct">Is_correct</label>
         <select name="is_correct" id="is_correct" required>
             <option value="{{$reponse->is_correct}}">{{$reponse->is_correct}}</option>

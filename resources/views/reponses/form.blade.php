@@ -15,7 +15,7 @@
             @endforeach
         </select>
         <label for="reponse">Indiquez une réponse</label>
-        <input type="reponse" name="reponse" id="reponse" required>
+        <input type="text" name="reponse" id="reponse" required>
         <label for="is_correct">Indiquez si la réponse est correcte</label>
         <select name="is_correct" id="is_correct" required>
             <option value=""></option>
