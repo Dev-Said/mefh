@@ -11,20 +11,24 @@ export default class ListeChapitres extends React.Component {
           }
       }
 
-
+  
   componentDidMount() {
-    axios.get(`http://localhost:8000/api/module`)
+    axios.get(`http://localhost:8000/api/modulesApi`)
     .then(res => {
-      //Object.values converti objet en tableau
-      const modules = Object.values(res.data);
-      // console.log(modules);
-      this.setState({ modules: modules });
+      //Object.entries converti un objet en tableau
+
+      const modules = Object.entries(res.data);
+
+        this.setState({ modules: modules });
+
+        // console.log(this.state.modules);
     })
 }
 
   render() {
     return (
       <ul>
+      
         <ControlledAccordions modules = {this.state.modules} />
       </ul>
     )

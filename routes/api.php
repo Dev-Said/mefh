@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ModuleApiController;
+
 
 
 /*
@@ -15,12 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 //si champ api_token dans table users
-Route::middleware('auth:api')->group(function () {
+// Route::middleware('auth:api')->group(function () {
 
+// });
+
+
+Route::middleware('auth:api')->group(function () {
+    // Route::get('users/formations/{user}', 'App\Http\Controllers\UserController@formations');
+    // Route::apiResource('usersss', UserController::class);
+    
 });
 
+Route::apiResource('modulesApi', ModuleApiController::class);

@@ -2,15 +2,15 @@
 
 @section('list')
 
-<h1>Chapitres</h1>
+<h1>Formations</h1>
 
 <div>
 
     <table>
         <thead>
             <tr>
-            <th>Question</th>
-                <th>Réponse</th>
+                <th>Titre</th>
+                <th>Description</th>
                 @if(Auth::check())
                 <th></th>
                 <th></th>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
 
-            @each('faqs.one', $faqs, 'faq')
+            @each('formations.one', $formations, 'formation')
 
         </tbody>
     </table>

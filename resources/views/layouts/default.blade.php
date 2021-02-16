@@ -231,6 +231,9 @@
                 <a href="/users">
                     <li class="{{ 'users' == request()->path() ? 'active' : '' }}">Users</li>
                 </a>
+                <a href="/formations">
+                    <li class="{{ 'formations' == request()->path() ? 'active' : '' }}">Formations</li>
+                </a>
                 <a href="/modules">
                     <li class="{{ 'modules' == request()->path() ? 'active' : '' }}">Modules</li>
                 </a>
@@ -245,6 +248,13 @@
                 </a>
                 <a href="/reponses">
                     <li class="{{ 'reponses' == request()->path() ? 'active' : '' }}">Reponses</li>
+                </a>
+                </a>
+                <a href="/faqs">
+                    <li class="{{ 'faqs' == request()->path() ? 'active' : '' }}">Faqs</li>
+                </a>
+                <a href="/indexFormations">
+                    <li class="{{ 'indexFormations' == request()->path() ? 'active' : '' }}">IndexFormations</li>
                 </a>
                 <a href="{{ request()->path() .'/create' }}">
                     <li class="nouveau {{ request()->is('*/create') ? 'hide' : '' }}">Nouveau</li>

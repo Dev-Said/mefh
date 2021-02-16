@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
+use App\Models\formation;
 use Illuminate\Support\Arr;
 use App\Http\Requests\StoreModuleRequest;
 
@@ -27,9 +28,10 @@ class ModuleResController extends Controller
      */
     public function create()
     {
-        
+        $formations = formation::all();
         $modulesCount = Module::all()->max('ordre') + 1;
-        return view('modules.form', ['modulesCount' => $modulesCount]);
+        return view('modules.form', ['modulesCount' => $modulesCount,
+                                    'formations' => $formations]);
     }
 
     /**
@@ -72,7 +74,11 @@ class ModuleResController extends Controller
      */
     public function edit(Module $module)
     {
-        return view('modules.edit', ['module' => $module]);
+        $formation = formation::find($module->formation_id);
+        $formations = formation::all();
+        return view('modules.edit', ['module' => $module,
+                                    'formation_old' => $formation,
+                                    'formations' => $formations]);
     }
 
     /**

@@ -34450,32 +34450,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/accordeon/accordeon.scss":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/accordeon/accordeon.scss ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/tail.css":
-/*!********************************!*\
-  !*** ./resources/css/tail.css ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -66911,9 +66885,7 @@ if (false) {} else {
 /******/ 			["./resources/sass/nav.scss"],
 /******/ 			["./resources/sass/reset.scss"],
 /******/ 			["./resources/js/components/modules/modules.scss"],
-/******/ 			["./resources/js/components/videos/video.scss"],
-/******/ 			["./resources/js/components/accordeon/accordeon.scss"],
-/******/ 			["./resources/css/tail.css"]
+/******/ 			["./resources/js/components/videos/video.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		

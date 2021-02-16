@@ -10,8 +10,8 @@ ReactDOM.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
       <div className="contenaireModules">
-        <ListeChapitres />
         <Video />
+        <ListeChapitres />
       </div>
     {/* </React.StrictMode> */}
   </Provider>,

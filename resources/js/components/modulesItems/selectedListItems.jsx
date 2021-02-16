@@ -27,14 +27,13 @@ export default function SimpleList(props) {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button onClick={() => props.handleClick(props.chapitre)}>
-          {/* <ListItemIcon>
-            <ArrowRight />
-          </ListItemIcon> */}
+        <ListItem button onClick={() => props.handleClick(props.fichier_video)}>
+          <ListItemIcon><ArrowRight /></ListItemIcon>
           <ListItemText primary={props.description} />
         </ListItem>
+        <Divider />
       </List>
-      <Divider />
+
     </div>
   );
 }

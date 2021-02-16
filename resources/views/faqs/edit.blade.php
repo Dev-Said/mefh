@@ -4,38 +4,19 @@
 
 <div class="edit">
 
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-    <form action="/chapitres/{{ $chapitre->id }}" method="post" enctype="multipart/form-data">
+    <form action="/faqs/{{ $faq->id }}" method="post">
         @csrf
         @method('put')
-        <label for="titre">Titre</label>
-        <input type="text" name="titre" id="titre" value="{{ $chapitre->titre }}" >
-
-        <label for="fichier_video">Fichier_video</label>
-        <input type="file" id="fichier_video" name="fichier_video" value="{{ $chapitre->fichier_video }}" 
-         accept="video/*">
-        
-        <label for="description">Description</label>
-        <input type="description" name="description" id="description" value="{{ $chapitre->description }}" >
-        <label for="ordre">Ordre</label>
-        <input type="number" name="ordre" id="ordre" value="{{ $chapitre->ordre }}" >
-        <label for="module_id">Module</label>
-        <select name="module_id" id="module_id" >
-        
-            <option value="{{ $chapitre->module_id }}">{{ $chapitre->module->titre }}</option>
-            @foreach($modules as $module)
-            <option value="{{ $module->id }}">{{ $module->titre }}</option>
-            @endforeach
-        </select>
+        <label for="question">Question</label>
+        <input type="text" name="question" id="question" value="{{ $faq->question }}">
+        @error('question')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <label for="reponse">Réponse</label>
+        <input type="text" id="reponse" name="reponse" value="{{ $faq->reponse }}">
+        @error('reponse')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="submit">
     </form>
 

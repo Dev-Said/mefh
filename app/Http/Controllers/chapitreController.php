@@ -6,8 +6,8 @@ use App\Models\module;
 use App\Models\chapitre;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateChapitreRequest;
 use App\Http\Requests\StorePostChapitreRequest;
-use App\Http\Requests\StoreUpadateChapitreRequest;
 
 
 class ChapitreController extends Controller
@@ -67,7 +67,6 @@ class ChapitreController extends Controller
      */
     public function show(chapitre $chapitre)
     {
-        // $chapitre = chapitre::where('id', '10');
         return $chapitre;
     }
 
@@ -79,9 +78,8 @@ class ChapitreController extends Controller
      */
     public function edit(Chapitre $chapitre)
     {
-        // dd($chapitre->module_id);
         $modules = module::all();
-        // dd($module);
+
         return view('chapitres.edit', [
             'chapitre' => $chapitre,
             'modules' => $modules
@@ -96,7 +94,7 @@ class ChapitreController extends Controller
      * @param  \App\Models\chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUpadateChapitreRequest $request, chapitre $chapitre)
+    public function update(UpdateChapitreRequest $request, chapitre $chapitre)
     {
 
         $validated = $request->validated();  

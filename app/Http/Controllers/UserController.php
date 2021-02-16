@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Reponse;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -27,11 +29,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        // if (Auth::check()) {
-        //     return view('users.form');
-        // } else {
-        //     return redirect('/login');
-        // }
         return view('users.form');
     }
 
@@ -41,21 +38,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
+
+        $validated = $request->validated();
+
         $user = new User;
-        $user->nom = $request->has('nom') &&
-            strlen($request->nom) ? $request->nom : 'unknown';
-        $user->prenom = $request->has('prenom') &&
-            strlen($request->prenom) ? $request->prenom : 'unknown';
-        $user->sexe = $request->has('sexe') &&
-            strlen($request->sexe) ? $request->sexe : 'unknown';
-        $user->admin = $request->has('admin') &&
-            strlen($request->admin) ? $request->admin : 'unknown';
-        $user->email = $request->has('email') &&
-            strlen($request->email) ? $request->email : 'unknown';
-        $user->password = $request->has('password') &&
-            strlen($request->password) ? $request->password : 'unknown';
+        $user->nom = Arr::get($validated, 'nom');
+        $user->prenom = Arr::get($validated, 'prenom');
+        $user->sexe = Arr::get($validated, 'sexe');
+        $user->admin = Arr::get($validated, 'admin');
+        $user->email = Arr::get($validated, 'email');
+        $user->password = Hash::make(Arr::get($validated, 'password'));
 
         $user->save();
 
@@ -91,20 +85,17 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(StoreUserRequest $request, User $user)
     {
-        $user->nom = $request->has('nom') &&
-            strlen($request->nom) ? $request->nom : $user->nom;
-        $user->prenom = $request->has('prenom') &&
-            strlen($request->prenom) ? $request->prenom : $user->prenom;
-        $user->sexe = $request->has('sexe') &&
-            strlen($request->sexe) ? $request->sexe : $user->sexe;
-        $user->admin = $request->has('admin') &&
-            strlen($request->admin) ? $request->admin : $user->admin;
-        $user->email = $request->has('email') &&
-            strlen($request->email) ? $request->email : $user->email;
-        $user->password = $request->has('password') &&
-            strlen($request->password) ? $request->password : $user->password;
+
+        $validated = $request->validated();
+
+        $user->nom = Arr::get($validated, 'nom');
+        $user->prenom = Arr::get($validated, 'prenom');
+        $user->sexe = Arr::get($validated, 'sexe');
+        $user->admin = Arr::get($validated, 'admin');
+        $user->email = Arr::get($validated, 'email');
+        $user->password = Hash::make(Arr::get($validated, 'password'));
 
         $user->save();
 
@@ -132,15 +123,15 @@ class UserController extends Controller
     }
 
 
-    public function reponseUser(Request $request)
+    public function userUser(Request $request)
     {
         //on récupère les id des questions du quiz dont l'id est = à quiz_id
         //va me servir pour la suite
         // $questions_id = Quiz::find($request->input('quiz_id'))->questions()->get('id');
 
         $user = User::find(Auth::id());
-        $reponses = Reponse::find($request->except('_token', 'quiz_id'));
-        $user->reponses()->sync($reponses);
+        $users = user::find($request->except('_token', 'quiz_id'));
+        $user->users()->sync($users);
 
         //on fait un sync mais sans supprimer les quiz qui ont déjà été fait par un user
         $user->quizzes()->syncWithoutDetaching($request->input('quiz_id'));

@@ -12,7 +12,7 @@ class Video extends Component {
                 pip={false}
                 config={{ file: { attributes: { controlsList: 'nodownload' } } }}
                 onContextMenu={e => e.preventDefault()}
-                url={"./storage/videos/" + url_video}
+                url={"./storage/" + url_video}
                 controls={true}
                 playbackRate={1}
                 width="1200px"

@@ -1,21 +1,21 @@
 <tr>
     <td>
-        {{$faq->question}}
+        {{$formation->titre}}
     </td>
     <td>
-        {{$faq->reponse}}
+        {{$formation->description}}
     </td>
 
     @if(Auth::check())
     <td>
-        <form action="/faqs/{{ $faq->id }}" method="post">
+        <form action="/formations/{{ $formation->id }}" method="post">
             @csrf
             @method('delete')
             <input type="submit" value="Supprimer" name="delete" class="supp">
         </form>
     </td>
     <td>
-        <form action="/faqs/{{ $faq->id }}/edit" method="get">
+        <form action="/formations/{{ $formation->id }}/edit" method="get">
             @csrf
             <input type="submit" value="Modifier" name="update" class="modif">
         </form>

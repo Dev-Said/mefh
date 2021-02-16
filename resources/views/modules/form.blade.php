@@ -7,12 +7,29 @@
     <form action="/modules" method="post">
         @csrf
         <h2>Ajouter un module</h2>
+        <label for="formation_id">Formations</label>
+        <p>
+            <select name="formation_id" id="formation_id">
+            <option value="">Sélectionnez une formation</option>
+                @foreach($formations as $formation)
+                <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
+                @endforeach
+            </select>
+        </p>
+        @error('formation_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="titre">Titre</label>
-        <input type="text" name="titre" id="titre" required>
+        <input type="text" name="titre" id="titre" value="{{ old('titre') }}">
+        @error('titre')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="description">Description</label>
-        <input type="text" name="description" id="description" required>
+        <input type="text" name="description" id="description" value="{{ old('description') }}">
+        @error('description')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="hidden" name="ordre" id="ordre" value="{{ $modulesCount }}">
-        <input type="hidden" name="formation_id" value="1">
         <input type="submit">
     </form>
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFormationRequest extends FormRequest
+class UpdateChapitreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreFormationRequest extends FormRequest
     public function rules()
     {
         return [
-            'titre' => 'required|max:255|string',
-            'description' => 'required|max:1000',
+            'titre' => 'required|max:255',
+            'description' => 'required|max:255',
+            'ordre' => 'required|max:255',
+            'module_id' => 'required|max:255',
         ];
     }
 }

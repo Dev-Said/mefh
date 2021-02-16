@@ -3,12 +3,14 @@
 use App\Models\module;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ModuleResController;
 
 /*
@@ -47,16 +49,21 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+Route::resource('formations', FormationController::class);
 Route::resource('chapitres', ChapitreController::class);
 Route::resource('modules', ModuleResController::class);
 Route::resource('questions', QuestionController::class);
 Route::resource('quizzes', QuizController::class);
 Route::resource('reponses', ReponseController::class);
 Route::resource('users', UserController::class);
+Route::resource('faqs', FaqController::class);
 
 
-Route::group(['middleware' => ['auth']], function () {
-
+Route::group(['middleware' => ['auth']], function () 
+{
+    Route::resource('formations', FormationController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]);
     Route::resource('chapitres', ChapitreController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
@@ -75,6 +82,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
+    Route::resource('faqs', FaqController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]);
 
     Route::get('/quizzes/quiz/{id}', [QuizController::class, 'quiz']);
     Route::post('/reponses_user', [UserController::class, 'reponseUser']);
@@ -86,9 +96,9 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('/users');
     });
 
-    // Route::get('/modules', function () {
-    //     return view('modules');
-    // });  
-
+    Route::get('/indexFormations', function () {
+        return view('indexFormations');
+    });  
+   
 });
 

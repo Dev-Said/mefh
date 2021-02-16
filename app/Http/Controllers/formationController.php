@@ -16,7 +16,9 @@ class FormationController extends Controller
      */
     public function index()
     {
-        return formation::all();
+        $formations = formation::all();
+
+        return view('formations.list', ['formations' => $formations]);
     }
 
     /**
@@ -36,7 +38,16 @@ class FormationController extends Controller
         $formation->save();
 
         return back();
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('formations.form');
     }
 
     /**
@@ -48,6 +59,17 @@ class FormationController extends Controller
     public function show(formation $formation)
     {
         return $formation;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Reponse  $reponse
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(formation $formation)
+    {
+        return view('formations.edit', ['formation' => $formation]);
     }
 
     /**

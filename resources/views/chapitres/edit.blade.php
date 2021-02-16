@@ -19,23 +19,35 @@
         @method('put')
         <label for="titre">Titre</label>
         <input type="text" name="titre" id="titre" value="{{ $chapitre->titre }}" >
-
+        @error('titre')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="fichier_video">Fichier_video</label>
         <input type="file" id="fichier_video" name="fichier_video" value="{{ $chapitre->fichier_video }}" 
          accept="video/*">
-        
+         @error('fichier_video')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="description">Description</label>
         <input type="description" name="description" id="description" value="{{ $chapitre->description }}" >
+        @error('description')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="ordre">Ordre</label>
         <input type="number" name="ordre" id="ordre" value="{{ $chapitre->ordre }}" >
+        @error('ordre')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="module_id">Module</label>
         <select name="module_id" id="module_id" >
-        
             <option value="{{ $chapitre->module_id }}">{{ $chapitre->module->titre }}</option>
             @foreach($modules as $module)
             <option value="{{ $module->id }}">{{ $module->titre }}</option>
             @endforeach
         </select>
+        @error('module_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="submit">
     </form>
 
