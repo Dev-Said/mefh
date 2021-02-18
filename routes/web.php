@@ -11,6 +11,7 @@ use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
+use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
 
 /*
@@ -48,15 +49,16 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-
+//checker les pages CORS
 Route::resource('formations', FormationController::class);
 Route::resource('chapitres', ChapitreController::class);
 Route::resource('modules', ModuleResController::class);
-Route::resource('questions', QuestionController::class);
+// Route::resource('questions', QuestionController::class);
 Route::resource('quizzes', QuizController::class);
 Route::resource('reponses', ReponseController::class);
 Route::resource('users', UserController::class);
 Route::resource('faqs', FaqController::class);
+Route::resource('modulesApi', ModuleApiController::class);
 
 
 Route::group(['middleware' => ['auth']], function () 
@@ -70,9 +72,12 @@ Route::group(['middleware' => ['auth']], function ()
     Route::resource('modules', ModuleResController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
-    Route::resource('questions', QuestionController::class)->only([
+    Route::resource('modulesApi', ModuleApiController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
+    // Route::resource('questions', QuestionController::class)->only([
+    //     'create', 'store', 'edit', 'update', 'delete'
+    // ]);
     Route::resource('quizzes', QuizController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
@@ -100,5 +105,8 @@ Route::group(['middleware' => ['auth']], function ()
         return view('indexFormations');
     });  
    
+    Route::get('/questions', function () {
+        return view('questions');
+    });  
 });
 

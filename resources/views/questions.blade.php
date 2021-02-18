@@ -2,6 +2,7 @@
 
 @section('content')
 
-Ma page de questions
 
+<div id="faq"></div>
+<script src="/js/faq.js"></script>
 @endsection

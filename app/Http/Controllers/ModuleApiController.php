@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\module;
+use App\Models\chapitre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -51,9 +52,11 @@ class ModuleApiController extends Controller
      * @param  \App\Models\module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show(module $module)
+    public function show($id)
     {
-        //
+
+        return  module::find($id)->chapitres;
+       
     }
 
     /**
