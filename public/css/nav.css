@@ -23,21 +23,22 @@ ul.nav li a {
   font-family: "Roboto", sans-serif;
 }
 
-.active {
-  background-color: #1a87cf;
-}
-.active .nav-link {
-  color: white;
+.active a {
+  border-bottom: solid 2px #d9354e;
+  font-weight: bold;
+  color: red;
 }
 
 li.active a {
   color: #1a87cf;
+  font-weight: bolder;
+  font-size: 40px;
 }
 
 .logo {
   position: absolute;
   left: 10%;
-  width: 70px;
+  width: 120px;
   height: auto;
 }
 
@@ -54,7 +55,7 @@ li.active a {
 #buttonconnex {
   width: 100%;
   padding: 10px 15px;
-  background-color: #1a87cf;
+  background-color: black;
   color: white;
   font-size: 1rem;
   letter-spacing: 1px;

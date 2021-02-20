@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FaqResController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
@@ -58,6 +59,7 @@ Route::resource('quizzes', QuizController::class);
 Route::resource('reponses', ReponseController::class);
 Route::resource('users', UserController::class);
 Route::resource('faqs', FaqController::class);
+Route::resource('faqsres', FaqResController::class);
 Route::resource('modulesApi', ModuleApiController::class);
 
 
@@ -88,6 +90,9 @@ Route::group(['middleware' => ['auth']], function ()
         'create', 'store', 'edit', 'update', 'delete'
     ]);
     Route::resource('faqs', FaqController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]);
+    Route::resource('faqsres', FaqResController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
 

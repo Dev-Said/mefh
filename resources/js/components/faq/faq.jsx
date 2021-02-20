@@ -1,70 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import axios from "axios";
+import CustomizedInputBase from '../searchInput/searchInput';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '60%',
-      marginLeft: '20%',
-      marginTop: '30px',
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "30px",
     },
     heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-      height: '70px',
-      textAlign: 'center',
+        //   fontSize: theme.typography.pxToRem(15),
+        //   fontWeight: theme.typography.fontWeightRegular,
+        height: "60px",
+        paddingTop: "20px",
     },
     accordeon: {
-        borderRadius: '10px',
-        marginbottom: '15px',
-    }
-  }));
-
-
+        borderRadius: "8px",
+        marginBottom: "15px",
+        width: "50%",
+        boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    },
+}));
 
 export default function Faq() {
-  const classes = useStyles();
-  const [faqs, setFaqs] = useState([]);
+    const classes = useStyles();
+    const [faqs, setFaqs] = useState([]);
+    const [param, setParam] = useState('');
 
-useEffect(() => {
-    axios.get(`http://localhost:8000/faqs`)
-    .then(res => {
+    useEffect(() => {
+        axios.get(`http://localhost:8000/faqs/${param}`).then((res) => {
+            const faqData = Object.entries(res.data);
+            setFaqs(faqData);
+        });
+    }, []);
 
-      const faqData = Object.entries(res.data);
+    const handleChange = (e) => {
+        const value = e.currentTarget.value;
+        console.log(e.currentTarget.value);
+        axios.get(`http://localhost:8000/faqs/${value}`).then((res) => {
+            const faqData = Object.entries(res.data);
+            setFaqs(faqData);
+        });
+    }
 
-      setFaqs(faqData);
-      console.log(faqData);
-        
-    })
-  }, []);
+    return (
+        <div>
+            <div className={classes.root}>
+                <CustomizedInputBase onChange={handleChange} />
+                {faqs.map((faq, index) => (
+                    <Accordion className={classes.accordeon} key={faq[1].id}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon color="primary" />}
+                            fontSize="large"
+                        >
+                            <Typography
+                                className={classes.heading}
+                                variant="h6"
+                            >
+                                {faq[1].question}
+                            </Typography>
+                        </AccordionSummary>
 
-  
-  return (
-    <div className={classes.root}>
-
-      {faqs.map((faq, index) => 
-      <Accordion className={classes.accordeon}
-      key={faq[1].id}>
-
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header">
-          <Typography className={classes.heading}>{ faq[1].question }</Typography>
-        </AccordionSummary>
-
-        <AccordionDetails>
-          <Typography>
-          { faq[1].reponse }
-          </Typography>
-        </AccordionDetails>
-
-      </Accordion>)}
-    </div>
-  );
+                        <AccordionDetails>
+                            <Typography>
+                                {faq[1].reponse}
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </div>
+        </div>
+    );
 }

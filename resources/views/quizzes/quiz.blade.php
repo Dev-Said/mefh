@@ -20,8 +20,7 @@
 
             <input type="{{ $question->type }}" name="{{ $reponse->question_id . $name }}" 
             id="{{ $reponse->id }}" value="{{ $reponse->id }}">
-            <label for="{{ $reponse->id }}">{{ $reponse->reponse }}</label>
-            
+            <label for="{{ $reponse->id }}">{{ $reponse->reponse }}</label>        
         </div>
         @endforeach
 

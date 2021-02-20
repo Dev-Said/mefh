@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Reponse;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -123,15 +124,15 @@ class UserController extends Controller
     }
 
 
-    public function userUser(Request $request)
+    public function reponseUser(Request $request)
     {
         //on récupère les id des questions du quiz dont l'id est = à quiz_id
         //va me servir pour la suite
         // $questions_id = Quiz::find($request->input('quiz_id'))->questions()->get('id');
 
         $user = User::find(Auth::id());
-        $users = user::find($request->except('_token', 'quiz_id'));
-        $user->users()->sync($users);
+        $reponses = Reponse::find($request->except('_token', 'quiz_id'));
+        $user->reponses()->sync($reponses);
 
         //on fait un sync mais sans supprimer les quiz qui ont déjà été fait par un user
         $user->quizzes()->syncWithoutDetaching($request->input('quiz_id'));

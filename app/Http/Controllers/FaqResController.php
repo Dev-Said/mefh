@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreFaqRequest;
 
-class FaqController extends Controller
+class FaqResController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,8 @@ class FaqController extends Controller
      */
     public function index()
     {
-        return Faq::all();
-        // $faqs = Faq::all();
-        // return view('faqs.list', ['faqs' => $faqs]);
+        $faqs = Faq::all();
+        return view('faqs.list', ['faqs' => $faqs]);
     }
 
     /**
@@ -56,17 +55,9 @@ class FaqController extends Controller
      * @param  \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function show($param)
+    public function show(Faq $faq)
     {
-        if ($param <> ''){
-            return Faq::where('question', 'like', "%$param%")
-            ->orWhere('reponse', 'like', "%$param%")
-            ->get();
-        } else {
-            return Faq::all();
-        }
-
-    
+            return $faq;
     }
 
     /**

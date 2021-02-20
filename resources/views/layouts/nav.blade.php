@@ -40,7 +40,7 @@
 
     <ul class="nav">
         <div class="logo">
-            <img src="/storage/images/M.png" alt="logo">
+            <img src="/storage/images/logo.png" alt="logo">
         </div>
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" aria-current="page" href="/">Accueil</a>

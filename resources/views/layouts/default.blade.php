@@ -69,6 +69,7 @@
             background-color: #f7f7f7;
             color: #292b2c;
             letter-spacing: 1px;
+            font-weight: bold;
         }
 
         .nouveau {
@@ -250,8 +251,8 @@
                     <li class="{{ 'reponses' == request()->path() ? 'active' : '' }}">Reponses</li>
                 </a>
                 </a>
-                <a href="/faqs">
-                    <li class="{{ 'faqs' == request()->path() ? 'active' : '' }}">Faqs</li>
+                <a href="/faqsres">
+                    <li class="{{ 'faqsres' == request()->path() ? 'active' : '' }}">Faqs</li>
                 </a>
                 <a href="/indexFormations">
                     <li class="{{ 'indexFormations' == request()->path() ? 'active' : '' }}">IndexFormations</li>
