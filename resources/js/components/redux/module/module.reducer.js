@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 
 const modulesReducer = (url_video = INITIAL_STATE, action) => {
     // console.log(action);
+    // alert('reducer');
     switch (action.type) {
         case ModulesActionTypes.GET_VIDEO:
 

@@ -20,8 +20,9 @@ mix.js('resources/js/app.js', 'public/js').react()
     .sass('resources/sass/nav.scss', 'public/css')
     .sass('resources/sass/reset.scss', 'public/css')
     .sass('resources/js/components/modules/modules.scss', 'public/css')
-    .sass('resources/js/components/videos/video.scss', 'public/css');
-
+    .sass('resources/js/components/videos/video.scss', 'public/css')
+    .sass('resources/js/components/listeChapitres/listeChapitres.scss', 'public/css')
+    .sass('resources/js/components/stepper/stepper.scss', 'public/css');
 
 
     // .sass('resources/js/components/accordeon/accordeon.scss', 'public/css')

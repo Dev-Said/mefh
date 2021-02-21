@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 class Video extends Component {
     render() {
+
         const { url_video } = this.props;
 
         return (
@@ -15,20 +16,21 @@ class Video extends Component {
                 url={"./storage/" + url_video}
                 controls={true}
                 playbackRate={1}
-                width="1200px"
-                height="700px"
+                width="70%"
+                height="auto"
             />
-        )
+        )   
     }
 }
 
 const mapStateToProps = ({ modules }) => {
     return {
         url_video: modules.url_video
-    };
-};
+    }
+}
 
 export default connect(mapStateToProps)(Video);
 
 
 
+ 

@@ -4,13 +4,13 @@ import Video from '../videos/Video';
 import ListeChapitres from '../ListeChapitres/ListeChapitres';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import CustomizedSteppers from '../stepper/stepper';
+import HorizontalLabelPositionBelowStepper from '../stepper/stepper';
 
 ReactDOM.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
       <div className="contenaireModules">
-      {/* <CustomizedSteppers /> */}
+      <HorizontalLabelPositionBelowStepper />
         <Video />
         <ListeChapitres />
       </div>

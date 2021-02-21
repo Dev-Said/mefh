@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import store from '../redux/store'
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+import { getVideo } from "../redux/module/module.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,17 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledAccordions = (props) => {
   const classes = useStyles();
-
+  const getVideo = props.getVideo;
+  // console.log(props);
   const handleClick = (url_video) => {
-    store.dispatch({ type: 'GET_VIDEO', url_video: url_video })
+    // store.dispatch({ type: 'GET_VIDEO', url_video: url_video })
+    getVideo(url_video);
   };
 
   return (
     <div className={classes.root}>
-
-      {props.modules.map((module, index) => <li key={module[1].id}>
-        <Typography variant="body1" gutterBottom onClick={() => handleClick(module[1].fichier_video)}>
-          {module[1].titre}
+      {/* {console.log(props.chapitres)} */}
+      {props.chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
+        <Typography variant="body1" gutterBottom onClick={() => handleClick(chapitre[1].fichier_video)}>
+          {chapitre[1].titre}
         </Typography>
       </li>
       )}
@@ -39,5 +43,19 @@ const ControlledAccordions = (props) => {
   );
 }
 
-export default ControlledAccordions;
+
+const mapStateToProps = ({ modules }) => {
+  return {
+    url_video: modules.url_video
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  getVideo: (url_video) => dispatch(getVideo(url_video)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlledAccordions);
+
+// export default ControlledAccordions;
 

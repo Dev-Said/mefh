@@ -1,35 +1,55 @@
 import React from 'react';
 import axios from 'axios';
 import ControlledAccordions from '../accordeon/Accordeon';
+import { connect } from 'react-redux';
 
 
-export default class ListeChapitres extends React.Component {
-  constructor() {
-    super();
+class ListeChapitres extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      modules: [],
+      chapitres: [],
+      module: 1,
     }
   }
 
+  // componentDidMount() {
+    
+  //   // this.setState({ module: this.props.module_id });
+  //   axios.get(`http://localhost:8000/modulesApi/${this.props.module_id}}`)
+  //     .then(res => {
+  //       //Object.entries converti un objet en tableau
+  //       const chapitres = Object.entries(res.data);
 
-  componentDidMount() {
-    axios.get(`http://localhost:8000/modulesApi/1`)
+  //       this.setState({ chapitres: chapitres });
+
+  //     })
+  // }
+  
+  render() {
+    axios.get(`http://localhost:8000/modulesApi/${this.props.module_id}}`)
       .then(res => {
         //Object.entries converti un objet en tableau
-        const modules = Object.entries(res.data);
+        const chapitres = Object.entries(res.data);
 
-        this.setState({ modules: modules });
+        this.setState({ chapitres: chapitres });
 
       })
-  }
 
-  render() {
+    // console.log(this.props);
     return (
-      <ul>
-
-        <ControlledAccordions modules={this.state.modules} />
+      <ul className="listeChapitres">
+        <ControlledAccordions chapitres={this.state.chapitres} />
       </ul>
     )
   }
 }
 
+const mapStateToProps = ({ stepper }) => {
+  return {
+    module_id: stepper.module_id
+    
+  };
+};
+
+export default connect(mapStateToProps)(ListeChapitres);
