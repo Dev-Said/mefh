@@ -7446,86 +7446,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _accordeon_Accordeon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../accordeon/Accordeon */ "./resources/js/components/accordeon/Accordeon.jsx");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
 
 
-var ListeChapitres = /*#__PURE__*/function (_React$Component) {
-  _inherits(ListeChapitres, _React$Component);
+var ListeChapitres = function ListeChapitres(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+      _useState2 = _slicedToArray(_useState, 2),
+      module_id = _useState2[0],
+      setModule_id = _useState2[1];
 
-  var _super = _createSuper(ListeChapitres);
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      chapitres = _useState4[0],
+      setChapitres = _useState4[1];
 
-  function ListeChapitres(props) {
-    var _this;
-
-    _classCallCheck(this, ListeChapitres);
-
-    _this = _super.call(this, props);
-    _this.state = {
-      chapitres: []
-    };
-    return _this;
-  } // componentDidMount() {
-  //   // this.setState({ module: this.props.module_id });
-  //   axios.get(`http://localhost:8000/modulesApi/${module}}`)
-  //     .then(res => {
-  //       //Object.entries converti un objet en tableau
-  //       const chapitres = Object.entries(res.data);
-  //       this.setState({ chapitres: chapitres });
-  //     })
-  // }
-
-
-  _createClass(ListeChapitres, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi/".concat(this.props.module_id, "}")).then(function (res) {
-        //Object.entries converti un objet en tableau
-        var chapitres = Object.entries(res.data);
-
-        _this2.setState({
-          chapitres: chapitres
-        });
-      }); // console.log(this.props)
-
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
-        className: "listeChapitres",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_accordeon_Accordeon__WEBPACK_IMPORTED_MODULE_3__.default, {
-          chapitres: this.state.chapitres
-        })
-      });
-    }
-  }]);
-
-  return ListeChapitres;
-}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+  module_id !== props.module_id && setModule_id(props.module_id);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi/".concat(module_id, "}")).then(function (res) {
+      setChapitres(Object.entries(res.data));
+      {
+        console.log('didmount');
+      }
+    });
+  }, [props.module_id]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
+    className: "listeChapitres",
+    children: [console.log(props.module_id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_accordeon_Accordeon__WEBPACK_IMPORTED_MODULE_3__.default, {
+      chapitres: chapitres
+    })]
+  });
+};
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var stepper = _ref.stepper;
@@ -7582,7 +7549,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default
 
 var ControlledAccordions = function ControlledAccordions(props) {
   var classes = useStyles();
-  var getVideo = props.getVideo; // console.log(props);
+  var getVideo = props.getVideo;
 
   var handleClick = function handleClick(url_video) {
     // store.dispatch({ type: 'GET_VIDEO', url_video: url_video })
@@ -7943,10 +7910,10 @@ var Stepper = function Stepper(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       modules = _useState2[0],
-      setModules = _useState2[1];
+      setModules = _useState2[1]; // console.log(props);
+  // console.log(activeStep);
 
-  console.log(props);
-  console.log(activeStep);
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi").then(function (res) {
       var modulesData = Object.entries(res.data);
@@ -7961,7 +7928,7 @@ var Stepper = function Stepper(props) {
     _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
       type: 'INC_MODULE_ID',
       module_id: activeStep
-    });
+    }); // console.log('stepper');
   };
 
   var handleBack = function handleBack() {
@@ -8012,7 +7979,7 @@ var Stepper = function Stepper(props) {
           children: getStepContent(activeStep)
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
-            disabled: activeStep === 0,
+            disabled: activeStep < 2,
             onClick: handleBack // className={classes.backButton}
             ,
             color: "primary",

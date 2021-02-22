@@ -44,8 +44,8 @@ const Stepper = (props) => {
   // const getModuleId = props.getModuleId;
   const [modules, setModules] = useState([]);
 
-  console.log(props);
-  console.log(activeStep);
+  // console.log(props);
+  // console.log(activeStep);
 
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi`).then((res) => {
@@ -58,6 +58,7 @@ const Stepper = (props) => {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     store.dispatch({ type: 'INC_MODULE_ID', module_id: activeStep });
+    // console.log('stepper');
   };
 
   const handleBack = () => {
@@ -101,7 +102,7 @@ const Stepper = (props) => {
               <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
               <div>
                 <Button
-                  disabled={activeStep === 0}
+                  disabled={activeStep < 2}
                   onClick={handleBack}
                   // className={classes.backButton}
                   color="primary"

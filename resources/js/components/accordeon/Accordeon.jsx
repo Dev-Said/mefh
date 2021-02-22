@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const ControlledAccordions = (props) => {
   const classes = useStyles();
   const getVideo = props.getVideo;
-  // console.log(props);
+
 
   
   const handleClick = (url_video) => {
@@ -40,7 +40,7 @@ const ControlledAccordions = (props) => {
         </Typography>
       </li>
       )}
-
+      {/* {console.log('accordeon')} */}
     </div>
   );
 }
