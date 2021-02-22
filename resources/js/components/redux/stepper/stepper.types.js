@@ -1,4 +1,5 @@
 export const StepperActionTypes = {
-    GET_MODULE_ID: "GET_MODULE_ID",
+    INC_MODULE_ID: "INC_MODULE_ID",
+    DEC_MODULE_ID: "DEC_MODULE_ID",
   };
   

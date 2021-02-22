@@ -9,14 +9,13 @@ class ListeChapitres extends React.Component {
     super(props);
     this.state = {
       chapitres: [],
-      module: 1,
     }
   }
 
   // componentDidMount() {
     
   //   // this.setState({ module: this.props.module_id });
-  //   axios.get(`http://localhost:8000/modulesApi/${this.props.module_id}}`)
+  //   axios.get(`http://localhost:8000/modulesApi/${module}}`)
   //     .then(res => {
   //       //Object.entries converti un objet en tableau
   //       const chapitres = Object.entries(res.data);
@@ -25,7 +24,7 @@ class ListeChapitres extends React.Component {
 
   //     })
   // }
-  
+     
   render() {
     axios.get(`http://localhost:8000/modulesApi/${this.props.module_id}}`)
       .then(res => {
@@ -33,15 +32,15 @@ class ListeChapitres extends React.Component {
         const chapitres = Object.entries(res.data);
 
         this.setState({ chapitres: chapitres });
-
+        
       })
 
-    // console.log(this.props);
+      // console.log(this.props)
     return (
       <ul className="listeChapitres">
         <ControlledAccordions chapitres={this.state.chapitres} />
-      </ul>
-    )
+      </ul>  
+    ) 
   }
 }
 

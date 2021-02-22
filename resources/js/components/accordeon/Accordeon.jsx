@@ -24,6 +24,8 @@ const ControlledAccordions = (props) => {
   const classes = useStyles();
   const getVideo = props.getVideo;
   // console.log(props);
+
+  
   const handleClick = (url_video) => {
     // store.dispatch({ type: 'GET_VIDEO', url_video: url_video })
     getVideo(url_video);

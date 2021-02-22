@@ -4,17 +4,18 @@ const INITIAL_STATE = {
     module_id: 1,
 };
 
-const stepperReducer = (module_id = INITIAL_STATE, action) => {
-    // console.log(action);
+
+
+function stepperReducer(module_id = INITIAL_STATE, action) {
+    
     switch (action.type) {
-        case StepperActionTypes.GET_MODULE_ID:
-
-            return { ...module_id, module_id: action.module_id };
-
+        case StepperActionTypes.INC_MODULE_ID:
+            return { ...module_id, module_id: action.module_id + 1 }
+        case StepperActionTypes.DEC_MODULE_ID:
+            return { ...module_id, module_id: action.module_id - 1 }
         default:
-
-            return module_id;
-    }
-};
+            return module_id
+    }  
+}
 
 export default stepperReducer;

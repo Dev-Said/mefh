@@ -7487,13 +7487,12 @@ var ListeChapitres = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      chapitres: [],
-      module: 1
+      chapitres: []
     };
     return _this;
   } // componentDidMount() {
   //   // this.setState({ module: this.props.module_id });
-  //   axios.get(`http://localhost:8000/modulesApi/${this.props.module_id}}`)
+  //   axios.get(`http://localhost:8000/modulesApi/${module}}`)
   //     .then(res => {
   //       //Object.entries converti un objet en tableau
   //       const chapitres = Object.entries(res.data);
@@ -7514,7 +7513,7 @@ var ListeChapitres = /*#__PURE__*/function (_React$Component) {
         _this2.setState({
           chapitres: chapitres
         });
-      }); // console.log(this.props);
+      }); // console.log(this.props)
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", {
         className: "listeChapitres",
@@ -7791,21 +7790,25 @@ var INITIAL_STATE = {
   module_id: 1
 };
 
-var stepperReducer = function stepperReducer() {
+function stepperReducer() {
   var module_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  // console.log(action);
   switch (action.type) {
-    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.GET_MODULE_ID:
+    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.INC_MODULE_ID:
       return _objectSpread(_objectSpread({}, module_id), {}, {
-        module_id: action.module_id
+        module_id: action.module_id + 1
+      });
+
+    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.DEC_MODULE_ID:
+      return _objectSpread(_objectSpread({}, module_id), {}, {
+        module_id: action.module_id - 1
       });
 
     default:
       return module_id;
   }
-};
+}
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stepperReducer);
 
@@ -7823,7 +7826,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "StepperActionTypes": () => /* binding */ StepperActionTypes
 /* harmony export */ });
 var StepperActionTypes = {
-  GET_MODULE_ID: "GET_MODULE_ID"
+  INC_MODULE_ID: "INC_MODULE_ID",
+  DEC_MODULE_ID: "DEC_MODULE_ID"
 };
 
 /***/ }),
@@ -7857,7 +7861,7 @@ var store = (0,redux__WEBPACK_IMPORTED_MODULE_1__.createStore)(_root_reducer__WE
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* binding */ HorizontalLabelPositionBelowStepper
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -7865,9 +7869,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 /* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
 
@@ -7882,9 +7886,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
 
 
 
@@ -7929,7 +7930,7 @@ function getStepContent(stepIndex) {
   }
 }
 
-function HorizontalLabelPositionBelowStepper() {
+var Stepper = function Stepper(props) {
   var classes = useStyles();
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(1),
@@ -7937,47 +7938,45 @@ function HorizontalLabelPositionBelowStepper() {
       activeStep = _React$useState2[0],
       setActiveStep = _React$useState2[1];
 
-  var steps = getSteps();
+  var steps = getSteps(); // const getModuleId = props.getModuleId;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       modules = _useState2[0],
-      setModules = _useState2[1]; // console.log(activeStep);
+      setModules = _useState2[1];
 
-
+  console.log(props);
+  console.log(activeStep);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_4___default().get("http://localhost:8000/modulesApi").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi").then(function (res) {
       var modulesData = Object.entries(res.data);
       setModules(modulesData);
     });
-  }, []); // console.log(activeStep);
+  }, []);
 
   var handleNext = function handleNext() {
     setActiveStep(function (prevActiveStep) {
       return prevActiveStep + 1;
     });
-    _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'GET_MODULE_ID',
+    _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
+      type: 'INC_MODULE_ID',
       module_id: activeStep
-    }); // console.log(activeStep);
+    });
   };
 
   var handleBack = function handleBack() {
     setActiveStep(function (prevActiveStep) {
       return prevActiveStep - 1;
     });
-    _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'GET_MODULE_ID',
+    _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
+      type: 'DEC_MODULE_ID',
       module_id: activeStep
-    }); // console.log(activeStep);
+    });
   };
 
   var handleReset = function handleReset() {
     setActiveStep(0);
-    _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'GET_MODULE_ID',
-      module_id: activeStep
-    });
+    getModuleId(activeStep);
   };
 
   var salut = function salut(x) {
@@ -7987,8 +7986,6 @@ function HorizontalLabelPositionBelowStepper() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      activeStep: activeStep,
-      alternativeLabel: true,
       children: modules.map(function (module) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
           onClick: function onClick() {
@@ -8031,7 +8028,16 @@ function HorizontalLabelPositionBelowStepper() {
       })
     })]
   });
-}
+};
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var stepper = _ref.stepper;
+  return {
+    activeStep: stepper.module_id
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Stepper));
 
 /***/ }),
 
