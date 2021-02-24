@@ -44,7 +44,7 @@ export default function Faq() {
 
     const handleChange = (e) => {
         const value = e.currentTarget.value;
-        console.log(e.currentTarget.value);
+        // console.log(e.currentTarget.value);
         axios.get(`http://localhost:8000/faqs/${value}`).then((res) => {
             const faqData = Object.entries(res.data);
             setFaqs(faqData);

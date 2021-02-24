@@ -13,68 +13,46 @@ const useStyles = makeStyles((theme) => ({
   backButton: {
     marginRight: theme.spacing(1),
     color: 'primary',
-  },
-  // instructions: {
-  //   marginTop: theme.spacing(1),
-  //   marginBottom: theme.spacing(1),
-  // },
-}));
-
-function getSteps() {
-  return ['1', '1', '3', '4', '5', '6'];
-}
-
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown stepIndex';
   }
-}
+}));
 
 const Stepper = (props) => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
-  const steps = getSteps();
-  // const getModuleId = props.getModuleId;
   const [modules, setModules] = useState([]);
+  // const [titreChapitre, setTitreChapitre] = useState('');
+  const [chapitre_id, setChapitre_id] = useState(0);
+  const [chapitres, setChapitres] = useState([]);
+  // titreChapitre !== props.titreChapitre && setTitreChapitre(props.titreChapitre);
+  chapitre_id !== props.chapitre_id && setChapitre_id(props.chapitre_id);
+  chapitres !== props.chapitres && setChapitres(props.chapitres);
 
-  // console.log(props);
-  // console.log(activeStep);
+ 
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/modulesApi`).then((res) => {
-      const modulesData = Object.entries(res.data);
+    let one = 'http://localhost:8000/modulesApi'
+    let two = 'http://localhost:8000/modulesApi/' + chapitre_id 
+    // console.log(two);
+    const requestOne = axios.get(one);
+    const requestTwo = axios.get(two);
+
+    axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+      const modulesData = Object.entries(responses[0].data);
       setModules(modulesData);
-    });
-  }, []);
+      const chapitresData = Object.entries(responses[1].data);
+      setChapitres(chapitresData.titre);
+      // console.log(chapitresData[0]);
+    })).catch(errors => {
+      // errors
+    })
+
+  }, [props.chapitre_id]);
 
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    store.dispatch({ type: 'INC_MODULE_ID', module_id: activeStep });
-    // console.log('stepper');
-  };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    store.dispatch({ type: 'DEC_MODULE_ID', module_id: activeStep });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    getModuleId(activeStep);
-  };
 
   const salut = (x) => {
     alert(x);
   };
-
 
   return (
     <div className={classes.root}>
@@ -82,51 +60,34 @@ const Stepper = (props) => {
       <div>
         {modules.map((module) => (
           <Button key={module.moduleId} onClick={() => salut(module[1].moduleTitre)} variant="outlined" color="primary" size="small" >
-            {module[1].moduleTitre}
+            {/* {module[1].moduleTitre} */}
+            1
           </Button>
 
         ))}
       </div>
 
-
       <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-
-        ) : (
-
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  disabled={activeStep < 2}
-                  onClick={handleBack}
-                  // className={classes.backButton}
-                  color="primary"
-                  variant="contained"
-                >
-                  Back
-              </Button>
-                <Button variant="contained" color="primary" onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
+        {/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
+        <Typography className={classes.instructions}></Typography>
       </div>
     </div>
   );
 }
 
 
+// const mapStateToProps = ({ chapitreTitre }) => {
+//   return {
+//     titreChapitre: chapitreTitre.titreChapitre
+//   }
+// }
+
 const mapStateToProps = ({ stepper }) => {
   return {
-    activeStep: stepper.module_id
-  }
-}
+    chapitre_id: stepper.chapitre_id
 
+  };
+};
 
 export default connect(mapStateToProps)(Stepper);
+// export default Stepper;

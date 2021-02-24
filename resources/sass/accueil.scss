@@ -1,7 +1,12 @@
 @import '_variables';
 $padd: 20%;
 $top: 250px;
-    
+   
+
+*:focus {
+    outline: none;
+}
+
 .contenairAccueil {
     width: 100%;
     height: calc(100vh - 100px);

@@ -55,8 +55,22 @@ class ModuleApiController extends Controller
     public function show($id)
     {
 
-        return  module::find($id)->chapitres;
-       
+        // return  module::find($id)->chapitres;
+
+        return DB::table('modules')
+            ->selectRaw(
+                'modules.id as module_id,
+                modules.titre as module_titre,
+                chapitres.id as id,
+                chapitres.titre as titre,
+                chapitres.description as description,
+                chapitres.fichier_video as fichier_video,
+                chapitres.ordre as ordre'
+            )
+            ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
+            ->where('modules.id', $id)
+            ->orderBy('chapitres.ordre', 'asc')
+            ->get();
     }
 
     /**

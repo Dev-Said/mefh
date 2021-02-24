@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import store from '../redux/store'
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { getVideo } from "../redux/module/module.actions";
@@ -10,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
       height: '40px',
-      'max-width': '300px',
+      // 'max-width': '300px',
       marging: '15px',
       background: '#ffffff',
     },
@@ -25,22 +24,19 @@ const ControlledAccordions = (props) => {
   const getVideo = props.getVideo;
 
 
-  
+
   const handleClick = (url_video) => {
-    // store.dispatch({ type: 'GET_VIDEO', url_video: url_video })
     getVideo(url_video);
   };
 
   return (
     <div className={classes.root}>
-      {/* {console.log(props.chapitres)} */}
       {props.chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
         <Typography variant="body1" gutterBottom onClick={() => handleClick(chapitre[1].fichier_video)}>
           {chapitre[1].titre}
         </Typography>
       </li>
       )}
-      {/* {console.log('accordeon')} */}
     </div>
   );
 }

@@ -1,35 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import ControlledAccordions from '../accordeon/Accordeon';
 import { connect } from 'react-redux';
+import SimpleList from '../simpleList/simpleList';
+import BackNextButton from '../backNextButton/backNextButton';
 
 const ListeChapitres = (props) => {
 
-  const [module_id, setModule_id] = useState(1);
+  const [chapitre_id, setChapitre_id] = useState(0);
   const [chapitres, setChapitres] = useState([]);
 
-  module_id !== props.module_id && setModule_id(props.module_id);
+  //chapitre_id est màj que si props.chapitre_id a changé
+  //pour pas créer de boucle infinie
+  //cela permet de changer de module quand BackNextButton est cliqué
+  chapitre_id !== props.chapitre_id && setChapitre_id(props.chapitre_id);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/modulesApi/${module_id}}`)
+    axios.get(`http://localhost:8000/modulesApi/${chapitre_id}}`)
       .then(res => {
         setChapitres(Object.entries(res.data));
-        { console.log('didmount') }
       });
-  }, [props.module_id]);
+  }, [props.chapitre_id]); //useEffect est déclenché si [props.chapitre_id] change
 
   return (
     <ul className="listeChapitres" >
-      {/* { console.log(chapitres)} */}
-      { console.log(props.module_id)}
-      <ControlledAccordions chapitres={chapitres} />
+      <BackNextButton />
+      <SimpleList chapitres={chapitres} init_index={0} />
     </ul>
   )
 }
 
 const mapStateToProps = ({ stepper }) => {
   return {
-    module_id: stepper.module_id
+    chapitre_id: stepper.chapitre_id
 
   };
 };

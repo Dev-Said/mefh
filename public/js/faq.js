@@ -10445,8 +10445,8 @@ function Faq() {
   }, []);
 
   var handleChange = function handleChange(e) {
-    var value = e.currentTarget.value;
-    console.log(e.currentTarget.value);
+    var value = e.currentTarget.value; // console.log(e.currentTarget.value);
+
     axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/faqs/".concat(value)).then(function (res) {
       var faqData = Object.entries(res.data);
       setFaqs(faqData);
