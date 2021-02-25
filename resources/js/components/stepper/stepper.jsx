@@ -4,71 +4,60 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from "axios";
-import store from '../redux/store'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  backButton: {
-    marginRight: theme.spacing(1),
-    color: 'primary',
+  stepButton: {
+    height: 20,
+    width: 30,
   }
 }));
 
 const Stepper = (props) => {
   const classes = useStyles();
   const [modules, setModules] = useState([]);
-  // const [titreChapitre, setTitreChapitre] = useState('');
-  const [chapitre_id, setChapitre_id] = useState(0);
-  const [chapitres, setChapitres] = useState([]);
-  // titreChapitre !== props.titreChapitre && setTitreChapitre(props.titreChapitre);
-  chapitre_id !== props.chapitre_id && setChapitre_id(props.chapitre_id);
-  chapitres !== props.chapitres && setChapitres(props.chapitres);
+  const [module_id, setModule_id] = useState(1);
+  const [titre, setTitre] = useState();
 
- 
+  module_id !== props.module_id && setModule_id(props.module_id);
+  
 
   useEffect(() => {
-    let one = 'http://localhost:8000/modulesApi'
-    let two = 'http://localhost:8000/modulesApi/' + chapitre_id 
-    // console.log(two);
-    const requestOne = axios.get(one);
-    const requestTwo = axios.get(two);
-
-    axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
-      const modulesData = Object.entries(responses[0].data);
-      setModules(modulesData);
-      const chapitresData = Object.entries(responses[1].data);
-      setChapitres(chapitresData.titre);
-      // console.log(chapitresData[0]);
-    })).catch(errors => {
-      // errors
-    })
-
-  }, [props.chapitre_id]);
-
-
-
+    axios.get(`http://localhost:8000/modulesApi`)
+      .then(res => {
+        setModules(Object.entries(res.data));  
+      });
+  }, [props.module_id]);  
+  
+  useEffect(() => {
+    titre !== props.titre && setTitre(props.titre);
+    console.log(titre);
+  }, [props.titre]);
 
   const salut = (x) => {
     alert(x);
   };
-
+ 
   return (
     <div className={classes.root}>
 
       <div>
         {modules.map((module) => (
-          <Button key={module.moduleId} onClick={() => salut(module[1].moduleTitre)} variant="outlined" color="primary" size="small" >
-            {/* {module[1].moduleTitre} */}
-            1
+          <Button className={classes.stepButton} key={module.module_id}
+            onClick={() => salut(module[1].titre)}
+            variant="outlined" color="primary" >
+            {/* {module[1].module_titre} */}
+            {/* 1 */}
           </Button>
 
         ))}
       </div>
 
       <div>
-        {/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
+        <Typography className={classes.instructions}>{props.titre}</Typography>
         <Typography className={classes.instructions}></Typography>
       </div>
     </div>
@@ -76,18 +65,11 @@ const Stepper = (props) => {
 }
 
 
-// const mapStateToProps = ({ chapitreTitre }) => {
-//   return {
-//     titreChapitre: chapitreTitre.titreChapitre
-//   }
-// }
-
-const mapStateToProps = ({ stepper }) => {
+const mapStateToProps = ({ modules, titre }) => {
   return {
-    chapitre_id: stepper.chapitre_id
-
+    module_id: modules.module_id,
+    titre: titre.titre,
   };
 };
 
 export default connect(mapStateToProps)(Stepper);
-// export default Stepper;

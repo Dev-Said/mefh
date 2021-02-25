@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 
 class Video extends Component {
+
     render() {
 
         const { url_video } = this.props;
-
         return (
             <ReactPlayer className="player-wrapper"
                 pip={false}
@@ -23,9 +23,9 @@ class Video extends Component {
     }
 }
 
-const mapStateToProps = ({ modules }) => {
+const mapStateToProps = ({ videos }) => {
     return {
-        url_video: modules.url_video
+        url_video: videos.url_video
     }
 }
 

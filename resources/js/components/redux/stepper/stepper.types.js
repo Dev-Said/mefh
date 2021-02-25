@@ -1,6 +1,0 @@
-export const StepperActionTypes = {
-    INC_CHAPITRE_ID: "INC_CHAPITRE_ID",
-    DEC_CHAPITRE_ID: "DEC_CHAPITRE_ID",
-    RESET_CHAPITRE_ID: "RESET_CHAPITRE_ID",
-  };
-  

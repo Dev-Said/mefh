@@ -27,8 +27,8 @@
         @enderror
         <label for="admin">Admin</label>
         <select name="admin" id="admin">
-            <option value="{{$user->admin}}">{{ $user->admin === 1 ? 'admin' : 'not admin' }}</option>
-            <option value="{{ $user->admin === 1 ? 0 : 1 }}">{{ $user->admin === 1 ? 'not admin' : 'admin' }}</option>
+            <option value="{{ $user->admin }}">{{ $user->admin === '1' ? 'admin' : 'not admin' }}</option>
+            <option value="{{ $user->admin === '1' ? '0' : '1' }}">{{ $user->admin === '1' ? 'not admin' : 'admin' }}</option>
         </select>
         @error('admin')
         <div class="alert alert-danger">{{ $message }}</div>

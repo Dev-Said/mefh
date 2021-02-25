@@ -52,8 +52,8 @@
             <!-- <a class="nav-link" href="formation"><button id="buttonAccueil">Suivre la formation</button></a> -->
             <a class="nav-link" href="formation">Formation</a>
         </li>
-        <li class="nav-item {{ 'questions' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="questions">Questions essentielles</a>
+        <li class="nav-item {{ 'questionsEssentielles' == request()->path() ? 'active' : '' }}">
+            <a class="nav-link" href="questionsEssentielles">Questions essentielles</a>
         </li>
         <li class="nav-item {{ 'resources' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="resources">Resources</a>

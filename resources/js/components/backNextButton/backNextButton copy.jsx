@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
   },
   backButton: {
+    color: 'primary',
     width: 150,
     height: 50,
     borderRadius: `10px 0 0 0`,
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   nextButton: {
+    color: 'primary',
     width: 150,
     height: 50,
     borderRadius: `0 10px 0 0`,
@@ -34,40 +36,38 @@ const BackNextButton = () => {
   const [activeStep, setActiveStep] = React.useState(1);
   const [chapitres, setChapitres] = useState([]);
 
-  //récupère le fichier_video du premier chapitre qui a 
-  //un module_id = activeStep
+  //récupère le chapitreTitre dont le chapitreId est = à activeStep
   function getStepContent(activeStep) {
     var currentChapitre = chapitres.map(chapitre => chapitre[1])
-      .filter(function (monModule) {
-        return monModule.module_id === activeStep;
-      }).filter(function (monChapitre) {
-        return Math.min(monChapitre.ordre);
+      .filter(function (monChapitre) {
+        return monChapitre.chapitreId === activeStep;
       })
-      return currentChapitre[0] && currentChapitre[0].fichier_video;
+    return currentChapitre[0] && currentChapitre[0].fichier_video;
   }
 
-  // envoie fichier_video au store pour déclencher le chargement 
-  // de la 1er vidéo d'un module donné dans ReactPlayer
+  //permet de charger la 1er vidéo du module dans ReactPlayer
   useEffect(() => {
-    store.dispatch({ type: 'GET_VIDEO', url_video: getStepContent(activeStep) });
+    store.dispatch({ type: 'GET_VIDEO', url_video: getStepContent(activeStep) })
   });
 
   //charge tous les chapitres de tous les modules
-  useEffect(() => {  
+  useEffect(() => { //modifier controller index !!!
     axios.get(`http://localhost:8000/modulesApi`).then((res) => {
       const modulesData = Object.entries(res.data);
-      setChapitres(modulesData);   
+      setChapitres(modulesData); console.log(modulesData);
     });
   }, []);
-
+console.log(chapitres);
+///////////////////////////////////devrait envoyer module_id sans recharger tous les chapitres//////////////////////////
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    store.dispatch({ type: 'INC_MODULE_ID', module_id: activeStep });
+    store.dispatch({ type: 'INC_CHAPITRE_ID', chapitre_id: activeStep });
+    // console.log(activeStep);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    store.dispatch({ type: 'DEC_MODULE_ID', module_id: activeStep });
+    store.dispatch({ type: 'DEC_CHAPITRE_ID', chapitre_id: activeStep });
   };
 
   //handleReset pour revenir à la 1er page de la formation donc celle du 1er module
@@ -75,7 +75,7 @@ const BackNextButton = () => {
   const handleReset = () => {
     setActiveStep(1);
     getModuleId(activeStep);
-    store.dispatch({ type: 'RESET_MODULE_ID', module_id: activeStep });
+    store.dispatch({ type: 'RESET_CHAPITRE_ID', chapitre_id: activeStep });
   };
 
   return (
@@ -85,14 +85,16 @@ const BackNextButton = () => {
           disabled={activeStep < 2}
           onClick={handleBack}
           className={classes.backButton}
+          color="primary"
         // variant="contained"
         >
           Précédent
               </Button>
         <Button
-          disabled={activeStep > chapitres.length}
+          disabled={activeStep > 5}
           // variant="contained"
           className={classes.nextButton}
+          color="primary"
           onClick={handleNext}>
           Suivant
                 </Button>

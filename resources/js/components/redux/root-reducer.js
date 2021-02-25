@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import modulesReducer from "./module/module.reducer";
-import stepperReducer from "./stepper/stepper.reducer";
+import videoReducer from "./video/video.reducer";
+import moduleReducer from "./module/module.reducer";
 import titreChapitreReducer from "./titreChapitre/titreChapitre.reducer";
+import chapitreReducer from "./chapitre/chapitre.reducer";
 
 export default combineReducers({
-  modules: modulesReducer,
-  stepper: stepperReducer,
+  videos: videoReducer,
+  modules: moduleReducer,
   chapitreTitre: titreChapitreReducer,
+  titre: chapitreReducer,
 });

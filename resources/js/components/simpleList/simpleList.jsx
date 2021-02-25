@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import { connect } from 'react-redux';
-import { getVideo } from "../redux/module/module.actions";
+import { getVideo } from "../redux/video/video.actions";
+import store from '../redux/store'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
     maxWidth: 300,
-    minHeight: 350,
+    minHeight: 400,
     paddingTop: 1,
     paddingBottom: 1,
     paddingLeft: 1,
@@ -40,26 +40,35 @@ function SimpleList(props) {
   const classes = useStyles();
   const getVideo = props.getVideo;
 
-  //envoi l'url de la vidéo dans le store
+  //envoi l'url de la vidéo dans le store quand on clique dans la liste
   const handleClick = (url_video) => {
-    getVideo(url_video);
+    getVideo(url_video);   
+  };
+
+  const handleClick2 = (chapitre_titre) => {
+    store.dispatch({ type: 'GET_CHAPITRE', titre: chapitre_titre });
+    // console.log(chapitre_titre);
   };
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-//met en surbrillance l'item sélectionné dans la ListItem
+  //met en surbrillance l'item sélectionné dans la ListItem
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+
+  //sélectionne et met en surbrillance le premier de la liste quand on change de module  
+  useEffect(() => {
+    initListItemClick(null, props.init_index);
+  }, [props.module_id]);
 
   const initListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
 
-  //replace le selected sur le premier de la liste
-  useEffect(() => {
-    initListItemClick(null, props.init_index);
-  },[props.chapitres]);
-
+  //sélectionne uniquement les chapitres dont le module_id est = props.module_id
+  //cela permet de n'afficher dans la liste que les chapitres d'un module donné
+  const chapitres = props.chapitres.filter(chapitre => chapitre[1].module_id === props.module_id);
+ 
   return (
     <div className={classes.root}>
       <List component="nav"
@@ -67,32 +76,31 @@ function SimpleList(props) {
         // aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader className={classes.headerList} component="div" id="nested-list-subheader">
-            {props.chapitres[0] && props.chapitres[0][1].module_titre}
+            {chapitres[0] && chapitres[0][1].module_titre}
           </ListSubheader>
         }
       >
         <Divider />
-        {/* ICI ON RECUPERE TOUS LES CHAPITRES ET ON LES DELIMITE AVEC LE MODULE_ID POUR PAGINER LA LISTE */}
-        {props.chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
-          <ListItem button selected={selectedIndex === index} onClick={(event) => 
-          {handleClick(chapitre[1].fichier_video);
-           handleListItemClick(event, index);}}>
-           {selectedIndex === index && <ArrowRight  className={classes.itemIcon} />}
-            <ListItemText  className={classes.itemText} primary={chapitre[1].titre} />
+        {chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
+          <ListItem button selected={selectedIndex === index} onClick={(event) => {
+            handleClick(chapitre[1].fichier_video);
+            handleClick2(chapitre[1].titre);
+            handleListItemClick(event, index);
+          }}>
+            {selectedIndex === index && <ArrowRight className={classes.itemIcon} />}
+            <ListItemText className={classes.itemText} primary={chapitre[1].titre} />
           </ListItem>
           <Divider />
         </li>
         )}
-
       </List>
-
     </div>
   );
 }
 
-const mapStateToProps = ({ modules }) => {
+const mapStateToProps = ({ videos }) => {
   return {
-    url_video: modules.url_video
+    url_video: videos.url_video
   }
 }
 

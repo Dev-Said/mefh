@@ -22,17 +22,20 @@ class ModuleApiController extends Controller
         return DB::table('modules')
             ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
             ->select(
-                'modules.id as moduleId',
-                'chapitres.id as chapitreId',
-                'modules.titre as moduleTitre',
-                'modules.description as moduleDescription',
-                'chapitres.titre as chapitreTitre',
-                'chapitres.description as chapitreDescription',
+                'modules.id as module_id',
+                'chapitres.id as id',
+                'modules.titre as module_titre',
+                'modules.description as module_description',
+                'chapitres.titre as titre',
+                'chapitres.description as description',
                 'fichier_video',
-                'module_id',
+                'chapitres.ordre as ordre',
             )
-            ->orderBy('moduleId', 'asc')
+            ->orderBy('module_id', 'asc')
+            ->orderBy('ordre', 'asc')
             ->get();
+
+
     }
 
     /**

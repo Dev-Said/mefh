@@ -54,7 +54,7 @@ require __DIR__.'/auth.php';
 Route::resource('formations', FormationController::class);
 Route::resource('chapitres', ChapitreController::class);
 Route::resource('modules', ModuleResController::class);
-// Route::resource('questions', QuestionController::class);
+Route::resource('questions', QuestionController::class);
 Route::resource('quizzes', QuizController::class);
 Route::resource('reponses', ReponseController::class);
 Route::resource('users', UserController::class);
@@ -77,9 +77,9 @@ Route::group(['middleware' => ['auth']], function ()
     Route::resource('modulesApi', ModuleApiController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
-    // Route::resource('questions', QuestionController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
+    Route::resource('questions', QuestionController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]);
     Route::resource('quizzes', QuizController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
@@ -110,8 +110,8 @@ Route::group(['middleware' => ['auth']], function ()
         return view('indexFormations');
     });  
    
-    Route::get('/questions', function () {
-        return view('questions');
+    Route::get('/questionsEssentielles', function () {
+        return view('questionsEssentielles');
     });  
 });
 

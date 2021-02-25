@@ -9184,39 +9184,30 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var ListeChapitres = function ListeChapitres(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      chapitre_id = _useState2[0],
-      setChapitre_id = _useState2[1];
+      chapitres = _useState2[0],
+      setChapitres = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      chapitres = _useState4[0],
-      setChapitres = _useState4[1]; //chapitre_id est màj que si props.chapitre_id a changé
-  //pour pas créer de boucle infinie
-  //cela permet de changer de module quand BackNextButton est cliqué
-
-
-  chapitre_id !== props.chapitre_id && setChapitre_id(props.chapitre_id);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi/".concat(chapitre_id, "}")).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi").then(function (res) {
       setChapitres(Object.entries(res.data));
     });
-  }, [props.chapitre_id]); //useEffect est déclenché si [props.chapitre_id] change
-
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
     className: "listeChapitres",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_5__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_simpleList_simpleList__WEBPACK_IMPORTED_MODULE_4__.default, {
       chapitres: chapitres,
+      module_id: props.module_id,
       init_index: 0
     })]
   });
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var stepper = _ref.stepper;
+  var modules = _ref.modules;
   return {
-    chapitre_id: stepper.chapitre_id
+    module_id: modules.module_id
   };
 };
 
@@ -9269,7 +9260,6 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
       boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)"
     },
     backButton: {
-      color: 'primary',
       width: 150,
       height: 50,
       borderRadius: "10px 0 0 0",
@@ -9279,7 +9269,6 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
       backgroundColor: theme.palette.background.paper
     },
     nextButton: {
-      color: 'primary',
       width: 150,
       height: 50,
       borderRadius: "0 10px 0 0",
@@ -9302,17 +9291,21 @@ var BackNextButton = function BackNextButton() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       chapitres = _useState2[0],
-      setChapitres = _useState2[1]; //récupère le chapitreTitre dont le chapitreId est = à activeStep
+      setChapitres = _useState2[1]; //récupère le fichier_video du premier chapitre qui a 
+  //un module_id = activeStep
 
 
   function getStepContent(activeStep) {
     var currentChapitre = chapitres.map(function (chapitre) {
       return chapitre[1];
+    }).filter(function (monModule) {
+      return monModule.module_id === activeStep;
     }).filter(function (monChapitre) {
-      return monChapitre.chapitreId === activeStep;
+      return Math.min(monChapitre.ordre);
     });
     return currentChapitre[0] && currentChapitre[0].fichier_video;
-  } //permet de charger la 1er vidéo du module
+  } // envoie fichier_video au store pour déclencher le chargement 
+  // de la 1er vidéo d'un module donné dans ReactPlayer
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -9320,13 +9313,12 @@ var BackNextButton = function BackNextButton() {
       type: 'GET_VIDEO',
       url_video: getStepContent(activeStep)
     });
-  }); //CHARGE TOUS LES CHAPITRES DE TOUS LES MODULES
+  }); //charge tous les chapitres de tous les modules
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi").then(function (res) {
       var modulesData = Object.entries(res.data);
       setChapitres(modulesData);
-      console.log(modulesData);
     });
   }, []);
 
@@ -9335,9 +9327,9 @@ var BackNextButton = function BackNextButton() {
       return prevActiveStep + 1;
     });
     _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'INC_CHAPITRE_ID',
-      chapitre_id: activeStep
-    }); // console.log(activeStep);
+      type: 'INC_MODULE_ID',
+      module_id: activeStep
+    });
   };
 
   var handleBack = function handleBack() {
@@ -9345,8 +9337,8 @@ var BackNextButton = function BackNextButton() {
       return prevActiveStep - 1;
     });
     _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'DEC_CHAPITRE_ID',
-      chapitre_id: activeStep
+      type: 'DEC_MODULE_ID',
+      module_id: activeStep
     });
   }; //handleReset pour revenir à la 1er page de la formation donc celle du 1er module
   //à faire !!
@@ -9356,8 +9348,8 @@ var BackNextButton = function BackNextButton() {
     setActiveStep(1);
     getModuleId(activeStep);
     _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-      type: 'RESET_CHAPITRE_ID',
-      chapitre_id: activeStep
+      type: 'RESET_MODULE_ID',
+      module_id: activeStep
     });
   };
 
@@ -9367,15 +9359,13 @@ var BackNextButton = function BackNextButton() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
         disabled: activeStep < 2,
         onClick: handleBack,
-        className: classes.backButton,
-        color: "primary" // variant="contained"
+        className: classes.backButton // variant="contained"
         ,
         children: "Pr\xE9c\xE9dent"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
-        disabled: activeStep > 5 // variant="contained"
+        disabled: activeStep > chapitres.length // variant="contained"
         ,
         className: classes.nextButton,
-        color: "primary",
         onClick: handleNext,
         children: "Suivant"
       })]
@@ -9422,24 +9412,61 @@ react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime
 
 /***/ }),
 
-/***/ "./resources/js/components/redux/module/module.actions.js":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/redux/module/module.actions.js ***!
-  \****************************************************************/
+/***/ "./resources/js/components/redux/chapitre/chapitre.reducer.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/redux/chapitre/chapitre.reducer.js ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getVideo": () => /* binding */ getVideo
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _module_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module.types */ "./resources/js/components/redux/module/module.types.js");
+/* harmony import */ var _chapitre_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chapitre.types */ "./resources/js/components/redux/chapitre/chapitre.types.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-var getVideo = function getVideo(url) {
-  return {
-    type: _module_types__WEBPACK_IMPORTED_MODULE_0__.ModulesActionTypes.GET_VIDEO,
-    url_video: url
-  };
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var INITIAL_STATE = {
+  titre: 'titreInitial'
+};
+
+function chapitreReducer() {
+  var titre = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _chapitre_types__WEBPACK_IMPORTED_MODULE_0__.ChapitreActionTypes.GET_CHAPITRE:
+      return _objectSpread(_objectSpread({}, titre), {}, {
+        titre: action.titre
+      });
+
+    default:
+      return titre;
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chapitreReducer);
+
+/***/ }),
+
+/***/ "./resources/js/components/redux/chapitre/chapitre.types.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/redux/chapitre/chapitre.types.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ChapitreActionTypes": () => /* binding */ ChapitreActionTypes
+/* harmony export */ });
+var ChapitreActionTypes = {
+  GET_CHAPITRE: "GET_CHAPITRE"
 };
 
 /***/ }),
@@ -9464,27 +9491,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var INITIAL_STATE = {
-  url_video: 'react1.mp4'
+  module_id: 1
 };
 
-var modulesReducer = function modulesReducer() {
-  var url_video = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+function moduleReducer() {
+  var module_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  // console.log(action);
-  // alert('reducer');
   switch (action.type) {
-    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModulesActionTypes.GET_VIDEO:
-      return _objectSpread(_objectSpread({}, url_video), {}, {
-        url_video: action.url_video
+    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModuleActionTypes.INC_MODULE_ID:
+      return _objectSpread(_objectSpread({}, module_id), {}, {
+        module_id: action.module_id + 1
+      });
+
+    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModuleActionTypes.DEC_MODULE_ID:
+      return _objectSpread(_objectSpread({}, module_id), {}, {
+        module_id: action.module_id - 1
+      });
+
+    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModuleActionTypes.RESET_MODULE_ID:
+      return _objectSpread(_objectSpread({}, module_id), {}, {
+        module_id: 1
       });
 
     default:
-      return url_video;
+      return module_id;
   }
-};
+}
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modulesReducer);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (moduleReducer);
 
 /***/ }),
 
@@ -9497,10 +9532,12 @@ var modulesReducer = function modulesReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ModulesActionTypes": () => /* binding */ ModulesActionTypes
+/* harmony export */   "ModuleActionTypes": () => /* binding */ ModuleActionTypes
 /* harmony export */ });
-var ModulesActionTypes = {
-  GET_VIDEO: "GET_VIDEO"
+var ModuleActionTypes = {
+  INC_MODULE_ID: "INC_MODULE_ID",
+  DEC_MODULE_ID: "DEC_MODULE_ID",
+  RESET_MODULE_ID: "RESET_MODULE_ID"
 };
 
 /***/ }),
@@ -9516,90 +9553,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _module_module_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./module/module.reducer */ "./resources/js/components/redux/module/module.reducer.js");
-/* harmony import */ var _stepper_stepper_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stepper/stepper.reducer */ "./resources/js/components/redux/stepper/stepper.reducer.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video/video.reducer */ "./resources/js/components/redux/video/video.reducer.js");
+/* harmony import */ var _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/module.reducer */ "./resources/js/components/redux/module/module.reducer.js");
 /* harmony import */ var _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./titreChapitre/titreChapitre.reducer */ "./resources/js/components/redux/titreChapitre/titreChapitre.reducer.js");
+/* harmony import */ var _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chapitre/chapitre.reducer */ "./resources/js/components/redux/chapitre/chapitre.reducer.js");
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
-  modules: _module_module_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
-  stepper: _stepper_stepper_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
-  chapitreTitre: _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__.default
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_4__.combineReducers)({
+  videos: _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
+  modules: _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
+  chapitreTitre: _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
+  titre: _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__.default
 }));
-
-/***/ }),
-
-/***/ "./resources/js/components/redux/stepper/stepper.reducer.js":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/redux/stepper/stepper.reducer.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _stepper_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stepper.types */ "./resources/js/components/redux/stepper/stepper.types.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-var INITIAL_STATE = {
-  chapitre_id: 1
-};
-
-function stepperReducer() {
-  var chapitre_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.INC_CHAPITRE_ID:
-      return _objectSpread(_objectSpread({}, chapitre_id), {}, {
-        chapitre_id: action.chapitre_id + 1
-      });
-
-    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.DEC_CHAPITRE_ID:
-      return _objectSpread(_objectSpread({}, chapitre_id), {}, {
-        chapitre_id: action.chapitre_id - 1
-      });
-
-    case _stepper_types__WEBPACK_IMPORTED_MODULE_0__.StepperActionTypes.RESET_CHAPITRE_ID:
-      return _objectSpread(_objectSpread({}, chapitre_id), {}, {
-        chapitre_id: 1
-      });
-
-    default:
-      return chapitre_id;
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stepperReducer);
-
-/***/ }),
-
-/***/ "./resources/js/components/redux/stepper/stepper.types.js":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/redux/stepper/stepper.types.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "StepperActionTypes": () => /* binding */ StepperActionTypes
-/* harmony export */ });
-var StepperActionTypes = {
-  INC_CHAPITRE_ID: "INC_CHAPITRE_ID",
-  DEC_CHAPITRE_ID: "DEC_CHAPITRE_ID",
-  RESET_CHAPITRE_ID: "RESET_CHAPITRE_ID"
-};
 
 /***/ }),
 
@@ -9682,6 +9651,87 @@ var TitreChapitreActionTypes = {
 
 /***/ }),
 
+/***/ "./resources/js/components/redux/video/video.actions.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/redux/video/video.actions.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getVideo": () => /* binding */ getVideo
+/* harmony export */ });
+/* harmony import */ var _video_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video.types */ "./resources/js/components/redux/video/video.types.js");
+
+var getVideo = function getVideo(url) {
+  return {
+    type: _video_types__WEBPACK_IMPORTED_MODULE_0__.VideosActionTypes.GET_VIDEO,
+    url_video: url
+  };
+};
+
+/***/ }),
+
+/***/ "./resources/js/components/redux/video/video.reducer.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/redux/video/video.reducer.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _video_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video.types */ "./resources/js/components/redux/video/video.types.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var INITIAL_STATE = {
+  url_video: 'react1.mp4'
+};
+
+var videoReducer = function videoReducer() {
+  var url_video = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _video_types__WEBPACK_IMPORTED_MODULE_0__.VideosActionTypes.GET_VIDEO:
+      return _objectSpread(_objectSpread({}, url_video), {}, {
+        url_video: action.url_video
+      });
+
+    default:
+      return url_video;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (videoReducer);
+
+/***/ }),
+
+/***/ "./resources/js/components/redux/video/video.types.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/redux/video/video.types.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VideosActionTypes": () => /* binding */ VideosActionTypes
+/* harmony export */ });
+var VideosActionTypes = {
+  GET_VIDEO: "GET_VIDEO"
+};
+
+/***/ }),
+
 /***/ "./resources/js/components/simpleList/simpleList.jsx":
 /*!***********************************************************!*\
   !*** ./resources/js/components/simpleList/simpleList.jsx ***!
@@ -9695,166 +9745,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_List__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/List */ "./node_modules/@material-ui/core/esm/List/List.js");
-/* harmony import */ var _material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/ListItem */ "./node_modules/@material-ui/core/esm/ListItem/ListItem.js");
-/* harmony import */ var _material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/ListItemText */ "./node_modules/@material-ui/core/esm/ListItemText/ListItemText.js");
-/* harmony import */ var _material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/ListSubheader */ "./node_modules/@material-ui/core/esm/ListSubheader/ListSubheader.js");
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
-/* harmony import */ var _material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/icons/ArrowRight */ "./node_modules/@material-ui/icons/ArrowRight.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_module_module_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/module/module.actions */ "./resources/js/components/redux/module/module.actions.js");
-
-
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-
-
-
-
-
-
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
-  return {
-    root: {
-      width: 300,
-      maxWidth: 300,
-      minHeight: 350,
-      paddingTop: 1,
-      paddingBottom: 1,
-      paddingLeft: 1,
-      paddingRight: 1,
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-      borderRadius: "0 0 10px 10px"
-    },
-    headerList: {
-      backgroundColor: "white",
-      padding: "20px",
-      textAlign: "center",
-      fontSize: "20px",
-      lineHeight: "30px"
-    },
-    itemText: {
-      paddingLeft: 15
-    }
-  };
-});
-
-function SimpleList(props) {
-  var classes = useStyles();
-  var getVideo = props.getVideo; //envoi l'url de la vidéo dans le store
-
-  var handleClick = function handleClick(url_video) {
-    getVideo(url_video);
-  };
-
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(0),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      selectedIndex = _React$useState2[0],
-      setSelectedIndex = _React$useState2[1]; //met en surbrillance l'item sélectionné dans la ListItem
-
-
-  var handleListItemClick = function handleListItemClick(event, index) {
-    setSelectedIndex(index);
-  };
-
-  var initListItemClick = function initListItemClick(event, index) {
-    setSelectedIndex(index);
-  }; //replace le selected sur le premier de la liste
-
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    initListItemClick(null, props.init_index);
-  }, [props.chapitres]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-    className: classes.root,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_List__WEBPACK_IMPORTED_MODULE_5__.default, {
-      component: "nav",
-      "aria-label": "main mailbox folders" // aria-labelledby="nested-list-subheader"
-      ,
-      subheader: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_6__.default, {
-        className: classes.headerList,
-        component: "div",
-        id: "nested-list-subheader",
-        children: props.chapitres[0] && props.chapitres[0][1].module_titre
-      }),
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__.default, {}), props.chapitres.map(function (chapitre, index) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_8__.default, {
-            button: true,
-            selected: selectedIndex === index,
-            onClick: function onClick(event) {
-              handleClick(chapitre[1].fichier_video);
-              handleListItemClick(event, index);
-            },
-            children: [selectedIndex === index && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_9__.default, {
-              className: classes.itemIcon
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_10__.default, {
-              className: classes.itemText,
-              primary: chapitre[1].titre
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__.default, {})]
-        }, chapitre[1].id);
-      })]
-    })
-  });
-}
-
-var mapStateToProps = function mapStateToProps(_ref) {
-  var modules = _ref.modules;
-  return {
-    url_video: modules.url_video
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    getVideo: function getVideo(url_video) {
-      return dispatch((0,_redux_module_module_actions__WEBPACK_IMPORTED_MODULE_3__.getVideo)(url_video));
-    }
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(SimpleList));
-
-/***/ }),
-
-/***/ "./resources/js/components/stepper/stepper.jsx":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/stepper/stepper.jsx ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
-/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
+/* harmony import */ var _material_ui_core_List__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/List */ "./node_modules/@material-ui/core/esm/List/List.js");
+/* harmony import */ var _material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/ListItem */ "./node_modules/@material-ui/core/esm/ListItem/ListItem.js");
+/* harmony import */ var _material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/ListItemText */ "./node_modules/@material-ui/core/esm/ListItemText/ListItemText.js");
+/* harmony import */ var _material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/ListSubheader */ "./node_modules/@material-ui/core/esm/ListSubheader/ListSubheader.js");
+/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
+/* harmony import */ var _material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/icons/ArrowRight */ "./node_modules/@material-ui/icons/ArrowRight.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _redux_video_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/video/video.actions */ "./resources/js/components/redux/video/video.actions.js");
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
@@ -9878,14 +9777,178 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
+
 var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(function (theme) {
+  return {
+    root: {
+      width: 300,
+      maxWidth: 300,
+      minHeight: 400,
+      paddingTop: 1,
+      paddingBottom: 1,
+      paddingLeft: 1,
+      paddingRight: 1,
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+      borderRadius: "0 0 10px 10px"
+    },
+    headerList: {
+      backgroundColor: "white",
+      padding: "20px",
+      textAlign: "center",
+      fontSize: "20px",
+      lineHeight: "30px"
+    },
+    itemText: {
+      paddingLeft: 15
+    }
+  };
+});
+
+function SimpleList(props) {
+  var classes = useStyles();
+  var getVideo = props.getVideo; //envoi l'url de la vidéo dans le store quand on clique dans la liste
+
+  var handleClick = function handleClick(url_video) {
+    getVideo(url_video);
+  };
+
+  var handleClick2 = function handleClick2(chapitre_titre) {
+    _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
+      type: 'GET_CHAPITRE',
+      titre: chapitre_titre
+    }); // console.log(chapitre_titre);
+  };
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(0),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      selectedIndex = _React$useState2[0],
+      setSelectedIndex = _React$useState2[1]; //met en surbrillance l'item sélectionné dans la ListItem
+
+
+  var handleListItemClick = function handleListItemClick(event, index) {
+    setSelectedIndex(index);
+  }; //sélectionne et met en surbrillance le premier de la liste quand on change de module  
+
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    initListItemClick(null, props.init_index);
+  }, [props.module_id]);
+
+  var initListItemClick = function initListItemClick(event, index) {
+    setSelectedIndex(index);
+  }; //sélectionne uniquement les chapitres dont le module_id est = props.module_id
+  //cela permet de n'afficher dans la liste que les chapitres d'un module donné
+
+
+  var chapitres = props.chapitres.filter(function (chapitre) {
+    return chapitre[1].module_id === props.module_id;
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    className: classes.root,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_List__WEBPACK_IMPORTED_MODULE_6__.default, {
+      component: "nav",
+      "aria-label": "main mailbox folders" // aria-labelledby="nested-list-subheader"
+      ,
+      subheader: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_7__.default, {
+        className: classes.headerList,
+        component: "div",
+        id: "nested-list-subheader",
+        children: chapitres[0] && chapitres[0][1].module_titre
+      }),
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {}), chapitres.map(function (chapitre, index) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_9__.default, {
+            button: true,
+            selected: selectedIndex === index,
+            onClick: function onClick(event) {
+              handleClick(chapitre[1].fichier_video);
+              handleClick2(chapitre[1].titre);
+              handleListItemClick(event, index);
+            },
+            children: [selectedIndex === index && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_10__.default, {
+              className: classes.itemIcon
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_11__.default, {
+              className: classes.itemText,
+              primary: chapitre[1].titre
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {})]
+        }, chapitre[1].id);
+      })]
+    })
+  });
+}
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var videos = _ref.videos;
+  return {
+    url_video: videos.url_video
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    getVideo: function getVideo(url_video) {
+      return dispatch((0,_redux_video_video_actions__WEBPACK_IMPORTED_MODULE_3__.getVideo)(url_video));
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(SimpleList));
+
+/***/ }),
+
+/***/ "./resources/js/components/stepper/stepper.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/stepper/stepper.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
   return {
     root: {
       width: '100%'
     },
-    backButton: {
-      marginRight: theme.spacing(1),
-      color: 'primary'
+    stepButton: {
+      height: 20,
+      width: 30
     }
   };
 });
@@ -9896,40 +9959,28 @@ var Stepper = function Stepper(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       modules = _useState2[0],
-      setModules = _useState2[1]; // const [titreChapitre, setTitreChapitre] = useState('');
+      setModules = _useState2[1];
 
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
       _useState4 = _slicedToArray(_useState3, 2),
-      chapitre_id = _useState4[0],
-      setChapitre_id = _useState4[1];
+      module_id = _useState4[0],
+      setModule_id = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
       _useState6 = _slicedToArray(_useState5, 2),
-      chapitres = _useState6[0],
-      setChapitres = _useState6[1]; // titreChapitre !== props.titreChapitre && setTitreChapitre(props.titreChapitre);
+      titre = _useState6[0],
+      setTitre = _useState6[1];
 
-
-  chapitre_id !== props.chapitre_id && setChapitre_id(props.chapitre_id);
-  chapitres !== props.chapitres && setChapitres(props.chapitres);
+  module_id !== props.module_id && setModule_id(props.module_id);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var one = 'http://localhost:8000/modulesApi';
-    var two = 'http://localhost:8000/modulesApi/' + chapitre_id; // console.log(two);
-
-    var requestOne = axios__WEBPACK_IMPORTED_MODULE_3___default().get(one);
-    var requestTwo = axios__WEBPACK_IMPORTED_MODULE_3___default().get(two);
-    axios__WEBPACK_IMPORTED_MODULE_3___default().all([requestOne, requestTwo]).then(axios__WEBPACK_IMPORTED_MODULE_3___default().spread(function () {
-      for (var _len = arguments.length, responses = new Array(_len), _key = 0; _key < _len; _key++) {
-        responses[_key] = arguments[_key];
-      }
-
-      var modulesData = Object.entries(responses[0].data);
-      setModules(modulesData);
-      var chapitresData = Object.entries(responses[1].data);
-      setChapitres(chapitresData.titre); // console.log(chapitresData[0]);
-    }))["catch"](function (errors) {// errors
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi").then(function (res) {
+      setModules(Object.entries(res.data));
     });
-  }, [props.chapitre_id]);
+  }, [props.module_id]);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    titre !== props.titre && setTitre(props.titre);
+    console.log(titre);
+  }, [props.titre]);
 
   var salut = function salut(x) {
     alert(x);
@@ -9939,37 +9990,36 @@ var Stepper = function Stepper(props) {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       children: modules.map(function (module) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
+          className: classes.stepButton,
           onClick: function onClick() {
-            return salut(module[1].moduleTitre);
+            return salut(module[1].titre);
           },
           variant: "outlined",
-          color: "primary",
-          size: "small",
-          children: "1"
-        }, module.moduleId);
+          color: "primary"
+        }, module.module_id);
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__.default, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__.default, {
+        className: classes.instructions,
+        children: props.titre
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__.default, {
         className: classes.instructions
-      })
+      })]
     })]
   });
-}; // const mapStateToProps = ({ chapitreTitre }) => {
-//   return {
-//     titreChapitre: chapitreTitre.titreChapitre
-//   }
-// }
-
+};
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var stepper = _ref.stepper;
+  var modules = _ref.modules,
+      titre = _ref.titre;
   return {
-    chapitre_id: stepper.chapitre_id
+    module_id: modules.module_id,
+    titre: titre.titre
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Stepper)); // export default Stepper;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Stepper));
 
 /***/ }),
 
@@ -10057,9 +10107,9 @@ var Video = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1__.Component);
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var modules = _ref.modules;
+  var videos = _ref.videos;
   return {
-    url_video: modules.url_video
+    url_video: videos.url_video
   };
 };
 
