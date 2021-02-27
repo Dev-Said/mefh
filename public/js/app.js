@@ -23,10 +23,10 @@
 
 /***/ }),
 
-/***/ "./resources/js/components/modules/modules.scss":
-/*!******************************************************!*\
-  !*** ./resources/js/components/modules/modules.scss ***!
-  \******************************************************/
+/***/ "./resources/js/components/cours/modules.scss":
+/*!****************************************************!*\
+  !*** ./resources/js/components/cours/modules.scss ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -206,7 +206,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			["./resources/sass/formation.scss"],
 /******/ 			["./resources/sass/nav.scss"],
 /******/ 			["./resources/sass/reset.scss"],
-/******/ 			["./resources/js/components/modules/modules.scss"],
+/******/ 			["./resources/js/components/cours/modules.scss"],
 /******/ 			["./resources/js/components/videos/video.scss"],
 /******/ 			["./resources/js/components/listeChapitres/listeChapitres.scss"],
 /******/ 			["./resources/js/components/stepper/stepper.scss"]

@@ -8,5 +8,5 @@ export default combineReducers({
   videos: videoReducer,
   modules: moduleReducer,
   chapitreTitre: titreChapitreReducer,
-  titre: chapitreReducer,
+  chapitreData: chapitreReducer,
 });

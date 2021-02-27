@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import axios from "axios";
 import store from '../redux/store'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BackNextButton = () => {
+const BackNextButton = (props) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(1);
   const [chapitres, setChapitres] = useState([]);
@@ -43,28 +42,29 @@ const BackNextButton = () => {
       }).filter(function (monChapitre) {
         return Math.min(monChapitre.ordre);
       })
-      return currentChapitre[0] && currentChapitre[0].fichier_video;
+    return currentChapitre[0] && currentChapitre[0];
+
   }
 
-  // envoie fichier_video au store pour déclencher le chargement 
-  // de la 1er vidéo d'un module donné dans ReactPlayer
+  // envoie les datas au store pour déclencher le chargement 
+  // de la 1er vidéo, titre et description d'un module donné 
   useEffect(() => {
-    store.dispatch({ type: 'GET_VIDEO', url_video: getStepContent(activeStep) });
+    setChapitres(props.chapitres)
+    let stepContent = getStepContent(activeStep);
+    if (stepContent) {
+      let chapitre_Info = [stepContent.titre, stepContent.description];
+      store.dispatch({ type: 'GET_VIDEO', url_video: stepContent.fichier_video });
+      store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre_Info });
+    }
   });
 
-  //charge tous les chapitres de tous les modules
-  useEffect(() => {  
-    axios.get(`http://localhost:8000/modulesApi`).then((res) => {
-      const modulesData = Object.entries(res.data);
-      setChapitres(modulesData);   
-    });
-  }, []);
-
+  //passe au module suivant
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     store.dispatch({ type: 'INC_MODULE_ID', module_id: activeStep });
   };
 
+  //passe au module précédent
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     store.dispatch({ type: 'DEC_MODULE_ID', module_id: activeStep });

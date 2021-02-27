@@ -10,6 +10,7 @@ use App\Http\Controllers\FaqResController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\CheckUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ModuleApiController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\ModuleResController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/home', function () {
     return view('home');
 });
@@ -42,13 +44,11 @@ Route::view('/certificat', 'certificat');
 Route::view('/contact', 'contact');
 Route::view('/connexion', 'connexion');
 
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 //checker les pages CORS
 Route::resource('formations', FormationController::class);
@@ -63,8 +63,7 @@ Route::resource('faqsres', FaqResController::class);
 Route::resource('modulesApi', ModuleApiController::class);
 
 
-Route::group(['middleware' => ['auth']], function () 
-{
+Route::group(['middleware' => ['auth']], function () {
     Route::resource('formations', FormationController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
@@ -75,7 +74,7 @@ Route::group(['middleware' => ['auth']], function ()
         'create', 'store', 'edit', 'update', 'delete'
     ]);
     Route::resource('modulesApi', ModuleApiController::class)->only([
-        'create', 'store', 'edit', 'update', 'delete'
+        'create', 'store', 'edit', 'update', 'delete',
     ]);
     Route::resource('questions', QuestionController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
@@ -95,23 +94,26 @@ Route::group(['middleware' => ['auth']], function ()
     Route::resource('faqsres', FaqResController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
-
-    Route::get('/quizzes/quiz/{id}', [QuizController::class, 'quiz']);
-    Route::post('/reponses_user', [UserController::class, 'reponseUser']);
-    Route::get('/users/profile/{id}', [UserController::class, 'user']);
-    Route::get('/dashboard', [DashboardController::class, 'entry']);
-
-    Route::get('/logout', function () {
-        Auth::logout();
-        return redirect('/users');
-    });
-
-    Route::get('/indexFormations', function () {
-        return view('indexFormations');
-    });  
    
-    Route::get('/questionsEssentielles', function () {
-        return view('questionsEssentielles');
-    });  
 });
+
+
+Route::get('/quizzes/quiz/{id}', [QuizController::class, 'quiz']);
+Route::post('/reponses_user', [UserController::class, 'reponseUser']);
+Route::get('/users/profile/{id}', [UserController::class, 'user']);
+Route::get('/dashboard', [DashboardController::class, 'entry']);
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/users');
+});
+
+Route::get('/indexFormations', function () {
+    return view('indexFormations');
+});
+
+Route::get('/questionsEssentielles', function () {
+    return view('questionsEssentielles');
+});
+
 

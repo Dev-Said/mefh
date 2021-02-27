@@ -2,7 +2,10 @@
 
 @section('content')
 
+<script>
+    var auth = <?php echo json_encode($auth); ?>
+</script>
 
-<div id="modules"></div>
-<script src="/js/modules.js"></script>
+<div id="cours"></div>
+<script src="/js/cours.js"></script>
 @endsection

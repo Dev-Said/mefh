@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import axios from "axios";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -20,11 +19,9 @@ const Stepper = (props) => {
   const classes = useStyles();
   const [modules, setModules] = useState([]);
   const [module_id, setModule_id] = useState(1);
-  const [titre, setTitre] = useState();
 
   module_id !== props.module_id && setModule_id(props.module_id);
   
-
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi`)
       .then(res => {
@@ -32,12 +29,7 @@ const Stepper = (props) => {
       });
   }, [props.module_id]);  
   
-  useEffect(() => {
-    titre !== props.titre && setTitre(props.titre);
-    console.log(titre);
-  }, [props.titre]);
-
-  const salut = (x) => {
+   const salut = (x) => {
     alert(x);
   };
  
@@ -57,18 +49,17 @@ const Stepper = (props) => {
       </div>
 
       <div>
-        <Typography className={classes.instructions}>{props.titre}</Typography>
+        <Typography className={classes.instructions}>{props.titre_chapitre[0]}</Typography>
         <Typography className={classes.instructions}></Typography>
       </div>
     </div>
   );
 }
 
-
-const mapStateToProps = ({ modules, titre }) => {
+const mapStateToProps = ({ modules, chapitreData }) => {
   return {
     module_id: modules.module_id,
-    titre: titre.titre,
+    titre_chapitre: chapitreData.chapitreData,
   };
 };
 

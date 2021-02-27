@@ -40,15 +40,17 @@ function SimpleList(props) {
   const classes = useStyles();
   const getVideo = props.getVideo;
 
-  //envoi l'url de la vidéo dans le store quand on clique dans la liste
+  // envoi l'url de la vidéo dans le store quand on clique dans la liste
   const handleClick = (url_video) => {
     getVideo(url_video);   
   };
 
-  const handleClick2 = (chapitre_titre) => {
-    store.dispatch({ type: 'GET_CHAPITRE', titre: chapitre_titre });
-    // console.log(chapitre_titre);
-  };
+  //envoi le titre et la description du chapitre en cours pour 
+  //stepper quand on clique dans la liste
+  const handleClick2 = (chapitre_titre, chapitre_description) => {
+    let chapitre_info = [chapitre_titre, chapitre_description];
+    store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre_info });
+   };
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   //met en surbrillance l'item sélectionné dans la ListItem
@@ -84,7 +86,7 @@ function SimpleList(props) {
         {chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
           <ListItem button selected={selectedIndex === index} onClick={(event) => {
             handleClick(chapitre[1].fichier_video);
-            handleClick2(chapitre[1].titre);
+            handleClick2(chapitre[1].titre, chapitre[1].description);
             handleListItemClick(event, index);
           }}>
             {selectedIndex === index && <ArrowRight className={classes.itemIcon} />}

@@ -14,10 +14,11 @@ const ListeChapitres = (props) => {
         setChapitres(Object.entries(res.data));   
       });
   }, []); 
+  
 
    return (
     <ul className="listeChapitres" >
-      <BackNextButton />
+      <BackNextButton chapitres={chapitres} />
       <SimpleList chapitres={chapitres} module_id={props.module_id}  init_index={0}/>
     </ul>
   )

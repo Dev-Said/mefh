@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Module;
 use App\Models\Reponse;
 use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -33,6 +34,7 @@ class DashboardController extends Controller
                                 'reponsesLast' => $reponsesLast,
                                 'usersCount' => $usersCount,
                                 'usersLast' => $usersLast,
+                                'user' => Auth::user(),
                                 ]);
     }
 

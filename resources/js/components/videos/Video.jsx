@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
 
 
-class Video extends Component {
+const Video = (props) => {
 
-    render() {
-
-        const { url_video } = this.props;
-        return (
-            <ReactPlayer className="player-wrapper"
-                pip={false}
-                config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-                onContextMenu={e => e.preventDefault()}
-                url={"./storage/" + url_video}
-                controls={true}
-                playbackRate={1}
-                width="70%"
-                height="auto"
-            />
-        )   
-    }
+    return (
+        <ReactPlayer className="player-wrapper"
+            pip={false}
+            config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+            onContextMenu={e => e.preventDefault()}
+            url={"./storage/" + props.url_video}
+            controls={true}
+            playbackRate={1}
+            width="70%"
+            height="auto"
+        />
+    )
 }
 
 const mapStateToProps = ({ videos }) => {
@@ -33,4 +29,4 @@ export default connect(mapStateToProps)(Video);
 
 
 
- 
+

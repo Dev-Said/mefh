@@ -1,18 +1,18 @@
 import { ChapitreActionTypes } from './chapitre.types';
 
 const INITIAL_STATE = {
-    titre: 'titreInitial',
+    chapitreData: 'chapitreDataInitial',
 };
 
 
 
-function chapitreReducer(titre = INITIAL_STATE, action) {
+function chapitreReducer(chapitreData = INITIAL_STATE, action) {
     
     switch (action.type) {
         case ChapitreActionTypes.GET_CHAPITRE:
-            return { ...titre, titre: action.titre }
+            return { ...chapitreData, chapitreData: action.chapitreData }
         default:
-            return titre
+            return chapitreData
     }  
 }
 
