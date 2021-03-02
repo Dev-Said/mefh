@@ -37,6 +37,9 @@
             background-color: white;
         }
     </style>
+    <script>
+        var auth = <?= json_encode($auth); ?>
+    </script>
 </head>
 
 <body class="antialiased">

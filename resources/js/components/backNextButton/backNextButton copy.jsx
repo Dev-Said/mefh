@@ -32,45 +32,53 @@ const useStyles = makeStyles((theme) => ({
 const BackNextButton = (props) => {
 
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(1);
-
-  // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
-  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_id : 10;
+  const [activeStep, setActiveStep] = React.useState(1);
+  const [chapitres, setChapitres] = useState([]);
+  const [firstInfo_chapitre, setFirstInfo_chapitre] = useState(null);
 
   //récupère le premier chapitre qui a un module_id = activeStep
-  function getChapitre(step) {
-    var currentChapitre = props.chapitres.map(chapitre => chapitre[1])
-      .filter(function (module) {
-        return module.module_id == (props.info_chapitre.module_id + step);
-      }).filter(function (chapitre) {
-        return Math.min(chapitre.ordre);
+  function getChapitre() {
+    var currentChapitre = chapitres.map(chapitre => chapitre[1])
+      .filter(function (monModule) {
+        return monModule.module_id === activeStep;
+      }).filter(function (monChapitre) {
+        return Math.min(monChapitre.ordre);//<--ICI ICI ?? pour selected Item dans la liste
       })
     return currentChapitre[0] && currentChapitre[0];
+    
   }
 
-  // INITIALISATION :envoie les datas au store pour déclencher le chargement 
-  // de la 1er vidéo, titre et description du premier module 
- if (props.chapitres[0] && !props.info_chapitre.module_id) {
-  store.dispatch({ type: 'GET_CHAPITRE', chapitreData: props.chapitres[0][1] });
- }
-    
+  // envoie les datas au store pour déclencher le chargement 
+  // de la 1er vidéo, titre et description d'un module donné 
+  useEffect(() => {
+
+    setChapitres(props.chapitres)
+    ////////////////PAS DANS USEEFFECT POUR METTRE LE 1ER CHAPITRE SELECTIONNE
+    var chapitre = props.info_chapitre ? props.info_chapitre : getChapitre();
+
+    if (chapitre) {
+      store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
+                       console.log('backnext useeffect   ' + props.info_chapitre.titre);
+    }
+  });
+
   // modifie activeStep pour positionner le bon onglet "précédent / suivant"
   useEffect(() => {
-    setActiveStep(props.info_chapitre.module_id);
-  }, [props.info_chapitre.module_id]);
+    setActiveStep(props.activeStep);
+  }, [props.activeStep]);
 
   //passe au module suivant
   const handleNext = () => {
-    var chapitre = getChapitre(1);
-    store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    store.dispatch({ type: 'INC_MODULE_ID', module_id: activeStep });
   };
 
   //passe au module précédent
   const handleBack = () => {
-    var chapitre = getChapitre(-1);
-    store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    store.dispatch({ type: 'DEC_MODULE_ID', module_id: activeStep });
   };
-  props.chapitres[0] && console.log('getNbModules -->   ' + nbModules);
+
   return (
     <div className={classes.root}>
       <div>
@@ -83,7 +91,7 @@ const BackNextButton = (props) => {
           Précédent
               </Button>
         <Button
-          disabled={activeStep == nbModules}
+          disabled={activeStep > chapitres.length}
           // variant="contained"
           className={classes.nextButton}
           onClick={handleNext}>
@@ -94,10 +102,12 @@ const BackNextButton = (props) => {
   );
 }
 
-const mapStateToProps = ({ chapitreData }) => {
+const mapStateToProps = ({ activeStep, chapitreData }) => {
   return {
+    activeStep: activeStep.activeStep,
     info_chapitre: chapitreData.chapitreData,
   };
 };
 
 export default connect(mapStateToProps)(BackNextButton);
+// export default BackNextButton;

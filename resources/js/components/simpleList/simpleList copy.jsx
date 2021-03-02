@@ -7,6 +7,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import { connect } from 'react-redux';
+import { getVideo } from "../redux/video/video.actions";
 import store from '../redux/store'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const  SimpleList = (props) => {
   const classes = useStyles();
+  const getVideo = props.getVideo;
 
   // envoi le chapitre en cours pour stepper quand on clique dans la liste
   const handleClick2 = (chapitre) => {
@@ -54,20 +56,19 @@ const  SimpleList = (props) => {
     initListItemClick(null, props.init_index);
   }, []);
 
-  // sélectionne l'item qui correspond à info_chapitre.ordre dans la liste
   useEffect(() => {
     initListItemClick(null, props.info_chapitre.ordre);
+    // store.dispatch({ type: 'GET_VIDEO', url_video: props.info_chapitre.fichier_video });
+                                      //  console.log('ordre  simpleListe ' + props.info_chapitre.ordre)
   }, [props.info_chapitre.ordre]);
 
   const initListItemClick = (event, index) => {
     setSelectedIndex(index - 1);
   };
 
-  // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
-  // si il n'y a rien dans info_chapitre.module_id.
+  // sélectionne uniquement les chapitres dont le module_id est = props.module_id
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné
-  var idList = props.info_chapitre.module_id ? props.info_chapitre.module_id : 1;
-  const chapitres = props.chapitres.filter(chapitre => chapitre[1].module_id === idList);
+  const chapitres = props.chapitres.filter(chapitre => chapitre[1].module_id === props.module_id);
 
   return (
     <div className={classes.root}>
@@ -97,8 +98,9 @@ const  SimpleList = (props) => {
   );
 }
 
-const mapStateToProps = ({ chapitreData }) => {
+const mapStateToProps = ({ modules, videos, chapitreData }) => {
   return {
+    module_id: modules.module_id,
     info_chapitre: chapitreData.chapitreData,
   }
 }

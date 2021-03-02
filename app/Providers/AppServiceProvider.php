@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('indexFormations', AuthComposer::class);
+        View::composer('layouts.nav', AuthComposer::class);
     }
 }

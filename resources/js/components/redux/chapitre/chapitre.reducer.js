@@ -1,7 +1,7 @@
 import { ChapitreActionTypes } from './chapitre.types';
 
 const INITIAL_STATE = {
-    chapitreData: 'chapitreDataInitial',
+    chapitreData: '',
 };
 
 

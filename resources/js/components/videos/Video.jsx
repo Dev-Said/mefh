@@ -10,7 +10,7 @@ const Video = (props) => {
             pip={false}
             config={{ file: { attributes: { controlsList: 'nodownload' } } }}
             onContextMenu={e => e.preventDefault()}
-            url={"./storage/" + props.url_video}
+            url={"./storage/" + props.info_chapitre.fichier_video}
             controls={true}
             playbackRate={1}
             width="70%"
@@ -19,9 +19,9 @@ const Video = (props) => {
     )
 }
 
-const mapStateToProps = ({ videos }) => {
+const mapStateToProps = ({ chapitreData }) => {
     return {
-        url_video: videos.url_video
+        info_chapitre: chapitreData.chapitreData,
     }
 }
 

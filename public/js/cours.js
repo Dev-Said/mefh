@@ -5648,6 +5648,36 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/icons/GpsFixed.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@material-ui/icons/GpsFixed.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var React = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+}), 'GpsFixed');
+
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/icons/utils/createSvgIcon.js":
 /*!****************************************************************!*\
   !*** ./node_modules/@material-ui/icons/utils/createSvgIcon.js ***!
@@ -9159,9 +9189,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _simpleList_simpleList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../simpleList/simpleList */ "./resources/js/components/simpleList/simpleList.jsx");
-/* harmony import */ var _backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../backNextButton/backNextButton */ "./resources/js/components/backNextButton/backNextButton.jsx");
+/* harmony import */ var _simpleList_simpleList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../simpleList/simpleList */ "./resources/js/components/simpleList/simpleList.jsx");
+/* harmony import */ var _backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../backNextButton/backNextButton */ "./resources/js/components/backNextButton/backNextButton.jsx");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
 
@@ -9189,6 +9219,11 @@ var ListeChapitres = function ListeChapitres(props) {
       chapitres = _useState2[0],
       setChapitres = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
+      _useState4 = _slicedToArray(_useState3, 2),
+      chapitre = _useState4[0],
+      setChapitre = _useState4[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi").then(function (res) {
       setChapitres(Object.entries(res.data));
@@ -9196,24 +9231,16 @@ var ListeChapitres = function ListeChapitres(props) {
   }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", {
     className: "listeChapitres",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_5__.default, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_4__.default, {
       chapitres: chapitres
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_simpleList_simpleList__WEBPACK_IMPORTED_MODULE_4__.default, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_simpleList_simpleList__WEBPACK_IMPORTED_MODULE_3__.default, {
       chapitres: chapitres,
-      module_id: props.module_id,
       init_index: 0
     })]
   });
 };
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var modules = _ref.modules;
-  return {
-    module_id: modules.module_id
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(mapStateToProps)(ListeChapitres));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListeChapitres);
 
 /***/ }),
 
@@ -9230,9 +9257,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
 
 
@@ -9252,7 +9280,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default)(function (theme) {
+
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
   return {
     root: {
       width: 300,
@@ -9282,91 +9311,68 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
 var BackNextButton = function BackNextButton(props) {
   var classes = useStyles();
 
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(1),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      activeStep = _React$useState2[0],
-      setActiveStep = _React$useState2[1];
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
       _useState2 = _slicedToArray(_useState, 2),
-      chapitres = _useState2[0],
-      setChapitres = _useState2[1]; //récupère le fichier_video du premier chapitre qui a 
-  //un module_id = activeStep
+      activeStep = _useState2[0],
+      setActiveStep = _useState2[1]; // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
 
 
-  function getStepContent(activeStep) {
-    var currentChapitre = chapitres.map(function (chapitre) {
+  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_id : 10; //récupère le premier chapitre qui a un module_id = activeStep
+
+  function getChapitre(step) {
+    var currentChapitre = props.chapitres.map(function (chapitre) {
       return chapitre[1];
-    }).filter(function (monModule) {
-      return monModule.module_id === activeStep;
-    }).filter(function (monChapitre) {
-      return Math.min(monChapitre.ordre);
+    }).filter(function (module) {
+      return module.module_id == props.info_chapitre.module_id + step;
+    }).filter(function (chapitre) {
+      return Math.min(chapitre.ordre);
     });
     return currentChapitre[0] && currentChapitre[0];
-  } // envoie les datas au store pour déclencher le chargement 
-  // de la 1er vidéo, titre et description d'un module donné 
+  } // INITIALISATION :envoie les datas au store pour déclencher le chargement 
+  // de la 1er vidéo, titre et description du premier module 
+
+
+  if (props.chapitres[0] && !props.info_chapitre.module_id) {
+    _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
+      type: 'GET_CHAPITRE',
+      chapitreData: props.chapitres[0][1]
+    });
+  } // modifie activeStep pour positionner le bon onglet "précédent / suivant"
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    setChapitres(props.chapitres);
-    var stepContent = getStepContent(activeStep);
-
-    if (stepContent) {
-      var chapitre_Info = [stepContent.titre, stepContent.description];
-      _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
-        type: 'GET_VIDEO',
-        url_video: stepContent.fichier_video
-      });
-      _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
-        type: 'GET_CHAPITRE',
-        chapitreData: chapitre_Info
-      });
-    }
-  }); //passe au module suivant
+    setActiveStep(props.info_chapitre.module_id);
+  }, [props.info_chapitre.module_id]); //passe au module suivant
 
   var handleNext = function handleNext() {
-    setActiveStep(function (prevActiveStep) {
-      return prevActiveStep + 1;
-    });
+    var chapitre = getChapitre(1);
     _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
-      type: 'INC_MODULE_ID',
-      module_id: activeStep
+      type: 'GET_CHAPITRE',
+      chapitreData: chapitre
     });
   }; //passe au module précédent
 
 
   var handleBack = function handleBack() {
-    setActiveStep(function (prevActiveStep) {
-      return prevActiveStep - 1;
-    });
+    var chapitre = getChapitre(-1);
     _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
-      type: 'DEC_MODULE_ID',
-      module_id: activeStep
-    });
-  }; //handleReset pour revenir à la 1er page de la formation donc celle du 1er module
-  //à faire !!
-
-
-  var handleReset = function handleReset() {
-    setActiveStep(1);
-    getModuleId(activeStep);
-    _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
-      type: 'RESET_MODULE_ID',
-      module_id: activeStep
+      type: 'GET_CHAPITRE',
+      chapitreData: chapitre
     });
   };
 
+  props.chapitres[0] && console.log('getNbModules -->   ' + nbModules);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
         disabled: activeStep < 2,
         onClick: handleBack,
         className: classes.backButton // variant="contained"
         ,
         children: "Pr\xE9c\xE9dent"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default, {
-        disabled: activeStep > chapitres.length // variant="contained"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
+        disabled: activeStep == nbModules // variant="contained"
         ,
         className: classes.nextButton,
         onClick: handleNext,
@@ -9376,7 +9382,14 @@ var BackNextButton = function BackNextButton(props) {
   });
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BackNextButton);
+var mapStateToProps = function mapStateToProps(_ref) {
+  var chapitreData = _ref.chapitreData;
+  return {
+    info_chapitre: chapitreData.chapitreData
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_3__.connect)(mapStateToProps)(BackNextButton));
 
 /***/ }),
 
@@ -9415,7 +9428,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
 });
 
 var handleClick = function handleClick() {
-  alert(auth);
+  alert((0,lodash__WEBPACK_IMPORTED_MODULE_3__.toArray)(auth));
 };
 
 console.log(auth);
@@ -9432,6 +9445,65 @@ var ContainedButtons = function ContainedButtons() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContainedButtons);
+
+/***/ }),
+
+/***/ "./resources/js/components/redux/activeStep/activeStep.reducer.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/redux/activeStep/activeStep.reducer.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _activeStep_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./activeStep.types */ "./resources/js/components/redux/activeStep/activeStep.types.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var INITIAL_STATE = {
+  activeStep: 1
+};
+
+function activeStepReducer() {
+  var activeStep = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _activeStep_types__WEBPACK_IMPORTED_MODULE_0__.ActiveStepActionTypes.ACTIVE_STEP_UPDATE:
+      return _objectSpread(_objectSpread({}, activeStep), {}, {
+        activeStep: action.activeStep
+      });
+
+    default:
+      return activeStep;
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (activeStepReducer);
+
+/***/ }),
+
+/***/ "./resources/js/components/redux/activeStep/activeStep.types.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/redux/activeStep/activeStep.types.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ActiveStepActionTypes": () => /* binding */ ActiveStepActionTypes
+/* harmony export */ });
+var ActiveStepActionTypes = {
+  ACTIVE_STEP_UPDATE: "ACTIVE_STEP_UPDATE"
+};
 
 /***/ }),
 
@@ -9455,7 +9527,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var INITIAL_STATE = {
-  chapitreData: 'chapitreDataInitial'
+  chapitreData: ''
 };
 
 function chapitreReducer() {
@@ -9532,9 +9604,9 @@ function moduleReducer() {
         module_id: action.module_id - 1
       });
 
-    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModuleActionTypes.RESET_MODULE_ID:
+    case _module_types__WEBPACK_IMPORTED_MODULE_0__.ModuleActionTypes.SELECT_MODULE_ID:
       return _objectSpread(_objectSpread({}, module_id), {}, {
-        module_id: 1
+        module_id: action.module_id
       });
 
     default:
@@ -9560,7 +9632,7 @@ __webpack_require__.r(__webpack_exports__);
 var ModuleActionTypes = {
   INC_MODULE_ID: "INC_MODULE_ID",
   DEC_MODULE_ID: "DEC_MODULE_ID",
-  RESET_MODULE_ID: "RESET_MODULE_ID"
+  SELECT_MODULE_ID: "SELECT_MODULE_ID"
 };
 
 /***/ }),
@@ -9576,21 +9648,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video/video.reducer */ "./resources/js/components/redux/video/video.reducer.js");
 /* harmony import */ var _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/module.reducer */ "./resources/js/components/redux/module/module.reducer.js");
 /* harmony import */ var _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./titreChapitre/titreChapitre.reducer */ "./resources/js/components/redux/titreChapitre/titreChapitre.reducer.js");
 /* harmony import */ var _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chapitre/chapitre.reducer */ "./resources/js/components/redux/chapitre/chapitre.reducer.js");
+/* harmony import */ var _activeStep_activeStep_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./activeStep/activeStep.reducer */ "./resources/js/components/redux/activeStep/activeStep.reducer.js");
 
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_4__.combineReducers)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_5__.combineReducers)({
   videos: _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
   modules: _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
   chapitreTitre: _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
-  chapitreData: _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__.default
+  chapitreData: _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__.default,
+  activeStep: _activeStep_activeStep_reducer__WEBPACK_IMPORTED_MODULE_4__.default
 }));
 
 /***/ }),
@@ -9674,28 +9749,6 @@ var TitreChapitreActionTypes = {
 
 /***/ }),
 
-/***/ "./resources/js/components/redux/video/video.actions.js":
-/*!**************************************************************!*\
-  !*** ./resources/js/components/redux/video/video.actions.js ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getVideo": () => /* binding */ getVideo
-/* harmony export */ });
-/* harmony import */ var _video_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video.types */ "./resources/js/components/redux/video/video.types.js");
-
-var getVideo = function getVideo(url) {
-  return {
-    type: _video_types__WEBPACK_IMPORTED_MODULE_0__.VideosActionTypes.GET_VIDEO,
-    url_video: url
-  };
-};
-
-/***/ }),
-
 /***/ "./resources/js/components/redux/video/video.reducer.js":
 /*!**************************************************************!*\
   !*** ./resources/js/components/redux/video/video.reducer.js ***!
@@ -9768,16 +9821,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_List__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/List */ "./node_modules/@material-ui/core/esm/List/List.js");
-/* harmony import */ var _material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/ListItem */ "./node_modules/@material-ui/core/esm/ListItem/ListItem.js");
-/* harmony import */ var _material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/ListItemText */ "./node_modules/@material-ui/core/esm/ListItemText/ListItemText.js");
-/* harmony import */ var _material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/ListSubheader */ "./node_modules/@material-ui/core/esm/ListSubheader/ListSubheader.js");
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
-/* harmony import */ var _material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/icons/ArrowRight */ "./node_modules/@material-ui/icons/ArrowRight.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_List__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/List */ "./node_modules/@material-ui/core/esm/List/List.js");
+/* harmony import */ var _material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/ListItem */ "./node_modules/@material-ui/core/esm/ListItem/ListItem.js");
+/* harmony import */ var _material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/ListItemText */ "./node_modules/@material-ui/core/esm/ListItemText/ListItemText.js");
+/* harmony import */ var _material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/ListSubheader */ "./node_modules/@material-ui/core/esm/ListSubheader/ListSubheader.js");
+/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
+/* harmony import */ var _material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/icons/ArrowRight */ "./node_modules/@material-ui/icons/ArrowRight.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_video_video_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/video/video.actions */ "./resources/js/components/redux/video/video.actions.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
 
@@ -9803,8 +9855,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(function (theme) {
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
   return {
     root: {
       width: 300,
@@ -9831,99 +9882,88 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default
   };
 });
 
-function SimpleList(props) {
-  var classes = useStyles();
-  var getVideo = props.getVideo; // envoi l'url de la vidéo dans le store quand on clique dans la liste
+var SimpleList = function SimpleList(props) {
+  var classes = useStyles(); // envoi le chapitre en cours pour stepper quand on clique dans la liste
 
-  var handleClick = function handleClick(url_video) {
-    getVideo(url_video);
-  }; //envoi le titre et la description du chapitre en cours pour 
-  //stepper quand on clique dans la liste
-
-
-  var handleClick2 = function handleClick2(chapitre_titre, chapitre_description) {
-    var chapitre_info = [chapitre_titre, chapitre_description];
-    _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
+  var handleClick2 = function handleClick2(chapitre) {
+    _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
       type: 'GET_CHAPITRE',
-      chapitreData: chapitre_info
+      chapitreData: chapitre
     });
-  };
-
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(0),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      selectedIndex = _React$useState2[0],
-      setSelectedIndex = _React$useState2[1]; //met en surbrillance l'item sélectionné dans la ListItem
+  }; //met en surbrillance l'item sélectionné dans la ListItem
 
 
-  var handleListItemClick = function handleListItemClick(event, index) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+      _useState2 = _slicedToArray(_useState, 2),
+      selectedIndex = _useState2[0],
+      setSelectedIndex = _useState2[1];
+
+  var SelectedClick = function SelectedClick(event, index) {
     setSelectedIndex(index);
-  }; //sélectionne et met en surbrillance le premier de la liste quand on change de module  
+  }; // sélectionne et met en surbrillance le premier de la liste lors du premier chargement  
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     initListItemClick(null, props.init_index);
-  }, [props.module_id]);
+  }, []); // sélectionne l'item qui correspond à info_chapitre.ordre dans la liste
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    initListItemClick(null, props.info_chapitre.ordre);
+  }, [props.info_chapitre.ordre]);
 
   var initListItemClick = function initListItemClick(event, index) {
-    setSelectedIndex(index);
-  }; //sélectionne uniquement les chapitres dont le module_id est = props.module_id
-  //cela permet de n'afficher dans la liste que les chapitres d'un module donné
+    setSelectedIndex(index - 1);
+  }; // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
+  // si il n'y a rien dans info_chapitre.module_id.
+  // cela permet de n'afficher dans la liste que les chapitres d'un module donné
 
 
+  var idList = props.info_chapitre.module_id ? props.info_chapitre.module_id : 1;
   var chapitres = props.chapitres.filter(function (chapitre) {
-    return chapitre[1].module_id === props.module_id;
+    return chapitre[1].module_id === idList;
   });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_List__WEBPACK_IMPORTED_MODULE_6__.default, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_List__WEBPACK_IMPORTED_MODULE_5__.default, {
       component: "nav",
       "aria-label": "main mailbox folders" // aria-labelledby="nested-list-subheader"
       ,
-      subheader: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_7__.default, {
+      subheader: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_6__.default, {
         className: classes.headerList,
         component: "div",
         id: "nested-list-subheader",
         children: chapitres[0] && chapitres[0][1].module_titre
       }),
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {}), chapitres.map(function (chapitre, index) {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__.default, {}), chapitres.map(function (chapitre, index) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_9__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_8__.default, {
             button: true,
             selected: selectedIndex === index,
             onClick: function onClick(event) {
-              handleClick(chapitre[1].fichier_video);
-              handleClick2(chapitre[1].titre, chapitre[1].description);
-              handleListItemClick(event, index);
+              handleClick2(chapitre[1]);
+              SelectedClick(event, index);
             },
-            children: [selectedIndex === index && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_10__.default, {
+            children: [selectedIndex === index && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_ArrowRight__WEBPACK_IMPORTED_MODULE_9__.default, {
               className: classes.itemIcon
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_11__.default, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_ListItemText__WEBPACK_IMPORTED_MODULE_10__.default, {
               className: classes.itemText,
               primary: chapitre[1].titre
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {})]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__.default, {})]
         }, chapitre[1].id);
       })]
     })
   });
-}
+};
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var videos = _ref.videos;
+  var chapitreData = _ref.chapitreData;
   return {
-    url_video: videos.url_video
+    info_chapitre: chapitreData.chapitreData
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    getVideo: function getVideo(url_video) {
-      return dispatch((0,_redux_video_video_actions__WEBPACK_IMPORTED_MODULE_3__.getVideo)(url_video));
-    }
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(SimpleList));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(SimpleList));
 
 /***/ }),
 
@@ -9962,7 +10002,7 @@ var ChapitreDescription = function ChapitreDescription(props) {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_4__.default, {
       className: classes.instructions,
-      children: props.titre_chapitre[1]
+      children: props.description_chapitre.description
     })
   });
 };
@@ -9970,7 +10010,7 @@ var ChapitreDescription = function ChapitreDescription(props) {
 var mapStateToProps = function mapStateToProps(_ref) {
   var chapitreData = _ref.chapitreData;
   return {
-    titre_chapitre: chapitreData.chapitreData
+    description_chapitre: chapitreData.chapitreData
   };
 };
 
@@ -9991,12 +10031,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
-/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_icons_GpsFixed__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/icons/GpsFixed */ "./node_modules/@material-ui/icons/GpsFixed.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
 
@@ -10018,14 +10060,25 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
+
+
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(function (theme) {
   return {
     root: {
       width: '100%'
     },
     stepButton: {
       height: 20,
-      width: 30
+      width: 30,
+      "&:focus": {
+        outline: 'none'
+      }
+    },
+    titre: {
+      fontSize: 26,
+      marginBottom: 0,
+      fontWeight: "bold",
+      marginTop: "15px"
     }
   };
 });
@@ -10035,55 +10088,65 @@ var Stepper = function Stepper(props) {
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      modules = _useState2[0],
-      setModules = _useState2[1];
+      chapitres = _useState2[0],
+      setChapitres = _useState2[1];
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
       _useState4 = _slicedToArray(_useState3, 2),
-      module_id = _useState4[0],
-      setModule_id = _useState4[1];
+      id = _useState4[0],
+      setId = _useState4[1]; //récupère tous les chapitres
 
-  module_id !== props.module_id && setModule_id(props.module_id);
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi").then(function (res) {
-      setModules(Object.entries(res.data));
+      setChapitres(Object.entries(res.data));
+      setId(1);
     });
-  }, [props.module_id]);
+  }, []); // set l'id du chapitre actif pour positionner le 
+  // curseur quand je clique dans la liste
 
-  var salut = function salut(x) {
-    alert(x);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setId(props.info_chapitre.id); // <-- 
+  }, [props.info_chapitre.id]); // positionne le curseur sur le stepper cliqué et envoi son chapitre
+  // dans le store pour mettre à jour BackNextButton et SimpleList
+
+  var locateStepper = function locateStepper(chapitre) {
+    setId(chapitre.id);
+    _redux_store__WEBPACK_IMPORTED_MODULE_4__.default.dispatch({
+      type: 'GET_CHAPITRE',
+      chapitreData: chapitre
+    });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      children: modules.map(function (module) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
+      children: chapitres.map(function (chapitre) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
           className: classes.stepButton,
           onClick: function onClick() {
-            return salut(module[1].titre);
+            return locateStepper(chapitre[1]);
           },
           variant: "outlined",
-          color: "primary"
-        }, module.module_id);
+          color: "primary",
+          children: id == chapitre[1].id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_icons_GpsFixed__WEBPACK_IMPORTED_MODULE_7__.default, {
+            variant: "outlined"
+          }) : ''
+        }, chapitre[1].id);
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__.default, {
-        className: classes.instructions,
-        children: props.titre_chapitre[0]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__.default, {
-        className: classes.instructions
-      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__.default, {
+        className: classes.titre,
+        children: props.info_chapitre.titre
+      })
     })]
   });
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var modules = _ref.modules,
-      chapitreData = _ref.chapitreData;
+  var chapitreData = _ref.chapitreData;
   return {
-    module_id: modules.module_id,
-    titre_chapitre: chapitreData.chapitreData
+    info_chapitre: chapitreData.chapitreData
   };
 };
 
@@ -10125,7 +10188,7 @@ var Video = function Video(props) {
     onContextMenu: function onContextMenu(e) {
       return e.preventDefault();
     },
-    url: "./storage/" + props.url_video,
+    url: "./storage/" + props.info_chapitre.fichier_video,
     controls: true,
     playbackRate: 1,
     width: "70%",
@@ -10134,9 +10197,9 @@ var Video = function Video(props) {
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var videos = _ref.videos;
+  var chapitreData = _ref.chapitreData;
   return {
-    url_video: videos.url_video
+    info_chapitre: chapitreData.chapitreData
   };
 };
 

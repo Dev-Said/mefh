@@ -14,14 +14,14 @@ const ChapitreDescription = (props) => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.instructions}>{props.titre_chapitre[1]}</Typography>
+      <Typography className={classes.instructions}>{props.description_chapitre.description}</Typography>
     </div>
   );
 }
 
 const mapStateToProps = ({ chapitreData }) => {
   return {
-    titre_chapitre: chapitreData.chapitreData,
+    description_chapitre: chapitreData.chapitreData,
   };
 };
 
