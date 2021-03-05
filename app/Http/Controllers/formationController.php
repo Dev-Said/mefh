@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreFormationRequest;
 use App\Http\Requests\UpdateFormationRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FormationController extends Controller
 {
@@ -29,19 +30,6 @@ class FormationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(StoreFormationRequest $request)
-    // {
-    //     $validated = $request->validated();
-
-    //     $formation = new formation;
-    //     $formation->titre = Arr::get($validated, 'titre');
-    //     $formation->description = Arr::get($validated, 'description');
-
-    //     $formation->save();
-
-    //     return back();
-    // }
-
     public function store(StoreFormationRequest $request)
     {
         $validated = $request->validated();
@@ -52,8 +40,17 @@ class FormationController extends Controller
         $formationsCount = formation::all()->max('ordre') + 1;
         $formation->ordre = $formationsCount;
         if ($request->hasFile('image_formation')) {
-            $formation->image_formation = $request->image_formation->store('images', 'public');
+
+            $image = $request->file('image_formation');
+            $filename = time() . $image->getClientOriginalName();
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->fit(400, 400, function ($constraint) {
+                $constraint->upsize();
+            });
+            $image_resize->save(storage_path('app/public/images/' . $filename));
+            $formation->image_formation = 'images/' . $filename;
         }
+
         $formation->save();
 
         return back();
@@ -98,18 +95,6 @@ class FormationController extends Controller
      * @param  \App\Models\formation  $formation
      * @return \Illuminate\Http\Response
      */
-    // public function update(StoreFormationRequest $request, formation $formation)
-    // {
-    //     $validated = $request->validated();
-
-    //     $formation->titre = Arr::get($validated, 'titre');
-    //     $formation->description = Arr::get($validated, 'description');
-
-    //     $formation->save();
-
-    //     return back();
-    // }
-
     public function update(UpdateFormationRequest $request, formation $formation)
     {
         $validated = $request->validated();
@@ -117,21 +102,24 @@ class FormationController extends Controller
         //si il y a un fichier image alors on efface l'ancien
         // et on stock le nouveau
         if ($request->hasFile('image_formation')) {
-            // dd($formation);
+     
             Storage::delete('public/' . $formation->image_formation);
+
+            $image = $request->file('image_formation');
+            $filename = time() . $image->getClientOriginalName();
+            $image_resize = Image::make($image->getRealPath());
+            $image_resize->fit(400, 400, function ($constraint) {
+                $constraint->upsize();
+            });
+            $image_resize->save(storage_path('app/public/images/' . $filename));
+            $formation->image_formation = 'images/' . $filename;
         } else {
             $formation->image_formation = $formation->image_formation;
         }
-        // dd($formation);
+     
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
         $formation->ordre = $formation->ordre;
-
-        // si il y a un fichier image alors on le stock dans storage et on 
-        // récupère son chemin
-        if ($request->hasFile('image_formation')) {
-            $formation->image_formation = $request->image_formation->store('images', 'public');
-        }
 
         $formation->save();
 
@@ -144,13 +132,9 @@ class FormationController extends Controller
      * @param  \App\Models\formation  $formation
      * @return \Illuminate\Http\Response
      */
-    // public function destroy(formation $formation)
-    // {
-    //     $formation->delete();
-    // }
-
     public function destroy(formation $formation)
     {
+        // dd($formation->image_formation);
         Storage::delete('public/' . $formation->image_formation);
         $formation->delete();
 

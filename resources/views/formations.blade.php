@@ -14,14 +14,18 @@
         </p>
     </div>
     @foreach ($formations as $formation)
-    <div class="card-formation">
-    <img class="img_formation" src="storage/images/loris.jpg" alt="femme">
+    <a href="indexFormations/{{ $formation->id }}" class="card-formation">
+    <figure class="fig_formations_liste">
+    <img class="img_formation" src="{{ asset('storage/'.$formation->image_formation) }}" />
+    </figure>
+    
+    <!-- <img class="img_formation" src="{ $formation->image_formation }" alt="imges de formations"> -->
         <div class="sous-card-formation">
-            <a href="indexFormations/{{ $formation->id }}"><h2>{{ $formation->titre }}</h2></a>
+            <h2>{{ $formation->titre }}</h2>
         </div>
 
-        
-    </div>
+
+    </a>
     @endforeach
 </div>
 

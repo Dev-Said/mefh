@@ -16,7 +16,7 @@
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="image_formation">Image</label>
+        <label for="image_formation">Choisissez une image si vous souhaitez remplacer l'image actuelle</label>
         <input type="file" name="image_formation" id="image_formation">
         @error('image_formation')
         <div class="alert alert-danger">{{ $message }}</div>
