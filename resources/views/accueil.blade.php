@@ -13,7 +13,7 @@
         sur le sexisme et le harcèlement sexuel
     </h2>
 
-    <a id="lienFormation" href="formation"><button id="buttonAccueil">Suivre la formation</button></a>
+    <a id="lienFormation" href="formations"><button id="buttonAccueil">Suivre la formation</button></a>
 
 </div>
 

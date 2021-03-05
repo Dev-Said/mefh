@@ -24,6 +24,7 @@ class FaqFactory extends Factory
         return [
             'question' => $this->faker->sentence(5, true),
             'reponse' => $this->faker->sentence(18, true),
+            'formation_id' => 1,
         ];
     }
 }

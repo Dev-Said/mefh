@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>MEFH</title>
-
+    <base href="/public">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -19,15 +19,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="css/app.css" />
-    <link rel="stylesheet" type="text/css" href="css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="css/accueil.css" />
-    <link rel="stylesheet" type="text/css" href="css/formation.css" />
-    <link rel="stylesheet" type="text/css" href="css/modules.css" />
-    <link rel="stylesheet" type="text/css" href="css/video.css" />
-    <link rel="stylesheet" type="text/css" href="css/listeChapitres.css" />
-    <link rel="stylesheet" type="text/css" href="css/stepper.css" />
+   
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/formation.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/modules.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/video.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/listeChapitres.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/stepper.css') }}" />
 
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
@@ -51,9 +52,8 @@
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>
-        <li class="nav-item {{ 'formation' == request()->path() ? 'active' : '' }}">
-            <!-- <a class="nav-link" href="formation"><button id="buttonAccueil">Suivre la formation</button></a> -->
-            <a class="nav-link" href="formation">Formation</a>
+        <li class="nav-item {{ 'formations-Liste' == request()->path() ? 'active' : '' }}">
+            <a class="nav-link" href="formations-Liste">Formations</a>
         </li>
         <li class="nav-item {{ 'questionsEssentielles' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="questionsEssentielles">Questions essentielles</a>

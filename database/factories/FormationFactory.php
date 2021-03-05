@@ -21,9 +21,11 @@ class FormationFactory extends Factory
      */
     public function definition()
     {
+        static $i = 1;
         return [
             'titre' => $this->faker->sentence(3, true),
             'description' => $this->faker->sentence(6, true),
+            'ordre' => $i++,
         ];
     }
 }

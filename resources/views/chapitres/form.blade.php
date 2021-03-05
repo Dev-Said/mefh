@@ -13,7 +13,7 @@
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="fichier_video">Fichier_video</label>
-        <input type="file" id="fichier_video" name="fichier_video">
+        <input type="file" id="fichier_video" name="fichier_video" accept="video/*">
         @error('fichier_video')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

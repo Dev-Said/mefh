@@ -49,7 +49,8 @@ class ChapitreController extends Controller
         $chapitre = new chapitre;
         $chapitre->titre = Arr::get($validated, 'titre');
         $chapitre->description = Arr::get($validated, 'description');
-        $chapitre->ordre = Arr::get($validated, 'ordre');
+        $chapitresCount = chapitre::all()->max('ordre') + 1;
+        $chapitre->ordre = $chapitresCount;
         $chapitre->module_id = Arr::get($validated, 'module_id');
         if ($request->hasFile('fichier_video')) {
             $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');
@@ -97,7 +98,7 @@ class ChapitreController extends Controller
     public function update(UpdateChapitreRequest $request, chapitre $chapitre)
     {
 
-        $validated = $request->validated();  
+        $validated = $request->validated();
         //si il y a un fichier vidéo alors on efface l'ancien
         if ($request->hasFile('fichier_video')) {
             Storage::delete('public/' . $chapitre->fichier_video);
@@ -108,7 +109,7 @@ class ChapitreController extends Controller
         //$validate est un tableau d'où on récupère chaque champ validé
         $chapitre->titre = Arr::get($validated, 'titre');
         $chapitre->description = Arr::get($validated, 'description');
-        $chapitre->ordre = Arr::get($validated, 'ordre');
+        $chapitre->ordre = $chapitre->ordre;
         $chapitre->module_id = Arr::get($validated, 'module_id');
 
         // si il y a un fichier vidéo alors on le stock dans storage et on 
@@ -130,8 +131,27 @@ class ChapitreController extends Controller
      */
     public function destroy(chapitre $chapitre)
     {
+        $moduleId = $chapitre->module_id;
         Storage::delete('public/' . $chapitre->fichier_video);
         $chapitre->delete();
+
+        // pour les chapitres d'un module donné
+        // réctifie si besoin les valeurs de ordre
+        // pour garder la continuité et supprimer les trous
+        $chapitres = chapitre::where('module_id', $moduleId)
+            ->orderBy('ordre', 'asc')
+            ->get();
+
+        $i = 1;
+        foreach ($chapitres  as $chapitre) {
+            if ($chapitre !== $i) {
+                $chapitre->ordre = $i;
+                $chapitre->save();
+                $i++;
+            } else {
+                $i++;
+            }
+        }
 
         return back();
     }

@@ -17,6 +17,8 @@ class CreateFaqsTable extends Migration
             $table->id();
             $table->text('question');
             $table->text('reponse');
+            $table->unsignedBigInteger('formation_id');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
             $table->timestamps();
         });
     }

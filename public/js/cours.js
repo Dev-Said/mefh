@@ -9191,7 +9191,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _simpleList_simpleList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../simpleList/simpleList */ "./resources/js/components/simpleList/simpleList.jsx");
 /* harmony import */ var _backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../backNextButton/backNextButton */ "./resources/js/components/backNextButton/backNextButton.jsx");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 
 
 
@@ -9212,20 +9211,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var ListeChapitres = function ListeChapitres(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       chapitres = _useState2[0],
       setChapitres = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(1),
-      _useState4 = _slicedToArray(_useState3, 2),
-      chapitre = _useState4[0],
-      setChapitre = _useState4[1];
-
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/modulesApi/".concat(idFormation)).then(function (res) {
       setChapitres(Object.entries(res.data));
     });
   }, []);
@@ -9317,32 +9310,35 @@ var BackNextButton = function BackNextButton(props) {
       setActiveStep = _useState2[1]; // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
 
 
-  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_id : 10; //récupère le premier chapitre qui a un module_id = activeStep
+  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_ordre : 5; // console.log('nbModules    ' + nbModules);
+  //récupère le premier chapitre qui a un module_ordre = activeStep
 
   function getChapitre(step) {
     var currentChapitre = props.chapitres.map(function (chapitre) {
       return chapitre[1];
     }).filter(function (module) {
-      return module.module_id == props.info_chapitre.module_id + step;
+      return module.module_ordre == props.info_chapitre.module_ordre + step;
     }).filter(function (chapitre) {
       return Math.min(chapitre.ordre);
     });
     return currentChapitre[0] && currentChapitre[0];
-  } // INITIALISATION :envoie les datas au store pour déclencher le chargement 
+  } // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
+  // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
 
 
-  if (props.chapitres[0] && !props.info_chapitre.module_id) {
+  if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
     _redux_store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch({
       type: 'GET_CHAPITRE',
       chapitreData: props.chapitres[0][1]
     });
+    console.log('props.chapitres[0][1]    ' + props.chapitres[0][1].fichier_video);
   } // modifie activeStep pour positionner le bon onglet "précédent / suivant"
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    setActiveStep(props.info_chapitre.module_id);
-  }, [props.info_chapitre.module_id]); //passe au module suivant
+    setActiveStep(props.info_chapitre.module_ordre);
+  }, [props.info_chapitre.module_ordre]); //passe au module suivant
 
   var handleNext = function handleNext() {
     var chapitre = getChapitre(1);
@@ -9361,7 +9357,6 @@ var BackNextButton = function BackNextButton(props) {
     });
   };
 
-  props.chapitres[0] && console.log('getNbModules -->   ' + nbModules);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -9913,10 +9908,11 @@ var SimpleList = function SimpleList(props) {
 
   var initListItemClick = function initListItemClick(event, index) {
     setSelectedIndex(index - 1);
-  }; // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
+  };
+
+  console.log('id de la formation   ===>   ' + idFormation); // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
   // si il n'y a rien dans info_chapitre.module_id.
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné
-
 
   var idList = props.info_chapitre.module_id ? props.info_chapitre.module_id : 1;
   var chapitres = props.chapitres.filter(function (chapitre) {
@@ -10098,16 +10094,17 @@ var Stepper = function Stepper(props) {
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/modulesApi/".concat(idFormation)).then(function (res) {
       setChapitres(Object.entries(res.data));
       setId(1);
     });
-  }, []); // set l'id du chapitre actif pour positionner le 
-  // curseur quand je clique dans la liste
+  }, []); // set id avec l'id du chapitre dans le store pour positionner le 
+  // curseur du stepper quand je clique dans la liste
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     setId(props.info_chapitre.id); // <-- 
-  }, [props.info_chapitre.id]); // positionne le curseur sur le stepper cliqué et envoi son chapitre
+  }, [props.info_chapitre.id]);
+  console.log(' stepper id de la formation   ===>   ' + idFormation); // positionne le curseur sur le stepper cliqué et envoi son chapitre
   // dans le store pour mettre à jour BackNextButton et SimpleList
 
   var locateStepper = function locateStepper(chapitre) {

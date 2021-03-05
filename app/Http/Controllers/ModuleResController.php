@@ -29,9 +29,7 @@ class ModuleResController extends Controller
     public function create()
     {
         $formations = formation::all();
-        $modulesCount = Module::all()->max('ordre') + 1;
-        return view('modules.form', ['modulesCount' => $modulesCount,
-                                    'formations' => $formations]);
+        return view('modules.form', ['formations' => $formations]);
     }
 
     /**
@@ -42,14 +40,17 @@ class ModuleResController extends Controller
      */
     public function store(StoreModuleRequest $request)
     {
+        
         $validated = $request->validated();
+        
 
         $module = new module;
         $module->titre = Arr::get($validated, 'titre');
         $module->description = Arr::get($validated, 'description');
-        $module->ordre = Arr::get($validated, 'ordre');
+        
         $module->formation_id = Arr::get($validated, 'formation_id');
-
+        $modulesCount = module::where('formation_id', $module->formation_id)->max('ordre') + 1;
+        $module->ordre = $modulesCount;
         $module->save();
 
         return redirect('/modules');
@@ -74,11 +75,14 @@ class ModuleResController extends Controller
      */
     public function edit(Module $module)
     {
+        dd($module);
         $formation = formation::find($module->formation_id);
         $formations = formation::all();
-        return view('modules.edit', ['module' => $module,
-                                    'formation_old' => $formation,
-                                    'formations' => $formations]);
+        return view('modules.edit', [
+            'module' => $module,
+            'formation_old' => $formation,
+            'formations' => $formations
+        ]);
     }
 
     /**
@@ -90,12 +94,12 @@ class ModuleResController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(StoreModuleRequest $request, Module $module)
-    { 
+    {
         $validated = $request->validated();
 
         $module->titre = Arr::get($validated, 'titre');
         $module->description = Arr::get($validated, 'description');
-        $module->ordre = Arr::get($validated, 'ordre');
+        $module->ordre = $module->ordre;
         $module->formation_id = Arr::get($validated, 'formation_id');
 
         $module->save();
@@ -111,8 +115,26 @@ class ModuleResController extends Controller
      */
     public function destroy(Module $module)
     {
+        $formationId = $module->formation_id;
         $module->delete();
 
+        // pour les modules d'une formation donnée
+        // réctifie si besoin les valeurs de ordre
+        // pour garder la continuité et supprimer les trous
+        $modules = module::where('formation_id', $formationId)
+            ->orderBy('ordre', 'asc')
+            ->get();
+
+        $i = 1;
+        foreach ($modules  as $module) {
+            if ($module !== $i) {
+                $module->ordre = $i;
+                $module->save();
+                $i++;
+            } else {
+                $i++;
+            }
+        }
         return redirect('/modules');
     }
 }

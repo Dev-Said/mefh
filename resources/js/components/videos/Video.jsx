@@ -19,6 +19,7 @@ const Video = (props) => {
     )
 }
 
+
 const mapStateToProps = ({ chapitreData }) => {
     return {
         info_chapitre: chapitreData.chapitreData,

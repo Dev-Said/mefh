@@ -20,7 +20,7 @@ class CreateChapitresTable extends Migration
             $table->text('description');
             $table->integer('ordre');
             $table->unsignedBigInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('module')->onDelete('restrict');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->timestamps();
         });
     }

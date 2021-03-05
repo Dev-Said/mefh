@@ -19,21 +19,22 @@ class ModuleApiController extends Controller
         // return Module::all();
 
 
-        return DB::table('modules')
-            ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
-            ->select(
-                'modules.id as module_id',
-                'chapitres.id as id',
-                'modules.titre as module_titre',
-                'modules.description as module_description',
-                'chapitres.titre as titre',
-                'chapitres.description as description',
-                'fichier_video',
-                'chapitres.ordre as ordre',
-            )
-            ->orderBy('module_id', 'asc')
-            ->orderBy('ordre', 'asc')
-            ->get();
+        // return DB::table('modules')
+        //     ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
+        //     ->select(
+        //         'modules.id as module_id',
+        //         'modules.ordre as module_ordre',
+        //         'chapitres.id as id',
+        //         'modules.titre as module_titre',
+        //         'modules.description as module_description',
+        //         'chapitres.titre as titre',
+        //         'chapitres.description as description',
+        //         'fichier_video',
+        //         'chapitres.ordre as ordre',
+        //     )
+        //     ->orderBy('module_ordre', 'asc')
+        //     ->orderBy('ordre', 'asc')
+        //     ->get();
 
 
     }
@@ -61,19 +62,26 @@ class ModuleApiController extends Controller
         // return  module::find($id)->chapitres;
 
         return DB::table('modules')
-            ->selectRaw(
-                'modules.id as module_id,
-                modules.titre as module_titre,
-                chapitres.id as id,
-                chapitres.titre as titre,
-                chapitres.description as description,
-                chapitres.fichier_video as fichier_video,
-                chapitres.ordre as ordre'
+            ->select(
+                'modules.id as module_id',
+                'modules.ordre as module_ordre',
+                'chapitres.id as id',
+                'modules.titre as module_titre',
+                'modules.description as module_description',
+                'chapitres.titre as titre',
+                'chapitres.description as description',
+                'fichier_video',
+                'chapitres.ordre as ordre',
+                'modules.formation_id as formation_id',
             )
             ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
-            ->where('modules.id', $id)
-            ->orderBy('chapitres.ordre', 'asc')
+            ->where('formation_id', $id)
+            ->orderBy('module_ordre', 'asc')
+            ->orderBy('ordre', 'asc')
             ->get();
+
+            // return view('indexFormations', ['datas' => $datas]);
+
     }
 
     /**

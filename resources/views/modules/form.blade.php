@@ -29,7 +29,8 @@
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <input type="hidden" name="ordre" id="ordre" value="{{ $modulesCount }}">
+
+        <!-- le champ ordre se gère dans la fonction store de ModuleResController -->
         <input type="submit">
     </form>
 

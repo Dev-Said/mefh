@@ -35,29 +35,32 @@ const BackNextButton = (props) => {
   const [activeStep, setActiveStep] = useState(1);
 
   // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
-  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_id : 10;
+  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_ordre : 5;
+// console.log('nbModules    ' + nbModules);
 
-  //récupère le premier chapitre qui a un module_id = activeStep
+  //récupère le premier chapitre qui a un module_ordre = activeStep
   function getChapitre(step) {
     var currentChapitre = props.chapitres.map(chapitre => chapitre[1])
       .filter(function (module) {
-        return module.module_id == (props.info_chapitre.module_id + step);
+        return module.module_ordre == (props.info_chapitre.module_ordre + step);
       }).filter(function (chapitre) {
         return Math.min(chapitre.ordre);
       })
     return currentChapitre[0] && currentChapitre[0];
   }
 
-  // INITIALISATION :envoie les datas au store pour déclencher le chargement 
+  // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
- if (props.chapitres[0] && !props.info_chapitre.module_id) {
-  store.dispatch({ type: 'GET_CHAPITRE', chapitreData: props.chapitres[0][1] });
- }
-    
+  // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
+  if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
+    store.dispatch({ type: 'GET_CHAPITRE', chapitreData: props.chapitres[0][1] });
+    console.log('props.chapitres[0][1]    ' + props.chapitres[0][1].fichier_video);
+  }
+
   // modifie activeStep pour positionner le bon onglet "précédent / suivant"
   useEffect(() => {
-    setActiveStep(props.info_chapitre.module_id);
-  }, [props.info_chapitre.module_id]);
+    setActiveStep(props.info_chapitre.module_ordre);
+  }, [props.info_chapitre.module_ordre]);
 
   //passe au module suivant
   const handleNext = () => {
@@ -70,7 +73,7 @@ const BackNextButton = (props) => {
     var chapitre = getChapitre(-1);
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
   };
-  props.chapitres[0] && console.log('getNbModules -->   ' + nbModules);
+
   return (
     <div className={classes.root}>
       <div>

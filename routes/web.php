@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\module;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
@@ -10,11 +11,11 @@ use App\Http\Controllers\FaqResController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\CheckUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
+use App\Http\Controllers\FormationResController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +36,10 @@ Route::get('/', function () {
     return view('accueil');
 });
 
-Route::get('/formation', function () {
-    return view('formation', ['modules' => module::all()]);
+Route::get('/formations-Liste', function () {
+    return view('formations', ['formations' => DB::table('formations')->orderBy('ordre')->get()]);
 });
+
 Route::view('/questions', 'questions');
 Route::view('/resources', 'resources');
 Route::view('/certificat', 'certificat');
@@ -51,6 +53,7 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 //checker les pages CORS
+
 Route::resource('formations', FormationController::class);
 Route::resource('chapitres', ChapitreController::class);
 Route::resource('modules', ModuleResController::class);
@@ -93,8 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
     Route::resource('faqsres', FaqResController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
-    ]);
-   
+    ]);  
 });
 
 
@@ -108,8 +110,9 @@ Route::get('/logout', function () {
     return redirect('/users');
 });
 
-Route::get('/indexFormations', function () {
-    return view('indexFormations');
+
+Route::get('/indexFormations/{id}', function () {
+    return view('indexFormations', ['id' => request('id')]);
 });
 
 Route::get('/questionsEssentielles', function () {

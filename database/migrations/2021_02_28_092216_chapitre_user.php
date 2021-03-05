@@ -30,6 +30,6 @@ class ChapitreUser extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('chapitre_user');
     }
 }

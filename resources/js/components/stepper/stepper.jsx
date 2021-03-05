@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
 const Stepper = (props) => {
   const classes = useStyles();
   const [chapitres, setChapitres] = useState([]);
@@ -34,20 +35,20 @@ const Stepper = (props) => {
 
   //récupère tous les chapitres
   useEffect(() => {
-    axios.get(`http://localhost:8000/modulesApi`)
+    axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {
         setChapitres(Object.entries(res.data));
         setId(1);
       });
   }, []);
 
-  // set l'id du chapitre actif pour positionner le 
-  // curseur quand je clique dans la liste
+  // set id avec l'id du chapitre dans le store pour positionner le 
+  // curseur du stepper quand je clique dans la liste
   useEffect(() => {
     setId(props.info_chapitre.id); // <-- 
   }, [props.info_chapitre.id]);
 
-
+  console.log(' stepper id de la formation   ===>   ' + idFormation);
   // positionne le curseur sur le stepper cliqué et envoi son chapitre
   // dans le store pour mettre à jour BackNextButton et SimpleList
   const locateStepper = (chapitre) => {
@@ -63,6 +64,7 @@ const Stepper = (props) => {
             onClick={() => locateStepper(chapitre[1])}
             variant="outlined" color="primary" >
             {id == chapitre[1].id ? <GpsFixedIcon variant="outlined" /> : ''}
+            {/* {chapitre[1].id} */}
           </Button>
         ))}
       </div>

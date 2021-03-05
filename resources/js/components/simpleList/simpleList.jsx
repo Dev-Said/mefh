@@ -63,6 +63,7 @@ const  SimpleList = (props) => {
     setSelectedIndex(index - 1);
   };
 
+  console.log('id de la formation   ===>   ' + idFormation);
   // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
   // si il n'y a rien dans info_chapitre.module_id.
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné

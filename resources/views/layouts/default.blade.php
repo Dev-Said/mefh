@@ -254,9 +254,6 @@
                 <a href="/faqsres">
                     <li class="{{ 'faqsres' == request()->path() ? 'active' : '' }}">Faqs</li>
                 </a>
-                <a href="/indexFormations">
-                    <li class="{{ 'indexFormations' == request()->path() ? 'active' : '' }}">IndexFormations</li>
-                </a>
                 <a href="{{ request()->path() .'/create' }}">
                     <li class="nouveau {{ request()->is('*/create') ? 'hide' : '' }}">Nouveau</li>
                 </a>

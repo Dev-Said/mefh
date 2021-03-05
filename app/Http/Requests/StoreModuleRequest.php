@@ -26,7 +26,6 @@ class StoreModuleRequest extends FormRequest
         return [
             'titre' => 'required|max:255|string',
             'description' => 'required|string',
-            'ordre' => 'required|integer',
             'formation_id' => 'required|integer',
         ];
     }
