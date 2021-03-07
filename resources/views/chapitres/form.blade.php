@@ -22,13 +22,19 @@
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="ordre">Ordre</label>
-        <input type="text" name="ordre" id="ordre" value="{{ old('ordre') }}">
-        @error('ordre')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
         <label for="module_id">Module_id</label>
-        <input type="text" name="module_id" id="module_id" value="{{ old('module_id') }}">
+
+        <p>
+            <select name="module_id" id="module_id">
+            <option value="">Sélectionnez un module</option>
+                @foreach($modules as $module)
+                <option value="{{ $module->id }}">{{ $module->titre }}</option>
+                @endforeach
+            </select>
+        </p>
+
+
+        <!-- <input type="text" name="module_id" id="module_id" value="{{ old('module_id') }}"> -->
         @error('module_id')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

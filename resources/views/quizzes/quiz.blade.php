@@ -5,8 +5,6 @@
 
 <div class="edit">
 
-    
-
     <form action="/reponses_user" method="post">
         @csrf
         <h1>{{ $quiz->titre }}</h1>
@@ -15,7 +13,8 @@
         @foreach($question->reponses as $reponse)
         <div class="formQuiz">
             <!-- permet d'ajouter un chiffre différent à la fin du name pour différencier les checkbox
-            et permettre d'envoyer plusieurs réponses pour une même question -->
+            et permettre d'envoyer plusieurs réponses pour une même question car chaque réponse doit 
+            être insérée dans la db -->
             <div style="display: none;">{{ $name = $question->type == 'radio' ? '' : '_' . $loop->index }}</div>
 
             <input type="{{ $question->type }}" name="{{ $reponse->question_id . $name }}" 

@@ -23,10 +23,10 @@
 
 /***/ }),
 
-/***/ "./resources/js/components/cours/modules.scss":
-/*!****************************************************!*\
-  !*** ./resources/js/components/cours/modules.scss ***!
-  \****************************************************/
+/***/ "./resources/sass/reset.scss":
+/*!***********************************!*\
+  !*** ./resources/sass/reset.scss ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -66,6 +66,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/stepper/stepper.scss ***!
   \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/default.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/default.scss ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -118,19 +131,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************!*\
   !*** ./resources/sass/nav.scss ***!
   \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/sass/reset.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/reset.scss ***!
-  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -201,12 +201,12 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
+/******/ 			["./resources/sass/default.scss"],
 /******/ 			["./resources/sass/app.scss"],
 /******/ 			["./resources/sass/accueil.scss"],
 /******/ 			["./resources/sass/formation.scss"],
 /******/ 			["./resources/sass/nav.scss"],
 /******/ 			["./resources/sass/reset.scss"],
-/******/ 			["./resources/js/components/cours/modules.scss"],
 /******/ 			["./resources/js/components/videos/video.scss"],
 /******/ 			["./resources/js/components/listeChapitres/listeChapitres.scss"],
 /******/ 			["./resources/js/components/stepper/stepper.scss"]

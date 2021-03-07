@@ -31,8 +31,8 @@ class ChapitreController extends Controller
     public function create()
     {
 
-        $chapitresCount = Chapitre::all()->max('ordre') + 1;
-        return view('chapitres.form', ['chapitresCount' => $chapitresCount]);
+        $modules = module::all();
+        return view('chapitres.form', ['modules' => $modules]);
     }
 
 
@@ -49,8 +49,7 @@ class ChapitreController extends Controller
         $chapitre = new chapitre;
         $chapitre->titre = Arr::get($validated, 'titre');
         $chapitre->description = Arr::get($validated, 'description');
-        $chapitresCount = chapitre::all()->max('ordre') + 1;
-        $chapitre->ordre = $chapitresCount;
+        $chapitre->ordre = chapitre::where('module_id', $validated['module_id'])->max('ordre') + 1;
         $chapitre->module_id = Arr::get($validated, 'module_id');
         if ($request->hasFile('fichier_video')) {
             $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');

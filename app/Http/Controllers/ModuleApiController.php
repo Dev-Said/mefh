@@ -59,8 +59,8 @@ class ModuleApiController extends Controller
     public function show($id)
     {
 
-        // return  module::find($id)->chapitres;
-
+        // renvoi tous les chapitres correspondants aux modules
+        // d'une formation donnée
         return DB::table('modules')
             ->select(
                 'modules.id as module_id',
@@ -73,14 +73,14 @@ class ModuleApiController extends Controller
                 'fichier_video',
                 'chapitres.ordre as ordre',
                 'modules.formation_id as formation_id',
+                'quizzes.module_id as quiz_module_id'
             )
             ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
+            ->leftJoin('quizzes', 'modules.id', '=', 'quizzes.module_id')
             ->where('formation_id', $id)
             ->orderBy('module_ordre', 'asc')
             ->orderBy('ordre', 'asc')
             ->get();
-
-            // return view('indexFormations', ['datas' => $datas]);
 
     }
 

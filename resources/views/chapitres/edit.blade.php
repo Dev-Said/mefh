@@ -32,12 +32,8 @@
         <input type="description" name="description" id="description" value="{{ $chapitre->description }}" >
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <label for="ordre">Ordre</label>
-        <input type="number" name="ordre" id="ordre" value="{{ $chapitre->ordre }}" >
-        @error('ordre')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        @enderror 
+        <input type="hidden" name="ordre" id="ordre" value="{{ $chapitre->ordre }}" >
         <label for="module_id">Module</label>
         <select name="module_id" id="module_id" >
             <option value="{{ $chapitre->module_id }}">{{ $chapitre->module->titre }}</option>

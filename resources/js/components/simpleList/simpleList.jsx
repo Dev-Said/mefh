@@ -9,6 +9,7 @@ import ArrowRight from '@material-ui/icons/ArrowRight';
 import { connect } from 'react-redux';
 import store from '../redux/store'
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
@@ -31,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
   },
   itemText: {
     paddingLeft: 15,
+  },
+  quiz: {
+    width: 300,
+    height: 50,
+    "&:focus": {
+      outline: 'none',
+    },
+  },
+  typo: {
+    width: 300,
+    paddingLeft: 23,
+    paddingTop: "40px",
+    paddingBottom: "20px",
+    textAlign: 'left',
+    fontSize: "16px",
+    variant: "body2",
   }
 }));
 
@@ -39,7 +56,7 @@ const  SimpleList = (props) => {
   const classes = useStyles();
 
   // envoi le chapitre en cours pour stepper quand on clique dans la liste
-  const handleClick2 = (chapitre) => {
+  const handleClick = (chapitre) => {
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
   };
 
@@ -57,13 +74,14 @@ const  SimpleList = (props) => {
   // sélectionne l'item qui correspond à info_chapitre.ordre dans la liste
   useEffect(() => {
     initListItemClick(null, props.info_chapitre.ordre);
+    console.log(props.info_chapitre.ordre);
   }, [props.info_chapitre.ordre]);
 
   const initListItemClick = (event, index) => {
     setSelectedIndex(index - 1);
   };
 
-  console.log('id de la formation   ===>   ' + idFormation);
+  // console.log('id de la formation   ===>   ' + idFormation);
   // sélectionne uniquement les chapitres dont le module_id est = module_id ou 1
   // si il n'y a rien dans info_chapitre.module_id.
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné
@@ -84,7 +102,7 @@ const  SimpleList = (props) => {
         <Divider />
         {chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
           <ListItem button selected={selectedIndex === index} onClick={(event) => {
-            handleClick2(chapitre[1]);
+            handleClick(chapitre[1]);
             SelectedClick(event, index);
           }}>
             {selectedIndex === index && <ArrowRight className={classes.itemIcon} />}

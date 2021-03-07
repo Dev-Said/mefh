@@ -1,12 +1,18 @@
 .contenaireStepper {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: stretch;
   width: 100%;
-  height: calc(100vh - 130px);
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #f11e1e;
+  height: 100px;
+  background-color: #fff4f4;
   border: brown solid 2px;
+}
+
+.stepBouton {
+  width: auto;
+  flex: 1;
+  background-color: red;
 }

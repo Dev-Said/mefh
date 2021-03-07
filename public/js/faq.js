@@ -10411,8 +10411,6 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
       marginTop: "30px"
     },
     heading: {
-      //   fontSize: theme.typography.pxToRem(15),
-      //   fontWeight: theme.typography.fontWeightRegular,
       height: "60px",
       paddingTop: "20px"
     },

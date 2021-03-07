@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '70%',
+    marginTop: '40px',
   },
 }));
 
@@ -13,7 +14,7 @@ const ChapitreDescription = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root }>
       <Typography className={classes.instructions}>{props.description_chapitre.description}</Typography>
     </div>
   );

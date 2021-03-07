@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "30px",
     },
     heading: {
-        //   fontSize: theme.typography.pxToRem(15),
-        //   fontWeight: theme.typography.fontWeightRegular,
         height: "60px",
         paddingTop: "20px",
     },

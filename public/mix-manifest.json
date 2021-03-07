@@ -1,14 +1,14 @@
 {
-    "/js/app.js": "/js/app.js",
     "/js/cours.js": "/js/cours.js",
     "/js/faq.js": "/js/faq.js",
     "/css/app.css": "/css/app.css",
-    "/css/reset.css": "/css/reset.css",
     "/css/nav.css": "/css/nav.css",
     "/css/formation.css": "/css/formation.css",
     "/css/accueil.css": "/css/accueil.css",
+    "/css/default.css": "/css/default.css",
     "/css/stepper.css": "/css/stepper.css",
     "/css/listeChapitres.css": "/css/listeChapitres.css",
     "/css/video.css": "/css/video.css",
-    "/css/modules.css": "/css/modules.css"
+    "/css/modules.css": "/css/modules.css",
+    "/css/reset.css": "/css/reset.css"
 }

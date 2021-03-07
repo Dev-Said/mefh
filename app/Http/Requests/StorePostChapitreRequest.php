@@ -25,7 +25,7 @@ class StorePostChapitreRequest extends FormRequest
     {
         return [
             'titre' => 'required|max:255|string',
-            'description' => 'required|max:255|string',
+            'description' => 'required|string',
             'fichier_video' => 'required',
             // 'ordre' => 'required|max:5|alpha_num',
             'module_id' => 'required|max:5|alpha_num',

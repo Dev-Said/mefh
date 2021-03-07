@@ -21,6 +21,7 @@
     <!-- Styles -->
    
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
+  
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />

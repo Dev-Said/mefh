@@ -25,7 +25,7 @@ class UpdateChapitreRequest extends FormRequest
     {
         return [
             'titre' => 'required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'required|',
             'ordre' => 'required|max:255',
             'module_id' => 'required|max:255',
         ];

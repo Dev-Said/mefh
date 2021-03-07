@@ -49,7 +49,7 @@ class ModuleResController extends Controller
         $module->description = Arr::get($validated, 'description');
         
         $module->formation_id = Arr::get($validated, 'formation_id');
-        $modulesCount = module::where('formation_id', $module->formation_id)->max('ordre') + 1;
+        $modulesCount = module::where('formation_id', $validated['formation_id'])->max('ordre') + 1;
         $module->ordre = $modulesCount;
         $module->save();
 

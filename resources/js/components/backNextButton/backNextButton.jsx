@@ -54,7 +54,7 @@ const BackNextButton = (props) => {
   // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
   if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: props.chapitres[0][1] });
-    console.log('props.chapitres[0][1]    ' + props.chapitres[0][1].fichier_video);
+    // console.log('props.chapitres[0][1]    ' + props.chapitres[0][1].fichier_video);
   }
 
   // modifie activeStep pour positionner le bon onglet "précédent / suivant"

@@ -19,7 +19,7 @@ class FormationResController extends Controller
     {
         // $formations = DB::table('formations')->orderBy('ordre')->get();
         $formations = formation::all();
-        return view('formationsR.list', ['formations' => $formations]);
+        return view('formations.list', ['formations' => $formations]);
     }
 
     /**
@@ -29,7 +29,7 @@ class FormationResController extends Controller
      */
     public function create()
     {
-        return view('formationsR.form');
+        return view('formations.form');
     }
 
     /**
@@ -75,7 +75,7 @@ class FormationResController extends Controller
     public function edit(formation $formation)
     {
         //  dd($formation);
-        return view('formationsR.edit', ['formation' => $formation]);
+        return view('formations.edit', ['formation' => $formation]);
     }
 
     /**

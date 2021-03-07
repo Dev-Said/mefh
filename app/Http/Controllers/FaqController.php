@@ -58,15 +58,13 @@ class FaqController extends Controller
      */
     public function show($param)
     {
-        if ($param <> ''){
+        if ($param <> '') {
             return Faq::where('question', 'like', "%$param%")
-            ->orWhere('reponse', 'like', "%$param%")
-            ->get();
+                ->orWhere('reponse', 'like', "%$param%")
+                ->get();
         } else {
             return Faq::all();
         }
-
-    
     }
 
     /**

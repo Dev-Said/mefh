@@ -40,11 +40,12 @@ class FormationController extends Controller
         $formationsCount = formation::all()->max('ordre') + 1;
         $formation->ordre = $formationsCount;
         if ($request->hasFile('image_formation')) {
-
+            // si il y a un fichier image on le redimenssionne avec "intervention image" 
+            // avant la sauvegarde
             $image = $request->file('image_formation');
             $filename = time() . $image->getClientOriginalName();
             $image_resize = Image::make($image->getRealPath());
-            $image_resize->fit(400, 400, function ($constraint) {
+            $image_resize->fit(400, 250, function ($constraint) {
                 $constraint->upsize();
             });
             $image_resize->save(storage_path('app/public/images/' . $filename));
@@ -104,11 +105,12 @@ class FormationController extends Controller
         if ($request->hasFile('image_formation')) {
      
             Storage::delete('public/' . $formation->image_formation);
-
+            // si il y a un fichier image on le redimenssionne avec "intervention image" 
+            // avant la sauvegarde
             $image = $request->file('image_formation');
             $filename = time() . $image->getClientOriginalName();
             $image_resize = Image::make($image->getRealPath());
-            $image_resize->fit(400, 400, function ($constraint) {
+            $image_resize->fit(400, 250, function ($constraint) {
                 $constraint->upsize();
             });
             $image_resize->save(storage_path('app/public/images/' . $filename));
