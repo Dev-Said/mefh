@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +16,7 @@ const ChapitreDescription = (props) => {
 
   return (
     <div className={classes.root }>
-      <Typography className={classes.instructions}>{props.description_chapitre.description}</Typography>
+      <Typography className={classes.instructions}>{ ReactHtmlParser(props.description_chapitre.description) }</Typography>
     </div>
   );
 }

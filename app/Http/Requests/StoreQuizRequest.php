@@ -25,7 +25,7 @@ class StoreQuizRequest extends FormRequest
     {
         return [
             'titre' => 'required|max:255|string',
-            'module_id' => 'required|max:5|alpha_num',
+            'module_id' => 'required|alpha_num',
         ];
     }
 }

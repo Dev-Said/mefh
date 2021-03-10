@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="edit">
 
     <form action="/chapitres" method="post" enctype="multipart/form-data">
@@ -18,7 +20,7 @@
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="description">Description</label>
-        <input type="text" name="description" id="description" value="{{ old('description') }}">
+        <textarea   id="description" name="description" value="{{ old('description') }}"></textarea>
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -43,5 +45,12 @@
 
 </div>
 
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
+<script>
+CKEDITOR.replace( 'description', {
+    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+});
+</script>
 @endsection

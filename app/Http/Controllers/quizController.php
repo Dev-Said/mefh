@@ -7,6 +7,7 @@ use App\Models\Module;
 use App\Models\Remember;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreQuizRequest;
 
@@ -119,5 +120,20 @@ class QuizController extends Controller
     {
         $quiz = Quiz::find($id);
         return view('quizzes.quiz', ['quiz' => $quiz]);
+    }
+
+    public function quizApi($id)
+    {
+
+        return quiz::where('module_id', $id)
+        ->with('questions.reponses')->get();        
+    }
+
+
+
+    public function quizApi2(Request $request)
+    {
+
+        dd($request);     
     }
 }

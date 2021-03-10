@@ -26,7 +26,7 @@ class StoreReponseRequest extends FormRequest
         return [
             'reponse' => 'required|string',
             'is_correct' => 'required|boolean',
-            'question_id' => 'required|max:5|integer',
+            'question_id' => 'required|integer',
         ];
     }
 }

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     // margin-left: auto;
     // margin-right: auto;
     // backgroundColor: 'rgb(255, 244, 244)',
-    border: 'brown solid 1px',
+    // border: 'brown solid 1px',
   },
   stepButton: {
     height: 20,
@@ -51,7 +51,9 @@ const Stepper = (props) => {
   const [chapitres, setChapitres] = useState([]);
   const [id, setId] = useState(1);
 
-  //récupère tous les chapitres
+  // récupère tous les chapitres de la formation dont l'id est = idFormation
+  // idFormation est injecté dans la page blade qui affiche le stepper
+  // dans ce cas ci la page indexFormation
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {
@@ -81,7 +83,7 @@ const Stepper = (props) => {
     return style;
 
   }
-
+  console.log('stepper     ' + props.info_chapitre.module_id);
   const useStylesBootstrap = makeStyles((theme) => ({
     arrow: {
       color: theme.palette.common.black,
@@ -98,10 +100,6 @@ const Stepper = (props) => {
 
     return <Tooltip arrow classes={classes} {...props} />;
   }
-
-
-
-
 
   return (
     <div className={classes.root}>

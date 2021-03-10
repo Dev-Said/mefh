@@ -26,7 +26,7 @@ class StoreQuestionRequest extends FormRequest
         return [
             'question' => 'required|string',
             'type' => 'required|max:8|min:5|string',
-            'ordre' => 'required|max:5|alpha_num',
+            'ordre' => 'required|alpha_num',
             'quiz_id' => 'required|max:5|alpha_num',
         ];
     }

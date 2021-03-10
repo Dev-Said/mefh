@@ -4,7 +4,7 @@ import ListeChapitres from '../ListeChapitres/ListeChapitres';
 import Stepper from '../stepper/stepper';
 import ChapitreDescription from '../chapitreDescription/chapitreDescription';
 import ContainedButtons from '../coursCompleted/coursCompleted';
-import Faq from '../faq/faq';
+import Quiz from '../quiz/quiz';
 import './modules.scss';
 
 
@@ -24,20 +24,21 @@ const Wrapper = () => {
 
   var compo;
   if (isQuiz) {
-    compo = <Faq />
+    compo = <Quiz />
   } else {
-    compo = <Video />
+    compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />, <ChapitreDescription />, 
+      <ContainedButtons />]
   }
 
   return (
     <div className="contenaireModules">
-      <Stepper />
+      {/* <Stepper /> */}
       {compo}
-      <ListeChapitres handleQuizClick={handleQuizClick} />
+      {/* <ListeChapitres handleQuizClick={handleQuizClick} /> */}
 
       
-      <ChapitreDescription />
-      <ContainedButtons />
+      {/* <ChapitreDescription />
+      <ContainedButtons /> */}
     </div>
   )
 }

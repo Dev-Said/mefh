@@ -29,7 +29,7 @@
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="description">Description</label>
-        <input type="description" name="description" id="description" value="{{ $chapitre->description }}" >
+        <textarea   id="description" name="description" value="{{ $chapitre->description }}"></textarea>
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror 
@@ -49,6 +49,13 @@
 
 </div>
 
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
+<script>
+CKEDITOR.replace( 'description', {
+    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+});
+</script>
 
 @endsection

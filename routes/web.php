@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::get('/quizzes/quiz/{id}', [QuizController::class, 'quiz']);
+Route::get('/quizzes/quizApi/{id}', [QuizController::class, 'quizApi']);
 Route::post('/reponses_user', [UserController::class, 'reponseUser']);
 Route::get('/users/profile/{id}', [UserController::class, 'user']);
 Route::get('/dashboard', [DashboardController::class, 'entry']);
@@ -120,3 +121,4 @@ Route::get('/questionsEssentielles', function () {
 });
 
 
+Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
