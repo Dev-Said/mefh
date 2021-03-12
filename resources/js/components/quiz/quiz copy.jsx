@@ -85,15 +85,7 @@ const Quiz = (props) => {
     })
   }
   )
-
-  var reponses_Questions = {};
-  quizzes.map((quiz) => {
-    quiz[1].questions.map(question => {
-      question.reponses.map((reponse) => reponses_Questions[reponse.id] = question.id)
-    })
-  }
-  )
-
+console.log('length    ' + allQuestionsId.length)
   var obj = {};
   quizzes.map((quiz) => {
     quiz[1].questions.map(question => {
@@ -116,6 +108,14 @@ const Quiz = (props) => {
   console.log('allQuestionsId    ' + allQuestionsId);
   console.log(reponses_Questions);
 
+  // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
+  var reponses_Questions = {};
+  quizzes.map((quiz) => {
+    quiz[1].questions.map(question => {
+      question.reponses.map((reponse) => reponses_Questions[reponse.id] = question.id)
+    })
+  }
+  )
   // fournie l'id de la question dont la réponse est en paramètre
   const getQuestion = (idReponse) => {
     var questId;
@@ -125,18 +125,18 @@ const Quiz = (props) => {
     return questId;
   }
 
-
-  // fournie l'IsCorrect de la réponse en paramètre
+  // on crée un objet avec les is_correct de chaque réponse
+  // pour récupérer is_correct avec le reponse.id
+  var allIsCorrect = {};
+  quizzes.map((quiz) => {
+    quiz[1].questions.map(question => {
+      question.reponses.map((reponse) => allIsCorrect[reponse.id] = reponse.is_correct)
+    })
+  }
+  )
+  // fournie l'IsCorrect de la réponse donnée en paramètre
   const getIsCorrect = (idReponse) => {
-    // on crée un objet avec les is_correct de chaque réponse
-    // pour récupérer is_correct avec le reponse.id
-    var allIsCorrect = {};
-    quizzes.map((quiz) => {
-      quiz[1].questions.map(question => {
-        question.reponses.map((reponse) => allIsCorrect[reponse.id] = reponse.is_correct)
-      })
-    }
-    )
+
     var isCorrect;
     for (var prop in allIsCorrect) {
       prop == idReponse && (isCorrect = allIsCorrect[prop]);
@@ -145,9 +145,6 @@ const Quiz = (props) => {
 
   }
 
-
-  // calcule la pondération de la valeur d'une réponse donnée
-  const getCoefficient = (idReponse) => {
   // récupère le nombre de bonnes réponses par question
   var Questions_isCorrect = {};
   var tot = 0;
@@ -158,30 +155,42 @@ const Quiz = (props) => {
     })
   }
   )
+  // calcule la pondération de la valeur des points d'une réponse donnée
+  const getCoefficient = (idReponse) => {
     var questionId = getQuestion(idReponse)
-
     var coef = (1 / Questions_isCorrect[questionId])
     console.log('coef   ' + coef);
 
+    return coef;
   }
 
-  getCoefficient(11);
-
-  console.log('getIsCorrect   ' + getIsCorrect(8));
-
-
-  var userReponse = {};
-
+  // vérifie que toutes les questions ont au moins une réponse
+  const formValidation = () => {
+    var questionMissing = [];
+    for(let i = 0; i <= userReponse.length; i++){
+      
+      !allQuestionsId.includes(getQuestion(userReponse[i])) && questionMissing;
+    }
+    console.log('questionMissing   ' + questionMissing);
+  }
+  var userReponse = [];
   function handleSubmit(event) {
     event.preventDefault();
-    for (var i = 0; i <= event.target.length; i++) {
+
+    var coef;
+    var isCorret;
+    var total = 0;
+    for (let i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
-        userReponse[i] = event.target[i].value
-       
+        coef = getCoefficient(event.target[i].value);
+        isCorret = getIsCorrect(event.target[i].value);
+        total += (coef * isCorret);
       }
     }
- 
-    console.log(userReponse[1])
+    userReponse = event.target.value;
+    formValidation();
+    console.log('userReponse    ' + userReponse)
+    console.log('total    ' + total)
   }
 
 

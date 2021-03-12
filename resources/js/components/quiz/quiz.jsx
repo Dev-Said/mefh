@@ -164,6 +164,21 @@ const Quiz = (props) => {
     return coef;
   }
 
+  // vérifie que toutes les questions ont au moins une réponse
+  const formValidation = (userRep) => {
+    var questionMissing = [];
+    var userQuestion = [];
+
+    for (let i = 0; i <= userRep.length - 1; i++) {
+      userQuestion.push(getQuestion(userRep[i]))
+    }
+
+    for (let i = 0; i <= allQuestionsId.length - 1; i++) {
+      !userQuestion.includes(allQuestionsId[i]) &&
+        questionMissing.push(allQuestionsId[i])
+  }
+    console.log('questionMissing   ' + questionMissing);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -176,8 +191,12 @@ const Quiz = (props) => {
         coef = getCoefficient(event.target[i].value);
         isCorret = getIsCorrect(event.target[i].value);
         total += (coef * isCorret);
+        userReponse.push(event.target[i].value);
       }
+
     }
+
+    formValidation(userReponse);
     console.log('userReponse    ' + userReponse)
     console.log('total    ' + total)
   }

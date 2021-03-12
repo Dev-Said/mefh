@@ -14377,6 +14377,22 @@ var Quiz = function Quiz(props) {
     var coef = 1 / Questions_isCorrect[questionId];
     console.log('coef   ' + coef);
     return coef;
+  }; // vérifie que toutes les questions ont au moins une réponse
+
+
+  var formValidation = function formValidation(userRep) {
+    var questionMissing = [];
+    var userQuestion = [];
+
+    for (var i = 0; i <= userRep.length - 1; i++) {
+      userQuestion.push(getQuestion(userRep[i]));
+    }
+
+    for (var _i2 = 0; _i2 <= allQuestionsId.length - 1; _i2++) {
+      !userQuestion.includes(allQuestionsId[_i2]) && questionMissing.push(allQuestionsId[_i2]);
+    }
+
+    console.log('questionMissing   ' + questionMissing);
   };
 
   function handleSubmit(event) {
@@ -14391,9 +14407,11 @@ var Quiz = function Quiz(props) {
         coef = getCoefficient(event.target[i].value);
         isCorret = getIsCorrect(event.target[i].value);
         total += coef * isCorret;
+        userReponse.push(event.target[i].value);
       }
     }
 
+    formValidation(userReponse);
     console.log('userReponse    ' + userReponse);
     console.log('total    ' + total);
   }
