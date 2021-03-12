@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
     "&:focus": {
       outline: 'none',
-      backgroundColor: 'blue',
+      backgroundColor: '#4297b6',
     },
     flex: '1',
     // backgroundColor: "red",
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   selected: {
-    backgroundColor: 'blue',
+    backgroundColor: '#4297b6',
   }
 }));
 
@@ -78,7 +78,7 @@ const Stepper = (props) => {
 
   const colorSelected = (idChapitre) => {
     idChapitre === id ?
-      style = { backgroundColor: 'blue' } :
+      style = { backgroundColor: '#4297b6' } :
       style = { backgroundColor: '' }
     return style;
 
@@ -108,7 +108,7 @@ const Stepper = (props) => {
           <BootstrapTooltip title={chapitre[1].titre} placement="top">
             <Button className={classes.stepButton} key={chapitre[1].id}
               onClick={() => locateStepper(chapitre[1])}
-              variant="outlined" color="primary"
+              variant="outlined" color="#4297b6"
               style={colorSelected(chapitre[1].id)}>
             </Button>
           </BootstrapTooltip>

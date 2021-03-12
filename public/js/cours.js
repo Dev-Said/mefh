@@ -14039,7 +14039,8 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
 });
 
 var ChapitreDescription = function ChapitreDescription(props) {
-  var classes = useStyles();
+  var classes = useStyles(); // ReactHtmlParser permet d'afficher correctement du html provenant de ckeditor sans afficher les balises
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5__.default, {
@@ -14153,9 +14154,9 @@ var InputQuiz = function InputQuiz(props) {
   var name = props.name,
       value = props.value,
       id = props.id,
+      iscorrect = props.iscorrect,
       typeInput = props.typeInput,
-      ndx = props.ndx,
-      onChange = props.onChange; // ici on différencie les checkbox et les radios pour attribuer
+      ndx = props.ndx; // ici on différencie les checkbox et les radios pour attribuer
   // un name différent pour les checkbox et similaire pour les radios
 
   var trueName = typeInput === 'checkbox' ? name + ndx : name;
@@ -14165,8 +14166,7 @@ var InputQuiz = function InputQuiz(props) {
       type: typeInput,
       name: trueName,
       id: id,
-      value: id,
-      onChange: onChange
+      value: id
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
       className: classes.reponses,
       htmlFor: id,
@@ -14267,6 +14267,10 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default
       paddingBottom: '7px',
       backgroundColor: 'black',
       color: 'white'
+    },
+    divid: {
+      marginTop: '10px',
+      marginBottom: '10px'
     }
   };
 });
@@ -14289,41 +14293,109 @@ var Quiz = function Quiz(props) {
   // une fois pour chaque questions sinon invalidation
 
   var allQuestionsId = [];
-  quizzes.map(function (quiz, index) {
+  quizzes.map(function (quiz) {
     quiz[1].questions.map(function (question) {
       question.reponses.map(function (reponse) {
         return allQuestionsId.indexOf(reponse.question_id) === -1 && allQuestionsId.push(reponse.question_id);
       });
     });
   });
-  var allIsCorrect = [];
-  quizzes.map(function (quiz, index) {
+  var obj = {};
+  quizzes.map(function (quiz) {
     quiz[1].questions.map(function (question) {
       question.reponses.map(function (reponse) {
-        return allIsCorrect.push(reponse.is_correct);
+        return obj[reponse.id] = reponse.is_correct;
       });
     });
-  });
-  var total = 0; // for (var i = 0; i < allIsCorrect.length; i++) {
-  //   total += Number(isCorrect[i])
+  }); // var allresponseId = [];
+  // quizzes.map((quiz) => {
+  //   quiz[1].questions.map(question => {
+  //     question.reponses.map((reponse) => allresponseId.push(reponse.id))
+  //   })
   // }
-  // console.log('allQuestionsId    ' + allQuestionsId);
-  // console.log('allIsCorrect    ' + allIsCorrect);
-  // console.log('allIsCorrect.length    ' + allIsCorrect.length);
-  // console.log('quiz    ' + props.info_chapitre.module_id);
+  // )
 
-  var userResponseId = [];
+  console.log(obj);
+  console.log('allQuestionsId    ' + allQuestionsId);
+  console.log(reponses_Questions); // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
+
+  var reponses_Questions = {};
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return reponses_Questions[reponse.id] = question.id;
+      });
+    });
+  }); // fournie l'id de la question dont la réponse est en paramètre
+
+  var getQuestion = function getQuestion(idReponse) {
+    var questId;
+
+    for (var prop in reponses_Questions) {
+      prop == idReponse && (questId = reponses_Questions[prop]);
+    }
+
+    return questId;
+  }; // on crée un objet avec les is_correct de chaque réponse
+  // pour récupérer is_correct avec le reponse.id
+
+
+  var allIsCorrect = {};
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return allIsCorrect[reponse.id] = reponse.is_correct;
+      });
+    });
+  }); // fournie l'IsCorrect de la réponse donnée en paramètre
+
+  var getIsCorrect = function getIsCorrect(idReponse) {
+    var isCorrect;
+
+    for (var prop in allIsCorrect) {
+      prop == idReponse && (isCorrect = allIsCorrect[prop]);
+    }
+
+    return isCorrect;
+  }; // récupère le nombre de bonnes réponses par question
+
+
+  var Questions_isCorrect = {};
+  var tot = 0;
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return tot += reponse.is_correct;
+      });
+      Questions_isCorrect[question.id] = tot;
+      tot = 0;
+    });
+  }); // calcule la pondération de la valeur des points d'une réponse donnée
+
+  var getCoefficient = function getCoefficient(idReponse) {
+    var questionId = getQuestion(idReponse);
+    var coef = 1 / Questions_isCorrect[questionId];
+    console.log('coef   ' + coef);
+    return coef;
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
+    var userReponse = [];
+    var coef;
+    var isCorret;
+    var total = 0;
 
     for (var i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
-        userResponseId.push(event.target[i].value);
+        coef = getCoefficient(event.target[i].value);
+        isCorret = getIsCorrect(event.target[i].value);
+        total += coef * isCorret;
       }
     }
 
-    console.log('userResponseId    ' + userResponseId);
+    console.log('userReponse    ' + userReponse);
+    console.log('total    ' + total);
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
@@ -14345,12 +14417,13 @@ var Quiz = function Quiz(props) {
                 }), question.reponses.map(function (reponse, ndx) {
                   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_formulaire_InputQuiz__WEBPACK_IMPORTED_MODULE_3__.default, {
                     typeInput: question.type,
+                    iscorrect: reponse.is_correct,
                     value: reponse.reponse,
                     name: reponse.question_id,
                     ndx: ndx,
                     id: reponse.id
                   });
-                }, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {}))]
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {})]
               });
             })
           }, quiz[1].id);
@@ -14982,7 +15055,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default
       height: 20,
       "&:focus": {
         outline: 'none',
-        backgroundColor: 'blue'
+        backgroundColor: '#4297b6'
       },
       flex: '1' // backgroundColor: "red",
 
@@ -14994,7 +15067,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default
       marginTop: "15px"
     },
     selected: {
-      backgroundColor: 'blue'
+      backgroundColor: '#4297b6'
     }
   };
 });
@@ -15040,7 +15113,7 @@ var Stepper = function Stepper(props) {
 
   var colorSelected = function colorSelected(idChapitre) {
     idChapitre === id ? style = {
-      backgroundColor: 'blue'
+      backgroundColor: '#4297b6'
     } : style = {
       backgroundColor: ''
     };
@@ -15082,7 +15155,7 @@ var Stepper = function Stepper(props) {
               return locateStepper(chapitre[1]);
             },
             variant: "outlined",
-            color: "primary",
+            color: "#4297b6",
             style: colorSelected(chapitre[1].id)
           }, chapitre[1].id)
         });

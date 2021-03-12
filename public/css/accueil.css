@@ -5,7 +5,6 @@
 .contenairAccueil {
   width: 100%;
   height: calc(100vh - 100px);
-  background-image: url(/images/model7b.png?6e8012a4b0878f8081c6eb17f86dfdce);
   background-position: top left;
   background-repeat: no-repeat;
   background-size: cover, contain;

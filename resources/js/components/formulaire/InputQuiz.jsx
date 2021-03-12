@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const InputQuiz = (props) => {
   const classes = useStyles();
-  const { name, value, id, typeInput, ndx, onChange } = props
+  const { name, value, id, iscorrect, typeInput, ndx } = props
 
   // ici on différencie les checkbox et les radios pour attribuer
   // un name différent pour les checkbox et similaire pour les radios
@@ -24,8 +24,7 @@ const InputQuiz = (props) => {
 
   return (
     <div className="InputQuiz" >
-      <input type={typeInput} name={trueName}
-       id={id} value={id} onChange={onChange} />
+      <input type={typeInput} name={trueName} id={id} value={id} />
       <label className={classes.reponses} htmlFor={id}>{value}</label>
     </div>
   )

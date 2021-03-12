@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const ChapitreDescription = (props) => {
   const classes = useStyles();
 
+  // ReactHtmlParser permet d'afficher correctement du html provenant de ckeditor sans afficher les balises
   return (
     <div className={classes.root }>
       <Typography className={classes.instructions}>{ ReactHtmlParser(props.description_chapitre.description) }</Typography>
