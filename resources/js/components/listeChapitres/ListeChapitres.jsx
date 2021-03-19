@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
       outline: 'none',
     },
     backgroundColor: '#ebebeb',
-    border: 'solid 1px #e22e59'
+    // border: 'solid 1px #e22e59'
   },
 }));
 

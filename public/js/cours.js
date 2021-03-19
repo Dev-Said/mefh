@@ -13816,8 +13816,8 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default
       "&:focus": {
         outline: 'none'
       },
-      backgroundColor: '#ebebeb',
-      border: 'solid 1px #e22e59'
+      backgroundColor: '#ebebeb' // border: 'solid 1px #e22e59'
+
     }
   };
 });
@@ -14154,10 +14154,10 @@ var InputQuiz = function InputQuiz(props) {
   var name = props.name,
       value = props.value,
       id = props.id,
-      iscorrect = props.iscorrect,
       typeInput = props.typeInput,
       ndx = props.ndx; // ici on différencie les checkbox et les radios pour attribuer
-  // un name différent pour les checkbox et similaire pour les radios
+  // un name différent pour les checkbox et identique pour les radios
+  // du même groupe
 
   var trueName = typeInput === 'checkbox' ? name + ndx : name;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -14192,14 +14192,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_FormLabel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/FormLabel */ "./node_modules/@material-ui/core/esm/FormLabel/FormLabel.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
-/* harmony import */ var _formulaire_InputQuiz__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../formulaire/InputQuiz */ "./resources/js/components/formulaire/InputQuiz.jsx");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
+/* harmony import */ var _quiz_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./quiz.scss */ "./resources/js/components/quiz/quiz.scss");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_FormLabel__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/FormLabel */ "./node_modules/@material-ui/core/esm/FormLabel/FormLabel.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
+/* harmony import */ var _formulaire_InputQuiz__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../formulaire/InputQuiz */ "./resources/js/components/formulaire/InputQuiz.jsx");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/Divider */ "./node_modules/@material-ui/core/esm/Divider/Divider.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 
 
 
@@ -14225,12 +14227,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-
-
-
-
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(function (theme) {
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(function (theme) {
   return {
     root: {
       display: 'flex',
@@ -14239,15 +14236,15 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default
       paddingRight: '10%',
       paddingBottom: '70px'
     },
-    // formControl: {
-    //   margin: theme.spacing(3),
-    // },
     formLabel: {
       fontSize: '22px',
       fontWeight: 'bold',
       lineHeight: '30px',
       marginBottom: '20px',
       marginTop: '20px'
+    },
+    formLabelError: {
+      color: 'red'
     },
     reponses: {
       fontSize: '16px',
@@ -14283,8 +14280,18 @@ var Quiz = function Quiz(props) {
       quizzes = _useState2[0],
       setQuizzes = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      score = _useState4[0],
+      setScore = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      messageScore = _useState6[0],
+      setMessageScore = _useState6[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://localhost:8000/quizzes/quizApi/".concat(props.info_chapitre.module_id)).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://localhost:8000/quizzes/quizApi/".concat(props.info_chapitre.module_id)).then(function (res) {
       setQuizzes(Object.entries(res.data));
     });
   }, []); // on récupère l'id de toutes les questions dans allQuestionsId pour pouvoir 
@@ -14317,6 +14324,7 @@ var Quiz = function Quiz(props) {
 
   console.log(obj);
   console.log('allQuestionsId    ' + allQuestionsId);
+  console.log('allQuestionsIdlength    ' + allQuestionsId.length);
   console.log(reponses_Questions); // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
 
   var reponses_Questions = {};
@@ -14377,11 +14385,13 @@ var Quiz = function Quiz(props) {
     var coef = 1 / Questions_isCorrect[questionId];
     console.log('coef   ' + coef);
     return coef;
-  }; // vérifie que toutes les questions ont au moins une réponse
+  }; // vérifie qu'on a répondu à toutes les questions 
+  // sinon renvoi l'id des questions sans réponse 
 
+
+  var questionMissing = [];
 
   var formValidation = function formValidation(userRep) {
-    var questionMissing = [];
     var userQuestion = [];
 
     for (var i = 0; i <= userRep.length - 1; i++) {
@@ -14390,9 +14400,29 @@ var Quiz = function Quiz(props) {
 
     for (var _i2 = 0; _i2 <= allQuestionsId.length - 1; _i2++) {
       !userQuestion.includes(allQuestionsId[_i2]) && questionMissing.push(allQuestionsId[_i2]);
-    }
+    } //met en rouge les questions sans réponses
 
-    console.log('questionMissing   ' + questionMissing);
+
+    if (questionMissing.length) {
+      for (var _i3 = 0; _i3 <= questionMissing.length - 1; _i3++) {
+        document.getElementById('questionId_' + questionMissing[_i3]).classList.add(classes.formLabelError);
+      } //ouvre une modal pour signaler qu'il faut répondre à toutes les questions
+
+
+      var modal = document.getElementById("myModal");
+      modal.style.display = "block";
+      var span = document.getElementsByClassName("close")[0];
+
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    }
   };
 
   function handleSubmit(event) {
@@ -14411,14 +14441,86 @@ var Quiz = function Quiz(props) {
       }
     }
 
-    formValidation(userReponse);
-    console.log('userReponse    ' + userReponse);
-    console.log('total    ' + total);
+    formValidation(userReponse); //affiche une modal avec le score du quiz
+
+    if (!questionMissing.length) {
+      setScore(Math.ceil(total / allQuestionsId.length * 100));
+
+      if (score >= 80) {
+        setMessageScore('Félicitation, votre score est de ');
+      }
+
+      if (score < 80) {
+        setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ');
+      }
+
+      var modalScore = document.getElementById("myModal2");
+      modalScore.style.display = "block";
+      var span = document.getElementsByClassName("close2")[0];
+
+      span.onclick = function () {
+        modalScore.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modalScore.style.display = "none";
+        }
+      };
+    }
+
+    questionMissing.length = 0;
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+  console.log('messagescore   ' + messageScore);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: classes.root,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_6__.default, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      id: "myModal",
+      "class": "modal",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        "class": "modal-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          "class": "headerModal",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+            "class": "close",
+            children: "x"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+          children: "Vous devez r\xE9pondre \xE0 toutes les questions du quiz !"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          "class": "footerModal"
+        })]
+      })
+    }), console.log('score    ' + score), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      id: "myModal2",
+      "class": "modal",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        "class": "modal-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+          "class": "headerModal",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+            "class": "close2",
+            children: "x"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+          children: [" ", messageScore, " ", score, " %"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+          "class": "footerModal",
+          children: ["Voulez-vous sauvegarder votre score ?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+            children: "Sauvegarder"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+            children: "Annuler"
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_7__.default, {
+      onClick: function onClick() {
+        return props.handleQuizClick();
+      },
+      className: "iech",
+      children: "Revenir sur la page de formation"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_8__.default, {
       className: classes.paper,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
         children: props.info_chapitre.module_titre
@@ -14429,11 +14531,12 @@ var Quiz = function Quiz(props) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
             children: quiz[1].questions.map(function (question) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_FormLabel__WEBPACK_IMPORTED_MODULE_7__.default, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_FormLabel__WEBPACK_IMPORTED_MODULE_9__.default, {
                   className: classes.formLabel,
+                  id: 'questionId_' + question['id'],
                   children: question['question']
                 }), question.reponses.map(function (reponse, ndx) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_formulaire_InputQuiz__WEBPACK_IMPORTED_MODULE_3__.default, {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_formulaire_InputQuiz__WEBPACK_IMPORTED_MODULE_4__.default, {
                     typeInput: question.type,
                     iscorrect: reponse.is_correct,
                     value: reponse.reponse,
@@ -14441,7 +14544,7 @@ var Quiz = function Quiz(props) {
                     ndx: ndx,
                     id: reponse.id
                   });
-                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__.default, {})]
+                }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_10__.default, {})]
               });
             })
           }, quiz[1].id);
@@ -14451,7 +14554,7 @@ var Quiz = function Quiz(props) {
           children: "Envoyer"
         })]
       })]
-    })
+    })]
   });
 };
 
@@ -14462,7 +14565,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_4__.connect)(mapStateToProps)(Quiz));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_5__.connect)(mapStateToProps)(Quiz));
 
 /***/ }),
 
@@ -15266,6 +15369,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _coursCompleted_coursCompleted__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../coursCompleted/coursCompleted */ "./resources/js/components/coursCompleted/coursCompleted.jsx");
 /* harmony import */ var _quiz_quiz__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../quiz/quiz */ "./resources/js/components/quiz/quiz.jsx");
 /* harmony import */ var _modules_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules.scss */ "./resources/js/components/wrapper/modules.scss");
+/* harmony import */ var _quiz_quiz_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../quiz/quiz.scss */ "./resources/js/components/quiz/quiz.scss");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -15289,25 +15393,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Wrapper = function Wrapper() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       isQuiz = _useState2[0],
-      setIsQuiz = _useState2[1]; // const [compo, setCompo] = useState();
-
+      setIsQuiz = _useState2[1];
 
   var handleQuizClick = function handleQuizClick() {
-    setIsQuiz(true);
-  };
-
-  var handleVideoClick = function handleVideoClick() {
-    setIsQuiz(false);
+    isQuiz == true ? setIsQuiz(false) : setIsQuiz(true);
   };
 
   var compo;
 
   if (isQuiz) {
-    compo = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_quiz_quiz__WEBPACK_IMPORTED_MODULE_7__.default, {});
+    compo = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_quiz_quiz__WEBPACK_IMPORTED_MODULE_7__.default, {
+      handleQuizClick: handleQuizClick
+    });
   } else {
     compo = [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_stepper_stepper__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_videos_Video__WEBPACK_IMPORTED_MODULE_2__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ListeChapitres_ListeChapitres__WEBPACK_IMPORTED_MODULE_3__.default, {
       handleQuizClick: handleQuizClick
@@ -42514,6 +42616,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/stepper/stepper.scss ***!
   \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/quiz/quiz.scss":
+/*!************************************************!*\
+  !*** ./resources/js/components/quiz/quiz.scss ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -82909,7 +83024,8 @@ function warning(condition, message) {
 /******/ 			["./resources/js/components/wrapper/modules.scss"],
 /******/ 			["./resources/js/components/videos/video.scss"],
 /******/ 			["./resources/js/components/listeChapitres/listeChapitres.scss"],
-/******/ 			["./resources/js/components/stepper/stepper.scss"]
+/******/ 			["./resources/js/components/stepper/stepper.scss"],
+/******/ 			["./resources/js/components/quiz/quiz.scss"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		

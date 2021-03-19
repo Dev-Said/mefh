@@ -6,25 +6,19 @@ import ChapitreDescription from '../chapitreDescription/chapitreDescription';
 import ContainedButtons from '../coursCompleted/coursCompleted';
 import Quiz from '../quiz/quiz';
 import './modules.scss';
-
+import '../quiz/quiz.scss';
 
 const Wrapper = () => {
 
   const [isQuiz, setIsQuiz] = useState(false);
-  // const [compo, setCompo] = useState();
-
 
   const handleQuizClick = () => {
-    setIsQuiz(true);
-  }
-
-  const handleVideoClick = () => {
-    setIsQuiz(false);
+    isQuiz == true ? setIsQuiz(false) : setIsQuiz(true);
   }
 
   var compo;
   if (isQuiz) {
-    compo = <Quiz />
+    compo = <Quiz handleQuizClick={handleQuizClick} />
   } else {
     compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />, <ChapitreDescription />, 
       <ContainedButtons />]
@@ -32,13 +26,7 @@ const Wrapper = () => {
 
   return (
     <div className="contenaireModules">
-      {/* <Stepper /> */}
       {compo}
-      {/* <ListeChapitres handleQuizClick={handleQuizClick} /> */}
-
-      
-      {/* <ChapitreDescription />
-      <ContainedButtons /> */}
     </div>
   )
 }

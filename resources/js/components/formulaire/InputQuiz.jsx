@@ -16,10 +16,11 @@ const useStyles = makeStyles((theme) => ({
 
 const InputQuiz = (props) => {
   const classes = useStyles();
-  const { name, value, id, iscorrect, typeInput, ndx } = props
+  const { name, value, id, typeInput, ndx } = props
 
   // ici on différencie les checkbox et les radios pour attribuer
-  // un name différent pour les checkbox et similaire pour les radios
+  // un name différent pour les checkbox et identique pour les radios
+  // du même groupe
   const trueName = typeInput === 'checkbox' ? name + ndx : name
 
   return (
