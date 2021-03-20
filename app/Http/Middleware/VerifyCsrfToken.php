@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'reponses_user',
+        '8000',
+        'indexFormations/*',
     ];
 }

@@ -198,14 +198,13 @@ const Quiz = (props) => {
     }
   }
 
-
+  var userReponse = [];
   function handleSubmit(event) {
     event.preventDefault();
-    var userReponse = [];
     var coef;
     var isCorret;
     var total = 0;
-    
+
 
     for (let i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
@@ -221,11 +220,13 @@ const Quiz = (props) => {
     //affiche une modal avec le score du quiz
     if (!questionMissing.length) {
       setScore(Math.ceil((total / allQuestionsId.length) * 100));
-
-      if (score >= 80) {
+      var scoreTest = Math.ceil((total / allQuestionsId.length) * 100);
+      console.log('scoreTest   ' + scoreTest);
+      console.log('userReponse   ' + userReponse);
+      if (scoreTest >= 80) {
         setMessageScore('Félicitation, votre score est de ');
-      } 
-      if (score < 80) {
+      }
+      if (scoreTest < 80) {
         setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ');
       }
 
@@ -244,9 +245,30 @@ const Quiz = (props) => {
       }
     }
     questionMissing.length = 0;
+    console.log('userReponse   ' + userReponse);
   }
 
-  console.log('messagescore   ' + messageScore);
+  const handleSaveQuiz = () => {
+    if (auth == 0) {
+      alert('vous devez être enregisté pour pouvoir sauvegarder vos résultats ');
+    } else {
+      axios.withCredentials = true;
+      // var token = document.head.querySelector('meta[name="csrf-token"]');
+      // axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+      // console.log('token.content   ' + token.content);
+      console.log('userReponse --->  ' + userReponse);
+      axios.post(`http://localhost:8000/reponses_user`, { userReponse })
+        .then(function (response) {
+          // success
+          console.log('success   ' + response.data);
+        })
+        .catch(function (error) {
+          // error 
+          console.log('probleme   ' + error);
+        });
+    }
+  }
+
 
   return (
     <div className={classes.root}>
@@ -260,7 +282,7 @@ const Quiz = (props) => {
         </div>
       </div>
 
-      {console.log('score    ' + score)}
+      {console.log('score2    ' + score)}
       {/* affiche résultat du quiz */}
       <div id="myModal2" class="modal">
         <div class="modal-content">
@@ -268,7 +290,7 @@ const Quiz = (props) => {
           <p> {messageScore} {score} %</p>
           <div class="footerModal">
             Voulez-vous sauvegarder votre score ?
-            <button>Sauvegarder</button>
+            <button onClick={handleSaveQuiz}>Sauvegarder</button>
             <button>Annuler</button>
           </div>
         </div>

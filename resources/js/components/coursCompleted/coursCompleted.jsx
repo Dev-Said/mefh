@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 import { toArray } from 'lodash';
 
 const useStyles = makeStyles(() => ({
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
 
 
 const handleClick = () => {
-  alert(toArray(auth));
+  alert(auth);
         
     }
 

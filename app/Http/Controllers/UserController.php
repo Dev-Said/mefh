@@ -126,17 +126,17 @@ class UserController extends Controller
 
     public function reponseUser(Request $request)
     {
-        //on récupère les id des questions du quiz dont l'id est = à quiz_id
-        //va me servir pour la suite
-        // $questions_id = Quiz::find($request->input('quiz_id'))->questions()->get('id');
+        // dd($request);
+        // $user = User::find(Auth::id());
 
-        $user = User::find(Auth::id());
-        $reponses = Reponse::find($request->except('_token', 'quiz_id'));
-        $user->reponses()->sync($reponses);
+        // $user = User::find(6);
+        // $reponses = Reponse::find($request->except('_token', 'quiz_id'));
+        // $user->reponses()->sync($reponses);
 
-        //on fait un sync mais sans supprimer les quiz qui ont déjà été fait par un user
-        $user->quizzes()->syncWithoutDetaching($request->input('quiz_id'));
+        // //on fait un sync mais sans supprimer les quiz qui ont déjà été fait par un user
+        // $user->quizzes()->syncWithoutDetaching($request->input('quiz_id'));
 
-        return redirect('/quizzes');
+        // return redirect('/quizzes');
+        return json_encode('salut');
     }
 }

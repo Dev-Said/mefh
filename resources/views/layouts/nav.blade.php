@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>MEFH</title>
     <base href="/public">
     <!-- Fonts -->
@@ -71,7 +72,7 @@
             <a class="nav-link" href="contact">Contact</a>
         </li>
         <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="register"><button id="buttonconnex">Inscription</button></a>
+            <a class="nav-link" href="modules"><button id="buttonconnex">Inscription</button></a>
         </li>
     </ul>
 

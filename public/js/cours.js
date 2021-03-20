@@ -14074,19 +14074,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
 
 
-
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default)(function () {
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default)(function () {
   return {
     root: {
       marginTop: 50,
@@ -14096,7 +14093,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
 });
 
 var handleClick = function handleClick() {
-  alert((0,lodash__WEBPACK_IMPORTED_MODULE_3__.toArray)(auth));
+  alert(auth);
 };
 
 console.log(auth);
@@ -14105,7 +14102,7 @@ var ContainedButtons = function ContainedButtons() {
   var classes = useStyles();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.root,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default, {
       onClick: handleClick,
       children: "Indiquer que ce chapitre a \xE9t\xE9 suivi"
     })
@@ -14425,9 +14422,10 @@ var Quiz = function Quiz(props) {
     }
   };
 
+  var userReponse = [];
+
   function handleSubmit(event) {
     event.preventDefault();
-    var userReponse = [];
     var coef;
     var isCorret;
     var total = 0;
@@ -14445,12 +14443,15 @@ var Quiz = function Quiz(props) {
 
     if (!questionMissing.length) {
       setScore(Math.ceil(total / allQuestionsId.length * 100));
+      var scoreTest = Math.ceil(total / allQuestionsId.length * 100);
+      console.log('scoreTest   ' + scoreTest);
+      console.log('userReponse   ' + userReponse);
 
-      if (score >= 80) {
+      if (scoreTest >= 80) {
         setMessageScore('Félicitation, votre score est de ');
       }
 
-      if (score < 80) {
+      if (scoreTest < 80) {
         setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ');
       }
 
@@ -14470,9 +14471,30 @@ var Quiz = function Quiz(props) {
     }
 
     questionMissing.length = 0;
+    console.log('userReponse   ' + userReponse);
   }
 
-  console.log('messagescore   ' + messageScore);
+  var handleSaveQuiz = function handleSaveQuiz() {
+    if (auth == 0) {
+      alert('vous devez être enregisté pour pouvoir sauvegarder vos résultats ');
+    } else {
+      (axios__WEBPACK_IMPORTED_MODULE_3___default().withCredentials) = true; // var token = document.head.querySelector('meta[name="csrf-token"]');
+      // axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+      // console.log('token.content   ' + token.content);
+
+      console.log('userReponse --->  ' + userReponse);
+      axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://localhost:8000/reponses_user", {
+        userReponse: userReponse
+      }).then(function (response) {
+        // success
+        console.log('success   ' + response.data);
+      })["catch"](function (error) {
+        // error 
+        console.log('probleme   ' + error);
+      });
+    }
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
@@ -14492,7 +14514,7 @@ var Quiz = function Quiz(props) {
           "class": "footerModal"
         })]
       })
-    }), console.log('score    ' + score), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+    }), console.log('score2    ' + score), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
       id: "myModal2",
       "class": "modal",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -14508,6 +14530,7 @@ var Quiz = function Quiz(props) {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
           "class": "footerModal",
           children: ["Voulez-vous sauvegarder votre score ?", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+            onClick: handleSaveQuiz,
             children: "Sauvegarder"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
             children: "Annuler"

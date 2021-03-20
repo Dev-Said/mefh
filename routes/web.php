@@ -122,3 +122,5 @@ Route::get('/questionsEssentielles', function () {
 
 
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
+
+
