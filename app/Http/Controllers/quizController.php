@@ -124,7 +124,8 @@ class QuizController extends Controller
 
     public function quizApi($id)
     {
-
+        // on reçoit l'id d'un module et on return
+        // le quiz correspondant 
         return quiz::where('module_id', $id)
         ->with('questions.reponses')->get();        
     }

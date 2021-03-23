@@ -13,12 +13,13 @@ class CreateReponseUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('reponse_user', function (Blueprint $table) {
+        Schema::create('reponse_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reponse_id');
-            $table->foreign('reponse_id')->references('id')->on('reponses')->onDelete('cascade');
+            $table->integer('score');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('quiz_id');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateReponseUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reponse_user');
+        Schema::dropIfExists('reponse_users');
     }
 }

@@ -14,7 +14,7 @@ class AuthComposer
         //à la vue indexFormation
 
         Auth::check() ? 
-        $view->with('auth', [Auth::user()->nom, Auth::user()->prenom]) : 
+        $view->with('auth', [Auth::user()->nom, Auth::user()->prenom, Auth::user()->id]) : 
         $view->with('auth', '0');
     }
 }

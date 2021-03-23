@@ -15,64 +15,64 @@ class QuestionSeeder extends Seeder
     public function run()
     {
         DB::table('questions')->insert([
-            'question' => 'Combien font 1 + 1 ?',
+            'question' => 'Appeler de façon répétée sa collègue « ma jolie », « la miss », « ma chérie », « ma poulette » :',
             'type' => 'radio',
             'ordre' => 1,
             'quiz_id' => 1,
         ]);
         DB::table('questions')->insert([
-            'question' => 'Combien font 2 + 2 ?',
-            'type' => 'radio',
+            'question' => 'Faire des commentaires sexuels envers une/des collègue/s : (Plusieurs réponses possibles)',
+            'type' => 'checkbox',
             'ordre' => 2,
-            'quiz_id' => 2,
+            'quiz_id' => 1,
         ]);
         DB::table('questions')->insert([
-            'question' => 'Combien font 3 + 3 ?',
+            'question' => 'Partager ou afficher des images pornographiques :',
             'type' => 'radio',
             'ordre' => 3,
-            'quiz_id' => 3,
+            'quiz_id' => 1,
         ]);
         DB::table('questions')->insert([
-            'question' => 'Combien font 4 + 4 ?',
+            'question' => 'Embrasser un.e collègue contre son gré :',
             'type' => 'radio',
             'ordre' => 4,
-            'quiz_id' => 4,
+            'quiz_id' => 1,
         ]);
         DB::table('questions')->insert([
-            'question' => 'Combien font 5 + 5 ?',
+            'question' => 'Le harcèlement sexuel et les agissements sexistes touchent-ils aussi les hommes ?',
             'type' => 'radio',
             'ordre' => 5,
-            'quiz_id' => 5,
+            'quiz_id' => 1,
         ]);
         DB::table('questions')->insert([
             'question' => 'Quels chiffres sont plus petits que 10 ?',
             'type' => 'checkbox',
-            'ordre' => 6,
-            'quiz_id' => 1,
+            'ordre' => 1,
+            'quiz_id' => 2,
         ]);
         DB::table('questions')->insert([
             'question' => 'Quels chiffres sont plus petits que 8 ?',
             'type' => 'checkbox',
-            'ordre' => 7,
+            'ordre' => 2,
             'quiz_id' => 2,
         ]);
         DB::table('questions')->insert([
             'question' => 'Quels chiffres sont plus petits que 5 ?',
             'type' => 'checkbox',
-            'ordre' => 8,
-            'quiz_id' => 3,
+            'ordre' => 3,
+            'quiz_id' => 2,
         ]);
         DB::table('questions')->insert([
             'question' => 'Quels chiffres sont plus grandq que 20 ?',
             'type' => 'checkbox',
-            'ordre' => 9,
-            'quiz_id' => 4,
+            'ordre' => 4,
+            'quiz_id' => 2,
         ]);
         DB::table('questions')->insert([
             'question' => 'Quels chiffres sont plus grandq que 100 ?',
             'type' => 'checkbox',
-            'ordre' => 10,
-            'quiz_id' => 5,
+            'ordre' => 5,
+            'quiz_id' => 2,
         ]);
     }
 }

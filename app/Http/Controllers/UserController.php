@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Reponse;
 use Illuminate\Support\Arr;
+use App\Models\Reponse_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,23 @@ class UserController extends Controller
         return redirect('/users');
     }
 
+    // crée un nouvel utilisateur via un formulaire proposé
+    // quand on veut sauvegarder les résultats d'un quiz et 
+    // qu'on est pas déjà inscrit
+    public function store2(Request $request)
+    {
+
+        $user = new User;
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->sexe = $request->sexe;
+        $user->admin = $request->admin;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+        return json_encode($user->id);
+    }
     /**
      * Display the specified resource.
      *
@@ -124,19 +142,20 @@ class UserController extends Controller
     }
 
 
+    // sauve le score d'un quiz et efface le précédent socre
+    // s'il existe
     public function reponseUser(Request $request)
     {
-        // dd($request);
-        // $user = User::find(Auth::id());
+        Reponse_user::where('quiz_id', $request->quiz_id)
+        ->where('user_id', $request->id)
+        ->delete();
 
-        // $user = User::find(6);
-        // $reponses = Reponse::find($request->except('_token', 'quiz_id'));
-        // $user->reponses()->sync($reponses);
+            $reponse_user = new Reponse_user;
+            $reponse_user->score = $request->resultat;
+            $reponse_user->user_id = $request->id;
+            $reponse_user->quiz_id = $request->quiz_id;
+            $reponse_user->save();
 
-        // //on fait un sync mais sans supprimer les quiz qui ont déjà été fait par un user
-        // $user->quizzes()->syncWithoutDetaching($request->input('quiz_id'));
-
-        // return redirect('/quizzes');
-        return json_encode('salut');
+        return json_encode('success');
     }
 }

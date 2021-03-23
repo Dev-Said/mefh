@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 
 
 const handleClick = () => {
-  alert(auth);
+  alert(auth[2]);
         
     }
 

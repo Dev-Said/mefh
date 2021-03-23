@@ -10,6 +10,12 @@ import './stepper.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: "100%",
+    height: "100px",
+    // backgroundColor: 'rgb(255, 244, 244)',
+    // border: 'brown solid 1px',
+  },
+  stepper: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
@@ -17,11 +23,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "stretch",
     alignItems: "stretch",
     width: "100%",
-    height: "100px",
-    // margin-left: auto;
-    // margin-right: auto;
-    // backgroundColor: 'rgb(255, 244, 244)',
-    // border: 'brown solid 1px',
+    marginBottom: "20px",
   },
   stepButton: {
     height: 20,
@@ -32,12 +34,17 @@ const useStyles = makeStyles((theme) => ({
     flex: '1',
     // backgroundColor: "red",
   },
+  blockTitre: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
   titre: {
-    fontSize: 26,
+    fontSize: 30,
     marginBottom: 0,
     fontWeight: "bold",
     marginTop: "15px",
-
   },
   selected: {
     backgroundColor: '#4297b6',
@@ -103,7 +110,7 @@ const Stepper = (props) => {
 
   return (
     <div className={classes.root}>
-      <div>
+      <div className={classes.stepper}>
         {chapitres.map((chapitre) => (
           <BootstrapTooltip title={chapitre[1].titre} placement="top">
             <Button className={classes.stepButton} key={chapitre[1].id}
@@ -114,9 +121,9 @@ const Stepper = (props) => {
           </BootstrapTooltip>
         ))}
       </div>
-      {/* <div>
+      <div className={classes.blockTitre}>
         <Typography className={classes.titre}>{props.info_chapitre.titre}</Typography>
-      </div> */}
+      </div>
     </div>
   );
 }

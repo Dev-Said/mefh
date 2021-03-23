@@ -3,7 +3,6 @@ import Video from '../videos/Video';
 import ListeChapitres from '../ListeChapitres/ListeChapitres';
 import Stepper from '../stepper/stepper';
 import ChapitreDescription from '../chapitreDescription/chapitreDescription';
-import ContainedButtons from '../coursCompleted/coursCompleted';
 import Quiz from '../quiz/quiz';
 import './modules.scss';
 import '../quiz/quiz.scss';
@@ -20,8 +19,8 @@ const Wrapper = () => {
   if (isQuiz) {
     compo = <Quiz handleQuizClick={handleQuizClick} />
   } else {
-    compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />, <ChapitreDescription />, 
-      <ContainedButtons />]
+    compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />, 
+    <ChapitreDescription />]
   }
 
   return (

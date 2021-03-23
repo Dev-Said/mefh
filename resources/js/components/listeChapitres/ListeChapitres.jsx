@@ -4,7 +4,7 @@ import axios from 'axios';
 import SimpleList from '../simpleList/simpleList';
 import BackNextButton from '../backNextButton/backNextButton';
 import Button from '@material-ui/core/Button';
-
+import ContainedButtons from '../coursCompleted/coursCompleted';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +51,8 @@ const ListeChapitres = (props) => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {
         setChapitres(Object.entries(res.data));     
+      }).catch(function (error) {
+        console.log('error:   ' + error);
       });
   }, []);
 
@@ -60,6 +62,7 @@ const ListeChapitres = (props) => {
       <SimpleList chapitres={chapitres} init_index={0} />
       <Button className={classes.quiz} onClick={() => props.handleQuizClick()}>
        Faire le quiz</Button>
+       <ContainedButtons />
     </ul>
   )
 }

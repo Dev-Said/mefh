@@ -8,11 +8,16 @@ import InputQuiz from '../formulaire/InputQuiz'
 import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-
+import ModalFooterButton from '../modalFooterButton/modalFooterButton';
+import Register from '../register/register';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    flexDirection: "column",
+    flexWrap: "nowrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
     width: '100%',
     paddingLeft: '10%',
     paddingRight: '10%',
@@ -37,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10%',
     paddingRight: '10%',
     paddingBottom: '40px',
-    paddingTop: '30px',
   },
   submitButton: {
     width: '120px',
@@ -50,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   divid: {
     marginTop: '10px',
     marginBottom: '10px',
+  },
+  quizBackButton: {
+
   }
 }));
 
@@ -59,15 +66,21 @@ const Quiz = (props) => {
   const [quizzes, setQuizzes] = useState([]);
   const [score, setScore] = useState(0);
   const [messageScore, setMessageScore] = useState('');
+  const [messageFooter, setMessageFooter] = useState('');
+  const [titreButton1, setTitreButton1] = useState('');
+  const [titreButton2, setTitreButton2] = useState('');
+  const [functionModalButton, setFunctionModalButton] = useState('');
+  const [idQuiz, setIdQuiz] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:8000/quizzes/quizApi/${props.info_chapitre.module_id}`)
       .then(res => {
         setQuizzes(Object.entries(res.data));
+        setIdQuiz(res.data[0].questions[0].quiz_id);
 
       });
   }, []);
-
+  console.log('quizzes   ' + idQuiz);
   // on récupère l'id de toutes les questions dans allQuestionsId pour pouvoir 
   // faire les validations en comparant le question_id de chaque reponse
   // au contenu de allQuestionsId. module_id doit apparaitre au moins
@@ -100,11 +113,6 @@ const Quiz = (props) => {
   // )
 
 
-
-  console.log(obj);
-  console.log('allQuestionsId    ' + allQuestionsId);
-  console.log('allQuestionsIdlength    ' + allQuestionsId.length);
-  console.log(reponses_Questions);
 
   // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
   var reponses_Questions = {};
@@ -153,7 +161,8 @@ const Quiz = (props) => {
     })
   }
   )
-  // calcule la pondération de la valeur des points d'une réponse donnée
+  // calcule la pondération de la valeur d'un point d'une réponse donnée
+  // en divisant 1 par le nombre de bonnes réponses pour une question donnée
   const getCoefficient = (idReponse) => {
     var questionId = getQuestion(idReponse)
     var coef = (1 / Questions_isCorrect[questionId])
@@ -162,7 +171,7 @@ const Quiz = (props) => {
     return coef;
   }
 
-  // vérifie qu'on a répondu à toutes les questions 
+  // vérifie si on a répondu à toutes les questions 
   // sinon renvoi l'id des questions sans réponse 
   var questionMissing = [];
   const formValidation = (userRep) => {
@@ -198,74 +207,103 @@ const Quiz = (props) => {
     }
   }
 
-  var userReponse = [];
+
+  var userReponseVar = [];
+
   function handleSubmit(event) {
     event.preventDefault();
     var coef;
     var isCorret;
     var total = 0;
 
-
     for (let i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
         coef = getCoefficient(event.target[i].value);
         isCorret = getIsCorrect(event.target[i].value);
         total += (coef * isCorret);
-        userReponse.push(event.target[i].value);
+        userReponseVar.push(event.target[i].value);
       }
     }
+    formValidation(userReponseVar);
 
-    formValidation(userReponse);
-
-    //affiche une modal avec le score du quiz
+    // s'il n'y a pas de questions manquantes 
+    // affiche une modal avec le score du quiz
     if (!questionMissing.length) {
       setScore(Math.ceil((total / allQuestionsId.length) * 100));
+      console.log('score submit --->  ' + score);
       var scoreTest = Math.ceil((total / allQuestionsId.length) * 100);
-      console.log('scoreTest   ' + scoreTest);
-      console.log('userReponse   ' + userReponse);
+
       if (scoreTest >= 80) {
-        setMessageScore('Félicitation, votre score est de ');
+        setMessageScore('Félicitation, votre score est de ' + scoreTest + '%');
       }
       if (scoreTest < 80) {
-        setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ');
+        setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ' + scoreTest + '%');
       }
 
-      var modalScore = document.getElementById("myModal2");
-      modalScore.style.display = "block";
-
-      var span = document.getElementsByClassName("close2")[0];
-      span.onclick = function () {
-        modalScore.style.display = "none";
-      }
-
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          modalScore.style.display = "none";
-        }
-      }
+      setMessageFooter('Voulez-vous sauvegarder votre score ?');
+      setTitreButton1('Enregistrer');
+      setTitreButton2('Quitter');
+      setFunctionModalButton('saveQuiz');
+      handelModal();
     }
     questionMissing.length = 0;
-    console.log('userReponse   ' + userReponse);
   }
 
+  // force le bon fonctionnement de la modal mYmodal2
+  const closeModal = () => {
+    document.getElementById("myModal2").style.display = "none";
+    props.handleQuizClick();
+
+  }
+
+  // gère la sauvegarde des résultats du quiz
   const handleSaveQuiz = () => {
     if (auth == 0) {
-      alert('vous devez être enregisté pour pouvoir sauvegarder vos résultats ');
+      setMessageScore('vous devez être enregisté pour pouvoir sauvegarder vos résultats');
+      setMessageFooter('Voulez-vous vous inscrire ?');
+      setTitreButton1('S\'inscrire');
+      setTitreButton2('Quitter');
+      setFunctionModalButton('inscription');
+      handelModal();
     } else {
-      axios.withCredentials = true;
-      // var token = document.head.querySelector('meta[name="csrf-token"]');
-      // axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-      // console.log('token.content   ' + token.content);
-      console.log('userReponse --->  ' + userReponse);
-      axios.post(`http://localhost:8000/reponses_user`, { userReponse })
+      console.log('score --->  ' + score);
+      axios.post(`http://localhost:8000/reponses_user`,
+        { resultat: score, id: auth[2], quiz_id: idQuiz })
         .then(function (response) {
-          // success
           console.log('success   ' + response.data);
+          document.getElementById("myModal2").style.display = "none";
         })
         .catch(function (error) {
-          // error 
           console.log('probleme   ' + error);
         });
+    }
+  }
+
+  const register = () => {
+    setMessageScore('');
+    handelModal();
+  }
+
+  // affiche et gère la modal
+  const handelModal = () => {
+    var modalScore = document.getElementById("myModal2");
+    modalScore.style.display = "block";
+
+    var span = document.getElementsByClassName("close2")[0];
+    span.onclick = function () {
+      modalScore.style.display = "none";
+    }
+
+    var button2 = document.getElementsByClassName("button2")[1];
+    button2.onclick = function () {
+      modalScore.style.display = "none";
+      props.handleQuizClick();
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modalScore) {
+        modalScore.style.display = "none";
+      }
     }
   }
 
@@ -276,29 +314,36 @@ const Quiz = (props) => {
       {/* aafiche erreur quiz non complet */}
       <div id="myModal" class="modal">
         <div class="modal-content">
-          <div class="headerModal"><button class="close">x</button></div>
+          <div class="headerModal"><span class="close">x</span></div>
           <p>Vous devez répondre à toutes les questions du quiz !</p>
           <div class="footerModal"></div>
         </div>
       </div>
 
-      {console.log('score2    ' + score)}
+
       {/* affiche résultat du quiz */}
-      <div id="myModal2" class="modal">
-        <div class="modal-content">
-          <div class="headerModal"><button class="close2">x</button></div>
-          <p> {messageScore} {score} %</p>
-          <div class="footerModal">
-            Voulez-vous sauvegarder votre score ?
-            <button onClick={handleSaveQuiz}>Sauvegarder</button>
-            <button>Annuler</button>
-          </div>
+      <div id="myModal2" class="modal2">
+        <div class="modal-content2">
+
+          <div class="headerModal2"><span class="close2">x</span></div>
+          <p> {messageScore} </p>
+          {messageScore == '' ? <Register resultat={score} quiz_id={idQuiz} /> :
+            <ModalFooterButton message={messageFooter}
+              titre1={titreButton1} titre2={titreButton2}
+              func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}
+              closeModal={closeModal}
+            />}
+
         </div>
       </div>
 
 
-      <Button onClick={() => props.handleQuizClick()} className="iech" >
-        Revenir sur la page de formation</Button>
+      <div className="quizHeader">
+        <Button onClick={() => props.handleQuizClick()} variant="contained" className="quizBackButton">
+          Revenir sur la page de formation</Button>
+      </div>
+
+
       <Paper className={classes.paper}>
         <h1>{props.info_chapitre.module_titre}</h1>
         <form className={classes.container} onSubmit={handleSubmit} >
