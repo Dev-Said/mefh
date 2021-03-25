@@ -74,7 +74,7 @@ const  SimpleList = (props) => {
   // sélectionne l'item qui correspond à info_chapitre.ordre dans la liste
   useEffect(() => {
     initListItemClick(null, props.info_chapitre.ordre);
-    console.log(props.info_chapitre.ordre);
+    console.log('check store useeffect   ' + props.info_chapitre.ordre);
   }, [props.info_chapitre.ordre]);
 
   const initListItemClick = (event, index) => {

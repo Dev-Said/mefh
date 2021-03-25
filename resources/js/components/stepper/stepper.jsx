@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect, useReducer } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
@@ -56,6 +56,8 @@ var style = '';
 const Stepper = (props) => {
   const classes = useStyles();
   const [chapitres, setChapitres] = useState([]);
+  const [chapitreSuivi, setChapitreSuivi] = useState([]);
+  const [dejaSuivi, setDejaSuivi] = useState(props.store_dejaSuivi);
   const [id, setId] = useState(1);
 
   // récupère tous les chapitres de la formation dont l'id est = idFormation
@@ -65,17 +67,39 @@ const Stepper = (props) => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {
         setChapitres(Object.entries(res.data));
-        setId(1);
+        setId(props.store_chapitre.id);
+        console.log('useefect 1  ' + props.store_dejaSuivi)
       });
   }, []);
 
   // set id avec l'id du chapitre dans le store pour positionner le 
   // curseur du stepper quand je clique dans la liste
   useEffect(() => {
-    setId(props.info_chapitre.id);
-  }, [props.info_chapitre.id]);
+    setId(props.store_chapitre.id);
+    console.log('setId setId setId setId   ' )
+  }, [props.store_chapitre.id]);
 
-  // console.log(' stepper id de la formation   ===>   ' + idFormation);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/chapitreSuiviList`, {
+      params: {
+        id: auth[2],
+      }
+    })
+      .then(res => {
+        setChapitreSuivi(Object.entries(res.data));
+        var chapTab = [];
+        chapitreSuivi.map((chap) => chapTab.push(chap[1].chapitre_id));
+        setDejaSuivi(chapTab);
+        store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: chapTab });
+        console.log('useeffect 2 setDejaSuivi   ' + props.store_dejaSuivi)
+      });
+  }, [props.store_chapitre.id]);
+
+  store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: dejaSuivi });
+  // props.store_dejaSuivi && setDejaSuivi(props.store_dejaSuivi);
+  console.log('props.store_dejaSuivi 3  ' + props.store_dejaSuivi )
+
   // positionne le curseur sur le stepper cliqué et envoi son chapitre
   // dans le store pour mettre à jour BackNextButton et SimpleList
   const locateStepper = (chapitre) => {
@@ -83,14 +107,17 @@ const Stepper = (props) => {
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
   };
 
+  // 
   const colorSelected = (idChapitre) => {
-    idChapitre === id ?
-      style = { backgroundColor: '#4297b6' } :
-      style = { backgroundColor: '' }
+ console.log('colorSelected  store_dejaSuivi  ' + props.store_dejaSuivi )
+    if (idChapitre === id) { style = { backgroundColor: '#4297b6' } }
+    else if (props.store_dejaSuivi.includes(idChapitre)) { style = { backgroundColor: '#f1f1f1' } }
+    else { style = { backgroundColor: '#ffffff' } }
     return style;
 
   }
-  console.log('stepper     ' + props.info_chapitre.module_id);
+
+  // bulle info
   const useStylesBootstrap = makeStyles((theme) => ({
     arrow: {
       color: theme.palette.common.black,
@@ -101,36 +128,37 @@ const Stepper = (props) => {
       fontSize: '16px',
     },
   }));
-
+  // bulle info
   function BootstrapTooltip(props) {
     const classes = useStylesBootstrap();
-
     return <Tooltip arrow classes={classes} {...props} />;
   }
 
   return (
     <div className={classes.root}>
       <div className={classes.stepper}>
-        {chapitres.map((chapitre) => (
-          <BootstrapTooltip title={chapitre[1].titre} placement="top">
+        {chapitres.map((chapitre, ndx) => (
+          <BootstrapTooltip key={ndx} title={chapitre[1].titre} placement="top">
             <Button className={classes.stepButton} key={chapitre[1].id}
               onClick={() => locateStepper(chapitre[1])}
               variant="outlined" color="#4297b6"
-              style={colorSelected(chapitre[1].id)}>
+              style={colorSelected(chapitre[1].id)}
+            >
             </Button>
           </BootstrapTooltip>
         ))}
       </div>
       <div className={classes.blockTitre}>
-        <Typography className={classes.titre}>{props.info_chapitre.titre}</Typography>
+        <Typography className={classes.titre}>{props.store_chapitre.titre}</Typography>
       </div>
     </div>
   );
 }
 
-const mapStateToProps = ({ chapitreData }) => {
+const mapStateToProps = ({ chapitreData, dejaSuivi }) => {
   return {
-    info_chapitre: chapitreData.chapitreData,
+    store_chapitre: chapitreData.chapitreData,
+    store_dejaSuivi: dejaSuivi.dejaSuivi,
   };
 };
 

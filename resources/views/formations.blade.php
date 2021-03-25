@@ -3,14 +3,11 @@
 @section('content')
 <div class="contenaire">
     <div class="text-formation">
-        <h1>Suivez notre formation sur le harcelement sexuel dans le milieu
-            universitaire et dans les hautes écoles
-        </h1>
+        <h1>Formez-vous sur les inégalités entre les femmes et les hommes</h1>
         <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro
-            reiciendis tempore nemo. Alias numquam, quidem blanditiis commodi
-            optio ex ut veniam tempora labore obcaecati, tenetur doloremque
-            voluptas veritatis ratione deserunt.
+            L'ASBL MEFH, le Mouvement pour l'égalité entre les Femmes et les Hommes,
+            vous propose des formations en ligne sur les discriminations en fonction
+            du sexe
         </p>
     </div>
     @foreach ($formations as $formation)
@@ -20,7 +17,7 @@
         </div>
 
         <figure class="fig_formations_liste">
-            <img class="img_formation" src="{{ asset('storage/'.$formation->image_formation) }}" alt="illustrations formations"/>
+            <img class="img_formation" src="{{ asset('storage/'.$formation->image_formation) }}" alt="illustrations formations" />
         </figure>
 
         <div class="inf-card-formation">

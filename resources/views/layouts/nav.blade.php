@@ -31,7 +31,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/video.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/listeChapitres.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/stepper.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/inputQuiz.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}" />
 
 

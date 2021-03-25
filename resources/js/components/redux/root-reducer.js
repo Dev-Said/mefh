@@ -4,6 +4,7 @@ import moduleReducer from "./module/module.reducer";
 import titreChapitreReducer from "./titreChapitre/titreChapitre.reducer";
 import chapitreReducer from "./chapitre/chapitre.reducer";
 import activeStepReducer from "./activeStep/activeStep.reducer";
+import dejaSuiviReducer from "./dejaSuivi/dejaSuivi.reducer";
 
 export default combineReducers({
   videos: videoReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   chapitreTitre: titreChapitreReducer,
   chapitreData: chapitreReducer,
   activeStep: activeStepReducer,
+  dejaSuivi: dejaSuiviReducer,
 });

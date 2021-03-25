@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\module;
 use App\Models\chapitre;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\Models\Chapitre_suivi;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateChapitreRequest;
 use App\Http\Requests\StorePostChapitreRequest;
-
 
 class ChapitreController extends Controller
 {
@@ -154,4 +155,37 @@ class ChapitreController extends Controller
 
         return back();
     }
+
+
+    // enregistre dans chapitreSuivis les chapitre_id 
+    // que l'utilisateur veut marquer comme déjà suivis
+    public function suivi(Request $request) {
+
+        $chapitreSuivi = Chapitre_suivi::where('chapitre_id', $request->chapitre_id)
+        ->where('user_id', $request->id)
+        ->first();
+
+        if (!$chapitreSuivi) {
+            $chapitreSuivi = new Chapitre_suivi;        
+            $chapitreSuivi->chapitre_id = $request->chapitre_id;
+            $chapitreSuivi->user_id = $request->id;
+           
+            $chapitreSuivi->save();
+        }
+    return json_encode('chapitreSuivi success  ' . $chapitreSuivi);
+
+    }
+
+
+    // renvoi la liste des chapitres marqués comme déjà suivis
+    public function list(Request $request) {
+
+        $list =  Chapitre_suivi::where('user_id', $request->id)
+        ->get();
+
+        return $list;
+
+    }
+
+
 }

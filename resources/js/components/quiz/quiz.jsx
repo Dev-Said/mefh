@@ -239,8 +239,9 @@ const Quiz = (props) => {
       if (scoreTest < 80) {
         setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ' + scoreTest + '%');
       }
-
-      setMessageFooter('Voulez-vous sauvegarder votre score ?');
+      // si le score est < 80 on affiche pas de message dans le footer de la modal
+      score >= 80 ? setMessageFooter('Voulez-vous sauvegarder votre score ?')
+      : setMessageFooter('    ');
       setTitreButton1('Enregistrer');
       setTitreButton2('Quitter');
       setFunctionModalButton('saveQuiz');
@@ -332,6 +333,7 @@ const Quiz = (props) => {
               titre1={titreButton1} titre2={titreButton2}
               func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}
               closeModal={closeModal}
+              score={score}
             />}
 
         </div>

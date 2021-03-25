@@ -60,9 +60,10 @@ export default function ModalFooterButton(props) {
   return (
     <div className={classes.root}>
     <p> { props.message } </p>
-      <BootstrapButton variant="contained" onClick={() => props.func()}>
+    {/* teste si le score est > = 80 pour afficher le bouton enregistrer */}
+      {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}>
         { props.titre1 }
-      </BootstrapButton>
+      </BootstrapButton>}
       <BootstrapButton variant="contained" onClick={() => props.closeModal()}>
       { props.titre2 }
       </BootstrapButton>

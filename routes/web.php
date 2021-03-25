@@ -106,6 +106,8 @@ Route::post('/reponses_user', [UserController::class, 'reponseUser']);
 Route::get('/users/profile/{id}', [UserController::class, 'user']);
 Route::get('/dashboard', [DashboardController::class, 'entry']);
 Route::post('/usersFromQuizForm', [UserController::class, 'store2']);
+Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
+Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/users');

@@ -7,19 +7,22 @@ import Quiz from '../quiz/quiz';
 import './modules.scss';
 import '../quiz/quiz.scss';
 
+
+
 const Wrapper = () => {
 
   const [isQuiz, setIsQuiz] = useState(false);
 
   const handleQuizClick = () => {
     isQuiz == true ? setIsQuiz(false) : setIsQuiz(true);
+    // store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: dejaSuivi });
   }
 
   var compo;
   if (isQuiz) {
     compo = <Quiz handleQuizClick={handleQuizClick} />
   } else {
-    compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />, 
+    compo = [<Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />,
     <ChapitreDescription />]
   }
 

@@ -52,6 +52,21 @@ class ModuleSeeder extends Seeder
             'ordre' => $i++,
             'formation_id' => '1',
         ]);
+
+        $i = 1;
+        
+        DB::table('modules')->insert([
+            'titre' => 'Autre module numéro 1',
+            'description' => 'Dans ce module, nous allons examiner Autre module numéro 1.',
+            'ordre' => $i++,
+            'formation_id' => '2',
+        ]);
+        DB::table('modules')->insert([
+            'titre' => 'Autre module numéro 2',
+            'description' => 'Dans ce module, nous allons examiner Autre module numéro 2.',
+            'ordre' => $i++,
+            'formation_id' => '2',
+        ]);
         
     }
 

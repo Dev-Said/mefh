@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChapitreSuivi extends Migration
+class CreateChapitreSuivisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class ChapitreSuivi extends Migration
      */
     public function up()
     {
-        Schema::create('chapitreSuivi', function (Blueprint $table) {
+        Schema::create('chapitre_suivis', function (Blueprint $table) {
             $table->id();
-            $table->integer('formation_id');
-            $table->integer('module_id');
             $table->integer('chapitre_id');
             $table->integer('user_id');
             $table->timestamps();
@@ -30,6 +28,6 @@ class ChapitreSuivi extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chapitreSuivi');
+        Schema::dropIfExists('chapitre_suivis');
     }
 }
