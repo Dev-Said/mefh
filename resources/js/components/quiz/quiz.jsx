@@ -80,7 +80,7 @@ const Quiz = (props) => {
 
       });
   }, []);
-  console.log('quizzes   ' + idQuiz);
+
   // on récupère l'id de toutes les questions dans allQuestionsId pour pouvoir 
   // faire les validations en comparant le question_id de chaque reponse
   // au contenu de allQuestionsId. module_id doit apparaitre au moins
@@ -166,8 +166,6 @@ const Quiz = (props) => {
   const getCoefficient = (idReponse) => {
     var questionId = getQuestion(idReponse)
     var coef = (1 / Questions_isCorrect[questionId])
-    console.log('coef   ' + coef);
-
     return coef;
   }
 
@@ -230,7 +228,6 @@ const Quiz = (props) => {
     // affiche une modal avec le score du quiz
     if (!questionMissing.length) {
       setScore(Math.ceil((total / allQuestionsId.length) * 100));
-      console.log('score submit --->  ' + score);
       var scoreTest = Math.ceil((total / allQuestionsId.length) * 100);
 
       if (scoreTest >= 80) {
@@ -267,7 +264,6 @@ const Quiz = (props) => {
       setFunctionModalButton('inscription');
       handelModal();
     } else {
-      console.log('score --->  ' + score);
       axios.post(`http://localhost:8000/reponses_user`,
         { resultat: score, id: auth[2], quiz_id: idQuiz })
         .then(function (response) {
@@ -313,20 +309,20 @@ const Quiz = (props) => {
     <div className={classes.root}>
 
       {/* aafiche erreur quiz non complet */}
-      <div id="myModal" class="modal">
-        <div class="modal-content">
-          <div class="headerModal"><span class="close">x</span></div>
+      <div id="myModal" className="modal">
+        <div className="modal-content">
+          <div className="headerModal"><span className="close">x</span></div>
           <p>Vous devez répondre à toutes les questions du quiz !</p>
-          <div class="footerModal"></div>
+          <div className="footerModal"></div>
         </div>
       </div>
 
 
       {/* affiche résultat du quiz */}
-      <div id="myModal2" class="modal2">
-        <div class="modal-content2">
+      <div id="myModal2" className="modal2">
+        <div className="modal-content2">
 
-          <div class="headerModal2"><span class="close2">x</span></div>
+          <div className="headerModal2"><span className="close2">x</span></div>
           <p> {messageScore} </p>
           {messageScore == '' ? <Register resultat={score} quiz_id={idQuiz} /> :
             <ModalFooterButton message={messageFooter}
@@ -351,13 +347,14 @@ const Quiz = (props) => {
         <form className={classes.container} onSubmit={handleSubmit} >
           {quizzes.map((quiz) =>
             <div key={quiz[1].id}>
-              {quiz[1].questions.map(question =>
-                <div><FormLabel className={classes.formLabel} id={'questionId_' + question['id']}>
+              {quiz[1].questions.map((question, ndx) =>
+                <div key={ndx}><FormLabel className={classes.formLabel} id={'questionId_' + question['id']}>
                   {question['question']}</FormLabel>
                   {question.reponses.map((reponse, ndx) => <InputQuiz typeInput={question.type}
                     iscorrect={reponse.is_correct} value={reponse.reponse}
                     name={reponse.question_id} ndx={ndx}
                     id={reponse.id}
+                    key={ndx}
                   />
                   )} <Divider />
                 </div>

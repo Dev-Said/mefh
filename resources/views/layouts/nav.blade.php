@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
-    
+
     <title>MEFH</title>
     <base href="/public">
     <!-- Fonts -->
@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
     <!-- Styles -->
-   
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
-  
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />
@@ -49,9 +49,9 @@
 <body class="antialiased">
 
     <ul class="nav">
-        <div class="logo">
-            <img src="/storage/images/logo.png" alt="logo">
-        </div>
+        <li class="logo">
+                <img src="/storage/images/logo.png" alt="logo" />
+        </li>
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>

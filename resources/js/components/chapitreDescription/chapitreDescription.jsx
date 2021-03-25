@@ -7,7 +7,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '70%',
-    marginTop: '40px',
+    marginTop: '5px',
   },
 }));
 

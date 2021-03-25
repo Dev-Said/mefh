@@ -159,6 +159,8 @@ class ChapitreController extends Controller
 
     // enregistre dans chapitreSuivis les chapitre_id 
     // que l'utilisateur veut marquer comme déjà suivis
+    // ou bien les supprime quand il veut les remettre
+    // en pas encore suivi
     public function suivi(Request $request) {
 
         $chapitreSuivi = Chapitre_suivi::where('chapitre_id', $request->chapitre_id)
@@ -171,6 +173,8 @@ class ChapitreController extends Controller
             $chapitreSuivi->user_id = $request->id;
            
             $chapitreSuivi->save();
+        } else {
+            $chapitreSuivi->delete();
         }
     return json_encode('chapitreSuivi success  ' . $chapitreSuivi);
 

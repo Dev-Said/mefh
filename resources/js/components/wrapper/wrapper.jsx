@@ -15,7 +15,6 @@ const Wrapper = () => {
 
   const handleQuizClick = () => {
     isQuiz == true ? setIsQuiz(false) : setIsQuiz(true);
-    // store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: dejaSuivi });
   }
 
   var compo;

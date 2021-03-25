@@ -36,7 +36,6 @@ const BackNextButton = (props) => {
 
   // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
   var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_ordre : 5;
-// console.log('nbModules    ' + nbModules);
 
   //récupère le premier chapitre qui a un module_ordre = activeStep
   function getChapitre(step) {
@@ -54,8 +53,7 @@ const BackNextButton = (props) => {
   // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
   if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: props.chapitres[0][1] });
-    // console.log('props.chapitres[0][1]    ' + props.chapitres[0][1].fichier_video);
-  }
+   }
 
   // modifie activeStep pour positionner le bon onglet "précédent / suivant"
   useEffect(() => {
