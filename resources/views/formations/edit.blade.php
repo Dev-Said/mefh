@@ -6,6 +6,7 @@
 <form action="/formations/{{ $formation->id }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
+        <h2>Modifier une formation</h2>
         <label for="titre">Titre</label>
         <input type="text" name="titre" id="titre" value="{{ $formation->titre }}">
         @error('titre')

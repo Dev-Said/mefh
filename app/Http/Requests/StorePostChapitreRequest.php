@@ -26,6 +26,7 @@ class StorePostChapitreRequest extends FormRequest
         return [
             'titre' => 'required|max:255|string',
             'description' => 'required|string',
+            // 'fichier_video' => 'required|mimetypes:video/avi,video/mpeg,video/quicktime,video/mp4,video/x-ms-wmv',
             'fichier_video' => 'required',
             // 'ordre' => 'required|alpha_num',
             'module_id' => 'required|max:5|alpha_num',

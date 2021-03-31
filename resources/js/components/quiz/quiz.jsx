@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10%',
     paddingRight: '10%',
     paddingBottom: '40px',
+    paddingTop: '50px',
+    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    // marginTop: "-50px",
   },
   submitButton: {
     width: '120px',
@@ -55,9 +58,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     marginBottom: '10px',
   },
-  quizBackButton: {
 
-  }
 }));
 
 
@@ -337,13 +338,13 @@ const Quiz = (props) => {
 
 
       <div className="quizHeader">
-        <Button onClick={() => props.handleQuizClick()} variant="contained" className="quizBackButton">
+        <Button onClick={() => props.handleQuizClick()} variant="outlined" className="quizBackButton">
           Revenir sur la page de formation</Button>
       </div>
 
 
       <Paper className={classes.paper}>
-        <h1>{props.info_chapitre.module_titre}</h1>
+        <h1 className="paperH1">Quiz du module: {props.info_chapitre.module_titre}</h1>
         <form className={classes.container} onSubmit={handleSubmit} >
           {quizzes.map((quiz) =>
             <div key={quiz[1].id}>

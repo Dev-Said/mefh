@@ -2,28 +2,38 @@
 
 @section('list')
 
-<h1>Users</h1>
+<div class="contenaire_list">
 
-<div>
+    <h1 class="titre_list">Utilisateurs</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Sexe</th>
-                <th>Admin</th>
-                <th>Email</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+    <a href="{{ '/users/create' }}">
+        <button class="button_nouveau"><i class="fas fa-plus"></i>Ajouter un utilisateur</button>
+    </a>
 
-            @each('users.one', $users, 'user')
 
-        </tbody>
-    </table>
+    <div class="tabla_list">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Sexe</th>
+                    <th>Admin</th>
+                    <th>Email</th>
+                    @if(Auth::check())
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+
+                @each('users.one', $users, 'user')
+
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

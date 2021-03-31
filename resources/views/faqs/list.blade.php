@@ -2,26 +2,35 @@
 
 @section('list')
 
-<h1>Chapitres</h1>
+<div class="contenaire_list">
 
-<div>
+    <h1 class="titre_list">Questions essentielles</h1>
 
-    <table>
-        <thead>
-            <tr>
-            <th>Question</th>
-                <th>Réponse</th>
-                @if(Auth::check())
-                <th></th>
-                <th></th>
-                @endif
-            </tr>
-        </thead>
-        <tbody>
+    <a href="{{ '/faqs/create' }}">
+        <button class="button_nouveau"><i class="fas fa-plus"></i>Ajouter une question essentielle</button>
+    </a>
 
-            @each('faqs.one', $faqs, 'faq')
 
-        </tbody>
-    </table>
+    <div class="tabla_list">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Réponse</th>
+                    <th>Formation</th>
+                    @if(Auth::check())
+                    <th></th>
+                    <th></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+
+                @each('faqs.one', $faqs, 'faq')
+
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

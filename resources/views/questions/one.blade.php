@@ -3,21 +3,21 @@
         {{$question->question}}
     </td>
     <td>
-        {{$question->num}}
+        {{$question->type == 'radio' ? 'Choix unique' : 'Choix multiple'}}
     </td>
     <td>
-        {{$question->quiz_id}}
+        {{$question->quiz->titre}}
     </td>
 
     @if(Auth::check())
-    <td>
+    <td class="td_Button">
         <form action="/questions/{{ $question->id }}" method="post">
             @csrf
             @method('delete')
             <input type="submit" value="Supprimer" name="delete" class="supp">
         </form>
     </td>
-    <td>
+    <td class="td_Button">
         <form action="/questions/{{ $question->id }}/edit" method="get">
             @csrf
             <input type="submit" value="Modifier" name="update" class="modif">

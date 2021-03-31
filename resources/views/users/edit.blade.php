@@ -4,9 +4,10 @@
 
 <div class="edit">
 
-    <form action="/users/{{ $user->id }}" method="post">
+    <form action="/users/{{ $user->id }}" method="post" novalidate>
         @csrf
         @method('put')
+        <h2>Modifier un utilisateur</h2>
         <label for="nom">Nom</label>
         <input type="text" name="nom" id="nom" value="{{ $user->nom }}">
         @error('nom')

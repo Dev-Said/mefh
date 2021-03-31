@@ -13,7 +13,7 @@
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="reponse">Reponse</label>
-        <input type="text" id="reponse" name="reponse" value="{{ old('reponse') }}">
+        <textarea id="reponse" name="reponse">{{ old('reponse') }}</textarea>
         @error('reponse')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -22,5 +22,13 @@
 
 </div>
 
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+<script>
+CKEDITOR.replace( 'reponse', {
+    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+});
+</script>
 
 @endsection

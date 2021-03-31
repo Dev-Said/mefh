@@ -24,8 +24,8 @@ class StoreFaqRequest extends FormRequest
     public function rules()
     {
         return [
-            'question' => 'required|max:500|string',
-            'reponse' => 'required|max:2000|string',
+            'question' => 'required|string',
+            'reponse' => 'required|string',
         ];
     }
 }

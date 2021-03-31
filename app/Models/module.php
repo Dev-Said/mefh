@@ -21,9 +21,14 @@ class Module extends Model
         'formation_id',
     ];
 
-    public function question()
+    public function quiz()
     {
-        return $this->hasOne(Question::class);
+        return $this->hasOne(quiz::class);
+    }
+
+    public function formation()
+    {
+        return $this->belongsTo(formation::class);
     }
 
     public function chapitres()

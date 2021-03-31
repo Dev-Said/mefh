@@ -14,7 +14,6 @@ class chapitre extends Model
         'fichier_video',
         'description',
         'ordre',
-        'duree',
         'module_id',
     ];
 

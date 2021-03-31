@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 300,
     maxWidth: 300,
-    minHeight: 400,
-    paddingTop: 1,
-    paddingBottom: 1,
-    paddingLeft: 1,
-    paddingRight: 1,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-    borderRadius: "0 0 10px 10px",
+    // minHeight: 400,
+    // paddingTop: 1,
+    // paddingBottom: 1,
+    // paddingLeft: 1,
+    // paddingRight: 1,
+    // backgroundColor: theme.palette.background.paper,
+    // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    // borderRadius: "0 0 10px 10px",
   },
   headerList: {
     backgroundColor: "white",
@@ -34,11 +34,8 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 50,
     marginTop: 20,
-    "&:focus": {
-      outline: 'none',
-    },
-    backgroundColor: '#ebebeb',
-    // border: 'solid 1px #e22e59'
+    border: 'solid 1px blue',
+    color: "blue",
   },
 }));
 
@@ -57,12 +54,12 @@ const ListeChapitres = (props) => {
   }, []);
 
   return (
-    <ul className="listeChapitres" >
+    <ul className={classes.root} >
       <BackNextButton chapitres={chapitres} />
       <SimpleList chapitres={chapitres} init_index={0} />
-      <Button className={classes.quiz} onClick={() => props.handleQuizClick()}>
+      <Button className={classes.quiz} variant="outlined" onClick={() => props.handleQuizClick()}>
        Faire le quiz</Button>
-       <CoursCompleted />
+      { auth[2] && <CoursCompleted />}
     </ul>
   )
 }

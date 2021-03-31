@@ -62,7 +62,7 @@
             <a class="nav-link" href="questionsEssentielles">Questions essentielles</a>
         </li>
         <li class="nav-item {{ 'resources' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="resources">Resources</a>
+            <a class="nav-link" href="resources">Ressources</a>
         </li>
         <li class="nav-item {{ 'certificat' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="certificat">Certificat</a>

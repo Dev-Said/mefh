@@ -25,8 +25,8 @@
         <label for="is_correct">Indiquez si la réponse est correcte</label>
         <select name="is_correct" id="is_correct">
             <option value=""></option>
-            <option value="1">correct</option>
-            <option value="0">not correct</option>
+            <option value="1">correcte</option>
+            <option value="0">pas correcte</option>
         </select>
         @error('is_correct')
         <div class="alert alert-danger">{{ $message }}</div>

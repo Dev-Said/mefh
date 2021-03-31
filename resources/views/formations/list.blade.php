@@ -2,26 +2,34 @@
 
 @section('list')
 
-<h1>Formations</h1>
 
-<div>
+<div class="contenaire_list">
+    <h1 class="titre_list">Formations</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                @if(Auth::check())
-                <th></th>
-                <th></th>
-                @endif
-            </tr>
-        </thead>
-        <tbody>
+    <a href="{{ '/formations/create' }}">
+        <button class="button_nouveau">Ajouter une formation</button>
+    </a>
 
-            @each('formations.one', $formations, 'formation')
+    <div>
 
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    @if(Auth::check())
+                    <th></th>
+                    <th></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+
+                @each('formations.one', $formations, 'formation')
+
+            </tbody>
+        </table>
+    </div>
 </div>
+
 @endsection

@@ -2,18 +2,20 @@
 
 @section('content')
 
-<div class="edit">
+<div class="editQuiz">
 
     <form action="/quizzes/{{ $quiz->id }}" method="post">
         @csrf
         @method('put')
-        <h1>Quiz : {{ $quiz->titre }}</h1>
+        <h2>Modifier un quiz</h2>
+        <h4>Quiz : {{ $quiz->titre }}</h4>
         <label for="titre">Modifier le titre</label>
         <input type="text" name="titre" id="titre" value="{{ $quiz->titre }}">
         @error('titre')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+        <br>
         <input type="submit" value="Confirmer">
     </form>
 
@@ -24,7 +26,7 @@
         <form action="/questions/{{ $question->id }}" method="post" class="endRight">
             @csrf
             @method('delete')
-            <input type="submit" value="Supprimer" name="delete" class="supp">
+            <input type="submit" value="Supprimer" name="delete" class="suppQuiz">
         </form>
     </div>
     @foreach($question->reponses as $reponse)
@@ -37,7 +39,7 @@
         <form action="/reponses/{{ $reponse->id }}" method="post" class="endRight">
             @csrf
             @method('delete')
-            <input type="submit" value="Supprimer" name="delete" class="supp">
+            <input type="submit" value="Supprimer" name="delete" class="suppQuiz">
         </form>
     </div>
     @endforeach

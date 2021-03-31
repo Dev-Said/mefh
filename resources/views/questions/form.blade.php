@@ -10,6 +10,7 @@
         <h3>Ajouter une question</h3>
         <label for="quiz_id">Sélectionnez un quiz</label>
         <select name="quiz_id" id="quiz_id">
+        <option value=""></option>
             @foreach($quizzes as $quiz)
             <option {{ old('quiz_id') == $quiz->id ? "selected" : "" }} value="{{ $quiz->id }}">{{ $quiz->titre }}</option>
             @endforeach
@@ -22,8 +23,9 @@
         @error('question')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="type">Type de réponse</label>
+        <label for="type">Type de question</label>
         <select name="type" id="type">
+        <option value=""></option>
             <option value="{{ old('type') == 'checkbox' ? 'checkbox' : 'radio' }}">{{ old('type') == 'checkbox' ? 'Choix multiple' : 'Choix unique' }}</option>
             <option value="{{ old('type') == 'checkbox' ? 'radio' : 'checkbox' }}">{{ old('type') == 'checkbox' ? 'Choix unique' : 'Choix multiple' }}</option>
         </select>

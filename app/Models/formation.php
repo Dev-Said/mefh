@@ -21,4 +21,14 @@ class formation extends Model
         return $this->hasOne(Faq::class);
     }
 
+    public function modules()
+    {
+        return $this->hasMany(modules::class);
+    }
+
+    public function ressource()
+    {
+        return $this->hasOne(Ressource::class);
+    }
+
 }

@@ -2,27 +2,34 @@
 
 @section('list')
 
-<h1>Questions</h1>
+<div class="contenaire_list">
 
-<div>
+    <h1 class="titre_list">Questions</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Question</th>
-                <th>Num</th>
-                <th>Quiz_id</th>
-                @if(Auth::check())
-                <th></th>
-                <th></th>
-                @endif
-            </tr>
-        </thead>
-        <tbody>
+    <a href="{{ '/questions/create' }}">
+        <button class="button_nouveau"><i class="fas fa-plus"></i>Ajouter une question</button>
+    </a>
 
-            @each('questions.one', $questions, 'question')
 
-        </tbody>
-    </table>
-</div>
-@endsection
+    <div class="tabla_list">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Type de question</th>
+                    <th>Quiz</th>
+                    @if(Auth::check())
+                    <th></th>
+                    <th></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+
+                @each('questions.one', $questions, 'question')
+
+            </tbody>
+        </table>
+    </div>
+    @endsection

@@ -6,6 +6,7 @@
     <form action="/modules/{{ $module->id }}" method="post">
         @csrf
         @method('put')
+        <h2>Modifier un module</h2>
         <label for="formation_id">Sélectionnez une formation</label>
         <p>
             <select name="formation_id" id="formation_id">

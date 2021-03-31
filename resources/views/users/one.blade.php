@@ -17,20 +17,20 @@
 
 
     @if(Auth::check())
-    <td>
+    <td class="td_Button">
         <form action="/users/{{ $user->id }}" method="post">
             @csrf
             @method('delete')
             <input type="submit" value="Supprimer" name="delete" class="supp">
         </form>
     </td>
-    <td>
+    <td class="td_Button"> 
         <form action="/users/{{ $user->id }}/edit" method="get">
             @csrf
             <input type="submit" value="Modifier" name="update" class="modif">
         </form>
     </td>
-    <td>
+    <td class="td_Button">
         <form action="/users/profile/{{ $user->id }}" method="get">
             @csrf
             <input type="submit" value="Voir le profil" name="update" class="gris">

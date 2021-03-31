@@ -2,26 +2,35 @@
 
 @section('list')
 
-<h1>Modules</h1>
 
-<div>
+<div class="contenaire_list">
 
-    <table>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                @if(Auth::check())
-                <th></th>
-                <th></th>
-                @endif
-            </tr>
-        </thead>
-        <tbody>
+    <h1 class="titre_list">Modules</h1>
 
-            @each('modules.one', $modules, 'module')
+    <a href="{{ '/modules/create' }}">
+        <button class="button_nouveau">Ajouter un module</button>
+    </a>
 
-        </tbody>
-    </table>
+    <div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Formation</th>
+                    @if(Auth::check())
+                    <th></th>
+                    <th></th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+
+                @each('modules.one', $modules, 'module')
+
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

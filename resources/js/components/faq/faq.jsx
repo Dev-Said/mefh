@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import axios from "axios";
 import CustomizedInputBase from '../searchInput/searchInput';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,13 +64,13 @@ export default function Faq() {
                                 className={classes.heading}
                                 variant="h6"
                             >
-                                {faq[1].question}
+                                {ReactHtmlParser(faq[1].question)}
                             </Typography>
                         </AccordionSummary>
 
                         <AccordionDetails>
                             <Typography>
-                                {faq[1].reponse}
+                                {ReactHtmlParser(faq[1].reponse)}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>

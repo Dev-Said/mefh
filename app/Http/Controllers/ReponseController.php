@@ -75,7 +75,9 @@ class ReponseController extends Controller
      */
     public function edit(Reponse $reponse)
     {
-        return view('reponses.edit', ['reponse' => $reponse]);
+        $questions = Question::all();
+        return view('reponses.edit', ['questions' => $questions,
+        'reponse' => $reponse]);
     }
 
     /**

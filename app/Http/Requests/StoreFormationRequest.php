@@ -26,7 +26,7 @@ class StoreFormationRequest extends FormRequest
         return [
             'titre' => 'required|max:255|string',
             'description' => 'required|max:1000',
-            'image_formation' => 'required',
+            'image_formation' => 'required|image',
         ];
     }
 }

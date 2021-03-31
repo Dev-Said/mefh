@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -23,13 +24,33 @@ class StoreUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'nom' => 'required|max:255|string',
-            'prenom' => 'required|max:255|string',
-            'sexe' => 'required|max:255|string',
-            'email' => 'required|max:255|email',
-            'admin' => 'required|max:255|string',
-            'password' => 'required|max:255',
-        ];
+
+       
+        switch ($this->method()) {
+            case 'POST':
+            {
+                return [
+                    'nom' => 'required|max:255|string',
+                    'prenom' => 'required|max:255|string',
+                    'sexe' => 'required|max:255|string',
+                    'email' => 'required|max:255|email|unique:App\Models\User,email',
+                    'admin' => 'required|max:255|string',
+                    'password' => 'required|max:255',
+                ];
+            }
+            case 'PUT':
+            case 'PATCH':
+            {
+                return [
+                    'nom' => 'required|max:255|string',
+                    'prenom' => 'required|max:255|string',
+                    'sexe' => 'required|max:255|string',
+                    'admin' => 'required|max:255|string',
+                    'password' => 'required|max:255',
+                    'email' => Rule::unique('users')->ignore($this->route()->user->id),
+                ];
+            }
+            default: break;
+        }
     }
 }

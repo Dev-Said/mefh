@@ -75,7 +75,6 @@ class ModuleResController extends Controller
      */
     public function edit(Module $module)
     {
-        dd($module);
         $formation = formation::find($module->formation_id);
         $formations = formation::all();
         return view('modules.edit', [
