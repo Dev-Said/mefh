@@ -65,6 +65,11 @@
                     <i class="far fa-comment-dots"></i>
                     Ressources</li>
                 </a>
+                <a href="/certificats">
+                    <li class="{{ 'certificats' == request()->path() ? 'active' : '' }}">
+                    <i class="fas fa-award"></i>
+                    Certificats</li>
+                </a>
                 <a href="/dashboard">
                     <li class="{{ 'dashboard' == request()->path() ? 'active' : '' }}">
                     <i class="fas fa-chart-line"></i>

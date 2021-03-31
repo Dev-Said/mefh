@@ -16,6 +16,7 @@ use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\FormationResController;
 
 /*
@@ -65,6 +66,7 @@ Route::resource('users', UserController::class);
 Route::resource('faqs', FaqController::class);
 Route::resource('faqsres', FaqResController::class);
 Route::resource('ressources', RessourceController::class);
+Route::resource('certificats', CertificatController::class);
 Route::resource('modulesApi', ModuleApiController::class);
 
 
@@ -100,6 +102,9 @@ Route::group(['middleware' => ['auth']], function () {
         'create', 'store', 'edit', 'update', 'delete'
     ]); 
     Route::resource('ressources', RessourceController::class)->only([
+        'create', 'store', 'edit', 'update', 'delete'
+    ]); 
+    Route::resource('certificats', CertificatController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]); 
 });

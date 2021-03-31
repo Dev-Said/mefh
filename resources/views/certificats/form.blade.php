@@ -4,26 +4,23 @@
 
 <div class="edit">
 
-    <form action="/ressources/{{ $ressource->id }}" method="post">
+    <form action="/certificats" method="post">
         @csrf
-        @method('put')
-        <h2>Modifier une ressource</h2>
+        <h2>Ajouter un certificat</h2>
         <label for="formation_id">Sélectionnez une formation</label>
         <p>
             <select name="formation_id" id="formation_id">
-                <option value="{{ $formation_old->id }}">{{ $formation_old->titre }}</option>
+            <option value=""></option>
                 @foreach($formations as $formation)
-                @if ($formation->id !== $formation_old->id)
                 <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
-                @endif
                 @endforeach
             </select>
         </p>
         @error('formation_id')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="text">Texte de la ressource</label>
-        <textarea id="text" name="text">{{ $ressource->text }}</textarea>
+        <label for="text">Texte du certificat</label>
+        <textarea id="text" name="text">{{ old('text') }}</textarea>
         @error('text')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -40,4 +37,5 @@ CKEDITOR.replace( 'text', {
     filebrowserUploadMethod: 'form'
 });
 </script>
+
 @endsection

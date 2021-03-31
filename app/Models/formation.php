@@ -31,4 +31,9 @@ class formation extends Model
         return $this->hasOne(Ressource::class);
     }
 
+    public function certificat()
+    {
+        return $this->hasOne(Certificat::class);
+    }
+
 }
