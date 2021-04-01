@@ -7,32 +7,50 @@ import axios from "axios";
 import Tooltip from '@material-ui/core/Tooltip';
 import store from '../redux/store';
 import './stepper.scss';
+import { styled } from '@material-ui/core/styles';
+ 
+
+const MyButton = styled(Button)({
+  width: 100,
+  height: "20px",
+  flex: "1",
+  minWidth: 2,
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     height: "100px",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    
     // backgroundColor: 'rgb(255, 244, 244)',
-    // border: 'brown solid 1px',
+    // border: 'blue solid 2px',
   },
   stepper: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "nowrap",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignContent: "stretch",
-    alignItems: "stretch",
-    width: "100%",
-    marginBottom: "20px",
+    // alignItems: "stretch",
+    // alignContent: "stretch",
+    // width: "100%",
+    // marginBottom: "20px",
+    // border: 'green solid 2px',
   },
   stepButton: {
     height: 20,
+    width: 100,
     "&:focus": {
       outline: 'none',
       backgroundColor: '#4297b6',
     },
     flex: '1',
-    // backgroundColor: "red",
+    backgroundColor: "red",
   },
   blockTitre: {
     display: "flex",
@@ -55,6 +73,7 @@ var style = '';
 
 const Stepper = (props) => {
   const classes = useStyles();
+  const classes2 = useStyles();
   const [chapitres, setChapitres] = useState([]);
   const [id, setId] = useState(1);
 
@@ -115,12 +134,13 @@ const Stepper = (props) => {
       <div className={classes.stepper}>
         {chapitres.map((chapitre, ndx) => (
           <BootstrapTooltip key={ndx} title={chapitre[1].titre} placement="top">
-            <Button className={classes.stepButton} key={chapitre[1].id}
+            <MyButton className={classes2.stepButton} key={chapitre[1].id}
               onClick={() => locateStepper(chapitre[1])}
               variant="outlined" color="#4297b6"
               style={colorSelected(chapitre[1].id)}
+              width="auto"
             >
-            </Button>       
+            </MyButton>       
           </BootstrapTooltip>
         ))}
       </div>

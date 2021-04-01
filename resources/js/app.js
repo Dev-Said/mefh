@@ -13,3 +13,6 @@
  */
 
 // require('./components/Example');
+
+import $ from 'jquery';
+window.$ = window.jQuery = $;

@@ -13503,6 +13503,37 @@ var shape = {
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/styles/styled.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/styles/styled.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/styled/styled.js");
+/* harmony import */ var _defaultTheme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js");
+
+
+
+
+var styled = function styled(Component) {
+  var componentCreator = (0,_material_ui_styles__WEBPACK_IMPORTED_MODULE_1__.default)(Component);
+  return function (style, options) {
+    return componentCreator(style, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+      defaultTheme: _defaultTheme__WEBPACK_IMPORTED_MODULE_2__.default
+    }, options));
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (styled);
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/styles/transitions.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/transitions.js ***!
@@ -18000,6 +18031,184 @@ function mergeClasses() {
     }
   });
   return nextClasses;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/styles/esm/styled/styled.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@material-ui/styles/esm/styled/styled.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ styled)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/getDisplayName.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/chainPropTypes.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _makeStyles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../makeStyles */ "./node_modules/@material-ui/styles/esm/makeStyles/makeStyles.js");
+
+
+
+
+
+
+
+
+
+function omit(input, fields) {
+  var output = {};
+  Object.keys(input).forEach(function (prop) {
+    if (fields.indexOf(prop) === -1) {
+      output[prop] = input[prop];
+    }
+  });
+  return output;
+} // styled-components's API removes the mapping between components and styles.
+// Using components as a low-level styling construct can be simpler.
+
+
+function styled(Component) {
+  var componentCreator = function componentCreator(style) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var name = options.name,
+        stylesOptions = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__.default)(options, ["name"]);
+
+    if ( true && Component === undefined) {
+      throw new Error(['You are calling styled(Component)(style) with an undefined component.', 'You may have forgotten to import it.'].join('\n'));
+    }
+
+    var classNamePrefix = name;
+
+    if (true) {
+      if (!name) {
+        // Provide a better DX outside production.
+        var displayName = (0,_material_ui_utils__WEBPACK_IMPORTED_MODULE_6__.default)(Component);
+
+        if (displayName !== undefined) {
+          classNamePrefix = displayName;
+        }
+      }
+    }
+
+    var stylesOrCreator = typeof style === 'function' ? function (theme) {
+      return {
+        root: function root(props) {
+          return style((0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+            theme: theme
+          }, props));
+        }
+      };
+    } : {
+      root: style
+    };
+    var useStyles = (0,_makeStyles__WEBPACK_IMPORTED_MODULE_7__.default)(stylesOrCreator, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+      Component: Component,
+      name: name || Component.displayName,
+      classNamePrefix: classNamePrefix
+    }, stylesOptions));
+    var filterProps;
+    var propTypes = {};
+
+    if (style.filterProps) {
+      filterProps = style.filterProps;
+      delete style.filterProps;
+    }
+    /* eslint-disable react/forbid-foreign-prop-types */
+
+
+    if (style.propTypes) {
+      propTypes = style.propTypes;
+      delete style.propTypes;
+    }
+    /* eslint-enable react/forbid-foreign-prop-types */
+
+
+    var StyledComponent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function StyledComponent(props, ref) {
+      var children = props.children,
+          classNameProp = props.className,
+          clone = props.clone,
+          ComponentProp = props.component,
+          other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__.default)(props, ["children", "className", "clone", "component"]);
+
+      var classes = useStyles(props);
+      var className = (0,clsx__WEBPACK_IMPORTED_MODULE_3__.default)(classes.root, classNameProp);
+      var spread = other;
+
+      if (filterProps) {
+        spread = omit(spread, filterProps);
+      }
+
+      if (clone) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.cloneElement(children, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+          className: (0,clsx__WEBPACK_IMPORTED_MODULE_3__.default)(children.props.className, className)
+        }, spread));
+      }
+
+      if (typeof children === 'function') {
+        return children((0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+          className: className
+        }, spread));
+      }
+
+      var FinalComponent = ComponentProp || Component;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(FinalComponent, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+        ref: ref,
+        className: className
+      }, spread), children);
+    });
+     true ? StyledComponent.propTypes = (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+      /**
+       * A render function or node.
+       */
+      children: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_4___default().node), (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func)]),
+
+      /**
+       * @ignore
+       */
+      className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
+
+      /**
+       * If `true`, the component will recycle it's children HTML element.
+       * It's using `React.cloneElement` internally.
+       *
+       * This prop will be deprecated and removed in v5
+       */
+      clone: (0,_material_ui_utils__WEBPACK_IMPORTED_MODULE_8__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool), function (props) {
+        if (props.clone && props.component) {
+          return new Error('You can not use the clone and component prop at the same time.');
+        }
+
+        return null;
+      }),
+
+      /**
+       * The component used for the root node.
+       * Either a string to use a HTML element or a component.
+       */
+      component: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().elementType)
+    }, propTypes) : 0;
+
+    if (true) {
+      StyledComponent.displayName = "Styled(".concat(classNamePrefix, ")");
+    }
+
+    hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_5___default()(StyledComponent, Component);
+    return StyledComponent;
+  };
+
+  return componentCreator;
 }
 
 /***/ }),
@@ -22670,15 +22879,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
-/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _material_ui_core_Tooltip__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Tooltip */ "./node_modules/@material-ui/core/esm/Tooltip/Tooltip.js");
+/* harmony import */ var _material_ui_core_Tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/Tooltip */ "./node_modules/@material-ui/core/esm/Tooltip/Tooltip.js");
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
 /* harmony import */ var _stepper_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stepper.scss */ "./resources/js/components/stepper/stepper.scss");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/styled.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -22709,32 +22919,47 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(function (theme) {
+
+var MyButton = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_7__.default)({
+  width: 100,
+  height: "20px",
+  flex: "1",
+  minWidth: 2
+});
+var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__.default)(function (theme) {
   return {
     root: {
       width: "100%",
-      height: "100px" // backgroundColor: 'rgb(255, 244, 244)',
-      // border: 'brown solid 1px',
+      height: "100px",
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "flex-start" // backgroundColor: 'rgb(255, 244, 244)',
+      // border: 'blue solid 2px',
 
     },
     stepper: {
       display: "flex",
       flexDirection: "row",
-      flexWrap: "nowrap",
+      flexWrap: "wrap",
       justifyContent: "center",
-      alignContent: "stretch",
-      alignItems: "stretch",
-      width: "100%",
-      marginBottom: "20px"
+      alignContent: "stretch" // alignItems: "stretch",
+      // alignContent: "stretch",
+      // width: "100%",
+      // marginBottom: "20px",
+      // border: 'green solid 2px',
+
     },
     stepButton: {
       height: 20,
+      width: 100,
       "&:focus": {
         outline: 'none',
         backgroundColor: '#4297b6'
       },
-      flex: '1' // backgroundColor: "red",
-
+      flex: '1',
+      backgroundColor: "red"
     },
     blockTitre: {
       display: "flex",
@@ -22757,6 +22982,7 @@ var style = '';
 
 var Stepper = function Stepper(props) {
   var classes = useStyles();
+  var classes2 = useStyles();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -22812,7 +23038,7 @@ var Stepper = function Stepper(props) {
   }; // bulle info
 
 
-  var useStylesBootstrap = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(function (theme) {
+  var useStylesBootstrap = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__.default)(function (theme) {
     return {
       arrow: {
         color: theme.palette.common.black
@@ -22827,7 +23053,7 @@ var Stepper = function Stepper(props) {
 
   function BootstrapTooltip(props) {
     var classes = useStylesBootstrap();
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Tooltip__WEBPACK_IMPORTED_MODULE_7__.default, _objectSpread({
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Tooltip__WEBPACK_IMPORTED_MODULE_9__.default, _objectSpread({
       arrow: true,
       classes: classes
     }, props));
@@ -22841,20 +23067,21 @@ var Stepper = function Stepper(props) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BootstrapTooltip, {
           title: chapitre[1].titre,
           placement: "top",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_8__.default, {
-            className: classes.stepButton,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(MyButton, {
+            className: classes2.stepButton,
             onClick: function onClick() {
               return locateStepper(chapitre[1]);
             },
             variant: "outlined",
             color: "#4297b6",
-            style: colorSelected(chapitre[1].id)
+            style: colorSelected(chapitre[1].id),
+            width: "auto"
           }, chapitre[1].id)
         }, ndx);
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: classes.blockTitre,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__.default, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_10__.default, {
         className: classes.titre,
         children: props.store_chapitre.titre
       })

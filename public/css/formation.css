@@ -1,14 +1,14 @@
 .contenaire {
   width: 70%;
   height: auto;
-  margin-top: 50px;
+  margin-top: 130px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0;
+  padding: 0 0 0 2%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   background-color: #ffffff;
 }
@@ -16,6 +16,13 @@
 .text-formation {
   margin: 50px 0 50px 0;
   padding-right: 30%;
+}
+
+.blockFormations {
+  display: grid;
+  grid-template-columns: repeat(3, 30%);
+  grid-column-gap: 3.3333%;
+  width: 100%;
 }
 
 .text-formation h1 {
@@ -29,7 +36,7 @@
 }
 
 a.card-formation {
-  width: 30%;
+  width: 100%;
   min-width: 250px;
   height: auto;
   margin: 20px 0;
@@ -40,10 +47,6 @@ a.card-formation {
   background-color: white;
   border: solid 1px #d6d6d6;
   border-radius: 5px;
-}
-
-a.card-formation:last-child {
-  margin-right: auto;
 }
 
 a:link,

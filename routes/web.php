@@ -38,7 +38,7 @@ Route::get('/', function () {
     return view('accueil');
 });
 
-Route::get('/formations-Liste', function () {
+Route::get('/formations-liste', function () {
     return view('formations', ['formations' => DB::table('formations')->orderBy('ordre')->get()]);
 });
 
@@ -124,7 +124,7 @@ Route::get('/logout', function () {
 });
 
 
-Route::get('/indexFormations/{id}', function () {
+Route::get('/formation/{id}', function () {
     return view('indexFormations', ['id' => request('id')]);
 });
 

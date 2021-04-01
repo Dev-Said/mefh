@@ -75,23 +75,11 @@
                     <i class="fas fa-chart-line"></i>
                     Dashboard</li>
                 </a>
-                <!-- <a href="{{ request()->path() .'/create' }}">
-                    <li class="nouveau {{ request()->is('*/create') ? 'hide' : '' }}">Nouveau</li>
-                </a> -->
-
-                @if(Auth::check())
-                <a href="/logout">
-                    <li class="connex">Déconnexion</li>
+                <a href="/">
+                    <li class="{{ '/' == request()->path() ? 'active' : '' }}">
+                    <i class="fas fa-home"></i>
+                    Accueil</li>
                 </a>
-                @else
-                <a href="/login">
-                    <li class="connex">Connexion</li>
-                </a>
-                <a href="/register">
-                    <li class="connex">Inscription</li>
-                </a>
-                @endif
-
             </ul>
         </div>
 
