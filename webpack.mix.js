@@ -21,7 +21,6 @@ mix.js('resources/js/cours.js', 'public/js').react()
     .sass('resources/sass/reset.scss', 'public/css')
     .sass('resources/js/components/wrapper/modules.scss', 'public/css')
     .sass('resources/js/components/videos/video.scss', 'public/css')
-    .sass('resources/js/components/listeChapitres/listeChapitres.scss', 'public/css')
     .sass('resources/js/components/stepper/stepper.scss', 'public/css')
     .sass('resources/js/components/quiz/quiz.scss', 'public/css');
 

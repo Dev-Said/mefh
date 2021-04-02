@@ -57,7 +57,9 @@ const ListeChapitres = (props) => {
     <ul className={classes.root} >
       <BackNextButton chapitres={chapitres} />
       <SimpleList chapitres={chapitres} init_index={0} />
-      <Button className={classes.quiz} variant="outlined" onClick={() => props.handleQuizClick()}>
+      {/* <Button className={classes.quiz} variant="outlined" onClick={() => props.handleQuizClick()}>
+       Faire le quiz</Button> */}
+       <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
        Faire le quiz</Button>
       { auth[2] && <CoursCompleted />}
     </ul>

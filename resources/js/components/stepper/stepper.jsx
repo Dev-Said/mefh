@@ -14,7 +14,7 @@ const MyButton = styled(Button)({
   width: 100,
   height: "20px",
   flex: "1",
-  minWidth: 2,
+  minWidth: '2px',
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -42,16 +42,16 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: "20px",
     // border: 'green solid 2px',
   },
-  stepButton: {
-    height: 20,
-    width: 100,
-    "&:focus": {
-      outline: 'none',
-      backgroundColor: '#4297b6',
-    },
-    flex: '1',
-    backgroundColor: "red",
-  },
+  // stepButton: {
+  //   height: 20,
+  //   width: 100,
+  //   "&:focus": {
+  //     outline: 'none',
+  //     backgroundColor: '#4297b6',
+  //   },
+  //   flex: '1',
+  //   backgroundColor: "red",
+  // },
   blockTitre: {
     display: "flex",
     width: "100%",
@@ -138,7 +138,6 @@ const Stepper = (props) => {
               onClick={() => locateStepper(chapitre[1])}
               variant="outlined" color="#4297b6"
               style={colorSelected(chapitre[1].id)}
-              width="auto"
             >
             </MyButton>       
           </BootstrapTooltip>

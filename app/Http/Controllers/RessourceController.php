@@ -32,6 +32,11 @@ class RessourceController extends Controller
         return view('ressources.form', ['formations' => $formations]);
     }
 
+    public function getRessources()
+    {
+        return Ressource::all();
+    }
+
     /**
      * Store a newly created resource in storage.
      *

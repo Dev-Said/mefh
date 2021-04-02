@@ -118,9 +118,10 @@ Route::get('/dashboard', [DashboardController::class, 'entry']);
 Route::post('/usersFromQuizForm', [UserController::class, 'store2']);
 Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
 Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
+Route::get('/ressourcesRes', [RessourceController::class, 'getRessources']);
 Route::get('/logout', function () {
     Auth::logout();
-    return redirect('/users');
+    return redirect('/');
 });
 
 

@@ -338,7 +338,10 @@ const Quiz = (props) => {
 
 
       <div className="quizHeader">
-        <Button onClick={() => props.handleQuizClick()} variant="outlined" className="quizBackButton">
+        {/* <Button onClick={() => props.handleQuizClick()} variant="outlined" className="quizBackButton">
+          Revenir sur la page de formation</Button>         */}
+          
+          <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
           Revenir sur la page de formation</Button>
       </div>
 

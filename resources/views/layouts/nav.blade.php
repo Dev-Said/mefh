@@ -61,16 +61,7 @@
         <li class="nav-item {{ 'formations-liste' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="formations-liste">Formations</a>
         </li>
-        <li class="nav-item {{ 'questionsEssentielles' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="questionsEssentielles">Questions essentielles</a>
-        </li>
-        <li class="nav-item {{ 'resources' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="resources">Ressources</a>
-        </li>
-        <li class="nav-item {{ 'certificat' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="certificat">Certificat</a>
-        </li>
-        <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
+         <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="contact">Contact</a>
         </li>
 

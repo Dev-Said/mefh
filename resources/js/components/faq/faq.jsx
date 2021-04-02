@@ -8,6 +8,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import axios from "axios";
 import CustomizedInputBase from '../searchInput/searchInput';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Faq() {
+export default function Faq(props) {
     const classes = useStyles();
     const [faqs, setFaqs] = useState([]);
     const [param, setParam] = useState('');
@@ -52,6 +54,10 @@ export default function Faq() {
 
     return (
         <div>
+
+            <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
+                Revenir sur la page de formation</Button>
+
             <div className={classes.root}>
                 <CustomizedInputBase onChange={handleChange} />
                 {faqs.map((faq, index) => (
