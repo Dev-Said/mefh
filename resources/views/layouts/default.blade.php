@@ -55,7 +55,7 @@
                     Reponses</li>
                 </a>
                 </a>
-                <a href="/faqsres">
+                <a href="/faqs">
                     <li class="{{ 'faqsres' == request()->path() ? 'active' : '' }}">
                     <i class="fas fa-info"></i>
                     Questions essentielles</li>

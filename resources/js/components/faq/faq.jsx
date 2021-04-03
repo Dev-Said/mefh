@@ -37,7 +37,7 @@ export default function Faq(props) {
     const [param, setParam] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/faqs/${param}`).then((res) => {
+        axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
             const faqData = Object.entries(res.data);
             setFaqs(faqData);
         });
@@ -45,8 +45,14 @@ export default function Faq(props) {
 
     const handleChange = (e) => {
         const value = e.currentTarget.value;
-        // console.log(e.currentTarget.value);
-        axios.get(`http://localhost:8000/faqs/${value}`).then((res) => {
+        console.log(e.currentTarget.value);
+        axios.get(`http://localhost:8000/faqChange`,
+        {
+            params: {
+                value: value,
+                formation_id: idFormation,
+            }
+        }).then((res) => {
             const faqData = Object.entries(res.data);
             setFaqs(faqData);
         });

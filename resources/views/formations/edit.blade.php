@@ -17,6 +17,17 @@
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+        <label for="langue">Langue</label>
+        <select name="langue" id="langue">
+            <option value="{{ $formation->langue }}">{{ $formation->langue }}</option>
+            <option value="Français">Français</option>
+            <option value="Néerlendais">Néerlendais</option>
+            <option value="Anglais">Anglais</option>
+            <option value="Allemand">Allemand</option>
+        </select>
+        @error('langue')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="image_formation">Choisissez une image si vous souhaitez remplacer l'image actuelle</label>
         <input type="file" name="image_formation" id="image_formation">
         @error('image_formation')

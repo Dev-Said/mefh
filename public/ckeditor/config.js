@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
-	config.extraPlugins = 'autogrow';
+
 
 	config.extraPlugins = 'panelbutton';
 
@@ -47,5 +47,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.extraPlugins = 'panel';
 
 	config.extraPlugins = 'colorbutton';
+
+	config.extraPlugins = 'autogrow';
 
 };

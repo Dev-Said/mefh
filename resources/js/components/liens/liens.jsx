@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import InfoIcon from '@material-ui/icons/Info';
+import PeopleIcon from '@material-ui/icons/People';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     lien: {
         marginRight: 30,
         fontSize: "18px",
-        color: "blue",
+        color: "#005caa",
         display: "inline",
         '&:hover': {
             cursor: "pointer",
@@ -36,13 +38,13 @@ export default function Links(props) {
     return (
         <div className={classes.root} >
             <Typography className={classes.lien} onClick={() => props.handleView('faq')}>
-                Questions éssentielles
+                <InfoIcon /> Questions éssentielles
         </Typography>
             <Typography className={classes.lien} onClick={() => props.handleView('ressource')}>
-                Ressources
+                <PeopleIcon /> Ressources
         </Typography>
             <Typography className={classes.lien} onClick={() => props.handleView('certificat')}>
-                Certificat
+                <VerifiedUserIcon /> Certificat
         </Typography>
         </div>
     );

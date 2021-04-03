@@ -18,6 +18,7 @@ class CreateFormationsTable extends Migration
             $table->string('titre', 255);
             $table->text('description');
             $table->integer('ordre');
+            $table->string('langue', 50);
             $table->string('image_formation', 255)->nullable();
             $table->timestamps();
         });

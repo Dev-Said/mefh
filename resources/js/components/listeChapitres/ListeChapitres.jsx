@@ -44,6 +44,7 @@ const ListeChapitres = (props) => {
   const classes = useStyles();
   const [chapitres, setChapitres] = useState([]);
 
+  //idFormation est injecté dans la page indexFormations
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {

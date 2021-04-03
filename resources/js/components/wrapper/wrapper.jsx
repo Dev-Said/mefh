@@ -9,24 +9,11 @@ import '../quiz/quiz.scss';
 import Links from '../liens/liens';
 import Faq from '../faq/faq';
 import Ressource from '../ressource/ressource';
+import Certificat from '../certificat/certificat';
 
 const Wrapper = () => {
 
-  // const [isQuiz, setIsQuiz] = useState(false);
   const [view, setView] = useState('formation');
-
-  // const handleQuizClick = () => {
-  //   isQuiz == true ? setIsQuiz(false) : setIsQuiz(true);
-  // }
-
-  // var compo;
-  // if (isQuiz) {
-  //   compo = <Quiz handleQuizClick={handleQuizClick} />
-  // } else {
-  //   compo = [<Links />, <Stepper />, <Video />, <ListeChapitres handleQuizClick={handleQuizClick} />,
-  //   <ChapitreDescription />]
-  // }
-
 
   const handleView = (vue) => {
     setView(vue);
@@ -49,9 +36,9 @@ const Wrapper = () => {
     case 'faq':
       compo = <Faq handleView={handleView} />
       break;
-    // case 'certificat':
-    //   compo = <Quiz handleView={handleView} />
-    //   break;
+    case 'certificat':
+      compo = <Certificat handleView={handleView} />
+      break;
     default:
       compo = [<Links handleView={handleView} />, <Stepper />,
       <Video />, <ListeChapitres handleView={handleView} />,

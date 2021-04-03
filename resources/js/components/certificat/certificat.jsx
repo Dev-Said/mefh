@@ -24,20 +24,19 @@ const useStyles = makeStyles({
     content: {
         boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
         marginBottom: 50,
-        backgroundColor: "#fdfdfd",
+        backgroundColor: "#ffffff",
     },
     backButton: {
         marginBottom: 50,
     },
 });
 
-export default function Ressource(props) {
+export default function Certificat(props) {
     const classes = useStyles();
     const [ressources, setRessources] = useState([]);
 
-
     useEffect(() => {
-        axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
+        axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
             const ressourceData = Object.entries(res.data);
             console.log('ressourceData   ' + ressourceData)
             setRessources(ressourceData);

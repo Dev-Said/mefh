@@ -53,8 +53,8 @@
 
     <ul class="nav menu">
         <li class="logo">
-            <img src="/storage/images/logo.png" alt="logo" />
-        </li>
+            <img src="/storage/images/logoMix.png" alt="logo" />
+        </li>        
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" aria-current="page" href="/">Accueil</a>
         </li>

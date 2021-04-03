@@ -5,6 +5,9 @@
     <td>
         {{$formation->description}}
     </td>
+    <td>
+        {{$formation->langue}}
+    </td>
 
     @if(Auth::check())
     <td class="td_Button">

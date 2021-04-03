@@ -42,11 +42,8 @@ Route::get('/formations-liste', function () {
     return view('formations', ['formations' => DB::table('formations')->orderBy('ordre')->get()]);
 });
 
-Route::view('/questions', 'questions');
-Route::view('/resources', 'resources');
-Route::view('/certificat', 'certificat');
+
 Route::view('/contact', 'contact');
-Route::view('/connexion', 'connexion');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -64,7 +61,6 @@ Route::resource('quizzes', QuizController::class);
 Route::resource('reponses', ReponseController::class);
 Route::resource('users', UserController::class);
 Route::resource('faqs', FaqController::class);
-Route::resource('faqsres', FaqResController::class);
 Route::resource('ressources', RessourceController::class);
 Route::resource('certificats', CertificatController::class);
 Route::resource('modulesApi', ModuleApiController::class);
@@ -98,9 +94,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('faqs', FaqController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]);
-    Route::resource('faqsres', FaqResController::class)->only([
-        'create', 'store', 'edit', 'update', 'delete'
-    ]); 
     Route::resource('ressources', RessourceController::class)->only([
         'create', 'store', 'edit', 'update', 'delete'
     ]); 
@@ -118,7 +111,10 @@ Route::get('/dashboard', [DashboardController::class, 'entry']);
 Route::post('/usersFromQuizForm', [UserController::class, 'store2']);
 Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
 Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
-Route::get('/ressourcesRes', [RessourceController::class, 'getRessources']);
+Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessources']);
+Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
+Route::get('/faqChange', [FaqController::class, 'getChange']);
+Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');

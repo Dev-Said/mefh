@@ -24,6 +24,17 @@ class FormationController extends Controller
         return view('formations.list', ['formations' => $formations]);
     }
 
+        /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('formations.form');
+    }
+    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,6 +48,7 @@ class FormationController extends Controller
         $formation = new formation;
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
+        $formation->langue = Arr::get($validated, 'langue');
         $formationsCount = formation::all()->max('ordre') + 1;
         $formation->ordre = $formationsCount;
         if ($request->hasFile('image_formation')) {
@@ -57,15 +69,7 @@ class FormationController extends Controller
         return back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('formations.form');
-    }
+
 
     /**
      * Display the specified resource.
@@ -121,6 +125,7 @@ class FormationController extends Controller
      
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
+        $formation->langue = Arr::get($validated, 'langue');
         $formation->ordre = $formation->ordre;
 
         $formation->save();

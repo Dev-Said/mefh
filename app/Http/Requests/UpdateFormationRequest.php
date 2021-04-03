@@ -26,6 +26,7 @@ class UpdateFormationRequest extends FormRequest
         return [
             'titre' => 'required|max:255|string',
             'description' => 'required|max:1000',
+            'langue' => 'required|max:50',
             'ordre' => 'required|max:255',
         ];
     }

@@ -26,6 +26,7 @@ class StoreFaqRequest extends FormRequest
         return [
             'question' => 'required|string',
             'reponse' => 'required|string',
+            'formation_id' => 'required',
         ];
     }
 }

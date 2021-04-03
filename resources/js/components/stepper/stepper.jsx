@@ -95,8 +95,6 @@ const Stepper = (props) => {
   }, [props.store_chapitre.id]);
 
 
-  // store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: dejaSuivi });
-
   // positionne le curseur sur le stepper cliqué et envoi son chapitre
   // dans le store pour mettre à jour BackNextButton et SimpleList
   const locateStepper = (chapitre) => {

@@ -32,10 +32,6 @@ class RessourceController extends Controller
         return view('ressources.form', ['formations' => $formations]);
     }
 
-    public function getRessources()
-    {
-        return Ressource::all();
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -67,9 +63,11 @@ class RessourceController extends Controller
     {
         $formation = formation::find($ressource->formation_id);
         $formations = formation::all();
-        return view('ressources.edit', ['ressource' => $ressource,
-        'formation_old' => $formation,
-        'formations' => $formations]);
+        return view('ressources.edit', [
+            'ressource' => $ressource,
+            'formation_old' => $formation,
+            'formations' => $formations
+        ]);
     }
 
 
@@ -103,5 +101,13 @@ class RessourceController extends Controller
         $ressource->delete();
 
         return back();
+    }
+
+
+    // renvoi les ressources d'une formation donnée
+    public function getRessources($idFormation)
+    {
+        return Ressource::where('formation_id', '=', $idFormation)
+            ->get();
     }
 }

@@ -4,7 +4,7 @@
 
 <div class="edit">
 
-<form action="/formations" method="post" enctype="multipart/form-data">
+    <form action="/formations" method="post" enctype="multipart/form-data">
         @csrf
         <h2>Ajouter une formation</h2>
         <label for="titre">Titre</label>
@@ -15,6 +15,17 @@
         <label for="description">Description</label>
         <input type="text" name="description" id="description" value="{{ old('description') }}">
         @error('description')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <label for="langue">Langue</label>
+        <select name="langue" id="langue">
+            <option value=""></option>
+            <option value="Français">Français</option>
+            <option value="Néerlendais">Néerlendais</option>
+            <option value="Anglais">Anglais</option>
+            <option value="Allemand">Allemand</option>
+        </select>
+        @error('langue')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="image_formation">Image</label>

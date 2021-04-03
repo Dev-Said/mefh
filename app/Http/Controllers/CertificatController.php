@@ -99,4 +99,14 @@ class CertificatController extends Controller
 
         return back();
     }
+
+
+    // renvoi le certificat d'une formation donnée
+    public function getCertificat($idFormation)
+    {
+        return Certificat::where('formation_id', '=', $idFormation)
+                ->get();
+    }
+
+
 }

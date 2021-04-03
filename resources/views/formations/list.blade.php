@@ -17,6 +17,7 @@
                 <tr>
                     <th>Titre</th>
                     <th>Description</th>
+                    <th>Langue</th>
                     @if(Auth::check())
                     <th></th>
                     <th></th>

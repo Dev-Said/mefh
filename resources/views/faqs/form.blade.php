@@ -7,6 +7,18 @@
     <form action="/faqs" method="post">
         @csrf
         <h2>Ajouter une question essentielle</h2>
+        <label for="formation_id">Formations</label>
+        <p>
+            <select name="formation_id" id="formation_id">
+            <option value="">Sélectionnez une formation</option>
+                @foreach($formations as $formation)
+                <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
+                @endforeach
+            </select>
+        </p>
+        @error('formation_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <label for="question">Question</label>
         <input type="text" name="question" id="question" value="{{ old('question') }}">
         @error('question')
