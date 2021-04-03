@@ -24,7 +24,7 @@ class FormationController extends Controller
         return view('formations.list', ['formations' => $formations]);
     }
 
-        /**
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,7 +33,7 @@ class FormationController extends Controller
     {
         return view('formations.form');
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -107,7 +107,7 @@ class FormationController extends Controller
         //si il y a un fichier image alors on efface l'ancien
         // et on stock le nouveau
         if ($request->hasFile('image_formation')) {
-     
+
             Storage::delete('public/' . $formation->image_formation);
             // si il y a un fichier image on le redimenssionne avec "intervention image" 
             // avant la sauvegarde
@@ -122,7 +122,7 @@ class FormationController extends Controller
         } else {
             $formation->image_formation = $formation->image_formation;
         }
-     
+
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
         $formation->langue = Arr::get($validated, 'langue');
@@ -159,5 +159,18 @@ class FormationController extends Controller
             }
         }
         return back();
+    }
+
+    // renvoi uniquement les formations dans la langue choisie
+    public function formationsLangue(Request $request)
+    {
+        if ($request->langue == 'Toutes les formations') {
+            $formations = formation::all();
+        } else {
+            $formations =  formation::where('langue', '=', $request->langue)
+                ->get();
+        }
+
+        return view('formations', ['formations' => $formations, 'langue' => $request->langue]);
     }
 }

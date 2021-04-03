@@ -12,17 +12,27 @@
     </div>
 
     <div class="selectForm">
-        <form action="/formations" method="post">
+        <form action="/formationsLangue" method="post">
             @csrf
-            <label for="langue">Choissez une langue de formation &nbsp;&nbsp;&nbsp;&nbsp; </label>&nbsp;&nbsp;
             <select name="langue" id="langue">
-                <option value="all">Toutes les formations</option>
-                <option value="Français">Français</option>
-                <option value="Néerlendais">Néerlendais</option>
-                <option value="Anglais">Anglais</option>
-                <option value="Allemand">Allemand</option>
-            </select>&nbsp;&nbsp;
-            <input type="submit" value="Sélectionner">
+                @isset( $langue ) <option value={{ $langue }}>{{ $langue }}</option> @endisset
+                @if ($langue && $langue !== 'Toutes les formations')
+                <option value="Toutes les formations">Toutes les formations</option>
+                @endif
+                @if ($langue && $langue !== 'Français')
+                <option value="Français">Les formations en Français</option>
+                @endif
+                @if ($langue && $langue !== 'Néerlendais')
+                <option value="Néerlendais">Les formations en Néerlendais</option>
+                @endif
+                @if ($langue && $langue !== 'Anglais')
+                <option value="Anglais">Les formations en Anglais</option>
+                @endif
+                @if ($langue && $langue !== 'Allemand')
+                <option value="Allemand">Les formations en Allemand</option>
+                @endif
+            </select>
+            <input type="submit" value="Comfirmer">
         </form>
     </div>
 

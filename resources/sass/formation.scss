@@ -28,30 +28,27 @@ $colour: #8b8b8b;
     text-align: left;
 }
 
-.selectForm label {
-    font-size: 18px;
-}
+
 
 .selectForm #langue {
     height: 40px;
-    // border-radius: 15px;
-    border: none;
-    background-color: rgb(250, 250, 250);
+    margin: 0;
+    padding: 0 20px;
+    border: solid rgb(174, 200, 255) 1px;
     color: rgb(0, 0, 0);
     // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     letter-spacing: 1px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .selectForm input[type=submit] { 
     height: 40px;
     width: 150px;
-    margin-top: 50px;
-    // border-radius: 15px;
-    border: none;
-    background-color: rgb(250, 250, 250);
+    margin-left: -4px;
+    border: solid rgb(174, 200, 255) 1px;
     color: rgb(0, 0, 0);
     font-size: 16px;
+    background-color: rgb(252, 252, 252);
     // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     letter-spacing: 1px;
 }

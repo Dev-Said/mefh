@@ -115,6 +115,7 @@ Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessource
 Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
+Route::post('/formationsLangue', [FormationController::class, 'formationsLangue']);
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
