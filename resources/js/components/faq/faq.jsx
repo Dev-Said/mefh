@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Faq(props) {
     const classes = useStyles();
     const [faqs, setFaqs] = useState([]);
-    const [param, setParam] = useState('');
+    // const [param, setParam] = useState('');
 
     useEffect(() => {
         axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {

@@ -40,7 +40,7 @@ class ModuleResController extends Controller
      */
     public function store(StoreModuleRequest $request)
     {
-        
+        dd($request);
         $validated = $request->validated();
         
 

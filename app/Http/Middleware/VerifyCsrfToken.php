@@ -15,5 +15,6 @@ class VerifyCsrfToken extends Middleware
         'reponses_user',
         'usersFromQuizForm',
         'chapitreSuivi',
-    ];
+        'checkUser',
+      ];
 }

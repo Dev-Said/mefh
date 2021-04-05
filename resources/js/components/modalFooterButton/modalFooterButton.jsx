@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const BootstrapButton = withStyles({
   root: {
     boxShadow: 'none',
+    maxWidth: 250,
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 22px',
@@ -60,7 +61,10 @@ export default function ModalFooterButton(props) {
   return (
     <div className={classes.root}>
     <p> { props.message } </p>
-    {/* teste si le score est > = 80 pour afficher le bouton enregistrer */}
+    {/* teste si le score est > = 80 pour afficher les boutons s\'inscrire et ou enregistrer */}
+      {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()}>
+        { props.titre0 }
+      </BootstrapButton>}      
       {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}>
         { props.titre1 }
       </BootstrapButton>}

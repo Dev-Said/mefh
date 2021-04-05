@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function egister(props) {
+export default function Register(props) {
     const classes = useStyles();
     const [nom, setNom] = React.useState('');
     const [prenom, setPrenoom] = React.useState('');

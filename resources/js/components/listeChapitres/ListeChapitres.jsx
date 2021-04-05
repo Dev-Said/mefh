@@ -5,7 +5,7 @@ import SimpleList from '../simpleList/simpleList';
 import BackNextButton from '../backNextButton/backNextButton';
 import Button from '@material-ui/core/Button';
 import CoursCompleted from '../coursCompleted/coursCompleted';
-
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,28 +43,49 @@ const ListeChapitres = (props) => {
 
   const classes = useStyles();
   const [chapitres, setChapitres] = useState([]);
+  const [quiz, setQuiz] = useState([]);
 
-  //idFormation est injecté dans la page indexFormations
+
+  // idFormation est injecté dans la page indexFormations
+  // dans laquelle s'affichent les composants
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {
-        setChapitres(Object.entries(res.data));     
+        setChapitres(Object.entries(res.data));   
       }).catch(function (error) {
         console.log('error:   ' + error);
       });
-  }, []);
+  }, []);  
+  
+  // récupère le quiz du module s'il y en a pour afficher le 
+  // bouton faire le quiz. Sinon on affiche pas le bouton
+  useEffect(() => {
+      axios.get(`http://localhost:8000/quizzes/quizApi/${props.info_chapitre.module_id}`)
+      .then(res => {
+        setQuiz(Object.values(res.data));
+      });
+  }, [props.info_chapitre.module_id]);
+
+ 
 
   return (
     <ul className={classes.root} >
       <BackNextButton chapitres={chapitres} />
       <SimpleList chapitres={chapitres} init_index={0} />
-      {/* <Button className={classes.quiz} variant="outlined" onClick={() => props.handleQuizClick()}>
-       Faire le quiz</Button> */}
-       <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
-       Faire le quiz</Button>
+      {quiz != 'hide' ? 
+      <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
+       Faire le quiz</Button> : ''
+      }
       { auth[2] && <CoursCompleted />}
     </ul>
   )
 }
 
-export default ListeChapitres;
+const mapStateToProps = ({ chapitreData }) => {
+  return {
+    info_chapitre: chapitreData.chapitreData,
+  }
+}
+
+
+export default connect(mapStateToProps)(ListeChapitres);

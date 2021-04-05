@@ -20,6 +20,7 @@
 
 .selectForm {
   width: 100%;
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -27,8 +28,10 @@
   height: 40px;
   margin: 0;
   padding: 0 20px;
-  border: solid #aec8ff 1px;
+  border: none;
   color: black;
+  background-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   letter-spacing: 1px;
   font-size: 16px;
 }
@@ -36,11 +39,12 @@
 .selectForm input[type=submit] {
   height: 40px;
   width: 150px;
-  margin-left: -4px;
-  border: solid #aec8ff 1px;
+  border: none;
   color: black;
   font-size: 16px;
-  background-color: #fcfcfc;
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   letter-spacing: 1px;
 }
 

@@ -147,15 +147,29 @@ class UserController extends Controller
     public function reponseUser(Request $request)
     {
         Reponse_user::where('quiz_id', $request->quiz_id)
-        ->where('user_id', $request->id)
-        ->delete();
+            ->where('user_id', $request->id)
+            ->delete();
 
-            $reponse_user = new Reponse_user;
-            $reponse_user->score = $request->resultat;
-            $reponse_user->user_id = $request->id;
-            $reponse_user->quiz_id = $request->quiz_id;
-            $reponse_user->save();
+        $reponse_user = new Reponse_user;
+        $reponse_user->score = $request->resultat;
+        $reponse_user->user_id = $request->id;
+        $reponse_user->quiz_id = $request->quiz_id;
+        $reponse_user->save();
 
         return json_encode('success');
+    }
+
+    // vérifie si user existe et que le password est ok
+    public function checkUser(Request $request)
+    {
+        
+            $credentials = $request->only('email', 'password');
+
+            if (Auth::attempt($credentials)) {
+                return  Auth::id();
+            }
+
+            return 'user not exist';
+
     }
 }

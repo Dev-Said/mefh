@@ -107,7 +107,13 @@ class RessourceController extends Controller
     // renvoi les ressources d'une formation donnée
     public function getRessources($idFormation)
     {
-        return Ressource::where('formation_id', '=', $idFormation)
+        $ressource = Ressource::where('formation_id', '=', $idFormation)
             ->get();
+
+        if ($ressource->isEmpty()) {
+            return response()->json(['hide' => 'hide'], 200);
+        } else {
+            return $ressource;
+        }
     }
 }

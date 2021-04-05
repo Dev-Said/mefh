@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import ModalFooterButton from '../modalFooterButton/modalFooterButton';
 import Register from '../register/register';
+import Login from '../login/login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formLabelError: {
     color: 'red',
+    fontWeight: '400',
   },
   reponses: {
     fontSize: '16px',
@@ -68,6 +70,7 @@ const Quiz = (props) => {
   const [score, setScore] = useState(0);
   const [messageScore, setMessageScore] = useState('');
   const [messageFooter, setMessageFooter] = useState('');
+  const [titreButton0, setTitreButton0] = useState('');
   const [titreButton1, setTitreButton1] = useState('');
   const [titreButton2, setTitreButton2] = useState('');
   const [functionModalButton, setFunctionModalButton] = useState('');
@@ -112,8 +115,6 @@ const Quiz = (props) => {
   //   })
   // }
   // )
-
-
 
   // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
   var reponses_Questions = {};
@@ -208,7 +209,7 @@ const Quiz = (props) => {
 
 
   var userReponseVar = [];
-
+  // gère l'envoi du quiz ------------------------------------->
   function handleSubmit(event) {
     event.preventDefault();
     var coef;
@@ -239,7 +240,8 @@ const Quiz = (props) => {
       }
       // si le score est < 80 on affiche pas de message dans le footer de la modal
       score >= 80 ? setMessageFooter('Voulez-vous sauvegarder votre score ?')
-      : setMessageFooter('    ');
+        : setMessageFooter('    ');
+      setTitreButton0('hide');
       setTitreButton1('Enregistrer');
       setTitreButton2('Quitter');
       setFunctionModalButton('saveQuiz');
@@ -248,18 +250,20 @@ const Quiz = (props) => {
     questionMissing.length = 0;
   }
 
-  // force le bon fonctionnement de la modal mYmodal2
+  // force le bon fonctionnement de la modal mYmodal2 ------------------------------->
   const closeModal = () => {
     document.getElementById("myModal2").style.display = "none";
-    props.handleQuizClick();
+    // props.handleQuizClick();
+    props.handleView('formation');
 
   }
 
-  // gère la sauvegarde des résultats du quiz
+  // gère la sauvegarde des résultats du quiz -------------------------------->
   const handleSaveQuiz = () => {
     if (auth == 0) {
       setMessageScore('vous devez être enregisté pour pouvoir sauvegarder vos résultats');
       setMessageFooter('Voulez-vous vous inscrire ?');
+      setTitreButton0('Se connecter');
       setTitreButton1('S\'inscrire');
       setTitreButton2('Quitter');
       setFunctionModalButton('inscription');
@@ -277,12 +281,21 @@ const Quiz = (props) => {
     }
   }
 
+
+  // gère la connexion et la sauvegarde des résultats du quiz -------------------------------->
+  const login = () => {
+      setMessageScore('Connectez-vous');
+      setFunctionModalButton('connexion');
+      handelModal();
+  }
+
+  // --------------------------------------------------------->
   const register = () => {
-    setMessageScore('');
+    setMessageScore('Enregistrez-vous');
     handelModal();
   }
 
-  // affiche et gère la modal
+  // affiche et gère la modal ---------------------------------------->
   const handelModal = () => {
     var modalScore = document.getElementById("myModal2");
     modalScore.style.display = "block";
@@ -325,23 +338,23 @@ const Quiz = (props) => {
 
           <div className="headerModal2"><span className="close2">x</span></div>
           <p> {messageScore} </p>
-          {messageScore == '' ? <Register resultat={score} quiz_id={idQuiz} /> :
-            <ModalFooterButton message={messageFooter}
-              titre1={titreButton1} titre2={titreButton2}
-              func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}
-              closeModal={closeModal}
-              score={score}
-            />}
+          {messageScore == 'Enregistrez-vous' ? <Register resultat={score} quiz_id={idQuiz} /> :
+            messageScore == 'Connectez-vous' ? <Login resultat={score} quiz_id={idQuiz} /> :
+              <ModalFooterButton message={messageFooter}
+                titre0={titreButton0} titre1={titreButton1} titre2={titreButton2}
+                func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}
+                func2={functionModalButton == 'saveQuiz' ? 'hide' : login}
+                closeModal={closeModal}
+                score={score}
+              />
+          }
 
         </div>
       </div>
 
 
       <div className="quizHeader">
-        {/* <Button onClick={() => props.handleQuizClick()} variant="outlined" className="quizBackButton">
-          Revenir sur la page de formation</Button>         */}
-          
-          <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
+        <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
           Revenir sur la page de formation</Button>
       </div>
 

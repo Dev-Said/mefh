@@ -20,7 +20,6 @@ class FaqController extends Controller
 
         $faqs = Faq::all();
         return view('faqs.list', ['faqs' => $faqs]);
-
     }
 
     /**
@@ -62,7 +61,7 @@ class FaqController extends Controller
      */
     public function show(Faq $faq)
     {
-            return $faq;
+        return $faq;
     }
 
     /**
@@ -118,8 +117,14 @@ class FaqController extends Controller
     // renvoi la faq d'une formation donnée
     public function faqIndex($idFormation)
     {
-        return Faq::where('formation_id', '=', $idFormation)
+        $faq = Faq::where('formation_id', '=', $idFormation)
             ->get();
+
+        if ($faq->isEmpty()) {
+            return response()->json(['hide' => 'hide'], 200);
+        } else {
+            return $faq;
+        }
     }
 
 
@@ -137,6 +142,4 @@ class FaqController extends Controller
             ])
             ->get();
     }
-
-
 }

@@ -98,8 +98,7 @@ class QuizController extends Controller
         $quiz->save();
 
         return redirect('questions/create');
-
-     }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -110,7 +109,7 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz)
     {
         $quiz->delete();
-       
+
         return redirect('/quizzes');
     }
 
@@ -126,8 +125,15 @@ class QuizController extends Controller
     {
         // on reçoit l'id d'un module et on return
         // le quiz correspondant 
-        return quiz::where('module_id', $id)
-        ->with('questions.reponses')->get();        
+
+        $quiz = quiz::where('module_id', $id)
+            ->with('questions.reponses')->get();
+
+        if ($quiz->isEmpty()) {
+            return response()->json(['hide' => 'hide'], 200);
+        } else {
+            return $quiz;
+        }
     }
 
 
@@ -135,6 +141,6 @@ class QuizController extends Controller
     public function quizApi2(Request $request)
     {
 
-        dd($request);     
+        dd($request);
     }
 }

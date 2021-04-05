@@ -10,8 +10,9 @@ class AuthComposer
 
     public function compose(View $view)
     {
-        //si Auth alors on envoi nom et prenom de Auth sinon on envoi 0
-        //à la vue indexFormation
+        // si Auth alors on envoi nom, prenom et id à layout.nav via un provider
+        // sinon on envoi 0 à layout.nav
+        
 
         Auth::check() ? 
         $view->with('auth', [Auth::user()->nom, Auth::user()->prenom, Auth::user()->id]) : 

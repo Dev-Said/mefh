@@ -63,9 +63,11 @@ class CertificatController extends Controller
     {
         $formation = formation::find($certificat->formation_id);
         $formations = formation::all();
-        return view('certificats.edit', ['certificat' => $certificat,
-        'formation_old' => $formation,
-        'formations' => $formations]);
+        return view('certificats.edit', [
+            'certificat' => $certificat,
+            'formation_old' => $formation,
+            'formations' => $formations
+        ]);
     }
 
     /**
@@ -104,9 +106,13 @@ class CertificatController extends Controller
     // renvoi le certificat d'une formation donnée
     public function getCertificat($idFormation)
     {
-        return Certificat::where('formation_id', '=', $idFormation)
-                ->get();
+        $certificat = Certificat::where('formation_id', '=', $idFormation)
+            ->get();
+
+        if ($certificat->isEmpty()) {
+            return response()->json(['hide' => 'hide'], 200);
+        } else {
+            return $certificat;
+        }
     }
-
-
 }

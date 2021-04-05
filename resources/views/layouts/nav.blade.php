@@ -4,7 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
+
+
+    <!-- ------------------------------------------------------------------ -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="/js/bootstrap.js"></script>
+
+    <script>
+        // rename myToken as you like
+        window.myToken =  <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+        </script>
+<!-- ---------------------------------------------------------------------------- -->
+
 
     <title>MEFH</title>
     <base href="/public">

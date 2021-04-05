@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Video from '../videos/Video';
 import ListeChapitres from '../ListeChapitres/ListeChapitres';
 import Stepper from '../stepper/stepper';
 import ChapitreDescription from '../chapitreDescription/chapitreDescription';
 import Quiz from '../quiz/quiz';
+import axios from "axios";
 import './modules.scss';
 import '../quiz/quiz.scss';
 import Links from '../liens/liens';
@@ -11,10 +12,28 @@ import Faq from '../faq/faq';
 import Ressource from '../ressource/ressource';
 import Certificat from '../certificat/certificat';
 
+
+
 const Wrapper = () => {
 
   const [view, setView] = useState('formation');
+  const [faqs, setFaqs] = useState([]);
+  const [ressources, setRessources] = useState([]);
+  const [certificats, setCertificats] = useState([]);
 
+  useEffect(() => {
+    axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
+      setCertificats(Object.values(res.data));
+    });
+    axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
+      setFaqs(Object.values(res.data));
+    });
+    axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
+      setRessources(Object.values(res.data));
+    });
+  }, []);
+
+  
   const handleView = (vue) => {
     setView(vue);
   }
@@ -26,7 +45,8 @@ const Wrapper = () => {
       compo = <Quiz handleView={handleView} />
       break;
     case 'formation':
-      compo = [<Links handleView={handleView} />, <Stepper />,
+      compo = [<Links faqs={faqs} ressources={ressources} certificats={certificats}
+        handleView={handleView} />, <Stepper />,
       <Video />, <ListeChapitres handleView={handleView} />,
       <ChapitreDescription />]
       break;
@@ -44,6 +64,8 @@ const Wrapper = () => {
       <Video />, <ListeChapitres handleView={handleView} />,
       <ChapitreDescription />]
   }
+
+
 
   return (
     <div className="contenaireModules">

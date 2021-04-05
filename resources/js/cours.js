@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './components/redux/store';
 import Wrapper from './components/wrapper/wrapper';
-
+require('./bootstrap');
 
 ReactDOM.render(
   <Provider store={store}>

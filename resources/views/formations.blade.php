@@ -15,7 +15,7 @@
         <form action="/formationsLangue" method="post">
             @csrf
             <select name="langue" id="langue">
-                @isset( $langue ) <option value={{ $langue }}>{{ $langue }}</option> @endisset
+                @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset
                 @if ($langue && $langue !== 'Toutes les formations')
                 <option value="Toutes les formations">Toutes les formations</option>
                 @endif
@@ -32,7 +32,7 @@
                 <option value="Allemand">Les formations en Allemand</option>
                 @endif
             </select>
-            <input type="submit" value="Comfirmer">
+            <input type="submit" value="Confirmer">
         </form>
     </div>
 

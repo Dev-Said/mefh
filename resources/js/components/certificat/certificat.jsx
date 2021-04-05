@@ -9,11 +9,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
 
+
 const useStyles = makeStyles({
     root: {
-        minWidth: "80%",
-        
-        
+        minWidth: "80%",        
     },
     title: {
         fontSize: 14,
@@ -33,23 +32,22 @@ const useStyles = makeStyles({
 
 export default function Certificat(props) {
     const classes = useStyles();
-    const [ressources, setRessources] = useState([]);
+    const [certificats, setCertificats] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
-            const ressourceData = Object.entries(res.data);
-            console.log('ressourceData   ' + ressourceData)
-            setRessources(ressourceData);
+            const certificatData = Object.entries(res.data);
+            setCertificats(certificatData);
         });
     }, []);
 
-
+   
     return (
         <div>
             <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.backButton}>
                 Revenir sur la page de formation</Button>
             <div className={classes.root}>
-                {ressources.map((ressource) => (
+                {certificats.map((ressource) => (
                     <Card className={classes.root} key={ressource[1].id} className={classes.content}>
                         <CardContent>
                             <Typography className={classes.title} color="textSecondary" gutterBottom>
