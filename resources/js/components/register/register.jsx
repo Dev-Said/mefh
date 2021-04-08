@@ -114,7 +114,7 @@ export default function Register(props) {
                 </Select>
             </FormControl>
             <TextField id="email" label="Email" variant="outlined" onChange={handleChangeEmail}
-                required className={classes.input} inputProps={{ style: inputStyle }} />
+                type="email" required className={classes.input} inputProps={{ style: inputStyle }} />
             <TextField id="password" label="Mot de passe" variant="outlined" type="password" 
                 onChange={handleChangePassword} required className={classes.input} inputProps={{ style: inputStyle }} />
             <Button type="submit" variant="outlined" className={classes.button}>

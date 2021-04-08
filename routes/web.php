@@ -3,11 +3,14 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReponseController;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
@@ -16,6 +19,8 @@ use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CertificatController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 
 /*
@@ -29,23 +34,54 @@ use App\Http\Controllers\CertificatController;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'visitors']
+], function () {
+
+    Route::get('/home', function () {
+        return view('home');
+    });
+
+    Route::get('/', function () {
+        return view('accueil', ['lang' => Lang::locale()]);
+    });
+
+    Route::get('/formations-liste', function () {
+        return view('formations', [
+            'formations' => DB::table('formations')->orderBy('ordre')->get(),
+            'langue' => 'Toutes les formations'
+        ]);
+    });
+
+
+    Route::view('/contact', 'contact');
+
+    Route::get('/vie-privee', function () {
+        return View('legale.viePrivee');
+    });
+
+    Route::get('/cookies', function () {
+        return View('legale.cookies');
+    });
+
+    Route::get('/cu', function () {
+        return View('legale.conditionsUtilisation');
+    });
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    });
+
+
+    Route::get('/formation/{id}', function () {
+        return view('indexFormations', ['id' => request('id')]);
+    });
 });
 
-Route::get('/', function () {
-    return view('accueil');
-});
 
-Route::get('/formations-liste', function () {
-    return view('formations', [
-        'formations' => DB::table('formations')->orderBy('ordre')->get(),
-        'langue' => 'Toutes les formations'
-    ]);
-});
-
-
-Route::view('/contact', 'contact');
+Route::get('visitor', [VisitorController::class, 'visit']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -60,8 +96,6 @@ Route::resource('modulesApi', ModuleApiController::class);
 
 
 Route::group(['middleware' => 'checkAdmin'], function () {
-
-
     Route::resource('formations', FormationController::class);
     Route::resource('chapitres', ChapitreController::class);
     Route::resource('modules', ModuleResController::class);
@@ -72,83 +106,11 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::resource('faqs', FaqController::class);
     Route::resource('ressources', RessourceController::class);
     Route::resource('certificats', CertificatController::class);
-
-
-    
-
-
-    // Route::resource('formations', FormationController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('chapitres', ChapitreController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('modules', ModuleResController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('modulesApi', ModuleApiController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete',
-    // ]);
-    // Route::resource('questions', QuestionController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('quizzes', QuizController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('reponses', ReponseController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('users', UserController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('faqs', FaqController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('ressources', RessourceController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
-    // Route::resource('certificats', CertificatController::class)->only([
-    //     'create', 'store', 'edit', 'update', 'delete'
-    // ]);
 });
 
 
 
-// Route::group(['middleware' => ['auth']], function () {
-//     Route::resource('formations', FormationController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('chapitres', ChapitreController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('modules', ModuleResController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('modulesApi', ModuleApiController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete',
-//     ]);
-//     Route::resource('questions', QuestionController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('quizzes', QuizController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('reponses', ReponseController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('users', UserController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('faqs', FaqController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]);
-//     Route::resource('ressources', RessourceController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]); 
-//     Route::resource('certificats', CertificatController::class)->only([
-//         'create', 'store', 'edit', 'update', 'delete'
-//     ]); 
-// });
+
 
 
 Route::get('/quizzes/quiz/{id}', [QuizController::class, 'quiz']);
@@ -165,19 +127,12 @@ Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertifi
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
 Route::post('/formationsLangue', [FormationController::class, 'formationsLangue']);
-
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-});
+Route::get('/getLang/{param}', [LangController::class, 'getLang']);
 
 
-Route::get('/formation/{id}', function () {
-    return view('indexFormations', ['id' => request('id')]);
-});
 
-Route::get('/questionsEssentielles', function () {
-    return view('questionsEssentielles');
-});
+// Route::get('/questionsEssentielles', function () {
+//     return view('questionsEssentielles');
+// });
 
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');

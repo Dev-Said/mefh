@@ -51,13 +51,13 @@ const Wrapper = () => {
       <ChapitreDescription />]
       break;
     case 'ressource':
-      compo = <Ressource handleView={handleView} />
+      compo = <Ressource ressources={ressources} handleView={handleView} />
       break;
     case 'faq':
-      compo = <Faq handleView={handleView} />
+      compo = <Faq faqs={faqs} handleView={handleView} />
       break;
     case 'certificat':
-      compo = <Certificat handleView={handleView} />
+      compo = <Certificat certificats={certificats} handleView={handleView} />
       break;
     default:
       compo = [<Links handleView={handleView} />, <Stepper />,

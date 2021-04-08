@@ -16,7 +16,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
-        "themsaid/wink": "^1.2",
+        "mcamara/laravel-localization": "^1.6",
+        "shetabit/visitor": "^3.1",
         "writingink/wink": "^1.2"
     },
     "require-dev": {

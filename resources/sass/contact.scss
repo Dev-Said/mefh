@@ -1,0 +1,115 @@
+
+$fa-font-path:        "../webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+
+
+.contenairContact {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    height: calc(100vh - 100px);
+    padding-top: 50px;
+}
+
+.coordonnees {
+    width: 50%;
+    height: calc(100vh - 200px);
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+  background-position: bottom;
+  background-image: url(/storage/images/imageContact.jpg);
+  background-repeat: no-repeat;
+}
+
+.coordonnees a,
+.coordonnees p {
+    color: rgb(240, 240, 240);
+    text-decoration: none;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+iframe {
+    width: 600px;
+    height: 400px;
+}
+
+.contenairForm {
+    width: 50%;
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.contenairForm form {
+    margin: 80px 0;
+    width: 600px;
+    min-width: 300px;
+    padding: 20px 3%;
+    margin-left: 7%;
+    // border: 1px solid #CCC;
+    border-radius: 5px;
+    // border: 1px solid rgb(255, 0, 0);
+  }
+  
+  .contenairForm form div + div {
+    margin-top: 30px;
+  }
+  
+  .contenairForm label {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .contenairForm input {
+      height: 50px;
+  }
+
+  .contenairForm input, .contenairForm textarea {
+    font: 16px sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    border: solid 1px  rgb(10, 150, 214);
+    border-radius: 5px;
+  }
+  
+  .contenairForm input:focus, 
+  .contenairForm textarea:focus {
+    border-color: #000;
+  }
+  
+  .contenairForm textarea {
+    vertical-align: top;
+    height: 250px;
+  }
+  
+
+  .contenairForm  button {
+    width: 150px;
+    height: 40px;
+    background-color: transparent;
+    border-radius: 20px;
+    border: solid 1px rgb(10, 150, 214);
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .coordonnees .fas, .coordonnees .far {
+      font-size: 20px;
+    margin-right: 8px;
+    color: rgb(240, 240, 240);
+}

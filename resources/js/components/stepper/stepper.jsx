@@ -78,8 +78,7 @@ const Stepper = (props) => {
   const [id, setId] = useState(1);
 
   // récupère tous les chapitres de la formation dont l'id est = idFormation
-  // idFormation est injecté dans la page blade qui affiche le stepper
-  // dans ce cas ci la page indexFormation
+  // idFormation est injecté dans la page indexFormation
   useEffect(() => {
     axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
       .then(res => {

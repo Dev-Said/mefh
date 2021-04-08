@@ -12,8 +12,8 @@ import CardContent from '@material-ui/core/CardContent';
 const useStyles = makeStyles({
     root: {
         minWidth: "80%",
-        
-        
+
+
     },
     title: {
         fontSize: 14,
@@ -22,12 +22,14 @@ const useStyles = makeStyles({
         marginBottom: 12,
     },
     content: {
-        boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+        // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
         marginBottom: 50,
         backgroundColor: "#fdfdfd",
     },
     backButton: {
         marginBottom: 50,
+        width: "100%",
     },
 });
 
@@ -36,17 +38,22 @@ export default function Ressource(props) {
     const [ressources, setRessources] = useState([]);
 
 
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
+    //         const ressourceData = Object.entries(res.data);
+    //         console.log('ressourceData   ' + ressourceData)
+    //         setRessources(ressourceData);
+    //     });
+    // }, []);
+
     useEffect(() => {
-        axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
-            const ressourceData = Object.entries(res.data);
-            console.log('ressourceData   ' + ressourceData)
-            setRessources(ressourceData);
-        });
+        setRessources(Object.entries(props.ressources));
     }, []);
 
 
     return (
         <div>
+            <h1>Ressources</h1>
             <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.backButton}>
                 Revenir sur la page de formation</Button>
             <div className={classes.root}>

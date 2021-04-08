@@ -6,18 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <!-- ------------------------------------------------------------------ -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="/js/bootstrap.js"></script>
-
-    <script>
-        // rename myToken as you like
-        window.myToken =  <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-        </script>
-<!-- ---------------------------------------------------------------------------- -->
-
 
     <title>MEFH</title>
     <base href="/public">
@@ -45,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/listeChapitres.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/stepper.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/contact.css') }}" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -64,17 +53,22 @@
 
 <body class="antialiased">
 
-    <ul class="nav menu">
+<nav class="cd-auto-hide-header menu" id="navigation">
+
+<input type="checkbox" id="toggle-nav" aria-label="open/close navigation">
+        <label for="toggle-nav" class="nav-button"></label>
+
+    <ul class="nav menu nav-inner" id="first_ul">
         <li class="logo">
             <img src="/storage/images/logoMix.png" alt="logo" />
-        </li>        
+        </li>
         <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" aria-current="page" href="/">Accueil</a>
+            <a class="nav-link" aria-current="page" href="/">{{ __('messages.accueil') }}</a>
         </li>
         <li class="nav-item {{ 'formations-liste' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="formations-liste">Formations</a>
         </li>
-         <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
+        <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
             <a class="nav-link" href="contact">Contact</a>
         </li>
 
@@ -82,30 +76,44 @@
 
 
         @if(Auth::check())
-        Bienvenue {{{Auth::user()->prenom}}}
-        @if(Auth::user()->admin)
-        <li class="connex nav-item {{ 'users' == request()->path() ? 'active' : '' }}">
-            <a href="/users">Admin</a>
-        </li>
+            @if(Auth::user()->admin)
+            <li class="connex nav-item {{ 'users' == request()->path() ? 'active' : '' }}">
+                <a href="/users"> Admin</a>
+            </li>
+            @endif
+            <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
+                <a href="/logout"><button id="buttonconnex">Déconnexion</button></a>
+            </li>
+            @else
+            <li class="connex nav-item {{ 'login' == request()->path() ? 'active' : '' }}">
+                <a href="/login"><button id="buttonconnex">Connexion</button></a>
+            </li>
+            <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
+                <a href="/register"><button id="buttonconnex">Inscription</button></a>
+            </li>
         @endif
-        <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
-            <a href="/logout"><button id="buttonconnex">Déconnexion</button></a>
-        </li>
-        @else
-        <li class="connex nav-item {{ 'login' == request()->path() ? 'active' : '' }}">
-            <a href="/login"><button id="buttonconnex">Connexion</button></a>
-        </li>
-        <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
-            <a href="/register"><button id="buttonconnex">Inscription</button></a>
-        </li>
-        @endif
-    </ul>
 
+        @php ($lang = Lang::locale())
+        <div class="dropdown">
+            <button class="dropbtn"><img src="/storage/images/{{ $lang }}.png" alt="choix de la langue" /></button>
+            <div class="dropdown-content">
+                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                <a class="{{ $lang == $localeCode ? 'hide' : ''}}" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                    <img src="/storage/images/{{ $localeCode }}.png" alt="langue {{ $localeCode }}" />
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </ul>
+</nav>
     @yield('content')
 
 </body>
 
 </html>
+
+
+
 
 <script>
     $(document).ready(function() {
@@ -114,12 +122,10 @@
 
             if ($(window).scrollTop() > 1) {
                 $('.menu').css({
-                    background: '#fdfdfd',
+                    background: '#ffffff',
                     height: '80px',
-                    border: '#a1a1a1 solid',
-                    'border-width': '0 0 1px 0',
                     borderBottom: 'white solid 2',
-                    'box-shadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+                    'box-shadow': 'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px',
                     'align-items': 'center',
                     position: 'fixed',
                     top: '0',
@@ -134,21 +140,27 @@
                     height: '80px',
                 });
 
+                $('.contenaireFormations').css({
+                    marginTop: '130px',
+                });
+
             }
 
             if ($(window).scrollTop() <= 1) {
                 $('.menu').css({
-                    position: 'none',
-                    background: '#fdfdfd',
+                    position: 'relative',
+                    background: '#ffffff',
                     height: '100px',
-                    border: 'white2 solid',
-                    'border-width': '0 0 1px 0',
                     'align-items': 'center',
                     'box-shadow': 'none',
                 });
 
                 $('.logo img').css({
                     height: '100px',
+                });
+
+                $('.contenaireFormations').css({
+                    marginTop: '30px',
                 });
 
             }

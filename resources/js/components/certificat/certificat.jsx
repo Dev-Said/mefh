@@ -34,14 +34,17 @@ export default function Certificat(props) {
     const classes = useStyles();
     const [certificats, setCertificats] = useState([]);
 
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
+    //         const certificatData = Object.entries(res.data);
+    //         setCertificats(certificatData);
+    //     });
+    // }, []);
+
     useEffect(() => {
-        axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
-            const certificatData = Object.entries(res.data);
-            setCertificats(certificatData);
-        });
+        setCertificats(Object.entries(props.certificats));
     }, []);
 
-   
     return (
         <div>
             <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.backButton}>

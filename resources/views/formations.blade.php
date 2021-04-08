@@ -1,14 +1,10 @@
 @extends('layouts.nav')
 
 @section('content')
-<div class="contenaire">
+<div class="contenaireFormations">
     <div class="text-formation">
-        <h1>Formez-vous sur les inégalités entre les femmes et les hommes</h1>
-        <p>
-            L'ASBL MEFH, le Mouvement pour l'égalité entre les Femmes et les Hommes,
-            vous propose des formations en ligne sur les discriminations en fonction
-            du sexe
-        </p>
+        <h1>{{ __('messages.slogan1_formations') }}</h1>
+        <p>{{ __('messages.slogan2_formations') }}</p>
     </div>
 
     <div class="selectForm">
@@ -51,8 +47,8 @@
             <div class="inf-card-formation">
                 <h3>{{ $formation->description }}</h3>
             </div>
-            <div class="inf-card-formation">
-                <h3><strong>Langue </strong>{{ $formation->langue }}</h3>
+            <div class="inf-card-langue">
+                <h4><strong>Langue </strong>{{ $formation->langue }}</h4>
             </div>
 
         </a>

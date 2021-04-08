@@ -13,11 +13,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: '50%',
-    height: '50px',
+    width: '98%',
+    height: '60px',
     marginBottom: '50px',
-    marginTop: '20px',
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    marginTop: '50px',
+    // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    border: "solid 1px #e0e0e0",
+    boxShadow: "none",
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -44,7 +46,7 @@ export default function CustomizedInputBase(props) {
         placeholder="Rechercher"
         onChange={props.onChange}
       />
-      <SearchIcon />
+      <SearchIcon   style={{ fontSize: 27, opacity: 0.7 }}/>
       <Divider className={classes.divider} orientation="vertical" />
       <IconButton onClick={props.onChange} type="reset" color="primary" className={classes.iconButton} aria-label="directions">
         <ClearIcon />
