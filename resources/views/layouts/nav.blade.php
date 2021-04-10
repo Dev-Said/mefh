@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name = "csrf-token" content = "{{csrf_token ()}}"> 
 
 
     <title>MEFH</title>
@@ -48,6 +49,7 @@
     <script>
         var auth = <?= json_encode($auth); ?>
     </script>
+    
 
 </head>
 
@@ -98,7 +100,8 @@
             <button class="dropbtn"><img src="/storage/images/{{ $lang }}.png" alt="choix de la langue" /></button>
             <div class="dropdown-content">
                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                <a class="{{ $lang == $localeCode ? 'hide' : ''}}" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                <a class="{{ $lang == $localeCode ? 'hide' : ''}}" rel="alternate" hreflang="{{ $localeCode }}" 
+                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                     <img src="/storage/images/{{ $localeCode }}.png" alt="langue {{ $localeCode }}" />
                 </a>
                 @endforeach

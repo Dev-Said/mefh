@@ -1,8 +1,6 @@
 @extends('home')
 
 @section('list')
-
-
 <div class="contenaire_list">
 
     <h1 class="titre_list">Modules</h1>
@@ -19,6 +17,7 @@
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Formation</th>
+                    <th>Ordre</th>
                     @if(Auth::check())
                     <th></th>
                     <th></th>

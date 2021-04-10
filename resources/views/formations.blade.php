@@ -8,7 +8,7 @@
     </div>
 
     <div class="selectForm">
-        <form action="/formationsLangue" method="post">
+        <form action="/formationsLangue" method="get">
             @csrf
             <select name="langue" id="langue">
                 @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset

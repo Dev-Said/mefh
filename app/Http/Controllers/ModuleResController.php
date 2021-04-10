@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Module;
 use App\Models\formation;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreModuleRequest;
-
+use Illuminate\Http\Request;
 
 class ModuleResController extends Controller
 {
@@ -17,7 +18,9 @@ class ModuleResController extends Controller
      */
     public function index()
     {
-        $modules = Module::all();
+        $modules = Module::orderBy('formation_id', 'asc')
+        ->orderBy('ordre', 'asc')
+        ->get();
         return view('modules.list', ['modules' => $modules]);
     }
 
@@ -40,14 +43,13 @@ class ModuleResController extends Controller
      */
     public function store(StoreModuleRequest $request)
     {
-        dd($request);
         $validated = $request->validated();
-        
+
 
         $module = new module;
         $module->titre = Arr::get($validated, 'titre');
         $module->description = Arr::get($validated, 'description');
-        
+
         $module->formation_id = Arr::get($validated, 'formation_id');
         $modulesCount = module::where('formation_id', $validated['formation_id'])->max('ordre') + 1;
         $module->ordre = $modulesCount;
@@ -62,10 +64,40 @@ class ModuleResController extends Controller
      * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show(Module $module)
+    // public function show(Module $module)
+    // {
+    //     return view('modules.one', ['module' => $module]);
+    // }
+
+
+    public function show($id)
     {
-        return view('modules.one', ['module' => $module]);
+
+        // renvoi tous les chapitres correspondants aux modules
+        // d'une formation donnée
+        return DB::table('modules')
+            ->select(
+                'modules.id as module_id',
+                'modules.ordre as module_ordre',
+                'chapitres.id as id',
+                'modules.titre as module_titre',
+                'modules.description as module_description',
+                'chapitres.titre as titre',
+                'chapitres.description as description',
+                'fichier_video',
+                'chapitres.ordre as ordre',
+                'modules.formation_id as formation_id',
+                'quizzes.module_id as quiz_module_id'
+            )
+            ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
+            ->leftJoin('quizzes', 'modules.id', '=', 'quizzes.module_id')
+            ->where('formation_id', $id)
+            ->orderBy('module_ordre', 'asc')
+            ->orderBy('ordre', 'asc')
+            ->get();
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -135,5 +167,40 @@ class ModuleResController extends Controller
             }
         }
         return redirect('/modules');
+    }
+
+
+    public function changeOrdre(Request $request)
+    {
+        $moduleRemplace = module::where('formation_id', $request->formation)
+        ->where('ordre', $request->ordre)
+        ->first();
+
+        $module = module::where('id', $request->module)->first();
+
+        $modulesCount = module::where('formation_id', $request->formation)->max('ordre');
+
+        // dd($module, $moduleRemplace, $modulesCount);
+
+         if ($request->operation == 'dec') {
+            if ($request->ordre > 0) {
+                $moduleRemplace->ordre = $module->ordre;
+                $moduleRemplace->save();
+                $module->ordre = $request->ordre;
+                $module->save();
+                return redirect('/modules');
+            }
+        } else if ($request->operation == 'inc') {
+            if ($request->ordre <= $modulesCount) {
+                $moduleRemplace->ordre = $module->ordre;
+                $moduleRemplace->save();
+                $module->ordre = $request->ordre;
+                $module->save();
+                return redirect('/modules');
+            }
+        } 
+
+        return redirect('/modules');
+        
     }
 }

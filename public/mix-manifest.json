@@ -1,5 +1,7 @@
 {
     "/js/cours.js": "/js/cours.js",
+    "/js/gestionOrdre.js": "/js/gestionOrdre.js",
+    "/js/axios.min.js": "/js/axios.min.js",
     "/css/app.css": "/css/app.css",
     "/css/nav.css": "/css/nav.css",
     "/css/formation.css": "/css/formation.css",

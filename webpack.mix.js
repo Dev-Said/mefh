@@ -12,6 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/cours.js', 'public/js').react()
+mix.js('resources/js/gestionOrdre.js', 'public/js')
+mix.js('node_modules/axios/dist/axios.min.js', 'public/js')
     .sass('resources/sass/default.scss', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/accueil.scss', 'public/css')

@@ -34,6 +34,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::get('/drag', function () {
+    return view('drag');
+});
+
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'visitors']
@@ -78,6 +83,8 @@ Route::group([
     Route::get('/formation/{id}', function () {
         return view('indexFormations', ['id' => request('id')]);
     });
+
+    Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
 });
 
 
@@ -92,7 +99,8 @@ require __DIR__ . '/auth.php';
 //checker les pages CORS
 
 
-Route::resource('modulesApi', ModuleApiController::class);
+// Route::resource('modulesApi', ModuleApiController::class);
+Route::resource('modulesApi', ModuleResController::class);
 
 
 Route::group(['middleware' => 'checkAdmin'], function () {
@@ -126,13 +134,10 @@ Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessource
 Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
-Route::post('/formationsLangue', [FormationController::class, 'formationsLangue']);
-Route::get('/getLang/{param}', [LangController::class, 'getLang']);
+Route::get('/changeOrdre', [ModuleResController::class, 'changeOrdre']);
+
+// Route::get('/getLang/{param}', [LangController::class, 'getLang']);
 
 
-
-// Route::get('/questionsEssentielles', function () {
-//     return view('questionsEssentielles');
-// });
 
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');

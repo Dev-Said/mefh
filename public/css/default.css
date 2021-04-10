@@ -6306,9 +6306,19 @@ th {
   display: block;
 }
 
-.fas, .far {
+.nav .fas, .nav .far {
   margin-right: 15px;
   background-color: rgba(255, 255, 255, 0.719);
+}
+
+.upArrow {
+  margin-right: 7px;
+  color: blue;
+}
+
+.downArrow {
+  margin-left: 7px;
+  color: blue;
 }
 
 form {
