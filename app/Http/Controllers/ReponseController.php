@@ -20,8 +20,23 @@ class ReponseController extends Controller
      */
     public function index()
     {
+        $questions = Question::all();
         $reponses = Reponse::orderBy('question_id', 'desc')->get();
-        return view('reponses.list', ['reponses' => $reponses]);
+        return view('reponses.list', ['reponses' => $reponses, 'questions' => $questions]);
+    }
+
+    public function indexSelect(Request $request)
+    {
+
+        $questions = Question::all();
+        if ($request->question == 'all questions') {
+            $reponses = Reponse::orderBy('question_id', 'asc')
+                ->get();
+        } else {
+            $reponses =  Reponse::where('question_id', '=', $request->question)
+                ->get();
+        }
+        return view('reponses.list', ['reponses' => $reponses, 'questions' => $questions]);
     }
 
     /**

@@ -19,7 +19,8 @@ class FormationController extends Controller
      */
     public function index()
     {
-        $formations = formation::all();
+        $formations = formation::orderBy('ordre', 'asc')
+        ->get();
 
         return view('formations.list', ['formations' => $formations]);
     }
@@ -172,5 +173,40 @@ class FormationController extends Controller
         }
 
         return view('formations', ['formations' => $formations, 'langue' => $request->langue]);
+    }
+
+
+
+    public function changeOrdre(Request $request)
+    {
+        $formationRemplace = formation::where('ordre', $request->ordre)
+        ->first();
+
+        $formation = formation::where('id', $request->formation)->first();
+
+        $formationsCount = formation::all()->count();
+
+        // dd($formation, $formationRemplace, $formationsCount);
+
+         if ($request->operation == 'dec') {
+            if ($request->ordre > 0) {
+                $formationRemplace->ordre = $formation->ordre;
+                $formationRemplace->save();
+                $formation->ordre = $request->ordre;
+                $formation->save();
+                return redirect('/formations');
+            }
+        } else if ($request->operation == 'inc') {
+            if ($request->ordre <= $formationsCount) {
+                $formationRemplace->ordre = $formation->ordre;
+                $formationRemplace->save();
+                $formation->ordre = $request->ordre;
+                $formation->save();
+                return redirect('/formations');
+            }
+        } 
+
+        return redirect('/formations');
+        
     }
 }

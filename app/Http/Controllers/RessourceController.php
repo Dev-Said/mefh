@@ -17,8 +17,23 @@ class RessourceController extends Controller
      */
     public function index()
     {
+        $formations = formation::all();
         $ressources = Ressource::all();
-        return view('ressources.list', ['ressources' => $ressources]);
+        return view('ressources.list', ['ressources' => $ressources, 'formations' => $formations]);
+    }
+
+    public function indexSelect(Request $request)
+    {
+
+        $formations = formation::all();
+        if ($request->formation == 'all formations') {
+            $ressources = Ressource::orderBy('formation_id', 'asc')
+                ->get();
+        } else {
+            $ressources =  Ressource::where('formation_id', '=', $request->formation)
+                ->get();
+        }
+        return view('ressources.list', ['ressources' => $ressources, 'formations' => $formations]);
     }
 
     /**

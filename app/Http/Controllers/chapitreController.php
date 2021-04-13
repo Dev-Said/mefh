@@ -20,8 +20,27 @@ class ChapitreController extends Controller
      */
     public function index()
     {
-        $chapitres = chapitre::all();
-        return view('chapitres.list', ['chapitres' => $chapitres]);
+        $modules = module::all();
+        $chapitres = chapitre::orderBy('module_id', 'asc')
+            ->orderBy('ordre', 'asc')
+            ->get();
+        return view('chapitres.list', ['chapitres' => $chapitres, 'modules' => $modules]);
+    }
+
+    public function indexSelect(Request $request)
+    {
+
+        $modules = module::all();
+        if ($request->module == 'all modules') {
+            $chapitres = chapitre::orderBy('module_id', 'asc')
+                ->orderBy('ordre', 'asc')
+                ->get();
+        } else {
+            $chapitres =  chapitre::where('module_id', '=', $request->module)
+                ->orderBy('ordre', 'asc')
+                ->get();
+        }
+        return view('chapitres.list', ['chapitres' => $chapitres, 'modules' => $modules]);
     }
 
     /**
@@ -161,35 +180,68 @@ class ChapitreController extends Controller
     // que l'utilisateur veut marquer comme déjà suivis
     // ou bien les supprime quand il veut les remettre
     // en pas encore suivi
-    public function suivi(Request $request) {
+    public function suivi(Request $request)
+    {
 
         $chapitreSuivi = Chapitre_suivi::where('chapitre_id', $request->chapitre_id)
-        ->where('user_id', $request->id)
-        ->first();
+            ->where('user_id', $request->id)
+            ->first();
 
         if (!$chapitreSuivi) {
-            $chapitreSuivi = new Chapitre_suivi;        
+            $chapitreSuivi = new Chapitre_suivi;
             $chapitreSuivi->chapitre_id = $request->chapitre_id;
             $chapitreSuivi->user_id = $request->id;
-           
+
             $chapitreSuivi->save();
         } else {
             $chapitreSuivi->delete();
         }
-    return json_encode('chapitreSuivi success  ' . $chapitreSuivi);
-
+        return json_encode('chapitreSuivi success  ' . $chapitreSuivi);
     }
 
 
     // renvoi la liste des chapitres marqués comme déjà suivis
-    public function list(Request $request) {
+    public function list(Request $request)
+    {
 
         $list =  Chapitre_suivi::where('user_id', $request->id)
-        ->get();
+            ->get();
 
         return $list;
-
     }
 
 
+
+    public function changeOrdre(Request $request)
+    {
+        $chapitreRemplace = chapitre::where('module_id', $request->module)
+            ->where('ordre', $request->ordre)
+            ->first();
+
+        $chapitre = chapitre::where('id', $request->chapitre)->first();
+
+        $chapitresCount = chapitre::where('module_id', $request->module)->max('ordre');
+
+        // dd($chapitre, $chapitreRemplace, $chapitresCount);
+
+        if ($request->operation == 'dec') {
+            if ($request->ordre > 0) {
+                $chapitreRemplace->ordre = $chapitre->ordre;
+                $chapitreRemplace->save();
+                $chapitre->ordre = $request->ordre;
+                $chapitre->save();
+                return redirect('/chapitres');
+            }
+        } else if ($request->operation == 'inc') {
+            if ($request->ordre <= $chapitresCount) {
+                $chapitreRemplace->ordre = $chapitre->ordre;
+                $chapitreRemplace->save();
+                $chapitre->ordre = $request->ordre;
+                $chapitre->save();
+                return redirect('/chapitres');
+            }
+        }
+
+        return redirect('/chapitres');
+    }
 }

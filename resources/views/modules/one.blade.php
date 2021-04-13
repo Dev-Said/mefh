@@ -10,10 +10,10 @@
         {{$module->formation->titre}}
     </td>
     <td >
-    <a href="/changeOrdre?ordre={{$module->ordre - 1}}&module={{$module->id}}&formation={{$module->formation->id}}&operation=dec">
+    <a href="/changeOrdreModule?ordre={{$module->ordre - 1}}&module={{$module->id}}&formation={{$module->formation->id}}&operation=dec">
     <i class="fas fa-long-arrow-alt-up upArrow"></i></a>
         {{$module->ordre}}
-        <a href="/changeOrdre?ordre={{$module->ordre + 1}}&module={{$module->id}}&formation={{$module->formation->id}}&operation=inc">
+        <a href="/changeOrdreModule?ordre={{$module->ordre + 1}}&module={{$module->id}}&formation={{$module->formation->id}}&operation=inc">
         <i class="fas fa-long-arrow-alt-down downArrow"></i></a>
     </td>
 

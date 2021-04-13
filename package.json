@@ -54,7 +54,6 @@
         "react-player": "^2.9.0",
         "react-prism": "^4.3.2",
         "react-redux": "^7.2.3",
-        "react-render-html": "^0.6.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "react-swipeable-views": "^0.13.9",

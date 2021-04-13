@@ -14,73 +14,73 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/default.css') }}" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
     
 
 </head>
 
 <body>
-    <div class="container">
-        <div class="nav">
+    <div class="containerAdmin">
+        <div class="navAdmin">
             <ul>
                 <a href="/users">
-                    <li class="{{ 'users' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'users' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-user"></i>
                     Users</li>
                 </a>
                 <a href="/formations">
-                    <li class="{{ 'formations' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'formations' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-chalkboard-teacher"></i>
                      Formations</li>
                 </a>
                 <a href="/modules">
-                    <li class="{{ 'modules' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'modules' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-book"></i>
                     Modules</li>
                 </a>
                 <a href="/chapitres">
-                    <li class="{{ 'chapitres' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'chapitres' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-book-reader"></i>
                     Chapitres</li>
                 </a>
                 <a href="/quizzes">
-                    <li class="{{ 'quizzes' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'quizzes' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-list"></i>
                     Quiz</li>
                 </a>
                 <a href="/questions">
-                    <li class="{{ 'questions' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'questions' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="far fa-question-circle"></i>
                     Questions</li>
                 </a>
                 <a href="/reponses">
-                    <li class="{{ 'reponses' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'reponses' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-check"></i>
                     Reponses</li>
                 </a>
                 </a>
                 <a href="/faqs">
-                    <li class="{{ 'faqsres' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'faqs' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-info"></i>
                     Questions essentielles</li>
                 </a>
                 <a href="/ressources">
-                    <li class="{{ 'ressources' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'ressources' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="far fa-comment-dots"></i>
                     Ressources</li>
                 </a>
                 <a href="/certificats">
-                    <li class="{{ 'certificats' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'certificats' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-award"></i>
                     Certificats</li>
                 </a>
                 <a href="/dashboard">
-                    <li class="{{ 'dashboard' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ 'dashboard' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-chart-line"></i>
                     Dashboard</li>
                 </a>
                 <a href="/">
-                    <li class="{{ '/' == request()->path() ? 'active' : '' }}">
+                    <li class="{{ '/' == request()->path() ? 'activeAdmin' : '' }}">
                     <i class="fas fa-home"></i>
                     Accueil</li>
                 </a>

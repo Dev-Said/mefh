@@ -20,8 +20,25 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        $quizzes = quiz::all();
         $questions = Question::all();
-        return view('questions.list', ['questions' => $questions]);
+        return view('questions.list', ['questions' => $questions, 'quizzes' => $quizzes]);
+    }
+
+    public function indexSelect(Request $request)
+    {
+
+        $quizzes = quiz::all();
+        if ($request->quiz == 'all quizzes') {
+            $questions = Question::orderBy('quiz_id', 'asc')
+                ->orderBy('ordre', 'asc')
+                ->get();
+        } else {
+            $questions =  Question::where('quiz_id', '=', $request->quiz)
+                ->orderBy('ordre', 'asc')
+                ->get();
+        }
+        return view('questions.list', ['questions' => $questions, 'quizzes' => $quizzes]);
     }
 
     /**

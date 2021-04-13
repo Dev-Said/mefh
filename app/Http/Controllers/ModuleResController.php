@@ -18,10 +18,27 @@ class ModuleResController extends Controller
      */
     public function index()
     {
+        $formations = formation::all();
         $modules = Module::orderBy('formation_id', 'asc')
         ->orderBy('ordre', 'asc')
         ->get();
-        return view('modules.list', ['modules' => $modules]);
+        return view('modules.list', ['modules' => $modules, 'formations' => $formations]);
+    }
+
+    public function indexSelect(Request $request)
+    {
+
+        $formations = formation::all();
+        if ($request->formation == 'all formations') {
+            $modules = Module::orderBy('formation_id', 'asc')
+                ->orderBy('ordre', 'asc')
+                ->get();
+        } else {
+            $modules =  Module::where('formation_id', '=', $request->formation)
+                ->orderBy('ordre', 'asc')
+                ->get();
+        }
+        return view('modules.list', ['modules' => $modules, 'formations' => $formations]);
     }
 
     /**

@@ -114,6 +114,13 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::resource('faqs', FaqController::class);
     Route::resource('ressources', RessourceController::class);
     Route::resource('certificats', CertificatController::class);
+
+    Route::post('/chapitresOneModule', [ChapitreController::class, 'indexSelect']);
+    Route::post('/modulesOneFormation', [ModuleResController::class, 'indexSelect']);
+    Route::post('/questionsOneQuiz', [QuestionController::class, 'indexSelect']);
+    Route::post('/reponsesOneQuestion', [ReponseController::class, 'indexSelect']);
+    Route::post('/faqsOneFormation', [FaqController::class, 'indexSelect']);
+    Route::post('/ressourcesOneQuestion', [RessourceController::class, 'indexSelect']);
 });
 
 
@@ -134,7 +141,9 @@ Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessource
 Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
-Route::get('/changeOrdre', [ModuleResController::class, 'changeOrdre']);
+Route::get('/changeOrdreModule', [ModuleResController::class, 'changeOrdre']);
+Route::get('/changeOrdreFormation', [FormationController::class, 'changeOrdre']);
+Route::get('/changeOrdreMChapitre', [ChapitreController::class, 'changeOrdre']);
 
 // Route::get('/getLang/{param}', [LangController::class, 'getLang']);
 

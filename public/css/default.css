@@ -6138,14 +6138,7 @@ body {
   border: 0 solid #e2e8f0;
 }
 
-a {
-  color: black;
-  text-decoration: none;
-  font-size: 16px;
-  letter-spacing: 1px;
-}
-
-.container {
+.containerAdmin {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -6153,7 +6146,7 @@ a {
   padding-right: 50px;
 }
 
-.nav {
+.navAdmin {
   border-right: solid 1px #e9e9e9;
   height: 100vh;
   width: 250px;
@@ -6164,18 +6157,13 @@ a {
   overflow: scroll;
 }
 
-.contenaire_list {
-  margin-left: 250px;
-  width: 100%;
-}
-
-ul {
+.navAdmin ul {
   width: 250px;
   list-style-type: none;
   padding: 0;
 }
 
-li {
+.navAdmin li {
   height: 70px;
   width: 100%;
   border-bottom: solid 1px #e9e9e9;
@@ -6185,44 +6173,70 @@ li {
   align-items: center;
 }
 
-.active {
+.activeAdmin {
   background-color: #f7f7f7;
   color: #292b2c;
   letter-spacing: 1px;
   font-weight: bold;
 }
 
-.list {
-  width: 100%;
-  height: auto;
-  padding: 10px 20px 10px 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
+.navAdmin a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.navAdmin .fas, .navAdmin .far {
+  margin-right: 15px;
+  background-color: rgba(255, 255, 255, 0.719);
+}
+
+.contenaire_list {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  padding: 0 30px;
 }
 
 .tabla_list {
   width: 100%;
 }
 
-table {
+.contenaire_list_form {
+  display: flex;
+  align-items: center;
+}
+
+.contenaire_list .contenaire_list_select {
+  width: 300px;
+  height: 40px;
+  border: solid 1px #b1b1b1;
+}
+
+.contenaire_list_submit {
+  width: 120px;
+  height: 40px;
+  background-color: transparent !important;
+  border: solid 1px #b1b1b1;
+}
+
+.tabla_list table {
   border-spacing: 0 10px;
   width: 100%;
 }
 
-td,
-th {
+.tabla_list td,
+.tabla_list th {
   padding-left: 5px;
   min-width: 150px;
 }
 
-td {
+.tabla_list td {
   border-bottom: solid 1px #f2f2f2;
   height: auto;
 }
 
-th {
+.tabla_list th {
   text-align: left;
   background-color: #f4f4f5;
   padding: 10px;
@@ -6288,7 +6302,6 @@ th {
   width: auto;
   height: auto;
   padding: 15px;
-  border-radius: 20px;
   font-size: 16px;
   margin: 30px 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -6306,11 +6319,6 @@ th {
   display: block;
 }
 
-.nav .fas, .nav .far {
-  margin-right: 15px;
-  background-color: rgba(255, 255, 255, 0.719);
-}
-
 .upArrow {
   margin-right: 7px;
   color: blue;
@@ -6321,7 +6329,12 @@ th {
   color: blue;
 }
 
-form {
+.button_nouveau .fa-plus {
+  margin-right: 10px;
+  color: #7c7c7c;
+}
+
+.edit form {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

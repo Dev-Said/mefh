@@ -8,6 +8,13 @@
     <td>
         {{$formation->langue}}
     </td>
+    <td >
+    <a href="/changeOrdreFormation?ordre={{$formation->ordre - 1}}&formation={{$formation->id}}&operation=dec">
+    <i class="fas fa-long-arrow-alt-up upArrow"></i></a>
+        {{$formation->ordre}}
+        <a href="/changeOrdreFormation?ordre={{$formation->ordre + 1}}&formation={{$formation->id}}&operation=inc">
+        <i class="fas fa-long-arrow-alt-down downArrow"></i></a>
+    </td>
 
     @if(Auth::check())
     <td class="td_Button">

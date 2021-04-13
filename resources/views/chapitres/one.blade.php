@@ -8,6 +8,13 @@
     <td>
         {{$chapitre->module->titre}}
     </td>
+    <td >
+    <a href="/changeOrdreMChapitre?ordre={{$chapitre->ordre - 1}}&chapitre={{$chapitre->id}}&module={{$chapitre->module->id}}&operation=dec">
+    <i class="fas fa-long-arrow-alt-up upArrow"></i></a>
+        {{$chapitre->ordre}}
+        <a href="/changeOrdreMChapitre?ordre={{$chapitre->ordre + 1}}&chapitre={{$chapitre->id}}&module={{$chapitre->module->id}}&operation=inc">
+        <i class="fas fa-long-arrow-alt-down downArrow"></i></a>
+    </td>
 
     @if(Auth::check())
     <td class="td_Button">

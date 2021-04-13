@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import '../style/description.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ChapitreDescription = (props) => {
   const classes = useStyles();
+
+
 
   // ReactHtmlParser permet d'afficher correctement du html provenant de ckeditor sans afficher les balises
   return (

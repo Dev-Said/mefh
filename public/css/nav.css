@@ -1,14 +1,23 @@
+@charset "UTF-8";
+.menu {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  z-index: 10;
+}
+
 ul.nav {
-  border-bottom: solid 1px #f8f8f8;
+  border-bottom: solid 1px #e6e6e6;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 100px;
-  font-size: medium;
+  font-size: 15px;
+  margin: 0;
   background-color: #ffffff;
   transition: ease-in-out 0.3s;
-  z-index: 5;
+  z-index: 10;
 }
 
 ul.nav li {
@@ -17,6 +26,10 @@ ul.nav li {
   justify-content: center;
   align-items: center;
   margin-right: 25px;
+}
+
+.nav-item {
+  margin-left: 10%;
 }
 
 ul.nav li a {
@@ -38,38 +51,89 @@ li.active a {
   font-size: 40px;
 }
 
+li.logo {
+  width: auto;
+  height: 100px;
+  margin-right: 40px;
+  margin-left: 10%;
+}
+
 .logo img {
-  position: absolute;
-  left: 10%;
   width: auto;
   height: 100px;
   transition: ease-in-out 0.3s;
 }
 
+.responsiveLoginLi,
+.logoResponsive {
+  display: none !important;
+}
+
 .connex {
   letter-spacing: 1px;
-  background-color: #f5fbfe;
+  background-color: transparent;
+}
+
+#buttonconnex:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.userLoginUl {
+  padding-top: 15px;
+  background-color: transparent !important;
 }
 
 #buttonconnex {
-  font-weight: bold;
-}
-
-#buttonconnex {
-  width: 100%;
+  width: 130px;
   padding: 10px 15px;
-  background-color: black;
-  color: white;
-  font-size: 1rem;
+  color: black;
+  font-size: 14px;
   letter-spacing: 1px;
   border: none;
-  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.userLogin {
+  position: relative;
+  display: inline-block;
+}
+
+.userLogin ul {
+  display: none;
+  position: absolute;
+  min-width: 100px;
+  left: -40px;
+  z-index: 1;
+  background-color: transparent !important;
+}
+
+.userLogin ul li {
+  width: 100px;
+  height: 40px;
+  padding: 12px;
+}
+
+.userLogin i:hover {
+  cursor: pointer;
+}
+
+.fa-user:hover .userLoginUl {
+  display: block;
+  background-color: transparent !important;
+}
+
+.drapeaux {
+  padding-right: 100px;
+  margin-left: auto;
 }
 
 /*-----------------MENU-DES-LANGUES-------------------*/
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-left: auto;
 }
 
 .dropbtn {
@@ -107,10 +171,6 @@ li.active a {
   background-color: saddlebrown;
 }
 
-.dropdownRespons {
-  display: none;
-}
-
 nav > input,
 .nav-button {
   display: none;
@@ -118,59 +178,76 @@ nav > input,
 }
 
 @media (max-width: 1000px) {
-  .container {
-    padding-top: 0;
-    margin-top: 100px;
-    /* border: blue solid 1px; */
+  .userLogin,
+.logo {
+    display: none !important;
   }
 
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin-bottom: 0;
-    padding-left: 100px;
-    /* height: 80px; */
-    /* border: red solid 4px; */
+  .responsiveLoginLi,
+.logoResponsive {
+    display: block !important;
+    margin: 0;
+    padding: 0;
   }
 
   .menu {
-    display: block;
-    height: 100px;
-    margin-bottom: 0;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
     background-color: white;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     box-sizing: border-box;
-    /* border: blue solid 4px; */
+    z-index: 10;
   }
 
-  ul#first_ul {
-    height: 100%;
-    width: 100%;
+  ul.nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    border: blue solid 1px;
-  }
-
-  .nav-inner {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     position: absolute;
     top: 100px;
     left: 0;
     width: 100%;
     height: auto;
-    margin-right: 0;
+    margin: 0;
+    padding: 0;
     text-align: left;
+    background-color: #fdfdfd;
     transform: translateX(-150%);
     transition: transform 0.2s;
-    border: green solid 5px;
   }
 
-  /* here's goes the slide effect */
-  input:checked ~ .nav-inner {
+  .nav-item {
+    margin-left: 0;
+  }
+
+  .logoResponsive img {
+    width: auto;
+    height: 100px;
+    transition: ease-in-out 0.3s;
+  }
+
+  .logoResponsive {
+    width: auto;
+    height: 100px;
+    margin-left: 120px;
+  }
+
+  .userLogin ul {
+    display: block;
+    position: unset;
+  }
+
+  /* déclenche slide menu */
+  input:checked ~ ul.nav {
     transform: translateX(0);
   }
 
@@ -195,29 +272,73 @@ nav > input,
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  nav ul li {
+  ul.nav li {
     width: 100%;
     display: block;
-    z-index: 100000000000;
-    /* border: red solid 1px */
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border-bottom: #bbbbbb solid 1px;
   }
 
-  .nav-inner a:link,
-.nav-inner li:last-child {
+  ul.nav a:link,
+.responsiveLogin a:link,
+ul.nav li:last-child {
     display: block;
     padding: 40px 0 40px 20px;
     margin: 0;
+    width: 100%;
     height: 60px;
     text-decoration: none;
     background-color: #fdfdfd;
-    border-bottom: #bbbbbb solid 1px;
     font-size: 19px;
     font-weight: bold;
     text-align: left;
     /* border: blue dashed 5px  */
   }
 
-  .nav-inner a:link:first-child {
-    border-top: #bbbbbb solid 1px;
+  .active a {
+    border-bottom: none;
+    color: #1a87cf;
+  }
+
+  .dropdown {
+    position: relative;
+    display: flex;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .dropbtn {
+    display: none;
+  }
+
+  .dropdown-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 300px;
+    height: auto;
+    margin-top: -60px;
+    box-shadow: none;
+  }
+
+  .dropdown-content a {
+    max-height: 40px !important;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: transparent !important;
+  }
+
+  .dropdown-content a img {
+    height: 40px;
+    width: auto;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: flex;
   }
 }

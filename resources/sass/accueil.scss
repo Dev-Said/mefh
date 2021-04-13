@@ -1,6 +1,6 @@
 @import '_variables';
 $padd: 20%;
-$top: 250px;
+$top: 220px;
    
 
 *:focus {
@@ -8,21 +8,23 @@ $top: 250px;
 }
 
 .contenairAccueil {
-    width: 100%;
-    height: calc(100vh - 100px);
-    // background-image: url("../../storage/app/public/images/model.jpg");
-    // background-image:  url(/storage/images/model7.png), url(/storage/images/model8.jpg);
-    // background-image:  url(/storage/images/model7b.png);
-    background-position: top left;
+    width: auto;
+    height: 1080px;
+    margin-top: -200px;
+    background-image:  url(/storage/images/accueil2.jpg);
+    // background-position: center top;
     background-repeat: no-repeat;
-    background-size: cover, contain;
-    position: absolute;
-    top: 100px;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    // background-size: cover;
+    background-size: contain;
+    background-position: center;
+
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: flex-start;
+    // align-items: flex-start;
  }
 
  #mozaik {
@@ -43,7 +45,7 @@ $top: 250px;
     left: $padd;
     width: 64%;
     font-family: 'Lato', sans-serif;
-    font-size: 180px;
+    font-size: 160px;
     font-weight: 700;
     text-align: left;
     color:#000000;
@@ -52,21 +54,21 @@ $top: 250px;
 
 .textAccueil2{
     position: absolute;
-    top: calc(#{$top} + 220px);
+    top: calc(#{$top} + 200px);
     left: $padd;
     width: 64%;
     font-family: 'Lato', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     text-align: left;
-    line-height: 32px;
+    line-height: 28px;
     color:#000000;
 }
 
 
 .sousTextAccueil{
     position: absolute;
-    top: calc(#{$top} + 300px);
+    top: calc(#{$top} + 250px);
     right: $padd;
     width: 64%;
     height: auto;
@@ -85,18 +87,28 @@ $top: 250px;
 #lienFormation{
     border-radius: 5px;
 }
+
+#buttonAccueil:hover{
+    cursor: pointer;
+}
+
 #buttonAccueil{
     position: absolute;
-    top: calc(#{$top} + 300px);
+    top: calc(#{$top} + 290px);
     left: $padd;
     width: auto;
-    padding: 10px 15px;
-    background-color: $color-action;
+    height: 40px;
+    padding: 25px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #920000;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+    letter-spacing: 1px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
 }
 
 

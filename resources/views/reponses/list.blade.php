@@ -1,6 +1,6 @@
-@extends('home')
+@extends('layouts.default')
 
-@section('list')
+@section('content')
 
 <div class="contenaire_list">
 
@@ -9,6 +9,20 @@
     <a href="{{ '/reponses/create' }}">
         <button class="button_nouveau"><i class="fas fa-plus"></i>Ajouter une réponse</button>
     </a>
+
+    <form action="/reponsesOneQuestion" method="post" class="contenaire_list_form">
+        @csrf
+        <p>
+            <select name="question" class="contenaire_list_select">
+            <option value="all questions" hidden disabled selected>Sélectionnez une question</option>
+            <option value="all questions">Sélectionner toutes les questions</option>
+                @foreach($questions as $question)
+                <option value="{{ $question->id }}">{{ $question->question }}</option>
+                @endforeach
+            </select>
+        </p>       
+        <input type="submit" value="Sélectionner" class="contenaire_list_submit">
+    </form>
 
 
     <div class="tabla_list">

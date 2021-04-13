@@ -1,6 +1,6 @@
-@extends('home')
+@extends('layouts.default')
 
-@section('list')
+@section('content')
 
 
 <div class="contenaire_list">

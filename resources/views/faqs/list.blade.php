@@ -1,6 +1,6 @@
-@extends('home')
+@extends('layouts.default')
 
-@section('list')
+@section('content')
 
 <div class="contenaire_list">
 
@@ -10,6 +10,20 @@
         <button class="button_nouveau"><i class="fas fa-plus"></i>Ajouter une question essentielle</button>
     </a>
 
+
+    <form action="/faqsOneFormation" method="post" class="contenaire_list_form">
+        @csrf
+        <p>
+            <select name="formation" class="contenaire_list_select">
+            <option value="all formations" hidden disabled selected>Sélectionnez une formation</option>
+            <option value="all formations">Sélectionner toutes les formations</option>
+                @foreach($formations as $formation)
+                <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
+                @endforeach
+            </select>
+        </p>       
+        <input type="submit" value="Sélectionner" class="contenaire_list_submit">
+    </form>
 
     <div class="tabla_list">
 

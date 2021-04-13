@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name = "csrf-token" content = "{{csrf_token ()}}"> 
+    <meta name="csrf-token" content="{{csrf_token ()}}">
 
 
     <title>MEFH</title>
@@ -49,66 +49,114 @@
     <script>
         var auth = <?= json_encode($auth); ?>
     </script>
-    
+
 
 </head>
 
-<body class="antialiased">
+<body>
 
-<nav class="cd-auto-hide-header menu" id="navigation">
+    <nav class="menu">
 
-<input type="checkbox" id="toggle-nav" aria-label="open/close navigation">
+        <input type="checkbox" id="toggle-nav" aria-label="open/close navigation">
         <label for="toggle-nav" class="nav-button"></label>
 
-    <ul class="nav menu nav-inner" id="first_ul">
-        <li class="logo">
-            <img src="/storage/images/logoMix.png" alt="logo" />
-        </li>
-        <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" aria-current="page" href="/">{{ __('messages.accueil') }}</a>
-        </li>
-        <li class="nav-item {{ 'formations-liste' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="formations-liste">Formations</a>
-        </li>
-        <li class="nav-item {{ 'contact' == request()->path() ? 'active' : '' }}">
-            <a class="nav-link" href="contact">Contact</a>
-        </li>
+        <div class="logoResponsive">
+            <img src="/storage/images/mefhlogo.png" alt="logo" />
+        </div>
 
+        <ul class="nav">
 
-
-
-        @if(Auth::check())
-            @if(Auth::user()->admin)
-            <li class="connex nav-item {{ 'users' == request()->path() ? 'active' : '' }}">
-                <a href="/users"> Admin</a>
+            <li class="logo">
+                <img src="/storage/images/mefhlogo.png" alt="logo" />
             </li>
-            @endif
-            <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
-                <a href="/logout"><button id="buttonconnex">Déconnexion</button></a>
+
+            <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
+                <a class="nav-link" aria-current="page" href="/">{{ __('messages.accueil') }}</a>
+            </li>
+            <li class=" {{ 'formations-liste' == request()->path() ? 'active' : '' }}">
+                <a class="nav-link" href="formations-liste">Formations</a>
+            </li>
+            <li class=" {{ 'contact' == request()->path() ? 'active' : '' }}">
+                <a class="nav-link" href="contact">Contact</a>
+            </li>
+
+
+
+
+            <li class="userLogin"><i class="fas fa-user">
+                    <ul class="userLoginUl">
+                        @if(Auth::check())
+                        @if(Auth::user()->admin)
+                        <li class="connex nav-item {{ 'users' == request()->path() ? 'active' : '' }}">
+                            <a href="/users"><button id="buttonconnex">Admin</button></a>
+                        </li>
+                        @endif
+                        <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
+                            <a href="/"><button id="buttonconnex">Mon profile</button></a>
+                        </li>
+                        <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
+                            <a href="/logout"><button id="buttonconnex">Déconnexion</button></a>
+                        </li>
+                        @else
+                        <li class="connex nav-item {{ 'login' == request()->path() ? 'active' : '' }}">
+                            <a href="/login"><button id="buttonconnex">Connexion</button></a>
+                        </li>
+                        <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
+                            <a href="/register"><button id="buttonconnex">Inscription</button></a>
+                        </li>
+                        @endif
+                    </ul>
+                </i>
+
+            </li>
+
+
+
+            @if(Auth::check())
+                @if(Auth::user()->admin)
+                <li class="responsiveLoginLi">
+                    <a href="/users">Admin</a>
+                </li>
+                @endif
+            <li class="responsiveLoginLi">
+                <a href="/login">Mon profile</a>
+            </li>
+            <li class="responsiveLoginLi">
+                <a href="/logout">Déconnexion</a>
             </li>
             @else
-            <li class="connex nav-item {{ 'login' == request()->path() ? 'active' : '' }}">
-                <a href="/login"><button id="buttonconnex">Connexion</button></a>
+            <li class="responsiveLoginLi">
+                <a href="/login">Connexion</a>
             </li>
-            <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
-                <a href="/register"><button id="buttonconnex">Inscription</button></a>
+            <li class="responsiveLoginLi">
+                <a href="/register">Inscription</a>
             </li>
-        @endif
+            @endif
 
-        @php ($lang = Lang::locale())
-        <div class="dropdown">
-            <button class="dropbtn"><img src="/storage/images/{{ $lang }}.png" alt="choix de la langue" /></button>
-            <div class="dropdown-content">
-                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                <a class="{{ $lang == $localeCode ? 'hide' : ''}}" rel="alternate" hreflang="{{ $localeCode }}" 
-                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                    <img src="/storage/images/{{ $localeCode }}.png" alt="langue {{ $localeCode }}" />
-                </a>
-                @endforeach
-            </div>
-        </div>
-    </ul>
-</nav>
+
+
+
+
+            @php ($lang = Lang::locale())
+            <li class="drapeaux">
+                <div class="dropdown">
+                    <button class="dropbtn"><img src="/storage/images/{{ $lang }}.png" alt="choix de la langue" /></button>
+                    <div class="dropdown-content">
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a class="{{ $lang == $localeCode ? 'hide' : ''}}" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <img src="/storage/images/{{ $localeCode }}.png" alt="langue {{ $localeCode }}" />
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
+
+            </li>
+
+        </ul>
+
+
+    </nav>
+
     @yield('content')
 
 </body>
@@ -123,8 +171,8 @@
 
         $(window).scroll(function() {
 
-            if ($(window).scrollTop() > 1) {
-                $('.menu').css({
+            if ($(window).scrollTop() > 1 && window.matchMedia("(min-width: 1001px)").matches) {
+                $('.nav').css({
                     background: '#ffffff',
                     height: '80px',
                     borderBottom: 'white solid 2',
@@ -133,6 +181,7 @@
                     position: 'fixed',
                     top: '0',
                     left: '0',
+                    'z-index': '10',
                 });
 
                 $('.menu a:link').css({
@@ -143,28 +192,23 @@
                     height: '80px',
                 });
 
-                $('.contenaireFormations').css({
-                    marginTop: '130px',
-                });
 
             }
 
-            if ($(window).scrollTop() <= 1) {
-                $('.menu').css({
+            if ($(window).scrollTop() <= 1 && window.matchMedia("(min-width: 1001px)").matches) {
+                $('.nav').css({
                     position: 'relative',
                     background: '#ffffff',
                     height: '100px',
                     'align-items': 'center',
                     'box-shadow': 'none',
+                    'z-index': '10',
                 });
 
                 $('.logo img').css({
                     height: '100px',
                 });
 
-                $('.contenaireFormations').css({
-                    marginTop: '30px',
-                });
 
             }
         })

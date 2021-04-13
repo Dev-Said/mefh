@@ -18,8 +18,24 @@ class FaqController extends Controller
     public function index()
     {
 
+        $formations = formation::all();
         $faqs = Faq::all();
-        return view('faqs.list', ['faqs' => $faqs]);
+        return view('faqs.list', ['faqs' => $faqs, 'formations' => $formations]);
+    }
+
+
+    public function indexSelect(Request $request)
+    {
+
+        $formations = formation::all();
+        if ($request->formation == 'all formations') {
+            $faqs = Faq::orderBy('formation_id', 'asc')
+                ->get();
+        } else {
+            $faqs =  Faq::where('formation_id', '=', $request->formation)
+                ->get();
+        }
+        return view('faqs.list', ['faqs' => $faqs, 'formations' => $formations]);
     }
 
     /**
