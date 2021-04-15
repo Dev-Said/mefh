@@ -4,19 +4,44 @@
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 0 0 2%;
+  padding: 40px 0 40px 2%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   background-color: #ffffff;
+  font-family: Roboto, segoe ui, Helvetica, Arial, sans-serif;
+  border: #ebebeb solid 1px;
+  border-radius: 5px;
+}
+
+.contenaire_text-formation {
+  width: 100%;
+  padding: 50px 0;
+  background-color: #460000;
 }
 
 .text-formation {
-  width: 100%;
-  margin: 50px 0 50px 0;
-  padding-right: 30%;
+  width: 70%;
+  margin: 50px auto;
+  padding-right: 15%;
+  font-family: Roboto, segoe ui, Helvetica, Arial, sans-serif;
+}
+
+.text-formation h1 {
+  font-size: 30px;
+  margin-bottom: 15px;
+  text-align: left;
+  color: white;
+}
+
+.text-formation p {
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 1px;
+  text-align: left;
+  color: white;
 }
 
 .selectForm {
@@ -43,7 +68,7 @@
   border: none;
   color: black;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 400;
   background-color: transparent;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   letter-spacing: 1px;
@@ -54,18 +79,6 @@
   grid-template-columns: repeat(3, 30%);
   grid-column-gap: 3.3333%;
   width: 100%;
-}
-
-.text-formation h1 {
-  font-size: 30px;
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.text-formation p {
-  font-size: 17px;
-  letter-spacing: 1px;
-  text-align: left;
 }
 
 a.card-formation {
@@ -82,28 +95,32 @@ a.card-formation {
   border-radius: 5px;
 }
 
-a:link,
-a:visited,
-a:hover,
-a:active {
+.contenaireFormations a:link,
+.contenaireFormations a:visited,
+.contenaireFormations a:hover,
+.contenaireFormations a:active {
   text-decoration: none;
-  color: #8f8f8f;
+  color: black;
 }
 
 .card-formation h2 {
   width: 100%;
   height: auto;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   text-align: left;
+  line-height: 22px;
   padding-left: 30px;
+  padding-right: 30px;
+  opacity: 0.8;
 }
 
 .card-formation h3 {
   width: 100%;
   height: auto;
   padding: 0 15px 10px 15px;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 22px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -141,14 +158,31 @@ a:active {
 
 .inf-card-langue {
   width: 100%;
-  height: 50px;
+  height: 65px;
   display: flex;
+  align-items: center;
   text-align: left;
   margin-top: auto;
   padding-left: 30px;
-  padding-bottom: 15px;
-  color: #272727;
+}
+
+.inf-card-langue h4 {
+  width: auto;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 16px;
+  color: black;
+  font-size: 14px;
   font-weight: bold;
+  background-color: #faf3b6;
+}
+
+.inf-card-langue h4 strong {
+  opacity: 0.6;
 }
 
 .img_formation {
@@ -160,4 +194,68 @@ a:active {
   width: 100%;
   height: auto;
   overflow: hidden;
+}
+
+@media (max-width: 1500px) {
+  .contenaireFormations {
+    width: 85%;
+  }
+
+  .text-formation {
+    width: 85%;
+  }
+}
+@media (max-width: 1300px) {
+  .contenaireFormations {
+    width: 100%;
+    border: none;
+  }
+
+  .text-formation {
+    width: 100%;
+    padding: 0 8% 0 2%;
+    margin: 50px auto;
+  }
+}
+@media (max-width: 1000px) {
+  .contenaireFormations {
+    margin-top: 10px;
+  }
+
+  .contenaire_text-formation {
+    width: 100%;
+    padding: 10px 5px 30px 5px;
+    background-color: #460000;
+  }
+
+  .text-formation {
+    padding-right: 1%;
+    margin-top: 170px;
+    margin-bottom: 40px;
+  }
+
+  .blockFormations {
+    display: grid;
+    grid-template-columns: repeat(2, 48%);
+    grid-column-gap: 2%;
+    width: 100%;
+  }
+
+  .selectForm select {
+    width: auto;
+    min-width: 200px;
+  }
+
+  .selectForm input {
+    width: auto;
+    min-width: 150px;
+  }
+}
+@media (max-width: 700px) {
+  .blockFormations {
+    display: grid;
+    grid-template-columns: repeat(1, 96%);
+    grid-column-gap: 2%;
+    width: 100%;
+  }
 }

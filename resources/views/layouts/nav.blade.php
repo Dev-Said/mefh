@@ -35,17 +35,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/stepper.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/legal.css') }}" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
-    <style>
-        body {
-            font-family: 'Nunito';
-            background-color: white;
-        }
-    </style>
+
     <script>
         var auth = <?= json_encode($auth); ?>
     </script>
@@ -61,26 +56,31 @@
         <label for="toggle-nav" class="nav-button"></label>
 
         <div class="logoResponsive">
-            <img src="/storage/images/mefhlogo.png" alt="logo" />
+            <a href="/"><img src="/storage/images/mefhlogo.png" alt="logo" /></a>
         </div>
 
         <ul class="nav">
 
             <li class="logo">
-                <img src="/storage/images/mefhlogo.png" alt="logo" />
+                <a href="/"><img src="/storage/images/mefhlogo.png" alt="logo" /></a>
             </li>
 
-            <li class="nav-item {{ '/' == request()->path() ? 'active' : '' }}">
+            <li class="nav-item {{ '/' == request()->path() || 'en' == request()->path() 
+                || 'nl' == request()->path() ? 'active' : '' }}">
                 <a class="nav-link" aria-current="page" href="/">{{ __('messages.accueil') }}</a>
             </li>
-            <li class=" {{ 'formations-liste' == request()->path() ? 'active' : '' }}">
+            @php
+            $id_formation = str_contains(request()->path(), 'formation/') ? request()->path() : '';
+            @endphp
+            <li class=" {{ 'formations-liste' == request()->path() || 'en/formations-liste' == request()->path() 
+                || 'nl/formations-liste' == request()->path() 
+                || $id_formation  == request()->path() ? 'active' : '' }}">
                 <a class="nav-link" href="formations-liste">Formations</a>
             </li>
-            <li class=" {{ 'contact' == request()->path() ? 'active' : '' }}">
+            <li class=" {{ 'contact' == request()->path() || 'en/contact' == request()->path() 
+                || 'nl/contact' == request()->path() ? 'active' : '' }}">
                 <a class="nav-link" href="contact">Contact</a>
             </li>
-
-
 
 
             <li class="userLogin"><i class="fas fa-user">
@@ -113,11 +113,11 @@
 
 
             @if(Auth::check())
-                @if(Auth::user()->admin)
-                <li class="responsiveLoginLi">
-                    <a href="/users">Admin</a>
-                </li>
-                @endif
+            @if(Auth::user()->admin)
+            <li class="responsiveLoginLi">
+                <a href="/users">Admin</a>
+            </li>
+            @endif
             <li class="responsiveLoginLi">
                 <a href="/login">Mon profile</a>
             </li>
@@ -158,6 +158,8 @@
     </nav>
 
     @yield('content')
+    @include('../footer')
+
 
 </body>
 
@@ -181,15 +183,16 @@
                     position: 'fixed',
                     top: '0',
                     left: '0',
+                    'margin-bottom': '100px',
                     'z-index': '10',
                 });
 
-                $('.menu a:link').css({
-                    color: '#1c2168',
-                });
-
                 $('.logo img').css({
-                    height: '80px',
+                    height: '100%',
+                });
+                
+                $('.logo a').css({
+                    height: '100%',
                 });
 
 
@@ -206,9 +209,12 @@
                 });
 
                 $('.logo img').css({
-                    height: '100px',
+                    height: '100%',
                 });
 
+                // $('.logo a').css({
+                //     height: '100px',
+                // });
 
             }
         })

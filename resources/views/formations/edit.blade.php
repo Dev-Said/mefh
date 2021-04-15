@@ -7,12 +7,12 @@
         @csrf
         @method('put')
         <h2>Modifier une formation</h2>
-        <label for="titre">Titre</label>
+        <label for="titre">Titre  (100 caractères maximum)</label>
         <input type="text" name="titre" id="titre" value="{{ $formation->titre }}">
         @error('titre')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="description">Description</label>
+        <label for="description">Description  (100 caractères maximum)</label>
         <input type="text" name="description" id="description" value="{{ $formation->description }}">
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>

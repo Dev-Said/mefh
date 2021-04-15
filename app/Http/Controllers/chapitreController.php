@@ -76,7 +76,8 @@ class ChapitreController extends Controller
         }
         $chapitre->save();
 
-        return back();
+         return redirect('chapitres');
+  
     }
 
     /**
@@ -139,7 +140,7 @@ class ChapitreController extends Controller
 
         $chapitre->save();
 
-        return back();
+        return redirect('chapitres');
     }
 
     /**

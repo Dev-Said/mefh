@@ -66,7 +66,7 @@ class FaqController extends Controller
 
         $faq->save();
 
-        return back();
+        return redirect('faqs');
     }
 
     /**
@@ -114,7 +114,7 @@ class FaqController extends Controller
 
         $faq->save();
 
-        return back();
+        return redirect('faqs');
     }
 
     /**

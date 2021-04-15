@@ -7,12 +7,12 @@
     <form action="/formations" method="post" enctype="multipart/form-data">
         @csrf
         <h2>Ajouter une formation</h2>
-        <label for="titre">Titre</label>
+        <label for="titre">Titre  (100 caractères maximum)</label>
         <input type="text" name="titre" id="titre" value="{{ old('titre') }}">
         @error('titre')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <label for="description">Description</label>
+        <label for="description">Description  (100 caractères maximum)</label>
         <input type="text" name="description" id="description" value="{{ old('description') }}">
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>

@@ -1,12 +1,17 @@
 @extends('layouts.nav')
 
 @section('content')
-<div class="contenaireFormations">
+
+
+
+<div class="contenaire_text-formation">
     <div class="text-formation">
         <h1>{{ __('messages.slogan1_formations') }}</h1>
         <p>{{ __('messages.slogan2_formations') }}</p>
     </div>
+</div>
 
+<div class="contenaireFormations">
     <div class="selectForm">
         <form action="/formationsLangue" method="get">
             @csrf
@@ -48,7 +53,7 @@
                 <h3>{{ $formation->description }}</h3>
             </div>
             <div class="inf-card-langue">
-                <h4><strong>Langue </strong>{{ $formation->langue }}</h4>
+                <h4><strong>Langue : &nbsp;</strong>{{ $formation->langue }}</h4>
             </div>
 
         </a>

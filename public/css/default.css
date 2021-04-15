@@ -6301,7 +6301,7 @@ body {
 .button_nouveau {
   width: auto;
   height: auto;
-  padding: 15px;
+  padding: 15px 25px;
   font-size: 16px;
   margin: 30px 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

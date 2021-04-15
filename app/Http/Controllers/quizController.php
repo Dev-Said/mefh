@@ -20,7 +20,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
+        $quizzes = Quiz::orderBy('titre', 'asc')
+        ->get();
         return view('quizzes.list', ['quizzes' => $quizzes]);
     }
 
@@ -54,7 +55,7 @@ class QuizController extends Controller
 
         $quiz->save();
 
-        return redirect('questions/create');
+        return redirect('quizzes');
     }
 
     /**
@@ -97,7 +98,7 @@ class QuizController extends Controller
 
         $quiz->save();
 
-        return redirect('questions/create');
+        return redirect('quizzes');
     }
 
     /**

@@ -68,7 +68,7 @@ class ReponseController extends Controller
 
         $reponse->save();
 
-        return redirect('/reponses/create');
+        return redirect('/reponses');
     }
 
     /**

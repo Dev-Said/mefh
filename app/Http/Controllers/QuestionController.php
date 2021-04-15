@@ -74,7 +74,7 @@ class QuestionController extends Controller
 
         $question->save();
 
-        return redirect('/reponses/create');
+        return redirect('/questions');
     }
 
     /**

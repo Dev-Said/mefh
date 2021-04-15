@@ -64,7 +64,7 @@ class RessourceController extends Controller
 
         $ressource->save();
 
-        return back();
+        return redirect('/ressources');
     }
 
 
@@ -102,7 +102,7 @@ class RessourceController extends Controller
 
         $ressource->save();
 
-        return back();
+        return redirect('/ressources');
     }
 
     /**

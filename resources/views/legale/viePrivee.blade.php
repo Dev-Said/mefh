@@ -12,7 +12,7 @@
     <p>MEFH ASBL est responsable du site Nom du site web</p>
     <h3>Informations de contact :</h3>
 
-    MEFH ASBL
+    <p>MEFH ASBL
 
     Adresse : Rue de la peupleraie 30, 5310 Eghezée
     <br/>
@@ -20,7 +20,7 @@
     <br/>
     E-mail: mouvementegalite.femmeshommes@gmail.com
     <br/>
-    Téléphone: +32 473 53 69 03
+    Téléphone: +32 473 53 69 03</p>
 
     <h2>3. Quelles données personnelles sont collectées?</h2>
     <p>Le traitement de vos données personnelles est limité au strict nécessaire pour atteindre les finalités poursuivies par MEFH ASBL. Ci-dessous, sont énumérées les catégories de données concernées par le traitement.</p>

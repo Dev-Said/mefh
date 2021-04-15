@@ -6130,58 +6130,87 @@ readers do not read off random characters that represent icons */
 
 .contenairContact {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  font-family: Roboto, segoe ui, Helvetica, Arial, sans-serif;
+}
+
+.sousContenairContact {
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
-  width: 100%;
-  height: calc(100vh - 100px);
-  padding-top: 50px;
+  width: 70%;
+  height: auto;
+  padding: 50px 0;
+}
+
+.contenairContact h1 {
+  width: 70%;
+  text-align: left;
+  margin: 50px auto;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.contenairCoordonees {
+  width: 50%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .coordonnees {
-  width: 50%;
+  width: 600px;
+  min-width: 300px;
   height: calc(100vh - 200px);
-  background-color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: bottom;
-  background-image: url(/storage/images/imageContact.jpg);
-  background-repeat: no-repeat;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .coordonnees a,
 .coordonnees p {
-  color: #f0f0f0;
+  color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: 1px;
 }
 
 iframe {
   width: 600px;
   height: 400px;
+  margin-top: 50px;
 }
 
 .contenairForm {
   width: 50%;
+  min-width: 300px;
   height: calc(100vh - 200px);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .contenairForm form {
-  margin: 80px 0;
+  margin: 120px 0 0 0;
   width: 600px;
   min-width: 300px;
   padding: 20px 3%;
-  margin-left: 7%;
+  margin-left: 20px;
   border-radius: 5px;
+}
+
+.contenairForm form div {
+  width: 100%;
 }
 
 .contenairForm form div + div {
@@ -6197,24 +6226,27 @@ iframe {
 
 .contenairForm input {
   height: 50px;
+  margin-top: 10px;
 }
 
-.contenairForm input, .contenairForm textarea {
+.contenairForm input,
+.contenairForm textarea {
   font: 16px sans-serif;
   width: 100%;
   box-sizing: border-box;
-  border: solid 1px #0a96d6;
-  border-radius: 5px;
+  border: none;
+  border-bottom: solid 1px #c4c4c4;
 }
 
 .contenairForm input:focus,
 .contenairForm textarea:focus {
-  border-color: #000;
+  border-color: #616161;
 }
 
 .contenairForm textarea {
   vertical-align: top;
-  height: 250px;
+  height: 100px;
+  margin-top: 10px;
 }
 
 .contenairForm button {
@@ -6227,8 +6259,39 @@ iframe {
   font-weight: bold;
 }
 
-.coordonnees .fas, .coordonnees .far {
+.coordonnees .fas,
+.coordonnees .far {
   font-size: 20px;
   margin-right: 8px;
-  color: #f0f0f0;
+  color: #444444;
+}
+
+@media (max-width: 1300px) {
+  .sousContenairContact {
+    width: 98%;
+    height: auto;
+    padding: 50px 0;
+  }
+
+  .contenairContact h1 {
+    width: 98%;
+  }
+}
+@media (max-width: 1000px) {
+  .contenairContact h1 {
+    margin: 180px auto 0 auto;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 2%;
+  }
+
+  .contenairCoordonees {
+    order: 2;
+    width: 100%;
+  }
+
+  .contenairForm {
+    order: 1;
+    width: 100%;
+  }
 }

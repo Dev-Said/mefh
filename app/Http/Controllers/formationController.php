@@ -67,7 +67,7 @@ class FormationController extends Controller
 
         $formation->save();
 
-        return back();
+        return redirect('formations');
     }
 
 
@@ -131,7 +131,7 @@ class FormationController extends Controller
 
         $formation->save();
 
-        return back();
+        return redirect('formations');
     }
 
     /**

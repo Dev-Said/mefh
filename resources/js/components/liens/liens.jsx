@@ -18,19 +18,25 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         justifyContent: "flex-start",
         alignItems: "flex-start",
-
-
     },
     lien: {
-        marginRight: 30,
+        marginRight: 35,
         fontSize: "18px",
         color: "#005caa",
         display: "inline",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
         '&:hover': {
             cursor: "pointer",
             textDecoration: 'underline',
         },
-    }
+    },
+    icon: {
+        marginRight: 8,
+        fontSize: "22px",
+    },
 }));
 
 export default function Links(props) {
@@ -45,17 +51,17 @@ export default function Links(props) {
         <div className={classes.root} >
             {props.faqs != 'hide' && props.faqs != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('faq')}>
-                    <InfoIcon /> Questions éssentielles
+                    <InfoIcon className={classes.icon} /> Questions éssentielles
         </Typography> : ''
             }
             {props.ressources != 'hide' && props.ressources != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('ressource')}>
-                    <PeopleIcon /> Ressources
+                    <PeopleIcon className={classes.icon} /> Ressources
         </Typography> : ''
             }
             {props.certificats != 'hide' && props.certificats != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('certificat')}>
-                    <VerifiedUserIcon /> Certificat
+                    <VerifiedUserIcon className={classes.icon} /> Certificat
         </Typography> : ''
             }
         </div>

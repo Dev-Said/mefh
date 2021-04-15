@@ -3,7 +3,7 @@
         {{$chapitre->titre}}
     </td>
     <td>
-        {!! $chapitre->description !!}
+        {!! $chapitre->description !!}  
     </td>
     <td>
         {{$chapitre->module->titre}}

@@ -70,7 +70,7 @@ Route::group([
         return View('legale.cookies');
     });
 
-    Route::get('/cu', function () {
+    Route::get('/conditionsUtilisation', function () {
         return View('legale.conditionsUtilisation');
     });
 

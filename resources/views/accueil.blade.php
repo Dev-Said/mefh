@@ -3,21 +3,25 @@
 @section('content')
 
 <div class="contenairAccueil">
-    <!-- <img src="/storage/images/mozaik.jpg" alt="" id="mozaik"> -->
-    <img src="/storage/images/model7b.png" alt="" id="yeux">
+    <h1>Le mouvement pour l'Egalité entre les Femmes et les Hommes</h1>
     <h2 class="textAccueil1">
-        Agir
+    {{ __('messages.slogan_accueil') }}
     </h2>
     <h2 class="textAccueil2">
-        Formations complètes et gratuites <br>
-        sur les inégalités entre les femmes et les hommes
+    {{ __('messages.slogan_accueil2') }} <br>
+    {{ __('messages.slogan_accueil3') }}
     </h2>
 
-    <a id="lienFormation" href="formations-liste"><button id="buttonAccueil">Commencer</button></a>
+    <a id="lienFormation" href="formations-liste"><button id="buttonAccueil">{{ __('messages.button_accueil3') }}</button></a>
+
+    <div class="sociaux">
+    <a href="https://www.facebook.com/MEFH1/"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.linkedin.com/company/mouvement-%C3%A9galit%C3%A9-femmes-hommes/about/"><i class="fab fa-linkedin-in"></i></a>
+    <i class="fas fa-envelope"></i>
+    </div>
 
 </div>
 
 
-<!-- <div id="example"></div> -->
 <script src="/js/app.js"></script>
 @endsection

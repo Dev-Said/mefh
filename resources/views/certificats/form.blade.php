@@ -7,7 +7,7 @@
     <form action="/certificats" method="post">
         @csrf
         <h2>Ajouter un certificat</h2>
-        <label for="formation_id">Sélectionnez une formation</label>
+        <label for="formation_id">Sélectionnez une formation parmi celles qui n'ont pas de certificat</label>
         <p>
             <select name="formation_id" id="formation_id">
             <option value=""></option>
