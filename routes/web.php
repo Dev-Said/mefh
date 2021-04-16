@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Langue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CertificatController;
+use App\Http\Controllers\ReactRequestController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
@@ -55,7 +57,8 @@ Route::group([
     Route::get('/formations-liste', function () {
         return view('formations', [
             'formations' => DB::table('formations')->orderBy('ordre')->get(),
-            'langue' => 'Toutes les formations'
+            'langue' => 'Toutes les formations',
+            'langues' => DB::table('langues')->orderBy('langue')->get(),
         ]);
     });
 
@@ -100,7 +103,7 @@ require __DIR__ . '/auth.php';
 
 
 // Route::resource('modulesApi', ModuleApiController::class);
-Route::resource('modulesApi', ModuleResController::class);
+Route::resource('modulesApi', ModuleResController::class); // <--- appelé dans ListeChapitre, à supprimer !!!!
 
 
 Route::group(['middleware' => 'checkAdmin'], function () {
@@ -115,6 +118,8 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::resource('ressources', RessourceController::class);
     Route::resource('certificats', CertificatController::class);
 
+    // renvoi des résultats filtrés par le choix fait dans un menu select 
+    // dans les listes de la partie admin
     Route::post('/chapitresOneModule', [ChapitreController::class, 'indexSelect']);
     Route::post('/modulesOneFormation', [ModuleResController::class, 'indexSelect']);
     Route::post('/questionsOneQuiz', [QuestionController::class, 'indexSelect']);
@@ -141,6 +146,11 @@ Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessource
 Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
+
+Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
+
+
+
 Route::get('/changeOrdreModule', [ModuleResController::class, 'changeOrdre']);
 Route::get('/changeOrdreFormation', [FormationController::class, 'changeOrdre']);
 Route::get('/changeOrdreMChapitre', [ChapitreController::class, 'changeOrdre']);

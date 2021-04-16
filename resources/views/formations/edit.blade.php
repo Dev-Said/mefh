@@ -20,10 +20,9 @@
         <label for="langue">Langue</label>
         <select name="langue" id="langue">
             <option value="{{ $formation->langue }}">{{ $formation->langue }}</option>
-            <option value="Français">Français</option>
-            <option value="Néerlendais">Néerlendais</option>
-            <option value="Anglais">Anglais</option>
-            <option value="Allemand">Allemand</option>
+            @foreach($langues as $langue)
+            <option value="{{ $langue->langue }}">{{ $langue->langue }}</option>
+            @endforeach
         </select>
         @error('langue')
         <div class="alert alert-danger">{{ $message }}</div>

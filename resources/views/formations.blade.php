@@ -14,24 +14,16 @@
 <div class="contenaireFormations">
     <div class="selectForm">
         <form action="/formationsLangue" method="get">
-            @csrf
+   
             <select name="langue" id="langue">
                 @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset
                 @if ($langue && $langue !== 'Toutes les formations')
                 <option value="Toutes les formations">Toutes les formations</option>
                 @endif
-                @if ($langue && $langue !== 'Français')
-                <option value="Français">Les formations en Français</option>
-                @endif
-                @if ($langue && $langue !== 'Néerlendais')
-                <option value="Néerlendais">Les formations en Néerlendais</option>
-                @endif
-                @if ($langue && $langue !== 'Anglais')
-                <option value="Anglais">Les formations en Anglais</option>
-                @endif
-                @if ($langue && $langue !== 'Allemand')
-                <option value="Allemand">Les formations en Allemand</option>
-                @endif
+                @foreach($langues as $langue)
+                <option value="{{ $langue->langue }}">{{ $langue->langue }}</option>
+                @endforeach
+
             </select>
             <input type="submit" value="Confirmer">
         </form>

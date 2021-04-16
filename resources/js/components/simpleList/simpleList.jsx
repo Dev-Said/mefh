@@ -82,7 +82,7 @@ const  SimpleList = (props) => {
 
 
   // si il y a un module_id dans le store on sélectionne uniquement les chapitres 
-  // dont le module_id est = module_id si il n'y en a pas alores sélectionne  les 
+  // dont le module_id est = module_id si il n'y en a pas alores on sélectionne les 
   // chapitres dont le module_id est = 1
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné
   var idList = props.info_chapitre.module_id ? props.info_chapitre.module_id : 1;
@@ -92,7 +92,6 @@ const  SimpleList = (props) => {
     <div className={classes.root}>
       <List component="nav"
         aria-label="main mailbox folders"
-        // aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader className={classes.headerList} component="div" id="nested-list-subheader">
             {chapitres[0] && chapitres[0][1].module_titre}

@@ -42,16 +42,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Links(props) {
     const classes = useStyles();
 
-
-    console.log('props.certificats   ' + props.certificats)
-
-
-    // on affiche les liens que lorsqu'il y a quelque chose à afficher
+     // on affiche les liens que lorsqu'il y a quelque chose à afficher
     return (
         <div className={classes.root} >
             {props.faqs != 'hide' && props.faqs != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('faq')}>
-                    <InfoIcon className={classes.icon} /> Questions éssentielles
+                    <InfoIcon className={classes.icon} />Questions éssentielles
         </Typography> : ''
             }
             {props.ressources != 'hide' && props.ressources != '' ?
