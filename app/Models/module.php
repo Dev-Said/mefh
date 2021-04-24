@@ -23,7 +23,7 @@ class Module extends Model
 
     public function quiz()
     {
-        return $this->hasOne(quiz::class);
+        return $this->hasOne(Quiz::class);
     }
 
     public function formation()

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     
     // backgroundColor: 'rgb(255, 244, 244)',
-    // border: 'primary solid 2px',
+    // border: 'blue solid 2px',
   },
   stepper: {
     display: "flex",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   //   width: 100,
   //   "&:focus": {
   //     outline: 'none',
-  //     backgroundColor: "blue",
+  //     backgroundColor: '#4297b6',
   //   },
   //   flex: '1',
   //   backgroundColor: "red",
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
   },
   selected: {
-    backgroundColor: "blue",
+    backgroundColor: '#4297b6',
   }
 }));
 
@@ -76,6 +76,7 @@ const Stepper = (props) => {
   const classes2 = useStyles();
   const [chapitres, setChapitres] = useState([]);
   const [id, setId] = useState(1);
+  const [currentChapitre, setCurrentChapitre] = useState(1);
 
   // récupère tous les chapitres de la formation dont l'id est = idFormation
   // idFormation est injecté dans la page indexFormation
@@ -83,27 +84,37 @@ const Stepper = (props) => {
     axios.get(`${globalUrl}modulesApi/${idFormation}`)
       .then(res => {
         setChapitres(Object.entries(res.data));
-        setId(props.store_chapitre.id);
+        localStorage.setItem('lclStorChapitres', JSON.stringify(res.data));
+        JSON.parse(localStorage.getItem("currentChapitre")) ? 
+        setCurrentChapitre(JSON.parse(localStorage.getItem("currentChapitre"))) :
+        setCurrentChapitre(1);
+        // setId(props.store_chapitre.id);
       });
   }, []);
 
   // set id avec l'id du chapitre dans le store pour positionner le 
   // curseur du stepper quand on clique dans la liste
   useEffect(() => {
-    setId(props.store_chapitre.id);
+    setCurrentChapitre(JSON.parse(localStorage.getItem("currentChapitre")));
+    // setId(props.store_chapitre.id);
+    console.log('currentChapitre    ' + currentChapitre.id);
+    // setId(currentChapitre.id);
+  // });
   }, [props.store_chapitre.id]);
 
 
   // positionne le curseur sur le stepper cliqué et envoi son chapitre
   // dans le store pour mettre à jour BackNextButton et SimpleList
   const locateStepper = (chapitre) => {
-    setId(chapitre.id);
+    // setId(chapitre.id);
+    localStorage.setItem('currentChapitre', JSON.stringify(chapitre));
+    setCurrentChapitre(JSON.parse(localStorage.getItem("currentChapitre")));
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
   };
 
    
   const colorSelected = (idChapitre) => {
-    if (idChapitre === id) { style = { backgroundColor: "blue" } }
+    if (idChapitre === currentChapitre.id) { style = { backgroundColor: '#4297b6' } }
     else if (props.store_dejaSuivi.includes(idChapitre)) { style = { backgroundColor: '#f1f1f1' } }
     else { style = { backgroundColor: '#ffffff' } }
     return style;
@@ -129,11 +140,11 @@ const Stepper = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.stepper}>
-        {chapitres.map((chapitre, index) => (
-          <BootstrapTooltip key={index} title={chapitre[1].titre} placement="top">
-            <MyButton className={classes2.stepButton} 
+        {chapitres.map((chapitre, ndx) => (
+          <BootstrapTooltip key={ndx} title={chapitre[1].titre} placement="top">
+            <MyButton className={classes2.stepButton} key={chapitre[1].id}
               onClick={() => locateStepper(chapitre[1])}
-              variant="outlined" color="primary"
+              variant="outlined" color="#4297b6"
               style={colorSelected(chapitre[1].id)}
             >
             </MyButton>       

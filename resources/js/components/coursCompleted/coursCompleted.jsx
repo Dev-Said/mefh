@@ -21,7 +21,8 @@ const useStyles = makeStyles(() => ({
 const CoursCompleted = (props) => {
   const classes = useStyles();
   const [message, setMessage] = useState();
-
+  var ordreChapitres = [];
+  var id = '';
   var messageVar = props.store_dejaSuivi.includes(props.store_chapitre.id) ?
     "je n'ai pas terminé ce chapitre" :
     "J'ai terminé ce chapitre";
@@ -32,7 +33,7 @@ const CoursCompleted = (props) => {
 
   // gère le bouton "J'ai terminé ce chapitre"
   const handleClick = () => {
-    axios.post(`http://localhost:8000/chapitreSuivi`,
+    axios.post(`${globalUrl}chapitreSuivi`,
       { id: auth[2], chapitre_id: props.store_chapitre.id })
       .then(function (response) {
         // met le stepper du chapitre en non terminé
@@ -53,12 +54,51 @@ const CoursCompleted = (props) => {
           store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: tab });
 
           // passe au chapitre suivant lorsqu'on clique sur "J'ai terminé ce chapitre"
-          axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
+          axios.get(`${globalUrl}modulesApi/${idFormation}`)
             .then(res => {
               var chapitres = Object.entries(res.data);
-              const currentchapitres = chapitres.find(element => element[1].id == (props.store_chapitre.id + 1));
-              store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres[1] });
-            });         
+              var chap = {};
+              var ordChap = {};
+
+              // Pour faire avancer d'une case le stepper lorsqu'on clique sur j'ai terminé
+              // ce chapitre il suffisait de fair ça:
+
+              // const currentchapitres = chapitres.find(element => element[1].id == (props.store_chapitre.id + 1));
+              // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres[1] });
+
+              // tous fonctionne bien en local mais en production ça ne marche pas
+              // c'est pourquoi j'ai du faire tout ce qui suit
+
+              // création d'un tableau d'objets contenant l'id de chaque chapitre
+              // trié selon l'ordre voulu et un index qui servira d'ordre pour le 
+              // passage d'un stepper à l'autre lorsqu'on clique sur "j'ai terminé ce chapitre"
+
+              chapitres.map((chapitre, index) => {
+                ordChap = Object.create(chap, {
+                  id: {
+                    value: chapitre[1].id
+                  },
+                });
+                ordreChapitres.push(ordChap);
+              })
+
+              for (var i = 0; i < chapitres.length - 1; i++) {
+                if (chapitres[i][1].id == (props.store_chapitre.id)) {
+                  for (var j = 0; j < ordreChapitres.length - 1; j++) {
+                    if (ordreChapitres[j].id == chapitres[i][1].id) {
+                      id = ordreChapitres[j + 1].id;
+                      for (var k = 0; k < chapitres.length - 1; k++) {
+                        if (chapitres[k][1].id == id) {
+                          const currentchapitres = chapitres[k][1];
+                          store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres });
+                          break;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            });
         }
         console.log('success   ' + response.data);
       })

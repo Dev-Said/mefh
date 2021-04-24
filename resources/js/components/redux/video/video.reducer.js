@@ -1,7 +1,7 @@
 import { VideosActionTypes } from './video.types';
 
 const INITIAL_STATE = {
-    url_video: 'react1.mp4',
+    url_video: '',
 };
 
 const videoReducer = (url_video = INITIAL_STATE, action) => {

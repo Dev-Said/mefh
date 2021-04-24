@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const  SimpleList = (props) => {
+const SimpleList = (props) => {
   const classes = useStyles();
 
   // envoi le chapitre en cours pour stepper quand on clique dans la liste
@@ -99,17 +99,17 @@ const  SimpleList = (props) => {
         }
       >
         <Divider />
-        {chapitres.map((chapitre, index) => <li key={chapitre[1].id}>
-          <ListItem button selected={selectedIndex === index} onClick={(event) => {
-            handleClick(chapitre[1]);
-            SelectedClick(event, index);
-          }}>
-            {selectedIndex === index && <ArrowRight className={classes.itemIcon} />}
-            <ListItemText className={classes.itemText} primary={chapitre[1].titre} />
-          </ListItem>
-          <Divider />
-        </li>
-        )}
+          {chapitres.map((chapitre, index) => <div key={chapitre[1].id}>
+            <ListItem button selected={selectedIndex === index} onClick={(event) => {
+              handleClick(chapitre[1]);
+              SelectedClick(event, index);
+            }}>
+              {selectedIndex === index && <ArrowRight className={classes.itemIcon} />}
+              <ListItemText className={classes.itemText} primary={chapitre[1].titre} />
+            </ListItem>
+            <Divider />
+          </div>
+          )}
       </List>
     </div>
   );

@@ -41,14 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Faq(props) {
     const classes = useStyles();
     const [faqs, setFaqs] = useState([]);
-    // const [param, setParam] = useState('');
-
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
-    //         const faqData = Object.entries(res.data);
-    //         setFaqs(faqData);
-    //     });
-    // }, []);
 
     useEffect(() => {
         setFaqs(Object.entries(props.faqs));
@@ -56,8 +48,7 @@ export default function Faq(props) {
 
     const handleChange = (e) => {
         const value = e.currentTarget.value;
-        console.log(e.currentTarget.value);
-        axios.get(`http://localhost:8000/faqChange`,
+        axios.get(`${globalUrl}faqChange`,
             {
                 params: {
                     value: value,
@@ -79,8 +70,8 @@ export default function Faq(props) {
             <div >
 
 
-                {faqs.map((faq) => (
-                    <Accordion className={classes.accordeon} key={faq[1].id}>
+                {faqs.map((faq, index) => (
+                    <Accordion key={index} className={classes.accordeon} >
                         <AccordionSummary
                             expandIcon={<ArrowDropDownIcon style={{ fontSize: 30 }} />}
                             fontSize="large"

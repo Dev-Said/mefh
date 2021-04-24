@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -31,7 +31,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/formation.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/modules.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/video.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/listeChapitres.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/stepper.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact.css') }}" />
@@ -39,13 +38,15 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-
+ 
 
     <script>
         var auth = <?= json_encode($auth); ?>
     </script>
 
-
+    <script>
+        var globalUrl = <?= json_encode('http://127.0.0.1:8000/'); ?>
+    </script>
 </head>
 
 <body>
@@ -188,7 +189,7 @@
                 $('.logo img').css({
                     height: '100%',
                 });
-                
+
                 $('.logo a').css({
                     height: '100%',
                 });

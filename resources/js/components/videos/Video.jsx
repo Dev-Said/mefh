@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 
 const Video = (props) => {
-    console.log('videoooooooo    ' + props.info_chapitre.fichier_video)
     var video = String(props.info_chapitre.fichier_video).indexOf('fichier_video/') !== -1 ?
         <ReactPlayer className="player-wrapper"
             pip={false}

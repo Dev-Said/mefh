@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 const BootstrapButton = withStyles({
   root: {
     boxShadow: 'none',
-    maxWidth: 250,
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 22px',
@@ -52,7 +51,7 @@ const BootstrapButton = withStyles({
     '&:focus': {
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
     },
-  },
+  }
 })(Button);
 
 export default function ModalFooterButton(props) {
@@ -62,13 +61,16 @@ export default function ModalFooterButton(props) {
     <div className={classes.root}>
     <p> { props.message } </p>
     {/* teste si le score est > = 80 pour afficher les boutons s\'inscrire et ou enregistrer */}
-      {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()}>
+      {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()} 
+      style={{minWidth: '250px'}} >
         { props.titre0 }
       </BootstrapButton>}      
-      {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}>
+      {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}
+      style={{minWidth: '150px'}} >
         { props.titre1 }
       </BootstrapButton>}
-      <BootstrapButton variant="contained" onClick={() => props.closeModal()}>
+      <BootstrapButton variant="contained" onClick={() => props.closeModal()} 
+      style={{minWidth: '150px'}} >
       { props.titre2 }
       </BootstrapButton>
 

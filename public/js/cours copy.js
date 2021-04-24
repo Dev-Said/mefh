@@ -22614,11 +22614,10 @@ var ListeChapitres = function ListeChapitres(props) {
       setQuiz(Object.values(res.data));
     });
   }, [props.info_chapitre.module_id]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("ul", {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_3__.default, {
-      chapitres: chapitres,
-      currentChap: 1
+      chapitres: chapitres
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_simpleList_simpleList__WEBPACK_IMPORTED_MODULE_2__.default, {
       chapitres: chapitres,
       init_index: 0
@@ -22710,86 +22709,68 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
 var BackNextButton = function BackNextButton(props) {
   var classes = useStyles();
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
       _useState2 = _slicedToArray(_useState, 2),
-      curChapitre = _useState2[0],
-      setCurChapitre = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
-      _useState4 = _slicedToArray(_useState3, 2),
-      activeStep = _useState4[0],
-      setActiveStep = _useState4[1]; // met le premier chapitres de chaque modules dans modTab
+      activeStep = _useState2[0],
+      setActiveStep = _useState2[1]; // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
 
 
-  var modId = 0;
-  var modTab = [];
-  var chapi; // props.chapitres.map(chapitre => arrChap.push(chapitre[1]));
+  var nbModules = props.chapitres[0] ? props.chapitres.slice(-1)[0][1].module_ordre : 5; //récupère le premier chapitre qui a un module_ordre = activeStep
 
-  props.chapitres.map(function (chapitre) {
-    if (modId == 0) {
-      modTab.push(chapitre[1]);
-      modId = 1;
-    }
-
-    if (modId != chapitre[1].module_id) {
-      modTab.push(chapitre[1]);
-      ++modId;
-    }
-  }); // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
-
-  var nbModules = modTab.length ? modTab.length : 5; // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
+  function getChapitre(step) {
+    var currentChapitre = props.chapitres.map(function (chapitre) {
+      return chapitre[1];
+    }).filter(function (module) {
+      return module.module_ordre == props.info_chapitre.module_ordre + step;
+    }).filter(function (chapitre) {
+      return Math.min(chapitre.ordre);
+    });
+    return currentChapitre[0] && currentChapitre[0];
+  } // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
   // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
-      _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
-        type: 'GET_CHAPITRE',
-        chapitreData: props.chapitres[0][1]
-      });
-    }
-  }); // modifie activeStep pour positionner le bon onglet "précédent / suivant"
-  // useEffect(() => {
-  //   setActiveStep(props.info_chapitre.module_ordre);
-  // }, [props.info_chapitre.module_ordre]);
-  // met à jour le store avec le premier chapitre du module sélectionné
+
+  if (props.chapitres[0] && !props.info_chapitre.module_ordre) {
+    _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
+      type: 'GET_CHAPITRE',
+      chapitreData: props.chapitres[0][1]
+    });
+  } // modifie activeStep pour positionner le bon onglet "précédent / suivant"
+
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: modTab[props.store_curChapitre] });
-    _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
-      type: 'GET_BACKNEXT',
-      curChapitre: props.info_chapitre.module_ordre - 1
-    });
+    setActiveStep(props.info_chapitre.module_ordre);
   }, [props.info_chapitre.module_ordre]); //passe au module suivant
 
   var handleNext = function handleNext() {
-    // setCurChapitre(curChapitre + 1);
+    var chapitre = getChapitre(1);
     _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
       type: 'GET_CHAPITRE',
-      chapitreData: modTab[props.store_curChapitre + 1]
-    }); // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre + 1});
+      chapitreData: chapitre
+    });
   }; //passe au module précédent
 
 
   var handleBack = function handleBack() {
-    // setCurChapitre(curChapitre - 1);
+    var chapitre = getChapitre(-1);
     _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
       type: 'GET_CHAPITRE',
-      chapitreData: modTab[props.store_curChapitre - 1]
-    }); // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre - 1});
+      chapitreData: chapitre
+    });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
-        disabled: props.store_curChapitre < 1,
+        disabled: activeStep < 2,
         onClick: handleBack,
         className: classes.backButton // variant="contained"
         ,
         children: "Pr\xE9c\xE9dent"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
-        disabled: props.store_curChapitre == nbModules - 1 // variant="contained"
+        disabled: activeStep == nbModules // variant="contained"
         ,
         className: classes.nextButton,
         onClick: handleNext,
@@ -22800,11 +22781,9 @@ var BackNextButton = function BackNextButton(props) {
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var chapitreData = _ref.chapitreData,
-      curChapitre = _ref.curChapitre;
+  var chapitreData = _ref.chapitreData;
   return {
-    info_chapitre: chapitreData.chapitreData,
-    store_curChapitre: curChapitre.curChapitre
+    info_chapitre: chapitreData.chapitreData
   };
 };
 
@@ -22831,6 +22810,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Card */ "./node_modules/@material-ui/core/esm/Card/Card.js");
 /* harmony import */ var _material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/CardContent */ "./node_modules/@material-ui/core/esm/CardContent/CardContent.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -22854,10 +22835,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default)({
   root: {
-    minWidth: "80%",
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-    marginBottom: 50,
-    backgroundColor: "#ffffff"
+    minWidth: "80%"
   },
   title: {
     fontSize: 14
@@ -22865,11 +22843,11 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
   pos: {
     marginBottom: 12
   },
-  // content: {
-  //     boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-  //     marginBottom: 50,
-  //     backgroundColor: "#ffffff",
-  // },
+  content: {
+    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
+    marginBottom: 50,
+    backgroundColor: "#ffffff"
+  },
   backButton: {
     marginBottom: 50
   }
@@ -22895,18 +22873,19 @@ function Certificat(props) {
       children: "Revenir sur la page de formation"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: classes.root,
-      children: certificats.map(function (ressource, index) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__.default, {
-          className: classes.root,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__.default, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__.default, {
-              className: classes.title,
-              color: "textSecondary",
-              gutterBottom: true,
-              children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_1__.default)(ressource[1].text)
-            })
+      children: certificats.map(function (ressource) {
+        var _jsx2;
+
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__.default, (_jsx2 = {
+          className: classes.root
+        }, _defineProperty(_jsx2, "className", classes.content), _defineProperty(_jsx2, "children", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__.default, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__.default, {
+            className: classes.title,
+            color: "textSecondary",
+            gutterBottom: true,
+            children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_1__.default)(ressource[1].text)
           })
-        }, index);
+        })), _jsx2), ressource[1].id);
       })
     })]
   });
@@ -22927,6 +22906,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Typography */ "./node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_html_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-html-parser */ "./node_modules/react-html-parser/lib/index.js");
 /* harmony import */ var _style_description_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../style/description.scss */ "./resources/js/components/style/description.scss");
@@ -22952,7 +22932,10 @@ var ChapitreDescription = function ChapitreDescription(props) {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: classes.root,
-    children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_2__.default)(props.description_chapitre.description)
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_6__.default, {
+      className: classes.instructions,
+      children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_2__.default)(props.description_chapitre.description)
+    })
   });
 };
 
@@ -23028,8 +23011,6 @@ var CoursCompleted = function CoursCompleted(props) {
       message = _useState2[0],
       setMessage = _useState2[1];
 
-  var ordreChapitres = [];
-  var id = '';
   var messageVar = props.store_dejaSuivi.includes(props.store_chapitre.id) ? "je n'ai pas terminé ce chapitre" : "J'ai terminé ce chapitre";
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setMessage(messageVar);
@@ -23066,46 +23047,13 @@ var CoursCompleted = function CoursCompleted(props) {
 
           axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(globalUrl, "modulesApi/").concat(idFormation)).then(function (res) {
             var chapitres = Object.entries(res.data);
-            var chap = {};
-            var ordChap = {}; // Pour faire avancer d'une case le stepper lorsqu'on clique sur j'ai terminé
-            // ce chapitre il suffisait de fair ça:
-            // const currentchapitres = chapitres.find(element => element[1].id == (props.store_chapitre.id + 1));
-            // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres[1] });
-            // tous fonctionne bien en local mais en production ça ne marche pas
-            // c'est pourquoi j'ai du faire tout ce qui suit
-            // création d'un tableau d'objets contenant l'id de chaque chapitre
-            // trié selon l'ordre voulu et un index qui servira d'ordre pour le 
-            // passage d'un stepper à l'autre lorsqu'on clique sur "j'ai terminé ce chapitre"
-
-            chapitres.map(function (chapitre, index) {
-              ordChap = Object.create(chap, {
-                id: {
-                  value: chapitre[1].id
-                }
-              });
-              ordreChapitres.push(ordChap);
+            var currentchapitres = chapitres.find(function (element) {
+              return element[1].id == props.store_chapitre.id + 1;
             });
-
-            for (var i = 0; i < chapitres.length - 1; i++) {
-              if (chapitres[i][1].id == props.store_chapitre.id) {
-                for (var j = 0; j < ordreChapitres.length - 1; j++) {
-                  if (ordreChapitres[j].id == chapitres[i][1].id) {
-                    id = ordreChapitres[j + 1].id;
-
-                    for (var k = 0; k < chapitres.length - 1; k++) {
-                      if (chapitres[k][1].id == id) {
-                        var currentchapitres = chapitres[k][1];
-                        _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
-                          type: 'GET_CHAPITRE',
-                          chapitreData: currentchapitres
-                        });
-                        break;
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
+              type: 'GET_CHAPITRE',
+              chapitreData: currentchapitres[1]
+            });
           });
         }
 
@@ -23231,6 +23179,7 @@ function Faq(props) {
 
   var handleChange = function handleChange(e) {
     var value = e.currentTarget.value;
+    console.log(e.currentTarget.value);
     axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(globalUrl, "faqChange"), {
       params: {
         value: value,
@@ -23254,7 +23203,7 @@ function Faq(props) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_searchInput_searchInput__WEBPACK_IMPORTED_MODULE_2__.default, {
       onChange: handleChange
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-      children: faqs.map(function (faq, index) {
+      children: faqs.map(function (faq) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_material_ui_core_Accordion__WEBPACK_IMPORTED_MODULE_7__.default, {
           className: classes.accordeon,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_material_ui_core_AccordionSummary__WEBPACK_IMPORTED_MODULE_8__.default, {
@@ -23282,7 +23231,7 @@ function Faq(props) {
               children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_3__.default)(faq[1].reponse)
             })
           })]
-        }, index);
+        }, faq[1].id);
       })
     })]
   });
@@ -23423,7 +23372,7 @@ function Links(props) {
       },
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons_Info__WEBPACK_IMPORTED_MODULE_4__.default, {
         className: classes.icon
-      }), "Questions essentielles"]
+      }), "Questions \xE9ssentielles"]
     }) : '', props.ressources != 'hide' && props.ressources != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_3__.default, {
       className: classes.lien,
       onClick: function onClick() {
@@ -23525,6 +23474,11 @@ function Login(props) {
       password = _useState4[0],
       setPassword = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      check = _useState6[0],
+      setCheck = _useState6[1];
+
   var handleChangeEmail = function handleChangeEmail(event) {
     setEmail(event.target.value);
   };
@@ -23551,11 +23505,11 @@ function Login(props) {
         }).then(function (response) {
           console.log('success   ' + response.data);
           document.getElementById("myModal2").style.display = "none";
-          window.location.reload();
         })["catch"](function (error) {
           console.log('probleme   ' + error);
         });
       } else {
+        // alert('Vos données sont incorrectes')
         handelModalW();
       }
     })["catch"](function (error) {
@@ -23607,7 +23561,7 @@ function Login(props) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
       className: classes.root,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-        children: "Introduisez votre adresse email et votre mot de passe"
+        children: "Connexion"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_5__.default, {
         id: "email",
         label: "Email",
@@ -23687,6 +23641,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default
 var BootstrapButton = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default)({
   root: {
     boxShadow: 'none',
+    maxWidth: 250,
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 22px',
@@ -23721,26 +23676,17 @@ function ModalFooterButton(props) {
       onClick: function onClick() {
         return props.func2();
       },
-      style: {
-        minWidth: '250px'
-      },
       children: props.titre0
     }), props.score >= 80 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
       variant: "contained",
       onClick: function onClick() {
         return props.func();
       },
-      style: {
-        minWidth: '150px'
-      },
       children: props.titre1
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
       variant: "contained",
       onClick: function onClick() {
         return props.closeModal();
-      },
-      style: {
-        minWidth: '150px'
       },
       children: props.titre2
     })]
@@ -23840,7 +23786,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_9__.default
 
     },
     submitButton: {
-      width: 'auto',
+      width: '120px',
       marginTop: '30px',
       paddingTop: '7px',
       paddingBottom: '7px',
@@ -23900,9 +23846,7 @@ var Quiz = function Quiz(props) {
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState18 = _slicedToArray(_useState17, 2),
       idQuiz = _useState18[0],
-      setIdQuiz = _useState18[1]; // charge le quiz correspondant au module_id courrant
-  // avec ses relations questions et reponses
-
+      setIdQuiz = _useState18[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(globalUrl, "quizzes/quizApi/").concat(props.info_chapitre.module_id)).then(function (res) {
@@ -23921,7 +23865,22 @@ var Quiz = function Quiz(props) {
         return allQuestionsId.indexOf(reponse.question_id) === -1 && allQuestionsId.push(reponse.question_id);
       });
     });
-  }); // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
+  });
+  var obj = {};
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return obj[reponse.id] = reponse.is_correct;
+      });
+    });
+  }); // var allresponseId = [];
+  // quizzes.map((quiz) => {
+  //   quiz[1].questions.map(question => {
+  //     question.reponses.map((reponse) => allresponseId.push(reponse.id))
+  //   })
+  // }
+  // )
+  // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
 
   var reponses_Questions = {};
   quizzes.map(function (quiz) {
@@ -23940,6 +23899,47 @@ var Quiz = function Quiz(props) {
     }
 
     return questId;
+  }; // on crée un objet avec les is_correct de chaque réponse
+  // pour récupérer is_correct avec le reponse.id
+
+
+  var allIsCorrect = {};
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return allIsCorrect[reponse.id] = reponse.is_correct;
+      });
+    });
+  }); // fournie l'IsCorrect de la réponse donnée en paramètre
+
+  var getIsCorrect = function getIsCorrect(idReponse) {
+    var isCorrect;
+
+    for (var prop in allIsCorrect) {
+      prop == idReponse && (isCorrect = allIsCorrect[prop]);
+    }
+
+    return isCorrect;
+  }; // récupère le nombre de bonnes réponses par question
+
+
+  var Questions_isCorrect = {};
+  var tot = 0;
+  quizzes.map(function (quiz) {
+    quiz[1].questions.map(function (question) {
+      question.reponses.map(function (reponse) {
+        return tot += reponse.is_correct;
+      });
+      Questions_isCorrect[question.id] = tot;
+      tot = 0;
+    });
+  }); // calcule la pondération de la valeur d'un point d'une réponse donnée
+  // en divisant 1 par le nombre de bonnes réponses pour une question donnée
+
+  var getCoefficient = function getCoefficient(idReponse) {
+    var questionId = getQuestion(idReponse);
+    var coef = 1 / Questions_isCorrect[questionId];
+    return coef;
   }; // vérifie si on a répondu à toutes les questions 
   // sinon renvoi l'id des questions sans réponse 
 
@@ -23949,33 +23949,13 @@ var Quiz = function Quiz(props) {
   var formValidation = function formValidation(userRep) {
     var userQuestion = [];
 
-    for (var _i2 = 0; _i2 <= userRep.length - 1; _i2++) {
-      // userQuestion reçoit l'id des questions correspondantes
-      // aux réponses données
-      userQuestion.push(getQuestion(userRep[_i2]));
-    } // si userQuestion ne contient pas une allQuestionId
-    // cela veut dire qu'on y a pas répondue.
-    // en production userQuestion.includes(allQuestionsId[i]) 
-    // ne fonctionne pas je dois utiliser ce qui suit
-    //--------------
+    for (var i = 0; i <= userRep.length - 1; i++) {
+      userQuestion.push(getQuestion(userRep[i]));
+    }
 
-
-    var count = 0;
-
-    for (var i = 0; i <= allQuestionsId.length - 1; i++) {
-      count = 0;
-
-      for (var j = 0; j <= userQuestion.length - 1; j++) {
-        if (userQuestion[j] == allQuestionsId[i]) {
-          count++;
-        }
-      }
-
-      if (count == 0) {
-        questionMissing.push(allQuestionsId[i]);
-      }
-    } //-------------
-    //met en rouge les questions sans réponses
+    for (var _i2 = 0; _i2 <= allQuestionsId.length - 1; _i2++) {
+      !userQuestion.includes(allQuestionsId[_i2]) && questionMissing.push(allQuestionsId[_i2]);
+    } //met en rouge les questions sans réponses
 
 
     if (questionMissing.length) {
@@ -24000,41 +23980,29 @@ var Quiz = function Quiz(props) {
     }
   };
 
-  var valFunc = function valFunc(userReponseVar) {
-    var value = 0;
-
-    for (var i = 0; i <= quizzes[0][1].questions.length - 1; i++) {
-      for (var j = 0; j <= quizzes[0][1].questions[1].reponses.length - 1; j++) {
-        for (var k = 0; k <= userReponseVar.length - 1; k++) {
-          if (userReponseVar[k] == quizzes[0][1].questions[i].reponses[j].id) {
-            value = value + Number(quizzes[0][1].questions[i].reponses[j].value);
-          }
-        }
-      }
-    }
-
-    return Number(value);
-  };
-
   var userReponseVar = []; // gère l'envoi du quiz ------------------------------------->
 
   function handleSubmit(event) {
     event.preventDefault();
+    var coef;
+    var isCorret;
+    var total = 0;
 
     for (var i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
+        coef = getCoefficient(event.target[i].value);
+        isCorret = getIsCorrect(event.target[i].value);
+        total += coef * isCorret;
         userReponseVar.push(event.target[i].value);
       }
     }
 
-    var val = Number(valFunc(userReponseVar));
     formValidation(userReponseVar); // s'il n'y a pas de questions manquantes 
     // affiche une modal avec le score du quiz
 
     if (!questionMissing.length) {
-      setScore(Math.ceil(val / allQuestionsId.length * 100)); //<---------- ICI ICI ICI ICI !!! ???
-
-      var scoreTest = Math.ceil(val / allQuestionsId.length * 100);
+      setScore(Math.ceil(total / allQuestionsId.length * 100));
+      var scoreTest = Math.ceil(total / allQuestionsId.length * 100);
 
       if (scoreTest >= 80) {
         setMessageScore('Félicitation, votre score est de ' + scoreTest + '%');
@@ -24066,9 +24034,9 @@ var Quiz = function Quiz(props) {
 
   var handleSaveQuiz = function handleSaveQuiz() {
     if (auth == 0) {
-      setMessageScore('vous devez être enregisté (e) pour sauvegarder vos résultats');
-      setMessageFooter('');
-      setTitreButton0('je suis déjà inscrit (e)');
+      setMessageScore('vous devez être enregisté pour pouvoir sauvegarder vos résultats');
+      setMessageFooter('Voulez-vous vous inscrire ?');
+      setTitreButton0('Se connecter');
       setTitreButton1('S\'inscrire');
       setTitreButton2('Quitter');
       setFunctionModalButton('inscription');
@@ -24089,7 +24057,7 @@ var Quiz = function Quiz(props) {
 
 
   var login = function login() {
-    setMessageScore('Enregister mes résultats');
+    setMessageScore('Connectez-vous');
     setFunctionModalButton('connexion');
     handelModal();
   }; // --------------------------------------------------------->
@@ -24159,7 +24127,7 @@ var Quiz = function Quiz(props) {
         }), messageScore == 'Enregistrez-vous' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_register_register__WEBPACK_IMPORTED_MODULE_6__.default, {
           resultat: score,
           quiz_id: idQuiz
-        }) : messageScore == 'Enregister mes résultats' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_login_login__WEBPACK_IMPORTED_MODULE_7__.default, {
+        }) : messageScore == 'Connectez-vous' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_login_login__WEBPACK_IMPORTED_MODULE_7__.default, {
           resultat: score,
           quiz_id: idQuiz
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_modalFooterButton_modalFooterButton__WEBPACK_IMPORTED_MODULE_5__.default, {
@@ -24292,65 +24260,6 @@ var ActiveStepActionTypes = {
 
 /***/ }),
 
-/***/ "./resources/js/components/redux/backNext/backNext.reducer.js":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/redux/backNext/backNext.reducer.js ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _backNext_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./backNext.types */ "./resources/js/components/redux/backNext/backNext.types.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-var INITIAL_STATE = {
-  curChapitre: 1
-};
-
-function backNextReducer() {
-  var curChapitre = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _backNext_types__WEBPACK_IMPORTED_MODULE_0__.BackNextActionTypes.GET_BACKNEXT:
-      return _objectSpread(_objectSpread({}, curChapitre), {}, {
-        curChapitre: action.curChapitre
-      });
-
-    default:
-      return curChapitre;
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (backNextReducer);
-
-/***/ }),
-
-/***/ "./resources/js/components/redux/backNext/backNext.types.js":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/redux/backNext/backNext.types.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "BackNextActionTypes": () => (/* binding */ BackNextActionTypes)
-/* harmony export */ });
-var BackNextActionTypes = {
-  GET_BACKNEXT: "GET_BACKNEXT"
-};
-
-/***/ }),
-
 /***/ "./resources/js/components/redux/chapitre/chapitre.reducer.js":
 /*!********************************************************************!*\
   !*** ./resources/js/components/redux/chapitre/chapitre.reducer.js ***!
@@ -24371,7 +24280,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var INITIAL_STATE = {
-  chapitreData: {}
+  chapitreData: ''
 };
 
 function chapitreReducer() {
@@ -24566,14 +24475,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video/video.reducer */ "./resources/js/components/redux/video/video.reducer.js");
 /* harmony import */ var _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/module.reducer */ "./resources/js/components/redux/module/module.reducer.js");
 /* harmony import */ var _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./titreChapitre/titreChapitre.reducer */ "./resources/js/components/redux/titreChapitre/titreChapitre.reducer.js");
 /* harmony import */ var _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chapitre/chapitre.reducer */ "./resources/js/components/redux/chapitre/chapitre.reducer.js");
 /* harmony import */ var _activeStep_activeStep_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./activeStep/activeStep.reducer */ "./resources/js/components/redux/activeStep/activeStep.reducer.js");
 /* harmony import */ var _dejaSuivi_dejaSuivi_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./dejaSuivi/dejaSuivi.reducer */ "./resources/js/components/redux/dejaSuivi/dejaSuivi.reducer.js");
-/* harmony import */ var _backNext_backNext_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./backNext/backNext.reducer */ "./resources/js/components/redux/backNext/backNext.reducer.js");
 
 
 
@@ -24581,15 +24489,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_7__.combineReducers)({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_6__.combineReducers)({
   videos: _video_video_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
   modules: _module_module_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
   chapitreTitre: _titreChapitre_titreChapitre_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
   chapitreData: _chapitre_chapitre_reducer__WEBPACK_IMPORTED_MODULE_3__.default,
   activeStep: _activeStep_activeStep_reducer__WEBPACK_IMPORTED_MODULE_4__.default,
-  dejaSuivi: _dejaSuivi_dejaSuivi_reducer__WEBPACK_IMPORTED_MODULE_5__.default,
-  curChapitre: _backNext_backNext_reducer__WEBPACK_IMPORTED_MODULE_6__.default
+  dejaSuivi: _dejaSuivi_dejaSuivi_reducer__WEBPACK_IMPORTED_MODULE_5__.default
 }));
 
 /***/ }),
@@ -24693,7 +24599,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var INITIAL_STATE = {
-  url_video: ''
+  url_video: 'react1.mp4'
 };
 
 var videoReducer = function videoReducer() {
@@ -24795,7 +24701,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
       }
     },
     button: {
-      width: "auto",
+      width: "150px",
       height: "45px",
       marginTop: "20px"
     },
@@ -24854,6 +24760,11 @@ function Register(props) {
 
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
+    console.log(nom);
+    console.log(prenom);
+    console.log(email);
+    console.log(sexe);
+    console.log(password);
     var admin = 0;
     axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(globalUrl, "usersFromQuizForm"), {
       nom: nom,
@@ -24872,7 +24783,7 @@ function Register(props) {
         document.getElementById("myModal2").style.display = "none";
       })["catch"](function (error) {
         console.log('probleme   ' + error);
-      });
+      }); //   document.getElementById("myModal2").style.display = "none";
     })["catch"](function (error) {
       console.log('probleme   ' + error);
     });
@@ -25048,7 +24959,7 @@ function Ressource(props) {
       children: "Revenir sur la page de formation"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: classes.root,
-      children: ressources.map(function (ressource, index) {
+      children: ressources.map(function (ressource) {
         var _jsx2;
 
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__.default, (_jsx2 = {
@@ -25060,7 +24971,7 @@ function Ressource(props) {
             gutterBottom: true,
             children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_1__.default)(ressource[1].text)
           })
-        })), _jsx2), index);
+        })), _jsx2), ressource[1].id);
       })
     })]
   });
@@ -25297,7 +25208,7 @@ var SimpleList = function SimpleList(props) {
         children: chapitres[0] && chapitres[0][1].module_titre
       }),
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_7__.default, {}), chapitres.map(function (chapitre, index) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("li", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_8__.default, {
             button: true,
             selected: selectedIndex === index,
@@ -25398,7 +25309,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__.default
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "flex-start" // backgroundColor: 'rgb(255, 244, 244)',
-      // border: 'primary solid 2px',
+      // border: 'blue solid 2px',
 
     },
     stepper: {
@@ -25418,7 +25329,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__.default
     //   width: 100,
     //   "&:focus": {
     //     outline: 'none',
-    //     backgroundColor: "blue",
+    //     backgroundColor: '#4297b6',
     //   },
     //   flex: '1',
     //   backgroundColor: "red",
@@ -25436,7 +25347,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_8__.default
       marginTop: "15px"
     },
     selected: {
-      backgroundColor: "blue"
+      backgroundColor: '#4297b6'
     }
   };
 });
@@ -25482,7 +25393,7 @@ var Stepper = function Stepper(props) {
   var colorSelected = function colorSelected(idChapitre) {
     if (idChapitre === id) {
       style = {
-        backgroundColor: "blue"
+        backgroundColor: '#4297b6'
       };
     } else if (props.store_dejaSuivi.includes(idChapitre)) {
       style = {
@@ -25523,7 +25434,7 @@ var Stepper = function Stepper(props) {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: classes.stepper,
-      children: chapitres.map(function (chapitre, index) {
+      children: chapitres.map(function (chapitre, ndx) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BootstrapTooltip, {
           title: chapitre[1].titre,
           placement: "top",
@@ -25533,10 +25444,10 @@ var Stepper = function Stepper(props) {
               return locateStepper(chapitre[1]);
             },
             variant: "outlined",
-            color: "primary",
+            color: "#4297b6",
             style: colorSelected(chapitre[1].id)
-          })
-        }, index);
+          }, chapitre[1].id)
+        }, ndx);
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: classes.blockTitre,
@@ -25582,6 +25493,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Video = function Video(props) {
+  console.log('videoooooooo    ' + globalUrl);
   var video = String(props.info_chapitre.fichier_video).indexOf('fichier_video/') !== -1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
     className: "player-wrapper",
     pip: false,
@@ -25711,7 +25623,12 @@ var Wrapper = function Wrapper() {
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState8 = _slicedToArray(_useState7, 2),
       certificats = _useState8[0],
-      setCertificats = _useState8[1]; // récupère les certiificat, ressource et faq s'ils y en a 
+      setCertificats = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      liens = _useState10[0],
+      setLiens = _useState10[1]; // récupère les certiificat, ressource et faq s'ils y en a 
   // pour une formation donnée
 
 
@@ -25807,9 +25724,9 @@ var Wrapper = function Wrapper() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _components_redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/redux/store */ "./resources/js/components/redux/store.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _components_redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/redux/store */ "./resources/js/components/redux/store.js");
 /* harmony import */ var _components_wrapper_wrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/wrapper/wrapper */ "./resources/js/components/wrapper/wrapper.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
@@ -25821,11 +25738,9 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
-  store: _components_redux_store__WEBPACK_IMPORTED_MODULE_1__.default,
-  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_wrapper_wrapper__WEBPACK_IMPORTED_MODULE_4__.default, {})
-  })
+react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+  store: _components_redux_store__WEBPACK_IMPORTED_MODULE_3__.default,
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_wrapper_wrapper__WEBPACK_IMPORTED_MODULE_4__.default, {})
 }), document.getElementById('cours'));
 
 /***/ }),

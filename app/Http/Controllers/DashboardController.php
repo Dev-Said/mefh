@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quiz;
+use App\Models\quiz;
 use App\Models\User;
-use App\Models\Module;
+use App\Models\module;
 use App\Models\Reponse;
 use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $usersCount = User::all()->count() ? User::all()->count() : '0';
         $usersLast = strlen(User::all()->last()) ? User::all()->last()->nom : 'Pas de données';
 
-        return view('Dashboard', ['modulesCount' => $modulesCount,
+        return view('dashboard', ['modulesCount' => $modulesCount,
                                 'modulesLast' => $modulesLast,
                                 'questionsCount' => $questionsCount,
                                 'questionsLast' => $questionsLast,

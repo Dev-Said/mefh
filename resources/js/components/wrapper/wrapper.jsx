@@ -20,14 +20,12 @@ const Wrapper = () => {
   const [faqs, setFaqs] = useState([]);
   const [ressources, setRessources] = useState([]);
   const [certificats, setCertificats] = useState([]);
-  const [liens, setLiens] = useState([]);
 
 
-  // récupère les certiificat, ressource et faq pour une formation donnée
-  // s'ils y en a
+  // récupère les certiificat, ressource et faq s'ils y en a 
+  // pour une formation donnée
   useEffect(() => {
-    // récupérer les 3 en une fois et les dispatcher sur les hooks !!!!!!!!!!!!!!!!!!!!
-    axios.get(`http://localhost:8000/getLiens/${idFormation}`).then((res) => {
+    axios.get(`${globalUrl}getLiens/${idFormation}`).then((res) => {
       setFaqs(res.data['faq']);
       setCertificats(res.data['certificat']);
       setRessources(res.data['ressource']);
@@ -81,9 +79,6 @@ const Wrapper = () => {
       <Video />, <ListeChapitres handleView={handleView} />,
       <ChapitreDescription />]
   }
-
-
-
   return (
     <div className="contenaireModules">
       {compo}

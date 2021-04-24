@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quiz;
-use App\Models\Module;
-use App\Models\Remember;
+use App\Models\quiz;
+use App\Models\module;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreQuizRequest;
 
 class QuizController extends Controller
@@ -125,7 +122,8 @@ class QuizController extends Controller
     public function quizApi($id)
     {
         // on reçoit l'id d'un module et on return
-        // le quiz correspondant 
+        // le quiz correspondant avec les relations
+        // questions et reponses
 
         $quiz = quiz::where('module_id', $id)
             ->with('questions.reponses')->get();
@@ -137,11 +135,4 @@ class QuizController extends Controller
         }
     }
 
-
-
-    public function quizApi2(Request $request)
-    {
-
-        dd($request);
-    }
 }

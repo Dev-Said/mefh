@@ -49,7 +49,7 @@ const ListeChapitres = (props) => {
   // idFormation est injecté dans la page indexFormations
   // dans laquelle s'affichent les composants
   useEffect(() => {
-    axios.get(`http://localhost:8000/modulesApi/${idFormation}`)
+    axios.get(`${globalUrl}modulesApi/${idFormation}`)
       .then(res => {
         setChapitres(Object.entries(res.data));   
       }).catch(function (error) {
@@ -60,24 +60,24 @@ const ListeChapitres = (props) => {
   // récupère le quiz du module s'il y en a pour afficher le 
   // bouton faire le quiz. Sinon on affiche pas le bouton
   useEffect(() => {
-      axios.get(`http://localhost:8000/quizzes/quizApi/${props.info_chapitre.module_id}`)
+      axios.get(`${globalUrl}quizzes/quizApi/${props.info_chapitre.module_id}`)
       .then(res => {
         setQuiz(Object.values(res.data));
       });
   }, [props.info_chapitre.module_id]);
 
- 
+
 
   return (
-    <ul className={classes.root} >
-      <BackNextButton chapitres={chapitres} />
+    <div className={classes.root} >
+      <BackNextButton chapitres={chapitres} currentChap={1}/>
       <SimpleList chapitres={chapitres} init_index={0} />
       {quiz != 'hide' ? 
       <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
        Faire le quiz</Button> : ''
       }
       { auth[2] && <CoursCompleted />}
-    </ul>
+    </div>
   )
 }
 

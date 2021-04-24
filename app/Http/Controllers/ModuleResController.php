@@ -20,8 +20,8 @@ class ModuleResController extends Controller
     {
         $formations = formation::all();
         $modules = Module::orderBy('formation_id', 'asc')
-        ->orderBy('ordre', 'asc')
-        ->get();
+            ->orderBy('ordre', 'asc')
+            ->get();
         return view('modules.list', ['modules' => $modules, 'formations' => $formations]);
     }
 
@@ -92,7 +92,7 @@ class ModuleResController extends Controller
 
         // renvoi tous les chapitres correspondants aux modules
         // d'une formation donnée
-            return DB::table('modules')
+        return DB::table('modules')
             ->select(
                 'modules.id as module_id',
                 'modules.ordre as module_ordre',
@@ -190,8 +190,8 @@ class ModuleResController extends Controller
     public function changeOrdre(Request $request)
     {
         $moduleRemplace = module::where('formation_id', $request->formation)
-        ->where('ordre', $request->ordre)
-        ->first();
+            ->where('ordre', $request->ordre)
+            ->first();
 
         $module = module::where('id', $request->module)->first();
 
@@ -199,7 +199,7 @@ class ModuleResController extends Controller
 
         // dd($module, $moduleRemplace, $modulesCount);
 
-         if ($request->operation == 'dec') {
+        if ($request->operation == 'dec') {
             if ($request->ordre > 0) {
                 $moduleRemplace->ordre = $module->ordre;
                 $moduleRemplace->save();
@@ -215,9 +215,8 @@ class ModuleResController extends Controller
                 $module->save();
                 return redirect('/modules');
             }
-        } 
+        }
 
         return redirect('/modules');
-        
     }
 }

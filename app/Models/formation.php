@@ -23,7 +23,7 @@ class formation extends Model
 
     public function modules()
     {
-        return $this->hasMany(modules::class);
+        return $this->hasMany(module::class);
     }
 
     public function ressource()

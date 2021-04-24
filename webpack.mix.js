@@ -26,6 +26,6 @@ mix.js('resources/js/cours.js', 'public/js').react()
     .sass('resources/js/components/quiz/quiz.scss', 'public/css');
 
 
-    // .sass('resources/js/components/accordeon/accordeon.scss', 'public/css')
+
 
     

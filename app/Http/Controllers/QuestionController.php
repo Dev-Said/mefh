@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quiz;
-use App\Models\Reponse;
+use App\Models\quiz;
 use App\Models\Question;
-use App\Models\Remember;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
@@ -20,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $quizzes = quiz::all();
+        $quizzes = Quiz::all();
         $questions = Question::all();
         return view('questions.list', ['questions' => $questions, 'quizzes' => $quizzes]);
     }
@@ -28,7 +25,7 @@ class QuestionController extends Controller
     public function indexSelect(Request $request)
     {
 
-        $quizzes = quiz::all();
+        $quizzes = Quiz::all();
         if ($request->quiz == 'all quizzes') {
             $questions = Question::orderBy('quiz_id', 'asc')
                 ->orderBy('ordre', 'asc')

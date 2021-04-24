@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     button: {
-        width: "150px",
+        width: "auto",
         height: "45px",
         marginTop: "20px",
     },
@@ -61,29 +61,23 @@ export default function Register(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(nom);
-        console.log(prenom);
-        console.log(email);
-        console.log(sexe);
-        console.log(password);
         var admin = 0;
-        axios.post(`http://localhost:8000/usersFromQuizForm`,
-        { nom: nom, prenom: prenom, email: email, sexe: sexe, password: password, admin: admin })
-        .then(function (response) {
-          axios.post(`http://localhost:8000/reponses_user`,
-          { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id })
-          .then(function (response) {
-            console.log('success   ' + response.data);
-            document.getElementById("myModal2").style.display = "none";
-          })
-          .catch(function (error) {
-            console.log('probleme   ' + error);
-          });
-        //   document.getElementById("myModal2").style.display = "none";
-        })
-        .catch(function (error) {
-          console.log('probleme   ' + error);
-        });
+        axios.post(`${globalUrl}usersFromQuizForm`,
+            { nom: nom, prenom: prenom, email: email, sexe: sexe, password: password, admin: admin })
+            .then(function (response) {
+                axios.post(`${globalUrl}reponses_user`,
+                    { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id })
+                    .then(function (response) {
+                        console.log('success   ' + response.data);
+                        document.getElementById("myModal2").style.display = "none";
+                    })
+                    .catch(function (error) {
+                        console.log('probleme   ' + error);
+                    });
+            })
+            .catch(function (error) {
+                console.log('probleme   ' + error);
+            });
 
     }
 
@@ -115,7 +109,7 @@ export default function Register(props) {
             </FormControl>
             <TextField id="email" label="Email" variant="outlined" onChange={handleChangeEmail}
                 type="email" required className={classes.input} inputProps={{ style: inputStyle }} />
-            <TextField id="password" label="Mot de passe" variant="outlined" type="password" 
+            <TextField id="password" label="Mot de passe" variant="outlined" type="password"
                 onChange={handleChangePassword} required className={classes.input} inputProps={{ style: inputStyle }} />
             <Button type="submit" variant="outlined" className={classes.button}>
                 Envoyer

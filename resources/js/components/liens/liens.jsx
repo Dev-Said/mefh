@@ -47,7 +47,7 @@ export default function Links(props) {
         <div className={classes.root} >
             {props.faqs != 'hide' && props.faqs != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('faq')}>
-                    <InfoIcon className={classes.icon} />Questions éssentielles
+                    <InfoIcon className={classes.icon} />Questions essentielles
         </Typography> : ''
             }
             {props.ressources != 'hide' && props.ressources != '' ?

@@ -4,7 +4,7 @@ import axios from "axios";
 var chapitreSuivi = [];
 var chapTab = [];
 
-axios.get(`http://localhost:8000/chapitreSuiviList`, {
+axios.get(`${globalUrl}chapitreSuiviList`, {
       params: {
         id: auth[2],
       }

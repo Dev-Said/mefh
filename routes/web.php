@@ -103,7 +103,9 @@ require __DIR__ . '/auth.php';
 
 
 // Route::resource('modulesApi', ModuleApiController::class);
-Route::resource('modulesApi', ModuleResController::class); // <--- appelé dans ListeChapitre, à supprimer !!!!
+// <--- appelé dans ListeChapitre et coursCompleted, à supprimer !!!! ??????
+Route::resource('modulesApi', ModuleResController::class); 
+Route::post('chapitreBackNext', [ModuleResController::class, 'chapitreBackNext']); 
 
 
 Route::group(['middleware' => 'checkAdmin'], function () {

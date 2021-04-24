@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: "-50px",
   },
   submitButton: {
-    width: '120px',
+    width: 'auto',
     marginTop: '30px',
     paddingTop: '7px',
     paddingBottom: '7px',
@@ -75,9 +75,11 @@ const Quiz = (props) => {
   const [titreButton2, setTitreButton2] = useState('');
   const [functionModalButton, setFunctionModalButton] = useState('');
   const [idQuiz, setIdQuiz] = useState([]);
-
+  
+  // charge le quiz correspondant au module_id courrant
+  // avec ses relations questions et reponses
   useEffect(() => {
-    axios.get(`http://localhost:8000/quizzes/quizApi/${props.info_chapitre.module_id}`)
+    axios.get(`${globalUrl}quizzes/quizApi/${props.info_chapitre.module_id}`)
       .then(res => {
         setQuizzes(Object.entries(res.data));
         setIdQuiz(res.data[0].questions[0].quiz_id);
@@ -100,22 +102,6 @@ const Quiz = (props) => {
   }
   )
 
-  var obj = {};
-  quizzes.map((quiz) => {
-    quiz[1].questions.map(question => {
-      question.reponses.map((reponse) => obj[reponse.id] = reponse.is_correct)
-    })
-  }
-  )
-
-  // var allresponseId = [];
-  // quizzes.map((quiz) => {
-  //   quiz[1].questions.map(question => {
-  //     question.reponses.map((reponse) => allresponseId.push(reponse.id))
-  //   })
-  // }
-  // )
-
   // crée un objet avec toutes les reponse.id comme clé et les  question.id comme value
   var reponses_Questions = {};
   quizzes.map((quiz) => {
@@ -133,57 +119,38 @@ const Quiz = (props) => {
     return questId;
   }
 
-  // on crée un objet avec les is_correct de chaque réponse
-  // pour récupérer is_correct avec le reponse.id
-  var allIsCorrect = {};
-  quizzes.map((quiz) => {
-    quiz[1].questions.map(question => {
-      question.reponses.map((reponse) => allIsCorrect[reponse.id] = reponse.is_correct)
-    })
-  }
-  )
-  // fournie l'IsCorrect de la réponse donnée en paramètre
-  const getIsCorrect = (idReponse) => {
-
-    var isCorrect;
-    for (var prop in allIsCorrect) {
-      prop == idReponse && (isCorrect = allIsCorrect[prop]);
-    }
-    return isCorrect;
-
-  }
-
-  // récupère le nombre de bonnes réponses par question
-  var Questions_isCorrect = {};
-  var tot = 0;
-  quizzes.map((quiz) => {
-    quiz[1].questions.map(question => {
-      question.reponses.map((reponse) => tot += reponse.is_correct)
-      Questions_isCorrect[question.id] = tot; tot = 0;
-    })
-  }
-  )
-  // calcule la pondération de la valeur d'un point d'une réponse donnée
-  // en divisant 1 par le nombre de bonnes réponses pour une question donnée
-  const getCoefficient = (idReponse) => {
-    var questionId = getQuestion(idReponse)
-    var coef = (1 / Questions_isCorrect[questionId])
-    return coef;
-  }
-
   // vérifie si on a répondu à toutes les questions 
   // sinon renvoi l'id des questions sans réponse 
   var questionMissing = [];
-  const formValidation = (userRep) => {
 
+  const formValidation = (userRep) => {
     var userQuestion = [];
     for (let i = 0; i <= userRep.length - 1; i++) {
+      // userQuestion reçoit l'id des questions correspondantes
+      // aux réponses données
       userQuestion.push(getQuestion(userRep[i]))
     }
-    for (let i = 0; i <= allQuestionsId.length - 1; i++) {
-      !userQuestion.includes(allQuestionsId[i]) &&
+
+    // si userQuestion ne contient pas une allQuestionId
+    // cela veut dire qu'on y a pas répondue.
+    // en production userQuestion.includes(allQuestionsId[i]) 
+    // ne fonctionne pas je dois utiliser ce qui suit
+    //--------------
+    var count = 0;
+    for (var i = 0; i <= allQuestionsId.length - 1; i++) {
+      count = 0;
+      for (var j = 0; j <= userQuestion.length - 1; j++) {
+        if (userQuestion[j] == allQuestionsId[i]) {
+          count++;
+        }
+      }
+      if (count == 0) {
         questionMissing.push(allQuestionsId[i])
+      }
     }
+    //-------------
+
+
     //met en rouge les questions sans réponses
     if (questionMissing.length) {
       for (let i = 0; i <= questionMissing.length - 1; i++) {
@@ -207,30 +174,40 @@ const Quiz = (props) => {
     }
   }
 
+  const valFunc = (userReponseVar) => {
+    let value = 0;
+    for (var i = 0; i <= quizzes[0][1].questions.length - 1; i++) {
+      for (var j = 0; j <= quizzes[0][1].questions[1].reponses.length - 1; j++) {
+        for (var k = 0; k <= userReponseVar.length - 1; k++) {
+          if (userReponseVar[k] == quizzes[0][1].questions[i].reponses[j].id) {
+            value = value + Number(quizzes[0][1].questions[i].reponses[j].value);
+
+          }
+        }
+      }
+    }
+    return Number(value);
+  }
 
   var userReponseVar = [];
   // gère l'envoi du quiz ------------------------------------->
   function handleSubmit(event) {
     event.preventDefault();
-    var coef;
-    var isCorret;
-    var total = 0;
 
     for (let i = 0; i <= event.target.length; i++) {
       if (event.target[i] && event.target[i].checked) {
-        coef = getCoefficient(event.target[i].value);
-        isCorret = getIsCorrect(event.target[i].value);
-        total += (coef * isCorret);
         userReponseVar.push(event.target[i].value);
       }
     }
-    formValidation(userReponseVar);
 
+    var val = Number(valFunc(userReponseVar));
+
+    formValidation(userReponseVar);
     // s'il n'y a pas de questions manquantes 
     // affiche une modal avec le score du quiz
     if (!questionMissing.length) {
-      setScore(Math.ceil((total / allQuestionsId.length) * 100));
-      var scoreTest = Math.ceil((total / allQuestionsId.length) * 100);
+      setScore(Math.ceil((val / allQuestionsId.length) * 100)); //<---------- ICI ICI ICI ICI !!! ???
+      var scoreTest = Math.ceil((val / allQuestionsId.length) * 100);
 
       if (scoreTest >= 80) {
         setMessageScore('Félicitation, votre score est de ' + scoreTest + '%');
@@ -261,15 +238,15 @@ const Quiz = (props) => {
   // gère la sauvegarde des résultats du quiz -------------------------------->
   const handleSaveQuiz = () => {
     if (auth == 0) {
-      setMessageScore('vous devez être enregisté pour pouvoir sauvegarder vos résultats');
-      setMessageFooter('Voulez-vous vous inscrire ?');
-      setTitreButton0('Se connecter');
+      setMessageScore('vous devez être enregisté (e) pour sauvegarder vos résultats');
+      setMessageFooter('');
+      setTitreButton0('je suis déjà inscrit (e)');
       setTitreButton1('S\'inscrire');
       setTitreButton2('Quitter');
       setFunctionModalButton('inscription');
       handelModal();
     } else {
-      axios.post(`http://localhost:8000/reponses_user`,
+      axios.post(`${globalUrl}reponses_user`,
         { resultat: score, id: auth[2], quiz_id: idQuiz })
         .then(function (response) {
           console.log('success   ' + response.data);
@@ -284,9 +261,9 @@ const Quiz = (props) => {
 
   // gère la connexion et la sauvegarde des résultats du quiz -------------------------------->
   const login = () => {
-      setMessageScore('Connectez-vous');
-      setFunctionModalButton('connexion');
-      handelModal();
+    setMessageScore('Enregister mes résultats');
+    setFunctionModalButton('connexion');
+    handelModal();
   }
 
   // --------------------------------------------------------->
@@ -322,7 +299,7 @@ const Quiz = (props) => {
   return (
     <div className={classes.root}>
 
-      {/* aafiche erreur quiz non complet */}
+      {/* affiche l'erreur quiz non complet */}
       <div id="myModal" className="modal">
         <div className="modal-content">
           <div className="headerModal"><span className="close">x</span></div>
@@ -332,14 +309,14 @@ const Quiz = (props) => {
       </div>
 
 
-      {/* affiche résultat du quiz */}
+      {/* affiche le résultat du quiz */}
       <div id="myModal2" className="modal2">
         <div className="modal-content2">
 
           <div className="headerModal2"><span className="close2">x</span></div>
           <p> {messageScore} </p>
           {messageScore == 'Enregistrez-vous' ? <Register resultat={score} quiz_id={idQuiz} /> :
-            messageScore == 'Connectez-vous' ? <Login resultat={score} quiz_id={idQuiz} /> :
+            messageScore == 'Enregister mes résultats' ? <Login resultat={score} quiz_id={idQuiz} /> :
               <ModalFooterButton message={messageFooter}
                 titre0={titreButton0} titre1={titreButton1} titre2={titreButton2}
                 func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}
@@ -367,12 +344,16 @@ const Quiz = (props) => {
               {quiz[1].questions.map((question, ndx) =>
                 <div key={ndx}><FormLabel className={classes.formLabel} id={'questionId_' + question['id']}>
                   {question['question']}</FormLabel>
-                  {question.reponses.map((reponse, ndx) => <InputQuiz typeInput={question.type}
-                    iscorrect={reponse.is_correct} value={reponse.reponse}
-                    name={reponse.question_id} ndx={ndx}
-                    id={reponse.id}
-                    key={ndx}
-                  />
+                  {question.reponses.map((reponse, ndx) =>
+                    <InputQuiz
+                      typeInput={question.type}
+                      iscorrect={reponse.is_correct}
+                      value={reponse.reponse}
+                      name={reponse.question_id}
+                      ndx={ndx}
+                      id={reponse.id}
+                      key={ndx}
+                    />
                   )} <Divider />
                 </div>
               )}
