@@ -49,7 +49,6 @@
 </head>
 
 <body>
-
     <nav class="menu">
 
         <input type="checkbox" id="toggle-nav" aria-label="open/close navigation">
@@ -159,7 +158,6 @@
 
     @yield('content')
     @include('../footer')
-
 
 </body>
 

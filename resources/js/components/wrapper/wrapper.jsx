@@ -20,26 +20,43 @@ const Wrapper = () => {
   const [faqs, setFaqs] = useState([]);
   const [ressources, setRessources] = useState([]);
   const [certificats, setCertificats] = useState([]);
+  const [liens, setLiens] = useState([]);
 
+
+  // récupère les certiificat, ressource et faq pour une formation donnée
+  // s'ils y en a
   useEffect(() => {
-    axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
-      setCertificats(Object.values(res.data));
+    // récupérer les 3 en une fois et les dispatcher sur les hooks !!!!!!!!!!!!!!!!!!!!
+    axios.get(`http://localhost:8000/getLiens/${idFormation}`).then((res) => {
+      setFaqs(res.data['faq']);
+      setCertificats(res.data['certificat']);
+      setRessources(res.data['ressource']);
     });
-    axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
-      setFaqs(Object.values(res.data));
-    });
-    axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
-      setRessources(Object.values(res.data));
-    });
+
+    /// A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /// supprimer aussi les functions dans les controlleurs
+
+    // axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
+    //   setCertificats(Object.values(res.data));
+    // });
+    // axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
+    //   setFaqs(Object.values(res.data));
+    // });
+    // axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
+    //   setRessources(Object.values(res.data));
+    // });
   }, []);
 
-  
+
   const handleView = (vue) => {
     setView(vue);
   }
 
   var compo;
 
+// affiche les composants en fonction de ce que contien le hook view
+// view est défini via la fonction handleView qui est appelé sur 
+// les différents composants se trouvant dans le switch ci-dessous
   switch (view) {
     case 'quiz':
       compo = <Quiz handleView={handleView} />

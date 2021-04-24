@@ -92,7 +92,7 @@ class ModuleResController extends Controller
 
         // renvoi tous les chapitres correspondants aux modules
         // d'une formation donnée
-        return DB::table('modules')
+            return DB::table('modules')
             ->select(
                 'modules.id as module_id',
                 'modules.ordre as module_ordre',

@@ -23378,8 +23378,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default
   };
 });
 function Links(props) {
-  var classes = useStyles();
-  console.log('props.certificats   ' + props.certificats); // on affiche les liens que lorsqu'il y a quelque chose à afficher
+  var classes = useStyles(); // on affiche les liens que lorsqu'il y a quelque chose à afficher
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: classes.root,
@@ -23390,7 +23389,7 @@ function Links(props) {
       },
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons_Info__WEBPACK_IMPORTED_MODULE_4__.default, {
         className: classes.icon
-      }), " Questions \xE9ssentielles"]
+      }), "Questions \xE9ssentielles"]
     }) : '', props.ressources != 'hide' && props.ressources != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_3__.default, {
       className: classes.lien,
       onClick: function onClick() {
@@ -24929,6 +24928,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+ // import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 
 
@@ -24948,7 +24948,6 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__.default
     marginBottom: 12
   },
   content: {
-    // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
     marginBottom: 50,
     backgroundColor: "#fdfdfd"
@@ -25216,7 +25215,7 @@ var SimpleList = function SimpleList(props) {
   var initListItemClick = function initListItemClick(event, index) {
     setSelectedIndex(index - 1);
   }; // si il y a un module_id dans le store on sélectionne uniquement les chapitres 
-  // dont le module_id est = module_id si il n'y en a pas alores sélectionne  les 
+  // dont le module_id est = module_id si il n'y en a pas alores on sélectionne les 
   // chapitres dont le module_id est = 1
   // cela permet de n'afficher dans la liste que les chapitres d'un module donné
 
@@ -25229,8 +25228,7 @@ var SimpleList = function SimpleList(props) {
     className: classes.root,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_material_ui_core_List__WEBPACK_IMPORTED_MODULE_5__.default, {
       component: "nav",
-      "aria-label": "main mailbox folders" // aria-labelledby="nested-list-subheader"
-      ,
+      "aria-label": "main mailbox folders",
       subheader: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_ListSubheader__WEBPACK_IMPORTED_MODULE_6__.default, {
         className: classes.headerList,
         component: "div",
@@ -25523,7 +25521,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Video = function Video(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
+  console.log('videoooooooo    ' + props.info_chapitre.fichier_video);
+  var video = String(props.info_chapitre.fichier_video).indexOf('fichier_video/') !== -1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
     className: "player-wrapper",
     pip: false,
     config: {
@@ -25541,7 +25540,32 @@ var Video = function Video(props) {
     playbackRate: 1,
     width: "70%",
     height: "auto"
-  });
+  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {});
+  return (
+    /*#__PURE__*/
+    // <div>
+    //     {video}
+    // </div>
+    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
+      className: "player-wrapper",
+      pip: false,
+      config: {
+        file: {
+          attributes: {
+            controlsList: 'nodownload'
+          }
+        }
+      },
+      onContextMenu: function onContextMenu(e) {
+        return e.preventDefault();
+      },
+      url: "./storage/" + props.info_chapitre.fichier_video,
+      controls: true,
+      playbackRate: 1,
+      width: "70%",
+      height: "auto"
+    })
+  );
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
@@ -25629,23 +25653,39 @@ var Wrapper = function Wrapper() {
       certificats = _useState8[0],
       setCertificats = _useState8[1];
 
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      liens = _useState10[0],
+      setLiens = _useState10[1]; // récupère les certiificat, ressource et faq pour une formation donnée
+  // s'ils y en a
+
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://localhost:8000/certificatsRes/".concat(idFormation)).then(function (res) {
-      setCertificats(Object.values(res.data));
-    });
-    axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://localhost:8000/faqIndex/".concat(idFormation)).then(function (res) {
-      setFaqs(Object.values(res.data));
-    });
-    axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://localhost:8000/ressourcesRes/".concat(idFormation)).then(function (res) {
-      setRessources(Object.values(res.data));
-    });
+    // récupérer les 3 en une fois et les dispatcher sur les hooks !!!!!!!!!!!!!!!!!!!!
+    axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://localhost:8000/getLiens/".concat(idFormation)).then(function (res) {
+      setFaqs(res.data['faq']);
+      setCertificats(res.data['certificat']);
+      setRessources(res.data['ressource']);
+    }); /// A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /// supprimer aussi les functions dans les controlleurs
+    // axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
+    //   setCertificats(Object.values(res.data));
+    // });
+    // axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
+    //   setFaqs(Object.values(res.data));
+    // });
+    // axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
+    //   setRessources(Object.values(res.data));
+    // });
   }, []);
 
   var handleView = function handleView(vue) {
     setView(vue);
   };
 
-  var compo;
+  var compo; // affiche les composants en fonction de ce que contien le hook view
+  // view est défini via la fonction handleView qui est appelé sur 
+  // les différents composants se trouvant dans le switch ci-dessous
 
   switch (view) {
     case 'quiz':

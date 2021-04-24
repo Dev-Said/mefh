@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\formation;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreFormationRequest;
 use App\Http\Requests\UpdateFormationRequest;
@@ -32,7 +33,8 @@ class FormationController extends Controller
      */
     public function create()
     {
-        return view('formations.form');
+        $langues = DB::table('langues')->get();
+        return view('formations.form', ['langues' => $langues]);
     }
 
 
@@ -91,7 +93,8 @@ class FormationController extends Controller
      */
     public function edit(formation $formation)
     {
-        return view('formations.edit', ['formation' => $formation]);
+        $langues = DB::table('langues')->get();
+        return view('formations.edit', ['formation' => $formation, 'langues' => $langues]);
     }
 
     /**
@@ -165,6 +168,8 @@ class FormationController extends Controller
     // renvoi uniquement les formations dans la langue choisie
     public function formationsLangue(Request $request)
     {
+        $langues = DB::table('langues')->orderBy('langue')->get();
+
         if ($request->langue == 'Toutes les formations') {
             $formations = formation::all();
         } else {
@@ -172,7 +177,10 @@ class FormationController extends Controller
                 ->get();
         }
 
-        return view('formations', ['formations' => $formations, 'langue' => $request->langue]);
+        return view('formations', ['formations' => $formations, 
+        'langue' => $request->langue,
+        'langues' => $langues
+        ]);
     }
 
 
@@ -185,8 +193,6 @@ class FormationController extends Controller
         $formation = formation::where('id', $request->formation)->first();
 
         $formationsCount = formation::all()->count();
-
-        // dd($formation, $formationRemplace, $formationsCount);
 
          if ($request->operation == 'dec') {
             if ($request->ordre > 0) {

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+// import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -22,7 +23,6 @@ const useStyles = makeStyles({
         marginBottom: 12,
     },
     content: {
-        // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
         marginBottom: 50,
         backgroundColor: "#fdfdfd",
