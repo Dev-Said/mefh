@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="contenairContact">
-    <h1>Le mouvement pour l'Egalité entre les Femmes et les Hommes</h1>
+    <h1>{{ __('messages.mefh') }}</h1>
     <div class="sousContenairContact">
         <div class="contenairCoordonees">
             <div class="coordonnees">
@@ -17,7 +17,7 @@
         <div class="contenairForm">
             <form action="/ma-page-de-traitement" method="post">
                 <div>
-                    <label for="name">Nom</label>
+                    <label for="name">{{ __('messages.nom') }}</label>
                     <input type="text" id="name" name="user_name">
                 </div>
                 <div>
@@ -25,11 +25,11 @@
                     <input type="email" id="mail" name="user_mail">
                 </div>
                 <div>
-                    <label for="msg">Message</label>
+                    <label for="msg">{{ __('messages.message') }}</label>
                     <textarea id="msg" name="user_message"></textarea>
                 </div>
                 <div>
-                    <button type="submit">Envoyer</button>
+                    <button type="submit">{{ __('messages.envoyer') }}</button>
                 </div>
             </form>
         </div>

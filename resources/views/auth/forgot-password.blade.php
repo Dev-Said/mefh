@@ -1,36 +1,31 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.nav')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
+@section('content')
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+<div class="reset_mpd_titre">
+    <h1>{{ __('messages.reset_mdp_titre') }}</h1>
+</div>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+<!-- Session Status -->
+<x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
+<!-- Validation Errors -->
+<x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+<form method="POST" action="{{ route('password.email') }}" class="auth auth_resetmdp">
+    @csrf
+    <!-- <div class="auth_logo">
+        <a href="/"><img src="/storage/images/mefhlogo.png" width="100px" alt="logo" /></a>
+    </div> -->
+    <!-- Email Address -->
+    <label for="email" class="auth_label">Email</label>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+    <x-input id="email" class="auth_input" type="email" name="email" :value="old('email')" required autofocus />
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    <div class="auth_footer">
+        <x-button class="auth_footer_resetmdp">
+            {{ __('messages.resetmdp') }}
+        </x-button>
+    </div>
+</form>
+@endsection

@@ -1,72 +1,65 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.nav')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('content')
+<x-slot name="logo">
+    <a href="/">
+        <x-application-logo />
+    </a>
+</x-slot>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+<!-- Validation Errors -->
+<x-auth-validation-errors :errors="$errors" />
 
-            <!-- Name -->
-            <div>
-                <x-label for="nom" :value="__('Nom')" />
+<form method="POST" action="{{ route('register') }}" class="auth auth_inscription">
+    @csrf
 
-                <x-input id="nom" class="block mt-1 w-full" type="text" name="nom" :value="old('nom')" required autofocus />
-            </div>
+    <h1>{{ __('messages.inscription') }}</h1>
+    <!-- Name -->
+    <label for="nom" class="auth_label">{{ __('messages.nom') }}</label>
 
-            <div class="mt-4">
-                <x-label for="prenom" :value="__('Prenom')" />
+    <x-input id="nom" class="auth_input" type="text" name="nom" :value="old('nom')" required autofocus />
 
-                <x-input id="prenom" class="block mt-1 w-full" type="text" name="prenom" :value="old('prenom')" required autofocus />
-            </div>
 
-            <div class="mt-4">
-                <x-label for="sexe" :value="__('Sexe')" />
+    <label for="prenom" class="auth_label">{{ __('messages.prenom') }}</label>
 
-                <!-- <label for="sexe">Sexe:</label> -->
+    <x-input id="prenom" class="auth_input" type="text" name="prenom" :value="old('prenom')" required autofocus />
 
-                <select name="sexe" id="sexe" :value="old('sexe')" required autofocus style="width:100%; border-radius: 0.375rem; border-color: rgba(209, 213, 219, 1);">
-                    <option value=""></option>
-                    <option value="Féminin">féminin</option>
-                    <option value="Masculin">masculin</option>
-                </select>
-            </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+    <label for="sexe" class="auth_label">{{ __('messages.sexe') }}</label>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+    <select name="sexe" id="sexe" class="auth_input" :value="old('sexe')" required autofocus style="width:100%; border-radius: 0.375rem; border-color: rgba(209, 213, 219, 1);">
+        <option value=""></option>
+        <option value="Féminin">féminin</option>
+        <option value="Masculin">masculin</option>
+    </select>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+    <!-- Email Address -->
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
+    <label for="email" class="auth_label">Email</label>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+    <x-input id="email" class="auth_input" type="email" name="email" :value="old('email')" required />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
-            </div>
+    <!-- Password -->
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
+    <label for="password" class="auth_label">{{ __('messages.mdp') }}</label>
 
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    <x-input id="password" class="auth_input" type="password" name="password" required autocomplete="new-password" />
+
+    <!-- Confirm Password -->
+
+    <label for="password_confirmation" class="auth_label">{{ __('messages.mdpconfirm') }}</label>
+
+    <x-input id="password_confirmation" class="auth_input" type="password" name="password_confirmation" required />
+
+
+    <div class="auth_footer">
+        <a href="{{ route('login') }}">
+            {{ __('messages.deja_inscrit') }}
+        </a>
+
+        <x-button>
+            {{ __('messages.inscrire') }}
+        </x-button>
+    </div>
+</form>
+@endsection

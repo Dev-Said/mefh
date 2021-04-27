@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/quiz.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/legal.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/authentification.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -75,11 +76,11 @@
             <li class=" {{ 'formations-liste' == request()->path() || 'en/formations-liste' == request()->path() 
                 || 'nl/formations-liste' == request()->path() 
                 || $id_formation  == request()->path() ? 'active' : '' }}">
-                <a class="nav-link" href="formations-liste">Formations</a>
+                <a class="nav-link" href="formations-liste">{{ __('messages.formations') }}</a>
             </li>
             <li class=" {{ 'contact' == request()->path() || 'en/contact' == request()->path() 
                 || 'nl/contact' == request()->path() ? 'active' : '' }}">
-                <a class="nav-link" href="contact">Contact</a>
+                <a class="nav-link" href="contact">{{ __('messages.contact') }}</a>
             </li>
 
 
@@ -92,17 +93,17 @@
                         </li>
                         @endif
                         <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
-                            <a href="/"><button id="buttonconnex">Mon profile</button></a>
+                            <a href="/"><button id="buttonconnex">{{ __('messages.mon_profile') }}</button></a>
                         </li>
                         <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
-                            <a href="/logout"><button id="buttonconnex">Déconnexion</button></a>
+                            <a href="/logout"><button id="buttonconnex">{{ __('messages.deconnexion') }}</button></a>
                         </li>
                         @else
                         <li class="connex nav-item {{ 'login' == request()->path() ? 'active' : '' }}">
-                            <a href="/login"><button id="buttonconnex">Connexion</button></a>
+                            <a href="/login"><button id="buttonconnex">{{ __('messages.connexion') }}</button></a>
                         </li>
                         <li class="connex nav-item {{ 'register' == request()->path() ? 'active' : '' }}">
-                            <a href="/register"><button id="buttonconnex">Inscription</button></a>
+                            <a href="/register"><button id="buttonconnex">{{ __('messages.inscription') }}</button></a>
                         </li>
                         @endif
                     </ul>

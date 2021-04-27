@@ -57,7 +57,7 @@ Route::group([
     Route::get('/formations-liste', function () {
         return view('formations', [
             'formations' => DB::table('formations')->orderBy('ordre')->get(),
-            'langue' => 'Toutes les formations',
+            'langue' => 'Toutes les langues',
             'langues' => DB::table('langues')->orderBy('langue')->get(),
         ]);
     });

@@ -13,22 +13,22 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('password.confirm') }}">
+        <form method="POST" action="{{ route('password.confirm') }}" class="auth">
             @csrf
 
             <!-- Password -->
-            <div>
-                <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
+                <label for="password" class="auth_label">{{ __('messages.mdp') }}</label>
+
+                <x-input id="password" class="auth_input"
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
-            </div>
 
-            <div class="flex justify-end mt-4">
-                <x-button>
-                    {{ __('Confirm') }}
+
+            <div class="auth_footer">
+                <x-button class="auth_footer_resetmdp">
+                    {{ __('messages.envoyer') }}
                 </x-button>
             </div>
         </form>

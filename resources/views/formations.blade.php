@@ -16,10 +16,10 @@
         <form action="/formationsLangue" method="get">
    
             <select name="langue" id="langue" onchange="this.form.submit()">
-                <option value="" disabled selected>Choisissez une langue</option>
-                @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset
+            <option value="" disabled selected>{{ __('messages.choisissez_une_langue') }}</option>
+                <!-- @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset -->
                 @if ($langue && $langue !== 'Toutes les langues')
-                <option value="Toutes les langues">Toutes les langues</option>
+                <option value="Toutes les langues">{{ __('messages.toutes_les_langues') }}</option>
                 @endif
                 @foreach($langues as $langue)
                 <option value="{{ $langue->langue }}">{{ $langue->langue }}</option>

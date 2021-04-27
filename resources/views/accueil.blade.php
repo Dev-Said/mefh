@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="contenairAccueil">
-    <h1>Le mouvement pour l'Egalité entre les Femmes et les Hommes</h1>
+    <h1>{{ __('messages.mefh') }}</h1>
     <h2 class="textAccueil1">
     {{ __('messages.slogan_accueil') }}
     </h2>
