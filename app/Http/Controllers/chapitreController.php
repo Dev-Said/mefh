@@ -74,6 +74,9 @@ class ChapitreController extends Controller
         if ($request->hasFile('fichier_video')) {
             $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');
         }
+        if ($request->hasFile('sous_titres')) {
+            $chapitre->sous_titres = $request->sous_titres->store('fichier_video', 'public');
+        }
         $chapitre->save();
 
          return redirect('chapitres');
@@ -133,9 +136,12 @@ class ChapitreController extends Controller
         $chapitre->module_id = Arr::get($validated, 'module_id');
 
         // si il y a un fichier vidéo alors on le stock dans storage et on 
-        //récupère son chemin
+        //récupère son chemin idem pour sous_titres
         if ($request->hasFile('fichier_video')) {
             $chapitre->fichier_video = $request->fichier_video->store('fichier_video', 'public');
+        }
+        if ($request->hasFile('sous_titres')) {
+            $chapitre->sous_titres = $request->sous_titres->store('fichier_video', 'public');
         }
 
         $chapitre->save();

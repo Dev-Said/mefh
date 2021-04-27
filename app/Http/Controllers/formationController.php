@@ -170,7 +170,7 @@ class FormationController extends Controller
     {
         $langues = DB::table('langues')->orderBy('langue')->get();
 
-        if ($request->langue == 'Toutes les formations') {
+        if ($request->langue == 'Toutes les langues') {
             $formations = formation::all();
         } else {
             $formations =  formation::where('langue', '=', $request->langue)

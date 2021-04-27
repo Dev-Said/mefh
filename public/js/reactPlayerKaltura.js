@@ -1,9 +1,9 @@
-(self["webpackChunkMEFH"] = self["webpackChunkMEFH"] || []).push([["reactPlayerMixcloud"],{
+(self["webpackChunkMEFH"] = self["webpackChunkMEFH"] || []).push([["reactPlayerKaltura"],{
 
-/***/ "./node_modules/react-player/lazy/players/Mixcloud.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-player/lazy/players/Mixcloud.js ***!
-  \************************************************************/
+/***/ "./node_modules/react-player/lazy/players/Kaltura.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-player/lazy/players/Kaltura.js ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -25,10 +25,6 @@ var _patterns = __webpack_require__(/*! ../patterns */ "./node_modules/react-pla
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -52,18 +48,18 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var SDK_URL = 'https://widget.mixcloud.com/media/js/widgetApi.js';
-var SDK_GLOBAL = 'Mixcloud';
+var SDK_URL = 'https://cdn.embed.ly/player-0.1.0.min.js';
+var SDK_GLOBAL = 'playerjs';
 
-var Mixcloud = /*#__PURE__*/function (_Component) {
-  _inherits(Mixcloud, _Component);
+var Kaltura = /*#__PURE__*/function (_Component) {
+  _inherits(Kaltura, _Component);
 
-  var _super = _createSuper(Mixcloud);
+  var _super = _createSuper(Kaltura);
 
-  function Mixcloud() {
+  function Kaltura() {
     var _this;
 
-    _classCallCheck(this, Mixcloud);
+    _classCallCheck(this, Kaltura);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
@@ -79,10 +75,12 @@ var Mixcloud = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "secondsLoaded", null);
 
-    _defineProperty(_assertThisInitialized(_this), "mute", function () {// No volume support
+    _defineProperty(_assertThisInitialized(_this), "mute", function () {
+      _this.callPlayer('mute');
     });
 
-    _defineProperty(_assertThisInitialized(_this), "unmute", function () {// No volume support
+    _defineProperty(_assertThisInitialized(_this), "unmute", function () {
+      _this.callPlayer('unmute');
     });
 
     _defineProperty(_assertThisInitialized(_this), "ref", function (iframe) {
@@ -92,7 +90,7 @@ var Mixcloud = /*#__PURE__*/function (_Component) {
     return _this;
   }
 
-  _createClass(Mixcloud, [{
+  _createClass(Kaltura, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.onMount && this.props.onMount(this);
@@ -102,24 +100,47 @@ var Mixcloud = /*#__PURE__*/function (_Component) {
     value: function load(url) {
       var _this2 = this;
 
-      (0, _utils.getSDK)(SDK_URL, SDK_GLOBAL).then(function (Mixcloud) {
-        _this2.player = Mixcloud.PlayerWidget(_this2.iframe);
+      (0, _utils.getSDK)(SDK_URL, SDK_GLOBAL).then(function (playerjs) {
+        if (!_this2.iframe) return;
+        _this2.player = new playerjs.Player(_this2.iframe);
 
-        _this2.player.ready.then(function () {
-          _this2.player.events.play.on(_this2.props.onPlay);
+        _this2.player.on('ready', function () {
+          _this2.player.isReady = true;
 
-          _this2.player.events.pause.on(_this2.props.onPause);
+          _this2.player.on('play', _this2.props.onPlay);
 
-          _this2.player.events.ended.on(_this2.props.onEnded);
+          _this2.player.on('pause', _this2.props.onPause);
 
-          _this2.player.events.error.on(_this2.props.error);
+          _this2.player.on('seeked', _this2.props.onSeek);
 
-          _this2.player.events.progress.on(function (seconds, duration) {
-            _this2.currentTime = seconds;
+          _this2.player.on('ended', _this2.props.onEnded);
+
+          _this2.player.on('error', _this2.props.onError);
+
+          _this2.player.on('timeupdate', function (_ref) {
+            var duration = _ref.duration,
+                seconds = _ref.seconds;
             _this2.duration = duration;
+            _this2.currentTime = seconds;
           });
 
-          _this2.props.onReady();
+          _this2.player.on('buffered', function (_ref2) {
+            var percent = _ref2.percent;
+
+            if (_this2.duration) {
+              _this2.secondsLoaded = _this2.duration * percent;
+            }
+          });
+
+          _this2.player.setLoop(_this2.props.loop);
+
+          if (_this2.props.muted) {
+            _this2.player.mute();
+          }
+
+          setTimeout(function () {
+            _this2.props.onReady();
+          });
         });
       }, this.props.onError);
     }
@@ -140,11 +161,17 @@ var Mixcloud = /*#__PURE__*/function (_Component) {
   }, {
     key: "seekTo",
     value: function seekTo(seconds) {
-      this.callPlayer('seek', seconds);
+      this.callPlayer('setCurrentTime', seconds);
     }
   }, {
     key: "setVolume",
-    value: function setVolume(fraction) {// No volume support
+    value: function setVolume(fraction) {
+      this.callPlayer('setVolume', fraction);
+    }
+  }, {
+    key: "setLoop",
+    value: function setLoop(loop) {
+      this.callPlayer('setLoop', loop);
     }
   }, {
     key: "getDuration",
@@ -159,44 +186,36 @@ var Mixcloud = /*#__PURE__*/function (_Component) {
   }, {
     key: "getSecondsLoaded",
     value: function getSecondsLoaded() {
-      return null;
+      return this.secondsLoaded;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          url = _this$props.url,
-          config = _this$props.config;
-      var id = url.match(_patterns.MATCH_URL_MIXCLOUD)[1];
       var style = {
         width: '100%',
         height: '100%'
       };
-      var query = (0, _utils.queryString)(_objectSpread(_objectSpread({}, config.options), {}, {
-        feed: "/".concat(id, "/")
-      })); // We have to give the iframe a key here to prevent a
-      // weird dialog appearing when loading a new track
-
       return /*#__PURE__*/_react["default"].createElement("iframe", {
-        key: id,
         ref: this.ref,
+        src: this.props.url,
+        frameBorder: "0",
+        scrolling: "no",
         style: style,
-        src: "https://www.mixcloud.com/widget/iframe/?".concat(query),
-        frameBorder: "0"
+        allowFullScreen: true,
+        allow: "encrypted-media",
+        referrerPolicy: "no-referrer-when-downgrade"
       });
     }
   }]);
 
-  return Mixcloud;
+  return Kaltura;
 }(_react.Component);
 
-exports.default = Mixcloud;
+exports.default = Kaltura;
 
-_defineProperty(Mixcloud, "displayName", 'Mixcloud');
+_defineProperty(Kaltura, "displayName", 'Kaltura');
 
-_defineProperty(Mixcloud, "canPlay", _patterns.canPlay.mixcloud);
-
-_defineProperty(Mixcloud, "loopOnEnded", true);
+_defineProperty(Kaltura, "canPlay", _patterns.canPlay.kaltura);
 
 /***/ })
 

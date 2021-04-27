@@ -3,7 +3,7 @@
         {{$chapitre->titre}}
     </td>
     <td>
-        {!! $chapitre->description !!}  
+        {{mb_strimwidth($chapitre->description, 0, 100, '...')}}  
     </td>
     <td>
         {{$chapitre->module->titre}}

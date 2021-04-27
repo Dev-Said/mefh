@@ -1,42 +1,37 @@
-import React from 'react';
-import ReactPlayer from 'react-player';
+import React from "react";
 import { connect } from 'react-redux';
+import ReactPlayer from "react-player";
 
 
-const Video = (props) => {
-    var video = String(props.info_chapitre.fichier_video).indexOf('fichier_video/') !== -1 ?
-        <ReactPlayer className="player-wrapper"
-            pip={false}
-            config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-            onContextMenu={e => e.preventDefault()}
-            url={"./storage/" + props.info_chapitre.fichier_video}
-            controls={true}
-            playbackRate={1}
-            width="70%"
-            height="auto"
-        /> :
-        <div></div>
+function Video(props) {
 
+    var sousTitre = props.info_chapitre.sous_titres;
+    console.log('sousTitre   '  + sousTitre)
     return (
-        // <div>
-        //     {video}
-        // </div>
-
-        <ReactPlayer className="player-wrapper"
-            pip={false}
-            config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-            onContextMenu={e => e.preventDefault()}
+        <ReactPlayer
             url={"./storage/" + props.info_chapitre.fichier_video}
+            playing={false}
             controls={true}
-            playbackRate={1}
+            onContextMenu={e => e.preventDefault()}
+            // light={light}
+            playbackRate={0.5, 1, 1.5}
+            // onProgress={handleProgress}
             width="70%"
             height="auto"
-        /> 
-
-
-    )
+            config={{
+                file: {
+                    attributes: {
+                        crossOrigin: "anonymous",
+                        controlsList: 'nodownload',
+                    },
+                    tracks: [
+                        { kind: 'subtitles', src: "./storage/" + sousTitre, srcLang: 'fr', default: true, mode: 'hidden' }
+                    ]
+                },
+            }}
+        />
+    );
 }
-
 
 const mapStateToProps = ({ chapitreData }) => {
     return {
@@ -45,7 +40,3 @@ const mapStateToProps = ({ chapitreData }) => {
 }
 
 export default connect(mapStateToProps)(Video);
-
-
-
-

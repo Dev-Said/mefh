@@ -34,10 +34,13 @@
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label for="fichier_video">Fichier video</label>
-        <input type="file" id="fichier_video" name="fichier_video" value="{{ $chapitre->fichier_video }}" accept="video/*">
+        <input type="file" id="fichier_video" name="fichier_video" accept="video/*">
         @error('fichier_video')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+        <label for="sous_titres">Fichier sous-titres</label>
+        <input type="file" id="sous_titres" name="sous_titres" accept=".vtt, VTT, Vtt">
+
         <label for="description">Description</label>
         <textarea id="description" name="description">{{ $chapitre->description }}</textarea>
         @error('description')

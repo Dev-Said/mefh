@@ -15,17 +15,17 @@
     <div class="selectForm">
         <form action="/formationsLangue" method="get">
    
-            <select name="langue" id="langue">
+            <select name="langue" id="langue" onchange="this.form.submit()">
+                <option value="" disabled selected>Choisissez une langue</option>
                 @isset( $langue ) <option value="{{ $langue }}">{{ $langue }}</option> @endisset
-                @if ($langue && $langue !== 'Toutes les formations')
-                <option value="Toutes les formations">Toutes les formations</option>
+                @if ($langue && $langue !== 'Toutes les langues')
+                <option value="Toutes les langues">Toutes les langues</option>
                 @endif
                 @foreach($langues as $langue)
                 <option value="{{ $langue->langue }}">{{ $langue->langue }}</option>
                 @endforeach
 
             </select>
-            <input type="submit" value="Confirmer">
         </form>
     </div>
 

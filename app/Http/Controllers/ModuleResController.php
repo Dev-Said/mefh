@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Module;
+use App\Models\module;
 use App\Models\formation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +19,7 @@ class ModuleResController extends Controller
     public function index()
     {
         $formations = formation::all();
-        $modules = Module::orderBy('formation_id', 'asc')
+        $modules = module::orderBy('formation_id', 'asc')
             ->orderBy('ordre', 'asc')
             ->get();
         return view('modules.list', ['modules' => $modules, 'formations' => $formations]);
@@ -30,11 +30,11 @@ class ModuleResController extends Controller
 
         $formations = formation::all();
         if ($request->formation == 'all formations') {
-            $modules = Module::orderBy('formation_id', 'asc')
+            $modules = module::orderBy('formation_id', 'asc')
                 ->orderBy('ordre', 'asc')
                 ->get();
         } else {
-            $modules =  Module::where('formation_id', '=', $request->formation)
+            $modules =  module::where('formation_id', '=', $request->formation)
                 ->orderBy('ordre', 'asc')
                 ->get();
         }
@@ -78,7 +78,7 @@ class ModuleResController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Module  $module
+     * @param  \App\Models\module  $module
      * @return \Illuminate\Http\Response
      */
     // public function show(Module $module)
@@ -104,7 +104,8 @@ class ModuleResController extends Controller
                 'fichier_video',
                 'chapitres.ordre as ordre',
                 'modules.formation_id as formation_id',
-                'quizzes.module_id as quiz_module_id'
+                'quizzes.module_id as quiz_module_id',
+                'sous_titres',
             )
             ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
             ->leftJoin('quizzes', 'modules.id', '=', 'quizzes.module_id')
@@ -119,10 +120,10 @@ class ModuleResController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Module  $module
+     * @param  \App\Models\module  $module
      * @return \Illuminate\Http\Response
      */
-    public function edit(Module $module)
+    public function edit(module $module)
     {
         $formation = formation::find($module->formation_id);
         $formations = formation::all();
@@ -138,10 +139,10 @@ class ModuleResController extends Controller
      * 
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Module  $module
+     * @param  \App\Models\module  $module
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreModuleRequest $request, Module $module)
+    public function update(StoreModuleRequest $request, module $module)
     {
         $validated = $request->validated();
 
@@ -158,10 +159,10 @@ class ModuleResController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Module  $module
+     * @param  \App\Models\module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Module $module)
+    public function destroy(module $module)
     {
         $formationId = $module->formation_id;
         $module->delete();

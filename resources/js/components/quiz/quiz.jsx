@@ -75,7 +75,7 @@ const Quiz = (props) => {
   const [titreButton2, setTitreButton2] = useState('');
   const [functionModalButton, setFunctionModalButton] = useState('');
   const [idQuiz, setIdQuiz] = useState([]);
-  
+  var val = 0;
   // charge le quiz correspondant au module_id courrant
   // avec ses relations questions et reponses
   useEffect(() => {
@@ -125,17 +125,14 @@ const Quiz = (props) => {
 
   const formValidation = (userRep) => {
     var userQuestion = [];
+    // userQuestion reçoit l'id des questions correspondantes
+    // aux réponses données
     for (let i = 0; i <= userRep.length - 1; i++) {
-      // userQuestion reçoit l'id des questions correspondantes
-      // aux réponses données
       userQuestion.push(getQuestion(userRep[i]))
     }
 
     // si userQuestion ne contient pas une allQuestionId
     // cela veut dire qu'on y a pas répondue.
-    // en production userQuestion.includes(allQuestionsId[i]) 
-    // ne fonctionne pas je dois utiliser ce qui suit
-    //--------------
     var count = 0;
     for (var i = 0; i <= allQuestionsId.length - 1; i++) {
       count = 0;
@@ -148,8 +145,6 @@ const Quiz = (props) => {
         questionMissing.push(allQuestionsId[i])
       }
     }
-    //-------------
-
 
     //met en rouge les questions sans réponses
     if (questionMissing.length) {
@@ -174,24 +169,28 @@ const Quiz = (props) => {
     }
   }
 
+  var value = 0;
   const valFunc = (userReponseVar) => {
-    let value = 0;
+
     for (var i = 0; i <= quizzes[0][1].questions.length - 1; i++) {
-      for (var j = 0; j <= quizzes[0][1].questions[1].reponses.length - 1; j++) {
+      for (var j = 0; j <= quizzes[0][1].questions[i].reponses.length - 1; j++) {
         for (var k = 0; k <= userReponseVar.length - 1; k++) {
           if (userReponseVar[k] == quizzes[0][1].questions[i].reponses[j].id) {
             value = value + Number(quizzes[0][1].questions[i].reponses[j].value);
-
           }
         }
       }
     }
+    
     return Number(value);
   }
+
 
   var userReponseVar = [];
   // gère l'envoi du quiz ------------------------------------->
   function handleSubmit(event) {
+    val = 0;
+    userReponseVar = [];
     event.preventDefault();
 
     for (let i = 0; i <= event.target.length; i++) {
@@ -200,13 +199,14 @@ const Quiz = (props) => {
       }
     }
 
-    var val = Number(valFunc(userReponseVar));
-
     formValidation(userReponseVar);
+
     // s'il n'y a pas de questions manquantes 
     // affiche une modal avec le score du quiz
-    if (!questionMissing.length) {
-      setScore(Math.ceil((val / allQuestionsId.length) * 100)); //<---------- ICI ICI ICI ICI !!! ???
+    if (questionMissing.length == 0) {
+      
+      val = Number(valFunc(userReponseVar));
+      setScore(Math.ceil((val / allQuestionsId.length) * 100)); 
       var scoreTest = Math.ceil((val / allQuestionsId.length) * 100);
 
       if (scoreTest >= 80) {
@@ -215,6 +215,7 @@ const Quiz = (props) => {
       if (scoreTest < 80) {
         setMessageScore('Pour valider ce module vous devez obtenir un score de 80 % minimum. Votre score est de ' + scoreTest + '%');
       }
+
       // si le score est < 80 on affiche pas de message dans le footer de la modal
       score >= 80 ? setMessageFooter('Voulez-vous sauvegarder votre score ?')
         : setMessageFooter('    ');
@@ -224,11 +225,14 @@ const Quiz = (props) => {
       setFunctionModalButton('saveQuiz');
       handelModal();
     }
+
     questionMissing.length = 0;
+
   }
 
   // force le bon fonctionnement de la modal mYmodal2 ------------------------------->
   const closeModal = () => {
+
     document.getElementById("myModal2").style.display = "none";
     // props.handleQuizClick();
     props.handleView('formation');
@@ -316,7 +320,8 @@ const Quiz = (props) => {
           <div className="headerModal2"><span className="close2">x</span></div>
           <p> {messageScore} </p>
           {messageScore == 'Enregistrez-vous' ? <Register resultat={score} quiz_id={idQuiz} /> :
-            messageScore == 'Enregister mes résultats' ? <Login resultat={score} quiz_id={idQuiz} /> :
+            messageScore == 'Enregister mes résultats' ?
+              <Login resultat={score} quiz_id={idQuiz} handleView={props.handleView} /> :
               <ModalFooterButton message={messageFooter}
                 titre0={titreButton0} titre1={titreButton1} titre2={titreButton2}
                 func={functionModalButton == 'saveQuiz' ? handleSaveQuiz : register}

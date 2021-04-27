@@ -23562,6 +23562,7 @@ function Login(props) {
       handelModalW();
       console.log('probleme   ' + error);
     });
+    props.handleView('formation');
   }; // affiche et gère la modal ---------------------------------------->
 
 
@@ -23900,9 +23901,10 @@ var Quiz = function Quiz(props) {
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState18 = _slicedToArray(_useState17, 2),
       idQuiz = _useState18[0],
-      setIdQuiz = _useState18[1]; // charge le quiz correspondant au module_id courrant
-  // avec ses relations questions et reponses
+      setIdQuiz = _useState18[1];
 
+  var val = 0; // charge le quiz correspondant au module_id courrant
+  // avec ses relations questions et reponses
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(globalUrl, "quizzes/quizApi/").concat(props.info_chapitre.module_id)).then(function (res) {
@@ -23947,17 +23949,13 @@ var Quiz = function Quiz(props) {
   var questionMissing = [];
 
   var formValidation = function formValidation(userRep) {
-    var userQuestion = [];
+    var userQuestion = []; // userQuestion reçoit l'id des questions correspondantes
+    // aux réponses données
 
     for (var _i2 = 0; _i2 <= userRep.length - 1; _i2++) {
-      // userQuestion reçoit l'id des questions correspondantes
-      // aux réponses données
       userQuestion.push(getQuestion(userRep[_i2]));
     } // si userQuestion ne contient pas une allQuestionId
     // cela veut dire qu'on y a pas répondue.
-    // en production userQuestion.includes(allQuestionsId[i]) 
-    // ne fonctionne pas je dois utiliser ce qui suit
-    //--------------
 
 
     var count = 0;
@@ -23974,8 +23972,7 @@ var Quiz = function Quiz(props) {
       if (count == 0) {
         questionMissing.push(allQuestionsId[i]);
       }
-    } //-------------
-    //met en rouge les questions sans réponses
+    } //met en rouge les questions sans réponses
 
 
     if (questionMissing.length) {
@@ -24000,11 +23997,11 @@ var Quiz = function Quiz(props) {
     }
   };
 
-  var valFunc = function valFunc(userReponseVar) {
-    var value = 0;
+  var value = 0;
 
+  var valFunc = function valFunc(userReponseVar) {
     for (var i = 0; i <= quizzes[0][1].questions.length - 1; i++) {
-      for (var j = 0; j <= quizzes[0][1].questions[1].reponses.length - 1; j++) {
+      for (var j = 0; j <= quizzes[0][1].questions[i].reponses.length - 1; j++) {
         for (var k = 0; k <= userReponseVar.length - 1; k++) {
           if (userReponseVar[k] == quizzes[0][1].questions[i].reponses[j].id) {
             value = value + Number(quizzes[0][1].questions[i].reponses[j].value);
@@ -24019,6 +24016,8 @@ var Quiz = function Quiz(props) {
   var userReponseVar = []; // gère l'envoi du quiz ------------------------------------->
 
   function handleSubmit(event) {
+    val = 0;
+    userReponseVar = [];
     event.preventDefault();
 
     for (var i = 0; i <= event.target.length; i++) {
@@ -24027,13 +24026,12 @@ var Quiz = function Quiz(props) {
       }
     }
 
-    var val = Number(valFunc(userReponseVar));
     formValidation(userReponseVar); // s'il n'y a pas de questions manquantes 
     // affiche une modal avec le score du quiz
 
-    if (!questionMissing.length) {
-      setScore(Math.ceil(val / allQuestionsId.length * 100)); //<---------- ICI ICI ICI ICI !!! ???
-
+    if (questionMissing.length == 0) {
+      val = Number(valFunc(userReponseVar));
+      setScore(Math.ceil(val / allQuestionsId.length * 100));
       var scoreTest = Math.ceil(val / allQuestionsId.length * 100);
 
       if (scoreTest >= 80) {
@@ -24161,7 +24159,8 @@ var Quiz = function Quiz(props) {
           quiz_id: idQuiz
         }) : messageScore == 'Enregister mes résultats' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_login_login__WEBPACK_IMPORTED_MODULE_7__.default, {
           resultat: score,
-          quiz_id: idQuiz
+          quiz_id: idQuiz,
+          handleView: props.handleView
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_modalFooterButton_modalFooterButton__WEBPACK_IMPORTED_MODULE_5__.default, {
           message: messageFooter,
           titre0: titreButton0,
@@ -25573,60 +25572,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-player */ "./node_modules/react-player/lib/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-player */ "./node_modules/react-player/lib/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
 
-var Video = function Video(props) {
-  var video = String(props.info_chapitre.fichier_video).indexOf('fichier_video/') !== -1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
-    className: "player-wrapper",
-    pip: false,
+function Video(props) {
+  var sousTitre = props.info_chapitre.sous_titres;
+  console.log('sousTitre   ' + sousTitre);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_2__.default, {
+    url: "./storage/" + props.info_chapitre.fichier_video,
+    playing: false,
+    controls: true,
+    onContextMenu: function onContextMenu(e) {
+      return e.preventDefault();
+    } // light={light}
+    ,
+    playbackRate: (0.5, 1, 1.5) // onProgress={handleProgress}
+    ,
+    width: "70%",
+    height: "auto",
     config: {
       file: {
         attributes: {
+          crossOrigin: "anonymous",
           controlsList: 'nodownload'
-        }
+        },
+        tracks: [{
+          kind: 'subtitles',
+          src: "./storage/" + sousTitre,
+          srcLang: 'fr',
+          "default": true,
+          mode: 'hidden'
+        }]
       }
-    },
-    onContextMenu: function onContextMenu(e) {
-      return e.preventDefault();
-    },
-    url: "./storage/" + props.info_chapitre.fichier_video,
-    controls: true,
-    playbackRate: 1,
-    width: "70%",
-    height: "auto"
-  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {});
-  return (
-    /*#__PURE__*/
-    // <div>
-    //     {video}
-    // </div>
-    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_1__.default, {
-      className: "player-wrapper",
-      pip: false,
-      config: {
-        file: {
-          attributes: {
-            controlsList: 'nodownload'
-          }
-        }
-      },
-      onContextMenu: function onContextMenu(e) {
-        return e.preventDefault();
-      },
-      url: "./storage/" + props.info_chapitre.fichier_video,
-      controls: true,
-      playbackRate: 1,
-      width: "70%",
-      height: "auto"
-    })
-  );
-};
+    }
+  });
+}
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var chapitreData = _ref.chapitreData;
@@ -25635,7 +25620,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Video));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps)(Video));
 
 /***/ }),
 
@@ -68423,12 +68408,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+var safeIsNaN = Number.isNaN ||
+    function ponyfill(value) {
+        return typeof value === 'number' && value !== value;
+    };
+function isEqual(first, second) {
+    if (first === second) {
+        return true;
+    }
+    if (safeIsNaN(first) && safeIsNaN(second)) {
+        return true;
+    }
+    return false;
+}
 function areInputsEqual(newInputs, lastInputs) {
     if (newInputs.length !== lastInputs.length) {
         return false;
     }
     for (var i = 0; i < newInputs.length; i++) {
-        if (newInputs[i] !== lastInputs[i]) {
+        if (!isEqual(newInputs[i], lastInputs[i])) {
             return false;
         }
     }

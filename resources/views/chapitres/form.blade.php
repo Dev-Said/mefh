@@ -31,6 +31,8 @@
         @error('fichier_video')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+        <label for="sous_titres">Fichier sous-titres</label>
+        <input type="file" id="sous_titres" name="sous_titres" accept=".vtt, VTT, Vtt">
         <label for="description">Description du chapitre</label>
         <textarea   id="description" name="description">{{ old('description') }}</textarea>
         @error('description')

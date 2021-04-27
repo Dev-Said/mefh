@@ -77,6 +77,7 @@ export default function Login(props) {
                 console.log('probleme   ' + error);
             });
 
+            props.handleView('formation');
     }
 
     // affiche et gère la modal ---------------------------------------->

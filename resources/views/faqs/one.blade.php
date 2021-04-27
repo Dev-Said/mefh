@@ -3,7 +3,7 @@
         {{$faq->question}}
     </td>
     <td>
-        {!! $faq->reponse !!}
+        {{mb_strimwidth($faq->reponse, 0, 100, '...')}}
     </td>
     <td>
         {{$faq->formation->titre}}

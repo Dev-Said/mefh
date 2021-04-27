@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateReponsesTable extends Migration
+class UpdateChapitresTables extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class UpdateReponsesTable extends Migration
     public function up()
     {
 
-        Schema::table('reponses', function (Blueprint $table) {
-            $table->float('value', 8, 2);
+        Schema::table('chapitres', function (Blueprint $table) {
+            $table->string('sous_titres', 255)->nullable();
         });
     }
 
@@ -26,11 +26,11 @@ class UpdateReponsesTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('reponses', 'value'))
+        if (Schema::hasColumn('chapitres', 'sous_titres'))
         {
-            Schema::table('reponses', function (Blueprint $table)
+            Schema::table('chapitres', function (Blueprint $table)
             {
-                $table->dropColumn('value');
+                $table->dropColumn('sous_titres');
             });
         }
     }
