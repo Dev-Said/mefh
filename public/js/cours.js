@@ -22618,7 +22618,8 @@ var ListeChapitres = function ListeChapitres(props) {
     className: classes.root,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_backNextButton_backNextButton__WEBPACK_IMPORTED_MODULE_3__.default, {
       chapitres: chapitres,
-      currentChap: 1
+      currentChap: 1,
+      localiz: props.localiz
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_simpleList_simpleList__WEBPACK_IMPORTED_MODULE_2__.default, {
       chapitres: chapitres,
       init_index: 0
@@ -22628,8 +22629,10 @@ var ListeChapitres = function ListeChapitres(props) {
       onClick: function onClick() {
         return props.handleView('quiz');
       },
-      children: "Faire le quiz"
-    }) : '', auth[2] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_coursCompleted_coursCompleted__WEBPACK_IMPORTED_MODULE_4__.default, {})]
+      children: props.localiz['btnquiz']
+    }) : '', auth[2] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_coursCompleted_coursCompleted__WEBPACK_IMPORTED_MODULE_4__.default, {
+      localiz: props.localiz
+    })]
   });
 };
 
@@ -22787,13 +22790,13 @@ var BackNextButton = function BackNextButton(props) {
         onClick: handleBack,
         className: classes.backButton // variant="contained"
         ,
-        children: "Pr\xE9c\xE9dent"
+        children: props.localiz['prev']
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
         disabled: props.store_curChapitre == nbModules - 1 // variant="contained"
         ,
         className: classes.nextButton,
         onClick: handleNext,
-        children: "Suivant"
+        children: props.localiz['next']
       })]
     })
   });
@@ -23028,9 +23031,11 @@ var CoursCompleted = function CoursCompleted(props) {
       message = _useState2[0],
       setMessage = _useState2[1];
 
+  var messagelocal = '';
   var ordreChapitres = [];
   var id = '';
   var messageVar = props.store_dejaSuivi.includes(props.store_chapitre.id) ? "je n'ai pas terminé ce chapitre" : "J'ai terminé ce chapitre";
+  var messagelocal = props.store_dejaSuivi.includes(props.store_chapitre.id) ? props.localiz['btndonefalse'] : props.localiz['btndonetrue'];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setMessage(messageVar);
   }); // gère le bouton "J'ai terminé ce chapitre"
@@ -23043,13 +23048,14 @@ var CoursCompleted = function CoursCompleted(props) {
       // met le stepper du chapitre en non terminé
       if (message == "je n'ai pas terminé ce chapitre") {
         var tab = props.store_dejaSuivi;
-        var index = tab.indexOf(props.store_chapitre.id);
+        var index = tab.indexOf(props.store_chapitre.id); // check si store_chapitre.id est dans la liste store_dejaSuivi
 
         if (index > -1) {
-          tab.splice(index, 1);
+          tab.splice(index, 1); //si oui on modifie le contenu de tab
         }
 
         setMessage("J'ai terminé ce chapitre");
+        messagelocal = props.localiz['btndonetrue'];
         _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
           type: 'DEJA_SUIVI',
           dejaSuivi: tab
@@ -23059,6 +23065,7 @@ var CoursCompleted = function CoursCompleted(props) {
           var tab = props.store_dejaSuivi;
           tab.push(props.store_chapitre.id);
           setMessage("je n'ai pas terminé ce chapitre");
+          messagelocal = props.localiz['btndonefalse'];
           _redux_store__WEBPACK_IMPORTED_MODULE_3__.default.dispatch({
             type: 'DEJA_SUIVI',
             dejaSuivi: tab
@@ -23067,13 +23074,7 @@ var CoursCompleted = function CoursCompleted(props) {
           axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(globalUrl, "modulesApi/").concat(idFormation)).then(function (res) {
             var chapitres = Object.entries(res.data);
             var chap = {};
-            var ordChap = {}; // Pour faire avancer d'une case le stepper lorsqu'on clique sur j'ai terminé
-            // ce chapitre il suffisait de fair ça:
-            // const currentchapitres = chapitres.find(element => element[1].id == (props.store_chapitre.id + 1));
-            // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres[1] });
-            // tous fonctionne bien en local mais en production ça ne marche pas
-            // c'est pourquoi j'ai du faire tout ce qui suit
-            // création d'un tableau d'objets contenant l'id de chaque chapitre
+            var ordChap = {}; // création d'un tableau d'objets contenant l'id de chaque chapitre !! problèmes avec find, includes et filter !!
             // trié selon l'ordre voulu et un index qui servira d'ordre pour le 
             // passage d'un stepper à l'autre lorsqu'on clique sur "j'ai terminé ce chapitre"
 
@@ -23121,7 +23122,7 @@ var CoursCompleted = function CoursCompleted(props) {
       onClick: handleClick,
       className: classes.quiz,
       variant: "outlined",
-      children: message
+      children: messagelocal
     })
   });
 };
@@ -23423,7 +23424,7 @@ function Links(props) {
       },
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons_Info__WEBPACK_IMPORTED_MODULE_4__.default, {
         className: classes.icon
-      }), "Questions essentielles"]
+      }), props.localiz['faq']]
     }) : '', props.ressources != 'hide' && props.ressources != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_3__.default, {
       className: classes.lien,
       onClick: function onClick() {
@@ -23431,7 +23432,7 @@ function Links(props) {
       },
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons_People__WEBPACK_IMPORTED_MODULE_5__.default, {
         className: classes.icon
-      }), " Ressources"]
+      }), " ", props.localiz['res']]
     }) : '', props.certificats != 'hide' && props.certificats != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_3__.default, {
       className: classes.lien,
       onClick: function onClick() {
@@ -23439,7 +23440,7 @@ function Links(props) {
       },
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons_VerifiedUser__WEBPACK_IMPORTED_MODULE_6__.default, {
         className: classes.icon
-      }), " Certificat"]
+      }), " ", props.localiz['cert']]
     }) : '']
   });
 }
@@ -25696,7 +25697,12 @@ var Wrapper = function Wrapper() {
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState8 = _slicedToArray(_useState7, 2),
       certificats = _useState8[0],
-      setCertificats = _useState8[1]; // récupère les certiificat, ressource et faq s'ils y en a 
+      setCertificats = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      langue = _useState10[0],
+      setLangue = _useState10[1]; // récupère les certiificat, ressource et faq s'ils y en a 
   // pour une formation donnée
 
 
@@ -25705,22 +25711,49 @@ var Wrapper = function Wrapper() {
       setFaqs(res.data['faq']);
       setCertificats(res.data['certificat']);
       setRessources(res.data['ressource']);
-    }); /// A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    /// supprimer aussi les functions dans les controlleurs
-    // axios.get(`http://localhost:8000/certificatsRes/${idFormation}`).then((res) => {
-    //   setCertificats(Object.values(res.data));
-    // });
-    // axios.get(`http://localhost:8000/faqIndex/${idFormation}`).then((res) => {
-    //   setFaqs(Object.values(res.data));
-    // });
-    // axios.get(`http://localhost:8000/ressourcesRes/${idFormation}`).then((res) => {
-    //   setRessources(Object.values(res.data));
-    // });
+      setLangue(res.data['langue']);
+    });
   }, []);
 
   var handleView = function handleView(vue) {
     setView(vue);
-  };
+  }; // gère la traduction dans la page de formation construite avec react
+
+
+  var localiz = [];
+
+  if (langue && langue == 'fr') {
+    localiz['prev'] = 'Précédent';
+    localiz['next'] = 'Suivant';
+    localiz['faq'] = 'Questions essentiels';
+    localiz['res'] = 'Ressources';
+    localiz['cert'] = 'Certificat';
+    localiz['btnquiz'] = 'Faire le quiz';
+    localiz['btndonetrue'] = 'J\'ai terminé ce chapitre';
+    localiz['btndonefalse'] = 'Je n\'ai pas terminé ce chapitre';
+  }
+
+  if (langue && langue == 'en') {
+    localiz['prev'] = 'Previous';
+    localiz['next'] = 'Next';
+    localiz['faq'] = 'Essential questions';
+    localiz['res'] = 'Resources';
+    localiz['cert'] = 'Certificate';
+    localiz['btnquiz'] = 'Take the quiz';
+    localiz['btndonetrue'] = 'I finished this chapter';
+    localiz['btndonefalse'] = 'I haven\'t finished this chapter';
+  }
+
+  if (langue && langue == 'nl') {
+    localiz['prev'] = 'Vorige';
+    localiz['next'] = 'Volgende';
+    localiz['faq'] = 'Essentiële vragen';
+    localiz['res'] = 'Middelen';
+    localiz['cert'] = 'Certificaat';
+    localiz['btnquiz'] = 'Doe de quiz';
+    localiz['btndonetrue'] = 'Hoofdstuk voltooid';
+    localiz['btndonefalse'] = 'Hoofdstuk niet af';
+  }
 
   var compo; // affiche les composants en fonction de ce que contien le hook view
   // view est défini via la fonction handleView qui est appelé sur 
@@ -25738,9 +25771,11 @@ var Wrapper = function Wrapper() {
         faqs: faqs,
         ressources: ressources,
         certificats: certificats,
-        handleView: handleView
+        handleView: handleView,
+        localiz: localiz
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_stepper_stepper__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_videos_Video__WEBPACK_IMPORTED_MODULE_1__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_ListeChapitres_ListeChapitres__WEBPACK_IMPORTED_MODULE_2__.default, {
-        handleView: handleView
+        handleView: handleView,
+        localiz: localiz
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_chapitreDescription_chapitreDescription__WEBPACK_IMPORTED_MODULE_4__.default, {})];
       break;
 
@@ -32312,8 +32347,9 @@ __webpack_require__.r(__webpack_exports__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "h1 {\n  font-size: 26px;\n  font-weight: bold;\n  margin-bottom: 20px;\n}\n\nh2 {\n  font-size: 24px;\n  font-weight: bold;\n  margin-bottom: 15px;\n}\n\nh3 {\n  font-size: 22px;\n  font-weight: bold;\n  margin-bottom: 15px;\n}\n\nh4 {\n  font-size: 20px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n\nh5 {\n  font-size: 18px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n\nh6 {\n  font-size: 16px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n\na:link, a:visited, a:active {\n  text-decoration: none;\n  color: blue;\n}\n\na:hover {\n  text-decoration: underline;\n  color: blue;\n}\n\nstrong {\n  font-weight: bold;\n}\n\np {\n  margin: 10px 0;\n  font-size: 16px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "h1, h2, h3, h4, h5, h6 {\n  font-weight: bold;\n  margin-bottom: 15px;\n}\n\nh1, h2, h3, h4, h5, h6, p, a, li {\n  font-family: \"Lato\", sans-serif;\n}\n\nh1 {\n  font-size: 30px;\n}\n\nh2 {\n  font-size: 26px;\n}\n\nh3 {\n  font-size: 24px;\n}\n\nh4 {\n  font-size: 22px;\n}\n\nh5 {\n  font-size: 20px;\n}\n\nh6 {\n  font-size: 18px;\n}\n\na:link, a:visited, a:active {\n  text-decoration: none;\n  color: blue;\n}\n\na:hover {\n  text-decoration: underline;\n  color: blue;\n}\n\nstrong {\n  font-weight: bold;\n}\n\np {\n  margin: 0 0 30px 0;\n  font-size: 19px;\n  line-height: 24px;\n  letter-spacing: 1px;\n}\n\nem {\n  font-style: italic;\n}\n\nul {\n  display: block;\n  list-style: inside;\n  margin-bottom: 30px;\n}\n\nli {\n  font-size: 17px;\n  line-height: 26px;\n  letter-spacing: 1px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

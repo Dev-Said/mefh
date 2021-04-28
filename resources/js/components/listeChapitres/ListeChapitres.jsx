@@ -70,13 +70,13 @@ const ListeChapitres = (props) => {
 
   return (
     <div className={classes.root} >
-      <BackNextButton chapitres={chapitres} currentChap={1}/>
+      <BackNextButton chapitres={chapitres} currentChap={1} localiz={props.localiz}/>
       <SimpleList chapitres={chapitres} init_index={0} />
       {quiz != 'hide' ? 
       <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
-       Faire le quiz</Button> : ''
+      {props.localiz['btnquiz']}</Button> : ''
       }
-      { auth[2] && <CoursCompleted />}
+      { auth[2] && <CoursCompleted localiz={props.localiz} />}
     </div>
   )
 }

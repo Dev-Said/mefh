@@ -131,17 +131,17 @@ class FaqController extends Controller
     }
 
     // renvoi la faq d'une formation donnée
-    public function faqIndex($idFormation)
-    {
-        $faq = Faq::where('formation_id', '=', $idFormation)
-            ->get();
+    // public function faqIndex($idFormation)
+    // {
+    //     $faq = Faq::where('formation_id', '=', $idFormation)
+    //         ->get();
 
-        if ($faq->isEmpty()) {
-            return response()->json(['hide' => 'hide'], 200);
-        } else {
-            return $faq;
-        }
-    }
+    //     if ($faq->isEmpty()) {
+    //         return response()->json(['hide' => 'hide'], 200);
+    //     } else {
+    //         return $faq;
+    //     }
+    // }
 
 
     // renvoi les questions et réponses qui contiennent le mot 

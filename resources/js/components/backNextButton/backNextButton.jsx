@@ -100,14 +100,14 @@ const BackNextButton = (props) => {
           className={classes.backButton}
         // variant="contained"
         >
-          Précédent
+          {props.localiz['prev']}
               </Button>
         <Button
           disabled={props.store_curChapitre == nbModules - 1}
           // variant="contained"
           className={classes.nextButton}
           onClick={handleNext}>
-          Suivant
+          {props.localiz['next']}
                 </Button>
       </div>
     </div>

@@ -110,16 +110,4 @@ class CertificatController extends Controller
     }
 
 
-    // renvoi le certificat d'une formation donnée
-    public function getCertificat($idFormation)
-    {
-        $certificat = Certificat::where('formation_id', '=', $idFormation)
-            ->get();
-
-        if ($certificat->isEmpty()) {
-            return response()->json(['hide' => 'hide'], 200);
-        } else {
-            return $certificat;
-        }
-    }
 }

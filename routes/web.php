@@ -58,7 +58,11 @@ Route::group([
         return view('formations', [
             'formations' => DB::table('formations')->orderBy('ordre')->get(),
             'langue' => 'Toutes les langues',
-            'langues' => DB::table('langues')->orderBy('langue')->get(),
+            'langues' => DB::table('formations')
+            ->select('langue')
+            ->distinct()
+            ->orderBy('langue')
+            ->get(),
         ]);
     });
 
@@ -88,6 +92,9 @@ Route::group([
     });
 
     Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
+
+    // en mettant cette route ici je peut obtenir son url et savoir dans quelle langue on est pour gérer le multilangue dans react
+    Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
 });
 
 
@@ -144,12 +151,10 @@ Route::get('/dashboard', [DashboardController::class, 'entry']);
 Route::post('/usersFromQuizForm', [UserController::class, 'store2']);
 Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
 Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
-Route::get('/ressourcesRes/{params}', [RessourceController::class, 'getRessources']);
-Route::get('/certificatsRes/{params}', [CertificatController::class, 'getCertificat']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
 
-Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
+
 
 
 

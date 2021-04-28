@@ -21,11 +21,16 @@ const useStyles = makeStyles(() => ({
 const CoursCompleted = (props) => {
   const classes = useStyles();
   const [message, setMessage] = useState();
+  var messagelocal = '';
   var ordreChapitres = [];
   var id = '';
   var messageVar = props.store_dejaSuivi.includes(props.store_chapitre.id) ?
     "je n'ai pas terminé ce chapitre" :
     "J'ai terminé ce chapitre";
+
+  var messagelocal = props.store_dejaSuivi.includes(props.store_chapitre.id) ?
+    props.localiz['btndonefalse'] :
+    props.localiz['btndonetrue'];
 
   useEffect(() => {
     setMessage(messageVar);
@@ -39,11 +44,12 @@ const CoursCompleted = (props) => {
         // met le stepper du chapitre en non terminé
         if (message == "je n'ai pas terminé ce chapitre") {
           var tab = props.store_dejaSuivi;
-          var index = tab.indexOf(props.store_chapitre.id);
+          var index = tab.indexOf(props.store_chapitre.id); // check si store_chapitre.id est dans la liste store_dejaSuivi
           if (index > -1) {
-            tab.splice(index, 1);
+            tab.splice(index, 1); //si oui on modifie le contenu de tab
           }
           setMessage("J'ai terminé ce chapitre");
+          messagelocal = props.localiz['btndonetrue'];
           store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: tab });
         }
         // met le stepper du chapitre en terminé
@@ -51,6 +57,7 @@ const CoursCompleted = (props) => {
           var tab = props.store_dejaSuivi;
           tab.push(props.store_chapitre.id);
           setMessage("je n'ai pas terminé ce chapitre");
+          messagelocal = props.localiz['btndonefalse'];
           store.dispatch({ type: 'DEJA_SUIVI', dejaSuivi: tab });
 
           // passe au chapitre suivant lorsqu'on clique sur "J'ai terminé ce chapitre"
@@ -60,16 +67,7 @@ const CoursCompleted = (props) => {
               var chap = {};
               var ordChap = {};
 
-              // Pour faire avancer d'une case le stepper lorsqu'on clique sur j'ai terminé
-              // ce chapitre il suffisait de fair ça:
-
-              // const currentchapitres = chapitres.find(element => element[1].id == (props.store_chapitre.id + 1));
-              // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: currentchapitres[1] });
-
-              // tous fonctionne bien en local mais en production ça ne marche pas
-              // c'est pourquoi j'ai du faire tout ce qui suit
-
-              // création d'un tableau d'objets contenant l'id de chaque chapitre
+              // création d'un tableau d'objets contenant l'id de chaque chapitre !! problèmes avec find, includes et filter !!
               // trié selon l'ordre voulu et un index qui servira d'ordre pour le 
               // passage d'un stepper à l'autre lorsqu'on clique sur "j'ai terminé ce chapitre"
 
@@ -108,10 +106,11 @@ const CoursCompleted = (props) => {
 
   }
 
+
   return (
     <div className={classes.root}>
       <Button onClick={handleClick} className={classes.quiz} variant="outlined">
-        {message}
+        {messagelocal}
       </Button>
 
     </div>

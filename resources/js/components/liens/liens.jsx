@@ -47,17 +47,17 @@ export default function Links(props) {
         <div className={classes.root} >
             {props.faqs != 'hide' && props.faqs != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('faq')}>
-                    <InfoIcon className={classes.icon} />Questions essentielles
+                    <InfoIcon className={classes.icon} />{props.localiz['faq']}
         </Typography> : ''
             }
             {props.ressources != 'hide' && props.ressources != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('ressource')}>
-                    <PeopleIcon className={classes.icon} /> Ressources
+                    <PeopleIcon className={classes.icon} /> {props.localiz['res']}
         </Typography> : ''
             }
             {props.certificats != 'hide' && props.certificats != '' ?
                 <Typography className={classes.lien} onClick={() => props.handleView('certificat')}>
-                    <VerifiedUserIcon className={classes.icon} /> Certificat
+                    <VerifiedUserIcon className={classes.icon} /> {props.localiz['cert']}
         </Typography> : ''
             }
         </div>

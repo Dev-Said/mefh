@@ -168,8 +168,13 @@ class FormationController extends Controller
     // renvoi uniquement les formations dans la langue choisie
     public function formationsLangue(Request $request)
     {
-        $langues = DB::table('langues')->orderBy('langue')->get();
+        $langues = DB::table('formations')
+        ->select('langue')
+        ->distinct()
+        ->orderBy('langue')
+        ->get();
 
+  
         if ($request->langue == 'Toutes les langues') {
             $formations = formation::all();
         } else {

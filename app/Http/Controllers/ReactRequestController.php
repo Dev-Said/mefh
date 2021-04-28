@@ -6,6 +6,9 @@ use App\Models\Faq;
 use App\Models\Ressource;
 use App\Models\Certificat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ReactRequestController extends Controller
 {
@@ -13,7 +16,19 @@ class ReactRequestController extends Controller
     // s'il y en a. Sinon renvoi hide pour cacher les liens où il n'y a rien
     public function getLiens($idFormation)
     {
-        $liens = Array( ["certificat" => "", "ressource" => "", "faq" => ""] );
+       
+        $langue = LaravelLocalization::localizeUrl('(/getLiens)');
+
+        if (str_contains($langue, '/nl/')) {
+            $langue = 'nl';
+        } else if (str_contains($langue, '/en/')) {
+            $langue = 'en';
+        } else {
+            $langue = 'fr';
+        }
+
+
+        $liens = Array( ["certificat" => "", "ressource" => "", "faq" => "", "langue" => ""] );
 
         $certificat = Certificat::where('formation_id', '=', $idFormation)
             ->get();
@@ -42,6 +57,8 @@ class ReactRequestController extends Controller
             $liens["faq"] = $faq;
         }
 
+        $liens["langue"] = $langue;
+    
         return $liens;
 
 

@@ -43,6 +43,7 @@
     <script>
         var globalUrl = <?= json_encode('http://127.0.0.1:8000/'); ?>
     </script>
+    
 </head>
 
 <body>
