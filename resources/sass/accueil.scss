@@ -8,15 +8,15 @@ $top: 220px;
 }
 
 .contenairAccueil {
-    width: auto;
+    width: 100%;
     height: 1080px;
     margin-top: -200px;
+    margin-bottom: 140px;
     background-image:  url(/storage/images/accueil3.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    // border: black solid 2px;
-    font-family: Roboto,segoe ui, Helvetica,Arial,sans-serif;
+
  }
 
  .contenairAccueil h1 {
@@ -49,7 +49,6 @@ $top: 220px;
     top: calc(#{$top} + 200px);
     left: $padd;
     width: 64%;
-    font-family: 'Lato', sans-serif;
     font-size: 20px;
     font-weight: 700;
     text-align: left;
@@ -65,15 +64,10 @@ $top: 220px;
     width: 64%;
     height: auto;
     text-align: right;
-    font-family: 'Lato', sans-serif;
-    // font-family: 'Roboto', sans-serif;
     font-size: 180px;
     font-weight: 700;
-    color:black; // #1EA0D9; //#D9B64A;
-    // box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-    // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color:black; 
 }
-
 
 
 #lienFormation{
@@ -96,6 +90,7 @@ $top: 220px;
     align-items: center;
     background-color: #920000;
     color: white;
+    font-family: 'Lato', sans-serif;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 1px;
@@ -114,7 +109,8 @@ $top: 220px;
 }
 
 .sociaux .fab, .sociaux .fas {
-    font-size: 19px;
+    font-size: 22px;
+    color: #920000;
 }
 
 

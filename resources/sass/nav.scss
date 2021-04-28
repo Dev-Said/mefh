@@ -1,12 +1,16 @@
 @import "variables";
 
-// body {
-//     width: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: flex-start;
-//     align-items: center;
-// }
+body {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Roboto Condensed', sans-serif;
+}
 
 
 .menu {
@@ -19,7 +23,7 @@
 }
 
 ul.nav {
-    // border-bottom: solid 1px #e6e6e6;
+    border-bottom: solid 1px #e6e6e6;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -35,7 +39,7 @@ ul.nav {
 }
 
 ul.nav li {
-    height: 100%;
+    height: calc(100% + 1px);
     // width: 110px;
     display: flex;
     justify-content: center;
@@ -50,8 +54,9 @@ ul.nav li {
 ul.nav li a {
     font-size: 18px;
     font-weight: 400;
+    letter-spacing: 1px;
     color: #000000;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 ul.nav li.active {
@@ -65,7 +70,7 @@ ul.nav li.active a {
 
 ul.nav li.logo {
     width: auto;
-    height: 100%;
+    height: calc(100% + 1px);
     margin-right: 40px;
     margin-left: 10%;
 }
@@ -393,7 +398,7 @@ nav > input,
     flex-wrap: wrap;
     background-color: rgb(31, 31, 31);
     color: rgb(255, 255, 255);
-    margin-top: 140px;
+    margin-top: auto;
     padding: 0;
     font-size: 14px;
     font-family: Roboto,segoe ui, Helvetica,Arial,sans-serif;

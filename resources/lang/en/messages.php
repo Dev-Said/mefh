@@ -12,6 +12,7 @@ return [
     'inscrire' => 'Register',
     'resetmdp' => 'Email Password Reset Link',
     'reset_mdp_titre' => 'Forgot your password ? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
+    'message_confirm' =>'This is a secure area of the application. Please confirm your password before continuing.',
     'mefh' => 'The Women and Men Equality Movement',
     'slogan1_formations' => 'Train yourself on women and men inequality',
     'slogan2_formations' => 'The non-profit organisation MEFH, the Movement for Equality between Women and Men, offers you online training courses on gender discrimination',

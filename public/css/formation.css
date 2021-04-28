@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: flex-start;
   background-color: #ffffff;
-  font-family: Roboto, segoe ui, Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
   border: #ebebeb solid 1px;
   border-radius: 5px;
 }
@@ -19,14 +19,14 @@
 .contenaire_text-formation {
   width: 100%;
   padding: 50px 0;
-  background-color: #460000;
+  background-color: #270000;
 }
 
 .text-formation {
   width: 70%;
   margin: 50px auto;
   padding-right: 15%;
-  font-family: Roboto, segoe ui, Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .text-formation h1 {

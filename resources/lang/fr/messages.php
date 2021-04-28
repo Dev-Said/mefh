@@ -12,6 +12,7 @@ return [
     'inscrire' => 'M\'inscrire',
     'resetmdp' => 'Réinitialiser mon mot de passe',
     'reset_mdp_titre' => 'Mot de passe oublié ? Aucun problème. Indiquez votre adresse e-mail et nous vous enverrons un lien de réinitialisation de mot de passe qui vous permettra d\'en choisir un nouveau.',
+    'message_confirm' =>'Ceci est une zone sécurisée de l\'application. Veuillez confirmer votre mot de passe avant de continuer.',
     'mefh' => 'Le mouvement pour l\'Égalité entre les Femmes et les Hommes',
     'slogan1_formations' => 'Formez-vous sur les inégalités entre les femmes et les hommes',
     'slogan2_formations' => 'L\'ASBL MEFH, le Mouvement pour l\'égalité entre les Femmes et les Hommes, vous propose des formations en ligne sur les discriminations en fonction du sexe',

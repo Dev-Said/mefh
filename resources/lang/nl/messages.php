@@ -11,6 +11,7 @@ return [
     'deja_inscrit' => 'Al geregistreerd ?',
     'resetmdp' => 'Reset mijn wachtwoord',
     'reset_mdp_titre' => 'Je wachtwoord vergeten ? Geen probleem. Laat ons uw e-mailadres weten en we zullen u een link voor het opnieuw instellen van uw wachtwoord e-mailen waarmee u een nieuwe kunt kiezen.',
+    'message_confirm' =>'Dit is een beveiligd gedeelte van de applicatie. Bevestig uw wachtwoord voordat u verder gaat.',
     'inscrire' => 'Registreren',
     'mefh' => 'De beweging voor gelijkheid tussen vrouwen en mannen',
     'slogan1_formations' => 'Train jezelf op het gebied van genderongelijkheid',
