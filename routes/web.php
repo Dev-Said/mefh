@@ -129,6 +129,7 @@ Route::group(['middleware' => 'checkAdmin'], function () {
 
     // renvoi des résultats filtrés par le choix fait dans un menu select 
     // dans les listes de la partie admin
+    
     Route::post('/chapitresOneModule', [ChapitreController::class, 'indexSelect']);
     Route::post('/modulesOneFormation', [ModuleResController::class, 'indexSelect']);
     Route::post('/questionsOneQuiz', [QuestionController::class, 'indexSelect']);

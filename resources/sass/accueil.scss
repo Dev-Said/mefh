@@ -22,13 +22,15 @@ $top: 220px;
  .contenairAccueil h1 {
     position: absolute;
     top: 150px;
-    left: 0;
+    left: 35%;
     font-size: 20PX;
     font-weight: bold;
-    width: 100%;
+    width: auto;
     text-align: center;
-    color: #920000;
-    // border: black solid 2px;
+    color: black;
+    border-top: #920000 solid 1px;
+    border-bottom:#920000 solid 1px;
+    padding: 10px 15px;
  }
 
 .textAccueil1{
@@ -40,7 +42,7 @@ $top: 220px;
     font-size: 160px;
     font-weight: 700;
     text-align: left;
-    color:#000000;
+    color: black;
     // border: black solid 2px;
 }
 
@@ -53,7 +55,7 @@ $top: 220px;
     font-weight: 700;
     text-align: left;
     line-height: 28px;
-    color:#000000;
+    color:black;
 }
 
 
@@ -66,7 +68,7 @@ $top: 220px;
     text-align: right;
     font-size: 180px;
     font-weight: 700;
-    color:black; 
+    color:black;
 }
 
 
@@ -110,7 +112,7 @@ $top: 220px;
 
 .sociaux .fab, .sociaux .fas {
     font-size: 22px;
-    color: #920000;
+    color: black;
 }
 
 

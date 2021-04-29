@@ -27,7 +27,6 @@ class StorePostChapitreRequest extends FormRequest
             'titre' => 'required|max:255|string',
             'description' => 'required|string',
             'fichier_video' => 'required',
-            'sous_titres' => 'required',
             'module_id' => 'required|max:5|alpha_num',
         ];
     }

@@ -14,15 +14,14 @@
     <form action="/chapitresOneModule" method="post" class="contenaire_list_form">
         @csrf
         <p>
-            <select name="module" class="contenaire_list_select">
-            <option value="all modules" hidden disabled selected>Sélectionnez un module</option>
-            <option value="all modules">Sélectionner tous les modules</option>
+            <select name="module" class="contenaire_list_select" onchange="this.form.submit()">
+                <option value="all modules" hidden disabled selected>Sélectionnez un module</option>
+                <option value="all modules">Sélectionner tous les modules</option>
                 @foreach($modules as $module)
                 <option value="{{ $module->id }}">{{ $module->titre }}</option>
                 @endforeach
             </select>
-        </p>       
-        <input type="submit" value="Sélectionner" class="contenaire_list_submit">
+        </p>
     </form>
 
 

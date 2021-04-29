@@ -159,6 +159,16 @@ class ChapitreController extends Controller
     {
         $moduleId = $chapitre->module_id;
         Storage::delete('public/' . $chapitre->fichier_video);
+        Storage::delete('public/' . $chapitre->sous_titres);
+
+        // c'est ça qui est utilisé en production pour éffacer les fichiers
+        // if(!empty($chapitre->fichier_video)) {
+        //     unlink ( 'MEFH/storage/app/public/' . $chapitre->fichier_video ) ;
+        // } 
+        // if(!empty($chapitre->sous_titres)) {
+        //     unlink ( 'MEFH/storage/app/public/' . $chapitre->sous_titres ) ;
+        // }
+
         $chapitre->delete();
 
         // pour les chapitres d'un module donné
@@ -179,9 +189,42 @@ class ChapitreController extends Controller
             }
         }
 
-        return back();
+        return redirect('chapitres');
     }
 
+
+    // public function deleteAll(Request $request)
+    // {
+        
+    //     $chapitre = Chapitre::find($request->chapitreId);
+
+    //     // dd($chapitre);
+
+
+    //     Storage::delete('public/' . $request->fichier_video);
+    //     // Storage::delete('public/' . $request->sous_titres);
+    //     $chapitre->delete();
+
+    //     // pour les chapitres d'un module donné
+    //     // réctifie si besoin les valeurs de ordre
+    //     // pour garder la continuité et supprimer les trous
+    //     $chapitres = chapitre::where('module_id', $chapitre->module_id)
+    //         ->orderBy('ordre', 'asc')
+    //         ->get();
+
+    //     $i = 1;
+    //     foreach ($chapitres  as $chapitre) {
+    //         if ($chapitre !== $i) {
+    //             $chapitre->ordre = $i;
+    //             $chapitre->save();
+    //             $i++;
+    //         } else {
+    //             $i++;
+    //         }
+    //     }
+
+    //     return redirect('chapitres');
+    // }
 
     // enregistre dans chapitreSuivis les chapitre_id 
     // que l'utilisateur veut marquer comme déjà suivis

@@ -19,6 +19,25 @@ $fa-font-path: "../webfonts";
     // border: 1px solid rgb(161, 141, 141);
 }
 
+.contactHeader {
+    width: 100%;
+    padding: 20px;
+    // background-color: #450707;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenairContact h1 {
+    width: 65%;
+    text-align: left;
+    margin: 40px 0;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 30px;
+    color: black;
+}
+
 .sousContenairContact {
     display: flex;
     flex-direction: row;
@@ -28,19 +47,6 @@ $fa-font-path: "../webfonts";
     width: 70%;
     height: auto;
     padding: 50px 0;
-    // background-image:  url(/storage/images/contact.jpg);
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background-position: center;
-    // border: 1px solid rgb(50, 35, 182);
-}
-
-.contenairContact h1 {
-    width: 70%;
-    text-align: left;
-    margin: 50px auto;
-    font-size: 25px;
-    font-weight: bold;
 }
 
 .contenairCoordonees {
@@ -128,7 +134,7 @@ iframe {
     width: 100%;
     box-sizing: border-box;
     border: none;
-    border-bottom: solid 1px rgb(196, 196, 196);
+    border-bottom: solid 1px #032C45;
 }
 
 .contenairForm input:focus,
@@ -147,7 +153,7 @@ iframe {
     height: 40px;
     background-color: transparent;
     border-radius: 20px;
-    border: solid 1px rgb(10, 150, 214);
+    border: solid 1px #032C45;
     font-size: 16px;
     font-weight: bold;
 }
@@ -156,7 +162,7 @@ iframe {
 .coordonnees .far {
     font-size: 20px;
     margin-right: 8px;
-    color: rgb(68, 68, 68);
+    color: #032C45;
 }
 
 

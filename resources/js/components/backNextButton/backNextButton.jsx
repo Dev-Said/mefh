@@ -41,18 +41,19 @@ const BackNextButton = (props) => {
   var modTab = [];
   var chapi;
   // props.chapitres.map(chapitre => arrChap.push(chapitre[1]));
-  props.chapitres.map(chapitre => {
-    if (modId == 0) {
+  props.chapitres.map((chapitre, index) => {
+    if (index == 0) {
+      modId = chapitre[1].module_id;
       modTab.push(chapitre[1]);
-      modId = 1;
     }
     if (modId != chapitre[1].module_id) {
+      modId = chapitre[1].module_id;
       modTab.push(chapitre[1]);
-      ++modId;
     }
   })
   // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
-  var nbModules = modTab.length ? modTab.length : 5;
+  var nbModules = modTab.length ? modTab.length : 1;
+  console.log('nbModules   ' + nbModules);
 
   // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
@@ -64,31 +65,19 @@ const BackNextButton = (props) => {
   });
 
 
-  // modifie activeStep pour positionner le bon onglet "précédent / suivant"
-  // useEffect(() => {
-  //   setActiveStep(props.info_chapitre.module_ordre);
-  // }, [props.info_chapitre.module_ordre]);
-
   // met à jour le store avec le premier chapitre du module sélectionné
   useEffect(() => {
-      // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: modTab[props.store_curChapitre] });
-      store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.info_chapitre.module_ordre - 1});
+    store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.info_chapitre.module_ordre - 1 });
   }, [props.info_chapitre.module_ordre]);
 
   //passe au module suivant
   const handleNext = () => {
-    // setCurChapitre(curChapitre + 1);
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: modTab[props.store_curChapitre + 1] });
-    // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre + 1});
-    
   };
 
   //passe au module précédent
   const handleBack = () => {
-    // setCurChapitre(curChapitre - 1);
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: modTab[props.store_curChapitre - 1] });
-    // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre - 1});
-    
   };
 
   return (
@@ -101,14 +90,14 @@ const BackNextButton = (props) => {
         // variant="contained"
         >
           {props.localiz['prev']}
-              </Button>
+        </Button>
         <Button
           disabled={props.store_curChapitre == nbModules - 1}
           // variant="contained"
           className={classes.nextButton}
           onClick={handleNext}>
           {props.localiz['next']}
-                </Button>
+        </Button>
       </div>
     </div>
   );

@@ -22728,19 +22728,20 @@ var BackNextButton = function BackNextButton(props) {
   var modTab = [];
   var chapi; // props.chapitres.map(chapitre => arrChap.push(chapitre[1]));
 
-  props.chapitres.map(function (chapitre) {
-    if (modId == 0) {
+  props.chapitres.map(function (chapitre, index) {
+    if (index == 0) {
+      modId = chapitre[1].module_id;
       modTab.push(chapitre[1]);
-      modId = 1;
     }
 
     if (modId != chapitre[1].module_id) {
+      modId = chapitre[1].module_id;
       modTab.push(chapitre[1]);
-      ++modId;
     }
   }); // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
 
-  var nbModules = modTab.length ? modTab.length : 5; // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
+  var nbModules = modTab.length ? modTab.length : 1;
+  console.log('nbModules   ' + nbModules); // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
   // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
 
@@ -22751,14 +22752,9 @@ var BackNextButton = function BackNextButton(props) {
         chapitreData: props.chapitres[0][1]
       });
     }
-  }); // modifie activeStep pour positionner le bon onglet "précédent / suivant"
-  // useEffect(() => {
-  //   setActiveStep(props.info_chapitre.module_ordre);
-  // }, [props.info_chapitre.module_ordre]);
-  // met à jour le store avec le premier chapitre du module sélectionné
+  }); // met à jour le store avec le premier chapitre du module sélectionné
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    // store.dispatch({ type: 'GET_CHAPITRE', chapitreData: modTab[props.store_curChapitre] });
     _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
       type: 'GET_BACKNEXT',
       curChapitre: props.info_chapitre.module_ordre - 1
@@ -22766,20 +22762,18 @@ var BackNextButton = function BackNextButton(props) {
   }, [props.info_chapitre.module_ordre]); //passe au module suivant
 
   var handleNext = function handleNext() {
-    // setCurChapitre(curChapitre + 1);
     _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
       type: 'GET_CHAPITRE',
       chapitreData: modTab[props.store_curChapitre + 1]
-    }); // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre + 1});
+    });
   }; //passe au module précédent
 
 
   var handleBack = function handleBack() {
-    // setCurChapitre(curChapitre - 1);
     _redux_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch({
       type: 'GET_CHAPITRE',
       chapitreData: modTab[props.store_curChapitre - 1]
-    }); // store.dispatch({ type: 'GET_BACKNEXT', curChapitre: props.store_curChapitre - 1});
+    });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {

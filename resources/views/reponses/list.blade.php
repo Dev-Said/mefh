@@ -13,15 +13,14 @@
     <form action="/reponsesOneQuestion" method="post" class="contenaire_list_form">
         @csrf
         <p>
-            <select name="question" class="contenaire_list_select">
-            <option value="all questions" hidden disabled selected>Sélectionnez une question</option>
-            <option value="all questions">Sélectionner toutes les questions</option>
+            <select name="question" class="contenaire_list_select" onchange="this.form.submit()">
+                <option value="all questions" hidden disabled selected>Sélectionnez une question</option>
+                <option value="all questions">Sélectionner toutes les questions</option>
                 @foreach($questions as $question)
                 <option value="{{ $question->id }}">{{ $question->question }}</option>
                 @endforeach
             </select>
-        </p>       
-        <input type="submit" value="Sélectionner" class="contenaire_list_submit">
+        </p>
     </form>
 
 

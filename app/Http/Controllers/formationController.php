@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\module;
 use App\Models\formation;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreFormationRequest;
 use App\Http\Requests\UpdateFormationRequest;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Http\Controllers\ModuleResController;
+
+
 
 class FormationController extends Controller
 {
@@ -21,7 +25,7 @@ class FormationController extends Controller
     public function index()
     {
         $formations = formation::orderBy('ordre', 'asc')
-        ->get();
+            ->get();
 
         return view('formations.list', ['formations' => $formations]);
     }
@@ -145,10 +149,19 @@ class FormationController extends Controller
      */
     public function destroy(formation $formation)
     {
-        // dd($formation->image_formation);
+        // on récupère les modules de la formation pour les
+        // supprimer
+        $modulesToDelete = module::where('formation_id', $formation->id)
+            ->get();
+
+        $moduleController = new ModuleResController;
+
+        foreach ($modulesToDelete as $module) {
+            $moduleController->destroy($module);
+        }
+
         Storage::delete('public/' . $formation->image_formation);
         $formation->delete();
-
         // réctifie si besoin les valeurs du champ ordre
         // pour garder la continuité et supprimer les trous
         $formations = formation::all();
@@ -169,12 +182,12 @@ class FormationController extends Controller
     public function formationsLangue(Request $request)
     {
         $langues = DB::table('formations')
-        ->select('langue')
-        ->distinct()
-        ->orderBy('langue')
-        ->get();
+            ->select('langue')
+            ->distinct()
+            ->orderBy('langue')
+            ->get();
 
-  
+
         if ($request->langue == 'Toutes les langues') {
             $formations = formation::all();
         } else {
@@ -182,9 +195,10 @@ class FormationController extends Controller
                 ->get();
         }
 
-        return view('formations', ['formations' => $formations, 
-        'langue' => $request->langue,
-        'langues' => $langues
+        return view('formations', [
+            'formations' => $formations,
+            'langue' => $request->langue,
+            'langues' => $langues
         ]);
     }
 
@@ -193,13 +207,13 @@ class FormationController extends Controller
     public function changeOrdre(Request $request)
     {
         $formationRemplace = formation::where('ordre', $request->ordre)
-        ->first();
+            ->first();
 
         $formation = formation::where('id', $request->formation)->first();
 
         $formationsCount = formation::all()->count();
 
-         if ($request->operation == 'dec') {
+        if ($request->operation == 'dec') {
             if ($request->ordre > 0) {
                 $formationRemplace->ordre = $formation->ordre;
                 $formationRemplace->save();
@@ -215,9 +229,8 @@ class FormationController extends Controller
                 $formation->save();
                 return redirect('/formations');
             }
-        } 
+        }
 
         return redirect('/formations');
-        
     }
 }

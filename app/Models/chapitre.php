@@ -15,6 +15,7 @@ class chapitre extends Model
         'description',
         'ordre',
         'module_id',
+        'sous_titres',
     ];
 
 

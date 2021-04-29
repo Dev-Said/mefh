@@ -16,12 +16,15 @@
 .contenairAccueil h1 {
   position: absolute;
   top: 150px;
-  left: 0;
+  left: 35%;
   font-size: 20PX;
   font-weight: bold;
-  width: 100%;
+  width: auto;
   text-align: center;
-  color: #920000;
+  color: black;
+  border-top: #920000 solid 1px;
+  border-bottom: #920000 solid 1px;
+  padding: 10px 15px;
 }
 
 .textAccueil1 {
@@ -33,7 +36,7 @@
   font-size: 160px;
   font-weight: 700;
   text-align: left;
-  color: #000000;
+  color: black;
 }
 
 .textAccueil2 {
@@ -45,7 +48,7 @@
   font-weight: 700;
   text-align: left;
   line-height: 28px;
-  color: #000000;
+  color: black;
 }
 
 .sousTextAccueil {
@@ -100,5 +103,5 @@
 
 .sociaux .fab, .sociaux .fas {
   font-size: 22px;
-  color: #920000;
+  color: black;
 }

@@ -21,11 +21,13 @@ $colour: #8b8b8b;
 .contenaire_text-formation {
     width: 100%;
     padding: 10px 0;
-    background-color: #270000;
+    // background-color: #450707; //#270000;
+
+   
 }
 .text-formation {
     width: 70%;
-    margin: 50px auto;
+    margin: 50px auto 0 auto;
     padding-right: 15%;
     padding-left: 2%;
     font-family: 'Roboto Condensed', sans-serif;
@@ -35,7 +37,7 @@ $colour: #8b8b8b;
     font-size: 30px;
     margin-bottom: 15px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
 .text-formation p {
@@ -43,7 +45,7 @@ $colour: #8b8b8b;
     line-height: 22px;
     letter-spacing: 1px;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
 .selectForm {

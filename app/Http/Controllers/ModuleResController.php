@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreModuleRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ChapitreController;
+use App\Models\chapitre;
 
 class ModuleResController extends Controller
 {
@@ -156,6 +158,7 @@ class ModuleResController extends Controller
         return redirect('/modules');
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -164,6 +167,18 @@ class ModuleResController extends Controller
      */
     public function destroy(module $module)
     {
+  
+        // on récupère les chapitres du modulen pour les
+        // supprimer
+        $chapitresToDelete = chapitre::where('module_id', $module->id)
+            ->get();
+
+        $chapitreController = new ChapitreController;
+
+        foreach ($chapitresToDelete as $chapitre) {
+            $chapitreController->destroy($chapitre);
+        }
+
         $formationId = $module->formation_id;
         $module->delete();
 
