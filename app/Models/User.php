@@ -54,8 +54,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Quiz::class)->withTimestamps();;
     }
 
-    public function isAdministrator() {
+    public function isAdministrator()
+    {
         return $this->where('admin', 1)->exists();
-     }
+    }
 
+    public function reponse_users()
+    {
+        return $this->hasMany(Reponse_user::class);
+    }
 }

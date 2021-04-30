@@ -65,22 +65,24 @@ class ReponseController extends Controller
 
         // on récupère les réponses correctes seulement
         $allReponsesForOneQuestion = Reponse::where('question_id', $question_id)
-        ->where('is_correct', 1)
-        ->get();
+            ->where('is_correct', 1)
+            ->get();
 
         // on les compte
         $countReponses = $allReponsesForOneQuestion->count();
 
         // on calcule le ratio en fonction du nombre de bonnes réponses
         // plus 1 si la nouvelle réponse est correcte
-        $value = 1 / ($countReponses + $is_correct);
+        if ($countReponses > 0) {
+            $value = 1 / ($countReponses);
+        } else { $value = 0; }
 
         // on modifie le/les champ value avec la nouvelle valeur
-        foreach($allReponsesForOneQuestion as $all){
+        foreach ($allReponsesForOneQuestion as $all) {
             $all->value = $value;
             $all->save();
         }
-        
+
         $reponse = new Reponse;
         $reponse->reponse = Arr::get($validated, 'reponse');
         $reponse->is_correct = Arr::get($validated, 'is_correct');
@@ -112,8 +114,10 @@ class ReponseController extends Controller
     public function edit(Reponse $reponse)
     {
         $questions = Question::all();
-        return view('reponses.edit', ['questions' => $questions,
-        'reponse' => $reponse]);
+        return view('reponses.edit', [
+            'questions' => $questions,
+            'reponse' => $reponse
+        ]);
     }
 
     /**
@@ -138,17 +142,19 @@ class ReponseController extends Controller
 
         // on récupère les réponses correctes seulement
         $allReponsesForOneQuestion = Reponse::where('question_id', $question_id)
-        ->where('is_correct', 1)
-        ->get();
+            ->where('is_correct', 1)
+            ->get();
 
         // on les compte
         $countReponses = $allReponsesForOneQuestion->count();
 
         // on calcule le ratio en fonction du nombre de bonnes réponses
-        $value = 1 / $countReponses;
+        if ($countReponses > 0) {
+            $value = 1 / ($countReponses);
+        } else { $value = 0; }
 
         // on modifie le/les champ value avec la nouvelle valeur
-        foreach($allReponsesForOneQuestion as $all){
+        foreach ($allReponsesForOneQuestion as $all) {
             $all->value = $value;
             $all->save();
         }
@@ -164,29 +170,36 @@ class ReponseController extends Controller
      */
     public function destroy(Reponse $reponse)
     {
-        
+
         $question_id = $reponse->question_id;
-        
+
         $reponse->delete();
-         // on récupère les réponses correctes seulement
-         $allReponsesForOneQuestion = Reponse::where('question_id', $question_id)
-         ->where('is_correct', 1)
-         ->get();
 
-         // on les compte
-         $countReponses = Reponse::where('question_id', $question_id)
-         ->where('is_correct', 1)
-         ->count();
- 
-         // on calcule le ratio en fonction du nombre de bonnes réponses
-         $value = 1 / ($countReponses);
+        // lorsqu'on supprime une réponse on doit re calculer
+        // la valeur des réponses restantes pour une question donnée
+        // pour qu'elles valent 1 point toutes ensemble
 
-        foreach($allReponsesForOneQuestion as $all){
+        // on récupère les réponses correctes seulement
+        $allReponsesForOneQuestion = Reponse::where('question_id', $question_id)
+            ->where('is_correct', 1)
+            ->get();
+
+        // on les compte
+        $countReponses = Reponse::where('question_id', $question_id)
+            ->where('is_correct', 1)
+            ->count();
+
+        // on calcule le ratio en fonction du nombre de bonnes réponses
+        if ($countReponses > 0) {
+            $value = 1 / ($countReponses);
+        } else { $value = 0; }
+
+        foreach ($allReponsesForOneQuestion as $all) {
             $all->value = $value;
             $all->save();
         }
 
-        
+
         return redirect('/reponses');
     }
 }

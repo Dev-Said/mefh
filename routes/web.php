@@ -10,13 +10,13 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
-use App\Http\Controllers\ModuleApiController;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CertificatController;
@@ -93,6 +93,8 @@ Route::group([
 
     Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
 
+    Route::get('/profile', [ProfileController::class, 'getUser']);
+
     // en mettant cette route ici je peut obtenir son url et savoir dans quelle langue on est pour gérer le multilangue dans react
     Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
 });
@@ -154,6 +156,7 @@ Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
 Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
 Route::get('/faqChange', [FaqController::class, 'getChange']);
 Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
+
 
 
 

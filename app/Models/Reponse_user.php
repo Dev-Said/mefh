@@ -21,4 +21,14 @@ class Reponse_user extends Model
     ];
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
 }

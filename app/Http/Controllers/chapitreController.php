@@ -161,14 +161,15 @@ class ChapitreController extends Controller
         Storage::delete('public/' . $chapitre->fichier_video);
         Storage::delete('public/' . $chapitre->sous_titres);
 
-        // c'est ça qui est utilisé en production pour éffacer les fichiers
+        // code utilisé en production pour éffacer les fichiers-----------------
         // if(!empty($chapitre->fichier_video)) {
         //     unlink ( 'MEFH/storage/app/public/' . $chapitre->fichier_video ) ;
         // } 
         // if(!empty($chapitre->sous_titres)) {
         //     unlink ( 'MEFH/storage/app/public/' . $chapitre->sous_titres ) ;
         // }
-
+        // ---------------------------------------------------------------------
+        
         $chapitre->delete();
 
         // pour les chapitres d'un module donné

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\quiz;
 use App\Models\module;
+use App\Models\Question;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreQuizRequest;
+use App\Http\Requests\StorequizRequest;
+use App\Http\Controllers\QuestionController;
 
-class QuizController extends Controller
+class quizController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,11 +44,11 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreQuizRequest $request)
+    public function store(StorequizRequest $request)
     {
         $validated = $request->validated();
 
-        $quiz = new quiz;
+        $quiz = new Quiz;
         $quiz->titre = Arr::get($validated, 'titre');
         $quiz->module_id = Arr::get($validated, 'module_id');
 
@@ -86,7 +88,7 @@ class QuizController extends Controller
      * @param  \App\Models\Quiz  $quiz
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreQuizRequest $request, Quiz $quiz)
+    public function update(StorequizRequest $request, Quiz $quiz)
     {
         $validated = $request->validated();
 
@@ -106,6 +108,18 @@ class QuizController extends Controller
      */
     public function destroy(Quiz $quiz)
     {
+
+        // on récupère les questions du quiz pour les
+        // supprimer
+        $questionsToDelete = Question::where('quiz_id', $quiz->id)
+            ->get();
+
+        $questionController = new QuestionController;
+
+        foreach ($questionsToDelete as $question) {
+            $questionController->destroy($question);
+        }
+
         $quiz->delete();
 
         return redirect('/quizzes');
@@ -125,7 +139,7 @@ class QuizController extends Controller
         // le quiz correspondant avec les relations
         // questions et reponses
 
-        $quiz = quiz::where('module_id', $id)
+        $quiz = Quiz::where('module_id', $id)
             ->with('questions.reponses')->get();
 
         if ($quiz->isEmpty()) {

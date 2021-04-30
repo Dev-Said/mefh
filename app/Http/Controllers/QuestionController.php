@@ -17,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
+        $quizzes = quiz::all();
         $questions = Question::all();
         return view('questions.list', ['questions' => $questions, 'quizzes' => $quizzes]);
     }
@@ -25,7 +25,7 @@ class QuestionController extends Controller
     public function indexSelect(Request $request)
     {
 
-        $quizzes = Quiz::all();
+        $quizzes = quiz::all();
         if ($request->quiz == 'all quizzes') {
             $questions = Question::orderBy('quiz_id', 'asc')
                 ->orderBy('ordre', 'asc')
@@ -47,7 +47,7 @@ class QuestionController extends Controller
     {
         //$questionsCount sert à définir l'ordre des questions dans le quiz. Il pourra être modifié
         $questionsCount = Question::all()->max('ordre') + 1;
-        $quizzes = Quiz::all();
+        $quizzes = quiz::all();
         return view('questions.form', ['questionsCount' => $questionsCount, 
                                         'quizzes' => $quizzes,
                                         ]);
@@ -94,7 +94,7 @@ class QuestionController extends Controller
     public function edit(Question $question)
     {
 
-        $quizzes = Quiz::all();
+        $quizzes = quiz::all();
         return view('questions.edit', ['quizzes' => $quizzes,
         'question' => $question]);
     }

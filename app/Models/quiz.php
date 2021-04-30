@@ -38,4 +38,9 @@ class Quiz extends Model
     {
         return $this->hasMany(Remembers::class);
     }
+
+    public function reponse_users()
+    {
+        return $this->hasMany(Reponse_user::class);
+    }
 }

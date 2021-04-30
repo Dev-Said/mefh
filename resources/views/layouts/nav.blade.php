@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/contact.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/legal.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/authentification.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/profile.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 

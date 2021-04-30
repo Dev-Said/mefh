@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\quiz;
 use App\Models\module;
+use App\Models\chapitre;
 use App\Models\formation;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreModuleRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\QuizController;
+use App\Http\Requests\StoreModuleRequest;
 use App\Http\Controllers\ChapitreController;
-use App\Models\chapitre;
 
 class ModuleResController extends Controller
 {
@@ -181,6 +183,17 @@ class ModuleResController extends Controller
 
         $formationId = $module->formation_id;
         $module->delete();
+
+        // on récupère les quiz de la formation pour les
+        // supprimer
+        $quizToDelete = quiz::where('module_id', $module->id)
+            ->get();
+
+        $quizController = new QuizController;
+
+        foreach ($quizToDelete as $quiz) {
+            $quizController->destroy($quiz);
+        }
 
         // pour les modules d'une formation donnée
         // réctifie si besoin les valeurs de ordre

@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\module;
 use App\Models\formation;
+use App\Models\Ressource;
+use App\Models\Certificat;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreFormationRequest;
-use App\Http\Requests\UpdateFormationRequest;
-use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Controllers\ModuleResController;
+use App\Http\Controllers\RessourceController;
+use App\Http\Requests\UpdateFormationRequest;
+use App\Http\Controllers\CertificatController;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 
@@ -116,6 +122,12 @@ class FormationController extends Controller
         // et on stock le nouveau
         if ($request->hasFile('image_formation')) {
 
+
+            // code utilisé en production
+            // if(!empty($formation->image_formation)) {
+            //     unlink ('MEFH/storage/app/public/' . $formation->image_formation ) ;
+            // } 
+
             Storage::delete('public/' . $formation->image_formation);
             // si il y a un fichier image on le redimenssionne avec "intervention image" 
             // avant la sauvegarde
@@ -159,6 +171,45 @@ class FormationController extends Controller
         foreach ($modulesToDelete as $module) {
             $moduleController->destroy($module);
         }
+
+        // on récupère la faq de la formation pour la
+        // supprimer
+        $ressourceToDelete = Ressource::where('formation_id', $formation->id)
+            ->get();
+
+        $ressourceController = new RessourceController;
+
+        foreach ($ressourceToDelete as $ressource) {
+            $ressourceController->destroy($ressource);
+        }
+
+        // on récupère les ressources de la formation pour les
+        // supprimer
+        $faqToDelete = Faq::where('formation_id', $formation->id)
+            ->get();
+
+        $faqController = new FaqController;
+
+        foreach ($faqToDelete as $faq) {
+            $faqController->destroy($faq);
+        }
+
+        // on récupère le certificat de la formation pour le
+        // supprimer
+        $certificatToDelete = Certificat::where('formation_id', $formation->id)
+            ->get();
+
+        $certificatController = new CertificatController;
+
+        foreach ($certificatToDelete as $certificat) {
+            $certificatController->destroy($certificat);
+        }
+
+
+        // code utilisé en production
+        // if(!empty($formation->image_formation)) {
+        // unlink ('MEFH/storage/app/public/' . $formation->image_formation ) ;
+        // }
 
         Storage::delete('public/' . $formation->image_formation);
         $formation->delete();
