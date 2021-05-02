@@ -59,16 +59,19 @@ export default function Register(props) {
         setPassword(event.target.value);
     };
 
+    // crée un nouvel utilisateur via un formulaire proposé
+    // quand on veut sauvegarder les résultats d'un quiz et 
+    // qu'on est pas déjà inscrit ensuite récupère l'user id
     const handleSubmit = (event) => {
         event.preventDefault();
         var admin = 0;
         axios.post(`${globalUrl}usersFromQuizForm`,
             { nom: nom, prenom: prenom, email: email, sexe: sexe, password: password, admin: admin })
-            .then(function (response) {
+            .then(function (response) {  // enregistre dans reponses_user les résultats du quiz
                 axios.post(`${globalUrl}reponses_user`,
                     { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id })
                     .then(function (response) {
-                        console.log('success   ' + response.data);
+                        console.log('gotCertificat   ' + response.data);
                         document.getElementById("myModal2").style.display = "none";
                     })
                     .catch(function (error) {

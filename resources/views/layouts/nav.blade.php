@@ -90,7 +90,7 @@
                         </li>
                         @endif
                         <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
-                            <a href="/"><button id="buttonconnex">{{ __('messages.mon_profile') }}</button></a>
+                            <a href="/profile"><button id="buttonconnex">{{ __('messages.mon_profile') }}</button></a>
                         </li>
                         <li class="connex nav-item {{ 'logout' == request()->path() ? 'active' : '' }}">
                             <a href="/logout"><button id="buttonconnex">{{ __('messages.deconnexion') }}</button></a>

@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import ModalFooterButton from '../modalFooterButton/modalFooterButton';
 import Register from '../register/register';
 import Login from '../login/login';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -181,7 +182,7 @@ const Quiz = (props) => {
         }
       }
     }
-    
+
     return Number(value);
   }
 
@@ -204,9 +205,9 @@ const Quiz = (props) => {
     // s'il n'y a pas de questions manquantes 
     // affiche une modal avec le score du quiz
     if (questionMissing.length == 0) {
-      
+
       val = Number(valFunc(userReponseVar));
-      setScore(Math.ceil((val / allQuestionsId.length) * 100)); 
+      setScore(Math.ceil((val / allQuestionsId.length) * 100));
       var scoreTest = Math.ceil((val / allQuestionsId.length) * 100);
 
       if (scoreTest >= 80) {
@@ -251,15 +252,56 @@ const Quiz = (props) => {
       handelModal();
     } else {
       axios.post(`${globalUrl}reponses_user`,
-        { resultat: score, id: auth[2], quiz_id: idQuiz })
+        { resultat: score, id: auth[2], quiz_id: idQuiz, formation_id: idFormation })
         .then(function (response) {
           console.log('success   ' + response.data);
+          if (response.data == true) {
+            certificat();
+          }
           document.getElementById("myModal2").style.display = "none";
         })
         .catch(function (error) {
           console.log('probleme   ' + error);
         });
     }
+  }
+
+
+  const certificat = () => {
+    document.getElementById("myModal2").style.display = "none";
+
+    var headerModal = document.getElementById("certificatheaderModal");
+    headerModal.style.backgroundColor = "#4771aa";
+
+    var footerModal = document.getElementById("certificatfooterModal");
+    footerModal.style.backgroundColor = "#4771aa";
+
+    var headerModal = document.getElementById("certificatModal");
+    console.log('headerModal   ' + headerModal)
+    headerModal.style.display = "block";
+
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function () {
+      headerModal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      if (event.target == headerModal) {
+        headerModal.style.display = "none";
+      }
+    };
+  }
+
+
+  const downloadCertificat = () => {
+    axios.get(`${globalUrl}pdf`)
+      .then(function (response) {
+        console.log('success   ' + response.data);
+        window.location = 'http://127.0.0.1:8000/profile';
+      })
+      .catch(function (error) {
+        console.log('probleme   ' + error);
+      });
   }
 
 
@@ -303,10 +345,25 @@ const Quiz = (props) => {
   return (
     <div className={classes.root}>
 
+      <div id="certificatModal" className="modal">
+        <div className="modal-content">
+          <div id="certificatheaderModal" className="headerModal"><span className="close"><CloseIcon /></span></div>
+          <p>Félicitation vous avez réussi tous les quiz de la formation</p>
+          <div id="certificatfooterModal" className="footerModal">
+            <button class="close" onClick={downloadCertificat}>
+              Télécharger le certificat
+            </button>
+            <button class="close" onClick={closeModal}>
+              Quitter
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* affiche l'erreur quiz non complet */}
       <div id="myModal" className="modal">
         <div className="modal-content">
-          <div className="headerModal"><span className="close">x</span></div>
+          <div className="headerModal"><span className="close"><CloseIcon /></span></div>
           <p>Vous devez répondre à toutes les questions du quiz !</p>
           <div className="footerModal"></div>
         </div>
@@ -317,9 +374,10 @@ const Quiz = (props) => {
       <div id="myModal2" className="modal2">
         <div className="modal-content2">
 
-          <div className="headerModal2"><span className="close2">x</span></div>
+          <div id="headerModal" className="headerModal2"><span className="close2"><CloseIcon /></span></div>
           <p> {messageScore} </p>
-          {messageScore == 'Enregistrez-vous' ? <Register resultat={score} quiz_id={idQuiz} /> :
+          {messageScore == 'Enregistrez-vous' ?
+            <Register resultat={score} quiz_id={idQuiz} /> :
             messageScore == 'Enregister mes résultats' ?
               <Login resultat={score} quiz_id={idQuiz} handleView={props.handleView} /> :
               <ModalFooterButton message={messageFooter}
@@ -335,6 +393,9 @@ const Quiz = (props) => {
       </div>
 
 
+
+
+      {/* EN FAIRE UN COMPOSANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
       <div className="quizHeader">
         <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
           Revenir sur la page de formation</Button>

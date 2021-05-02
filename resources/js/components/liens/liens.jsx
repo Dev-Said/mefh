@@ -55,11 +55,6 @@ export default function Links(props) {
                     <PeopleIcon className={classes.icon} /> {props.localiz['res']}
         </Typography> : ''
             }
-            {props.certificats != 'hide' && props.certificats != '' ?
-                <Typography className={classes.lien} onClick={() => props.handleView('certificat')}>
-                    <VerifiedUserIcon className={classes.icon} /> {props.localiz['cert']}
-        </Typography> : ''
-            }
         </div>
     );
 }

@@ -41,8 +41,13 @@ export default function Certificat(props) {
 
     return (
         <div>
+
+
             <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.backButton}>
                 Revenir sur la page de formation</Button>
+
+
+
             <div className={classes.root}>
                 {certificats.map((ressource, index) => (
                     <Card key={index} className={classes.root} >

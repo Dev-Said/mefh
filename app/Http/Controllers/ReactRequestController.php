@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Models\Ressource;
-use App\Models\Certificat;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Lang;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ReactRequestController extends Controller
 {
-    // renvoi le certificat, la ressource et/ou la faq d'une formation donnée
+    // renvoi la ressource et/ou la faq d'une formation donnée
     // s'il y en a. Sinon renvoi hide pour cacher les liens où il n'y a rien
+    // dans la page de formation
     public function getLiens($idFormation)
     {
        
@@ -28,16 +25,7 @@ class ReactRequestController extends Controller
         }
 
 
-        $liens = Array( ["certificat" => "", "ressource" => "", "faq" => "", "langue" => ""] );
-
-        $certificat = Certificat::where('formation_id', '=', $idFormation)
-            ->get();
-
-        if ($certificat->isEmpty()) {
-            $liens["certificat"] = 'hide';
-        } else {
-            $liens["certificat"] = $certificat;
-        }
+        $liens = Array( ["ressource" => "", "faq" => "", "langue" => ""] );
 
         $ressource = Ressource::where('formation_id', '=', $idFormation)
             ->get();

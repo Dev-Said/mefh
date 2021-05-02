@@ -6,7 +6,6 @@ use App\Models\Faq;
 use App\Models\module;
 use App\Models\formation;
 use App\Models\Ressource;
-use App\Models\Certificat;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +15,6 @@ use App\Http\Requests\StoreFormationRequest;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Requests\UpdateFormationRequest;
-use App\Http\Controllers\CertificatController;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
@@ -193,18 +191,6 @@ class FormationController extends Controller
         foreach ($faqToDelete as $faq) {
             $faqController->destroy($faq);
         }
-
-        // on récupère le certificat de la formation pour le
-        // supprimer
-        $certificatToDelete = Certificat::where('formation_id', $formation->id)
-            ->get();
-
-        $certificatController = new CertificatController;
-
-        foreach ($certificatToDelete as $certificat) {
-            $certificatController->destroy($certificat);
-        }
-
 
         // code utilisé en production
         // if(!empty($formation->image_formation)) {

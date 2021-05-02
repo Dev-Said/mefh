@@ -65,7 +65,7 @@
   text-align: right;
 }
 
-.close {
+.close, .closeWarning {
   color: white;
   margin: 15px 25px;
   padding: 10px;
@@ -75,7 +75,9 @@
 }
 
 .close:hover,
-.close:focus {
+.close:focus,
+.closeWarning:hover,
+.closeWarning:focus {
   color: white;
   text-decoration: none;
   cursor: pointer;
@@ -208,4 +210,15 @@
   padding-right: 20px;
   color: white;
   font-size: 18px;
+}
+
+#certificatfooterModal {
+  width: 100%;
+  display: flex;
+  flex: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+#certificatfooterModal button {
+  margin-right: 15px;
 }

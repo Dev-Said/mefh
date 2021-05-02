@@ -60,15 +60,19 @@ export default function ModalFooterButton(props) {
   return (
     <div className={classes.root}>
     <p> { props.message } </p>
+
     {/* teste si le score est > = 80 pour afficher les boutons s\'inscrire et ou enregistrer */}
+
       {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()} 
       style={{minWidth: '250px'}} >
         { props.titre0 }
-      </BootstrapButton>}      
+      </BootstrapButton>}    
+
       {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}
       style={{minWidth: '150px'}} >
         { props.titre1 }
       </BootstrapButton>}
+      
       <BootstrapButton variant="contained" onClick={() => props.closeModal()} 
       style={{minWidth: '150px'}} >
       { props.titre2 }

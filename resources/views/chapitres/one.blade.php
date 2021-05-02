@@ -3,17 +3,17 @@
         {{$chapitre->titre}}
     </td>
     <td>
-        {{mb_strimwidth($chapitre->description, 0, 100, '...')}}  
+        {{mb_strimwidth($chapitre->description, 0, 100, '...')}}
     </td>
     <td>
         {{$chapitre->module->titre}}
     </td>
-    <td >
-    <a href="/changeOrdreMChapitre?ordre={{$chapitre->ordre - 1}}&chapitre={{$chapitre->id}}&module={{$chapitre->module->id}}&operation=dec">
-    <i class="fas fa-long-arrow-alt-up upArrow"></i></a>
+    <td>
+        <a href="/changeOrdreMChapitre?ordre={{$chapitre->ordre - 1}}&chapitre={{$chapitre->id}}&module={{$chapitre->module->id}}&operation=dec">
+            <i class="fas fa-long-arrow-alt-up upArrow"></i></a>
         {{$chapitre->ordre}}
         <a href="/changeOrdreMChapitre?ordre={{$chapitre->ordre + 1}}&chapitre={{$chapitre->id}}&module={{$chapitre->module->id}}&operation=inc">
-        <i class="fas fa-long-arrow-alt-down downArrow"></i></a>
+            <i class="fas fa-long-arrow-alt-down downArrow"></i></a>
     </td>
 
     @if(Auth::check())

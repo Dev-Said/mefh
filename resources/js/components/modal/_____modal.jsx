@@ -1,4 +1,5 @@
 import React from "react";
+import CloseIcon from '@material-ui/icons/Close';
 
 const Modal = (props) => {
 
@@ -7,15 +8,12 @@ const Modal = (props) => {
 
             <div class="modal-content">
 
-                <div class="headerModal"><button class="close">x</button></div>
+                <div class="headerModal"><button class="close">
+                <CloseIcon /></button></div>
 
-                <p> {props.messageScore} {props.score} %</p>
+                <p> {props.message} </p>
 
-                <div class="footerModal">
-                    <p> Voulez-vous sauvegarder votre score ?</p>
-                    <button>Sauvegarder</button>
-                    <button>Annuler</button>
-                </div>
+                <div class="footerModal"></div>
 
             </div>
 

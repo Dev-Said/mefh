@@ -36,10 +36,6 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/drag', function () {
-    return view('drag');
-});
-
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
@@ -94,6 +90,16 @@ Route::group([
     Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
 
     Route::get('/profile', [ProfileController::class, 'getUser']);
+    Route::post('/profileUpadate', [ProfileController::class, 'storeCompleteProfile']);
+
+    Route::get('/edit-profile', function () {
+        if (Auth::check()) {
+            $user = Auth::user();
+            return view('profile.edit', ['user' => $user]);
+        }
+    });
+
+    Route::get('/pdf', [CertificatController::class, 'createPdf']);
 
     // en mettant cette route ici je peut obtenir son url et savoir dans quelle langue on est pour gérer le multilangue dans react
     Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
@@ -127,7 +133,6 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::resource('users', UserController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('ressources', RessourceController::class);
-    Route::resource('certificats', CertificatController::class);
 
     // renvoi des résultats filtrés par le choix fait dans un menu select 
     // dans les listes de la partie admin

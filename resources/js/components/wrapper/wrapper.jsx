@@ -10,7 +10,6 @@ import '../quiz/quiz.scss';
 import Links from '../liens/liens';
 import Faq from '../faq/faq';
 import Ressource from '../ressource/ressource';
-import Certificat from '../certificat/certificat';
 
 
 
@@ -19,7 +18,6 @@ const Wrapper = () => {
   const [view, setView] = useState('formation');
   const [faqs, setFaqs] = useState([]);
   const [ressources, setRessources] = useState([]);
-  const [certificats, setCertificats] = useState([]);
   const [langue, setLangue] = useState('');
 
 
@@ -28,7 +26,6 @@ const Wrapper = () => {
   useEffect(() => {
     axios.get(`${globalUrl}getLiens/${idFormation}`).then((res) => {
       setFaqs(res.data['faq']);
-      setCertificats(res.data['certificat']);
       setRessources(res.data['ressource']);
       setLangue(res.data['langue']);
     });
@@ -85,8 +82,8 @@ const Wrapper = () => {
       compo = <Quiz handleView={handleView} />
       break;
     case 'formation':
-      compo = [<Links faqs={faqs} ressources={ressources} certificats={certificats}
-        handleView={handleView} localiz={localiz}/>, <Stepper />,
+      compo = [<Links faqs={faqs} ressources={ressources} 
+      handleView={handleView} localiz={localiz}/>, <Stepper />,
       <Video />, <ListeChapitres handleView={handleView} localiz={localiz}/>,
       <ChapitreDescription />]
       break;
@@ -95,9 +92,6 @@ const Wrapper = () => {
       break;
     case 'faq':
       compo = <Faq faqs={faqs} handleView={handleView} />
-      break;
-    case 'certificat':
-      compo = <Certificat certificats={certificats} handleView={handleView} />
       break;
     default:
       compo = [<Links handleView={handleView} />, <Stepper />,

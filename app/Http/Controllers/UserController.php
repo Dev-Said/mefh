@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Reponse;
+use App\Models\Certificat;
 use Illuminate\Support\Arr;
 use App\Models\Reponse_user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\formation;
 
 class UserController extends Controller
 {
@@ -75,6 +78,8 @@ class UserController extends Controller
         $user->save();
         return json_encode($user->id);
     }
+
+
     /**
      * Display the specified resource.
      *
@@ -154,9 +159,38 @@ class UserController extends Controller
         $reponse_user->score = $request->resultat;
         $reponse_user->user_id = $request->id;
         $reponse_user->quiz_id = $request->quiz_id;
+        $reponse_user->formation_id = $request->formation_id;
         $reponse_user->save();
 
-        return json_encode('success');
+        $gotCertificat = false;
+
+        $allQuizFromFormation = DB::table('modules')
+        ->select(
+            'quizzes.id as quiz_id',
+        )
+        ->join('formations', 'formations.id', '=', 'modules.formation_id')
+        ->join('quizzes', 'modules.id', '=', 'quizzes.module_id')
+        ->where('formation_id', $request->formation_id)
+        ->count();
+
+        $quizDone = Reponse_user::where('user_id', $request->id)
+        ->where('formation_id', $request->formation_id)
+        ->count();
+
+        if ($quizDone == $allQuizFromFormation) {
+            $gotCertificat = true;
+            $user = User::find($request->id);
+            $formation = formation::find($request->formation_id);
+            $certificat = new Certificat;
+            $certificat->user_id = $user->id;
+            $certificat->nom = $user->nom;
+            $certificat->prenom = $user->prenom;
+            $certificat->formation_id = $formation->id;
+            $certificat->formation = $formation->titre;
+            $certificat->save();
+        }
+
+        return json_encode($gotCertificat);
     }
 
     // vérifie si user existe et que le password est ok
