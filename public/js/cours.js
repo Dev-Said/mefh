@@ -24000,12 +24000,14 @@ var Quiz = function Quiz(props) {
   };
 
   var downloadCertificat = function downloadCertificat() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(globalUrl, "pdf")).then(function (response) {
-      console.log('success   ' + response.data);
-      window.location = 'http://127.0.0.1:8000/profile';
-    })["catch"](function (error) {
-      console.log('probleme   ' + error);
-    });
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // window.location = 'https://m-egalitefemmeshommes.org/profile';
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    window.location = 'http://127.0.0.1:8000/profile';
   }; // gère la connexion et la sauvegarde des résultats du quiz -------------------------------->
 
 
@@ -24060,7 +24062,7 @@ var Quiz = function Quiz(props) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_icons_Close__WEBPACK_IMPORTED_MODULE_10__.default, {})
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("p", {
-          children: "F\xE9licitation vous avez r\xE9ussi tous les quiz de la formation"
+          children: "F\xE9licitations, vous avez r\xE9ussi tous les quiz de la formation. Vous pouvez t\xE9l\xE9charger votre certificat de r\xE9ussite sur votre page de profile."
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           id: "certificatfooterModal",
           className: "footerModal",
@@ -25547,7 +25549,7 @@ function Video(props) {
       return e.preventDefault();
     } // light={light}
     ,
-    playbackRate: (0.5, 1, 1.5) // onProgress={handleProgress}
+    playbackRate: 1 // onProgress={handleProgress}
     ,
     width: "70%",
     height: "auto",

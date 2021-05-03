@@ -14,7 +14,7 @@ function Video(props) {
             controls={true}
             onContextMenu={e => e.preventDefault()}
             // light={light}
-            playbackRate={0.5, 1, 1.5}
+            playbackRate={1}
             // onProgress={handleProgress}
             width="70%"
             height="auto"

@@ -164,6 +164,7 @@ class UserController extends Controller
 
         $gotCertificat = false;
 
+        // renvoi tous les quiz pour une formation donnée
         $allQuizFromFormation = DB::table('modules')
         ->select(
             'quizzes.id as quiz_id',
@@ -173,13 +174,20 @@ class UserController extends Controller
         ->where('formation_id', $request->formation_id)
         ->count();
 
+        // renvoi le nombre de quiz réussis par l'user
         $quizDone = Reponse_user::where('user_id', $request->id)
         ->where('formation_id', $request->formation_id)
         ->count();
 
-        if ($quizDone == $allQuizFromFormation) {
+        // si user a réussi tous les quiz de la formation 
+        // alors on l'enregistre dans la table certificat
+        $user = User::find(7);
+        $hasCertificat = Certificat::where('user_id', $user->id)
+        ->where('formation_id', 1)
+        ->exists();
+
+        if ($quizDone == $allQuizFromFormation && $hasCertificat == false) {
             $gotCertificat = true;
-            $user = User::find($request->id);
             $formation = formation::find($request->formation_id);
             $certificat = new Certificat;
             $certificat->user_id = $user->id;
@@ -188,6 +196,10 @@ class UserController extends Controller
             $certificat->formation_id = $formation->id;
             $certificat->formation = $formation->titre;
             $certificat->save();
+        }
+
+        if ($quizDone == $allQuizFromFormation && $hasCertificat == true) {
+            $gotCertificat = true;
         }
 
         return json_encode($gotCertificat);

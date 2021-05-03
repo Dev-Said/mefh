@@ -294,14 +294,14 @@ const Quiz = (props) => {
 
 
   const downloadCertificat = () => {
-    axios.get(`${globalUrl}pdf`)
-      .then(function (response) {
-        console.log('success   ' + response.data);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // window.location = 'https://m-egalitefemmeshommes.org/profile';
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         window.location = 'http://127.0.0.1:8000/profile';
-      })
-      .catch(function (error) {
-        console.log('probleme   ' + error);
-      });
   }
 
 
@@ -348,7 +348,7 @@ const Quiz = (props) => {
       <div id="certificatModal" className="modal">
         <div className="modal-content">
           <div id="certificatheaderModal" className="headerModal"><span className="close"><CloseIcon /></span></div>
-          <p>Félicitation vous avez réussi tous les quiz de la formation</p>
+          <p>Félicitations, vous avez réussi tous les quiz de la formation. Vous pouvez télécharger votre certificat de réussite sur votre page de profile.</p>
           <div id="certificatfooterModal" className="footerModal">
             <button class="close" onClick={downloadCertificat}>
               Télécharger le certificat
