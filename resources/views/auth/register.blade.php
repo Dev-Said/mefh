@@ -29,8 +29,8 @@
 
     <select name="sexe" id="sexe" class="auth_input" :value="old('sexe')" required autofocus style="width:100%; border-radius: 0.375rem; border-color: rgba(209, 213, 219, 1);">
         <option value=""></option>
-        <option value="Féminin">féminin</option>
-        <option value="Masculin">masculin</option>
+        <option value="Féminin">Féminin</option>
+        <option value="Masculin">Masculin</option>
     </select>
 
     <!-- Email Address -->
@@ -61,5 +61,9 @@
             {{ __('messages.inscrire') }}
         </x-button>
     </div>
+
+
+    {!! htmlFormSnippet() !!}
+
 </form>
 @endsection

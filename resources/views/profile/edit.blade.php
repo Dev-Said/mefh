@@ -21,7 +21,7 @@
             <label for="sexe">Sexe</label>
             <select name="sexe" id="sexe">
                 <option value="{{$user->sexe}}">{{$user->sexe}}</option>
-                <option value="{{ $user->sexe === 'masculin' ? 'féminin' : 'masculin' }}">{{ $user->sexe === 'masculin' ? 'féminin' : 'masculin' }}</option>
+                <option value="{{ $user->sexe === 'Masculin' ? 'Féminin' : 'Masculin' }}">{{ $user->sexe === 'Masculin' ? 'Féminin' : 'Masculin' }}</option>
             </select>
             @error('sexe')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -49,34 +49,34 @@
             <select name="tranche_age" id="tranche_age">
                 <option value="{{ $user->tranche_age }}">
                     @switch($user->tranche_age)
-                        @case(25)
+                        @case('moins de 25 ans')
                         moins de 25 ans
                             @break
-                        @case(35)
+                        @case('entre 25 et 35 ans')
                         entre 25 et 35 ans
                             @break
-                        @case(45)
+                        @case('entre 35 et 45 ans')
                             entre 35 et 45 ans
                             @break
-                        @case(55)
+                        @case('entre 45 et 55 ans')
                             entre 45 et 55 ans
                             @break
-                        @case(65)
+                        @case('entre 55 et 65 ans')
                             entre 55 et 65 ans
                             @break
-                        @case(100)
+                        @case('plus de 65 ans')
                             plus de 65 ans
                             @break
                         @default
                             
                     @endswitch
                 </option>
-                <option value="25">moins de 25 ans</option>
-                <option value="55">entre 25 et 35 ans</option>
-                <option value="45">entre 35 et 45 ans</option>
-                <option value="55">entre 45 et 55 ans </option>
-                <option value="65">entre 55 et 65 ans</option>
-                <option value="100">plus de 65 ans</option>
+                <option value="moins de 25 ans">moins de 25 ans</option>
+                <option value="entre 25 et 35 ans">entre 25 et 35 ans</option>
+                <option value="entre 35 et 45 ans">entre 35 et 45 ans</option>
+                <option value="entre 45 et 55 ans">entre 45 et 55 ans</option>
+                <option value="entre 55 et 65 ans">entre 55 et 65 ans</option>
+                <option value="plus de 65 ans">plus de 65 ans</option>
             </select>
             @error('tranche_age')
             <div class="alert alert-danger">{{ $message }}</div>

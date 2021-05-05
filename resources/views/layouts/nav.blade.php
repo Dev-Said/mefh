@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/legal.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/authentification.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/stats.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -44,6 +45,12 @@
     <script>
         var globalUrl = <?= json_encode('http://127.0.0.1:8000/'); ?>
     </script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js"></script>
+    
     
 </head>
 

@@ -119,7 +119,7 @@ const Quiz = (props) => {
     }
     return questId;
   }
-
+ 
   // vérifie si on a répondu à toutes les questions 
   // sinon renvoi l'id des questions sans réponse 
   var questionMissing = [];

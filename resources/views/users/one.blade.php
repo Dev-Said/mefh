@@ -30,11 +30,5 @@
             <input type="submit" value="Modifier" name="update" class="modif">
         </form>
     </td>
-    <td class="td_Button">
-        <form action="/users/profile/{{ $user->id }}" method="get">
-            @csrf
-            <input type="submit" value="Voir le profil" name="update" class="gris">
-        </form>
-    </td>
     @endif
 </tr>

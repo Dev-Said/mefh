@@ -20,8 +20,8 @@
         <label for="sexe">Sexe</label>
         <select name="sexe" id="sexe">
             <option value=""></option>
-            <option value="masculin">masculin</option>
-            <option value="feminin">feminin</option>
+            <option value="Masculin">Masculin</option>
+            <option value="Feminin">Feminin</option>
         </select>
         @error('sexe')
         <div class="alert alert-danger">{{ $message }}</div>

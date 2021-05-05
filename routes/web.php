@@ -10,12 +10,12 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ChapitreController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ModuleResController;
 use App\Http\Controllers\RessourceController;
@@ -39,18 +39,18 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'visitors']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
 
-    Route::get('/home', function () {
-        return view('home');
-    });
+    // Route::get('/home', function () {
+    //     return view('home');
+    // });
 
-    Route::get('/', function () {
+    Route::middleware(['visitors'])->get('/', function () {
         return view('accueil', ['lang' => Lang::locale()]);
     });
 
-    Route::get('/formations-liste', function () {
+    Route::middleware(['visitors'])->get('/formations-liste', function () {
         return view('formations', [
             'formations' => DB::table('formations')->orderBy('ordre')->get(),
             'langue' => 'Toutes les langues',
@@ -63,17 +63,19 @@ Route::group([
     });
 
 
-    Route::view('/contact', 'contact');
+    Route::middleware(['visitors'])->get('/contact', function () {
+        return View('contact');
+    });
 
-    Route::get('/vie-privee', function () {
+    Route::middleware(['visitors'])->get('/vie-privee', function () {
         return View('legale.viePrivee');
     });
 
-    Route::get('/cookies', function () {
+    Route::middleware(['visitors'])->get('/cookies', function () {
         return View('legale.cookies');
     });
 
-    Route::get('/conditionsUtilisation', function () {
+    Route::middleware(['visitors'])->get('/conditionsUtilisation', function () {
         return View('legale.conditionsUtilisation');
     });
 
@@ -83,16 +85,16 @@ Route::group([
     });
 
 
-    Route::get('/formation/{id}', function () {
+    Route::middleware(['visitors'])->get('/formation/{id}', function () {
         return view('indexFormations', ['id' => request('id')]);
     });
 
     Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
 
-    Route::get('/profile', [ProfileController::class, 'getUser']);
+    Route::middleware(['visitors'])->get('/profile', [ProfileController::class, 'getUser']);
     Route::post('/profileUpadate', [ProfileController::class, 'storeCompleteProfile']);
 
-    Route::get('/edit-profile', function () {
+    Route::middleware(['visitors'])->get('/edit-profile', function () {
         if (Auth::check()) {
             $user = Auth::user();
             return view('profile.edit', ['user' => $user]);
@@ -102,15 +104,12 @@ Route::group([
     Route::get('/pdf', [CertificatController::class, 'createPdf']);
 
     // en mettant cette route ici je peut obtenir son url et savoir dans quelle langue on est pour gérer le multilangue dans react
-    Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);
+    Route::get('/getLiens/{params}', [ReactRequestController::class, 'getLiens']);  
+
 });
 
 
 Route::get('visitor', [VisitorController::class, 'visit']);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
@@ -134,6 +133,8 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::resource('faqs', FaqController::class);
     Route::resource('ressources', RessourceController::class);
 
+    Route::get('/dashboard', [StatsController::class, 'getStats']);
+
     // renvoi des résultats filtrés par le choix fait dans un menu select 
     // dans les listes de la partie admin
     
@@ -155,7 +156,6 @@ Route::get('/quizzes/quizApi/{id}', [QuizController::class, 'quizApi']);
 Route::post('/reponses_user', [UserController::class, 'reponseUser']);
 Route::get('/users/profile/{id}', [UserController::class, 'user']);
 Route::post('/checkUser', [UserController::class, 'checkUser']);
-Route::get('/dashboard', [DashboardController::class, 'entry']);
 Route::post('/usersFromQuizForm', [UserController::class, 'store2']);
 Route::post('/chapitreSuivi', [ChapitreController::class, 'suivi']);
 Route::get('/chapitreSuiviList', [ChapitreController::class, 'list']);
@@ -176,3 +176,5 @@ Route::get('/changeOrdreMChapitre', [ChapitreController::class, 'changeOrdre']);
 
 
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
+
+

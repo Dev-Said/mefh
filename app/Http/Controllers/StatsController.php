@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Carbon\Carbon;
+use App\Models\formation;
+use App\Models\Certificat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+
+class StatsController extends Controller
+{
+    public function getStats()
+    {
+
+        // Quiz----------------------------------------------------------------
+
+        $quiz = DB::table('reponse_users')
+            ->select(
+                'quizzes.id as quiz_id',
+                'modules.titre as quiz_titre',
+                DB::raw('count(*) as countQuiz')
+            )
+            ->join('quizzes', 'quizzes.id', '=', 'reponse_users.quiz_id')
+            ->join('modules', 'modules.id', '=', 'quizzes.module_id')
+            ->join('formations', 'formations.id', '=', 'modules.formation_id')
+            ->orderBy('countQuiz', 'asc')
+            ->groupBy('quiz_id')
+            ->get();
+
+
+
+        // Certificat-----------------------------------------------------------
+
+        $certificat = DB::table('certificats')
+            ->select(
+                'certificats.id as certificat_id',
+                DB::raw('count(*) as countCertificat'),
+                'formations.titre as formation_titre'
+            )
+            ->join('formations', 'formations.id', '=', 'certificats.formation_id')
+            ->orderBy('countCertificat', 'asc')
+            ->groupBy('formation_id')
+            ->get();
+
+
+
+        // Users----------------------------------------------------------------
+
+        $userAge = DB::table('users')
+            ->select(
+                'users.id as user_id',
+                DB::raw('count(*) as countUserAge'),
+                'users.tranche_age as user_age'
+            )
+            ->orderBy('countUserAge', 'asc')
+            ->groupBy('user_age')
+            ->get();
+
+        $userSexe = DB::table('users')
+            ->select(
+                'users.id as user_id',
+                DB::raw('count(*) as countUserSexe'),
+                'users.sexe as user_sexe'
+            )
+            ->orderBy('countUserSexe', 'asc')
+            ->groupBy('user_sexe')
+            ->get();
+
+        $userPays = DB::table('users')
+            ->select(
+                'users.id as user_id',
+                DB::raw('count(*) as countUserPays'),
+                'users.pays as user_pays'
+            )
+            ->orderBy('countUserPays', 'asc')
+            ->groupBy('user_pays')
+            ->get();
+
+        $userVille = DB::table('users')
+            ->select(
+                'users.id as user_id',
+                DB::raw('count(*) as countUserVille'),
+                'users.ville as user_ville'
+            )
+            ->orderBy('countUserVille', 'asc')
+            ->groupBy('user_ville')
+            ->get();
+
+
+
+        // Visitors-------------------------------------------------------------
+
+        $platform = DB::table('shetabit_visits')
+            ->select(
+                'platform',
+                DB::raw('count(*) as countPlatform'),
+            )
+            ->orderBy('countPlatform', 'asc')
+            ->groupBy('platform')
+            ->get();
+
+
+       
+        $dailyVisit = DB::table('shetabit_visits')
+            ->select(
+                DB::raw('count(distinct(ip)) as countIp'),
+                DB::raw("DATE(created_at) as date"),
+                DB::raw('count(*) as countVisit'),
+            )
+            ->whereDate('created_at', '>', Carbon::now()->subDays(365))
+            ->orderBy('date', 'asc')
+            ->groupBy('date')
+            ->get();
+
+
+        $urlVisit = DB::table('shetabit_visits')
+            ->select(
+                'url',
+                DB::raw('count(url) as countUrl'),
+            )
+            ->orderBy('url', 'asc')
+            ->groupBy('url')
+            ->get();
+
+
+
+     
+        // dd($quiz);
+
+
+
+        return view('dashboard', [
+            'quiz' => $quiz,
+            'certificat' => $certificat,
+            'userAge' => $userAge,
+            'userSexe' => $userSexe,
+            'userPays' => $userPays,
+            'userVille' => $userVille,
+            'platform' => $platform,
+            'dailyVisit' => $dailyVisit,
+            'urlVisit' => $urlVisit,
+        ]);
+    }
+}

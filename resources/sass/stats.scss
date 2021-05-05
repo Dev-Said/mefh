@@ -1,0 +1,44 @@
+
+.bodyStats {
+    width: 100%;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+.age_sexe,
+.pays_ville,
+.dailyVist_Platform {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+#nbQuiz,
+#nbCertificat,
+#nbUserAge,
+#nbUserSexe,
+#nbUserPays,
+#nbUserVille,
+#nbPlatform,
+#nbDailyVisit,
+#nbUrlVisit {
+    width: 50%;
+    height: auto;
+    padding: 25px 25px 0 25px;
+    // border: solid rgb(211, 211, 211) 1px;
+    background-color: white;
+}
+ 
+
+#nbUrlVisit {
+    margin-top: 50px;
+}

@@ -80,7 +80,7 @@
 
 <body class="bodyCertificat">
     <div class="containerCertificat">
-        <h1>{{$prenom}} {{$nom}}</h1>
+        <h1>{{$prenom}}&nbsp;&nbsp;{{$nom}}</h1>
         <h3>a suivi avec succès le MOOC Entreprise</h3>
         <h2>{{$formation}}</h2>
         <p>proposé par le Mouvement Egalité Femmes Hommes et Psytel<br>

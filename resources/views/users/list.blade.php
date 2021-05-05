@@ -24,7 +24,6 @@
                     @if(Auth::check())
                     <th></th>
                     <th></th>
-                    <th></th>
                     @endif
                 </tr>
             </thead>

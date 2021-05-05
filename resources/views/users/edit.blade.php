@@ -21,7 +21,7 @@
         <label for="sexe">Sexe</label>
         <select name="sexe" id="sexe">
             <option value="{{$user->sexe}}">{{$user->sexe}}</option>
-            <option value="{{ $user->sexe === 'masculin' ? 'féminin' : 'masculin' }}">{{ $user->sexe === 'masculin' ? 'féminin' : 'masculin' }}</option>
+            <option value="{{ $user->sexe === 'Masculin' ? 'Féminin' : 'Masculin' }}">{{ $user->sexe === 'Masculin' ? 'Féminin' : 'Masculin' }}</option>
         </select>
         @error('sexe')
         <div class="alert alert-danger">{{ $message }}</div>
