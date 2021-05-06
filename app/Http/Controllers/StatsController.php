@@ -15,6 +15,8 @@ class StatsController extends Controller
     public function getStats()
     {
 
+        $formations = formation::all();
+
         // Quiz----------------------------------------------------------------
 
         $quiz = DB::table('reponse_users')
@@ -126,12 +128,6 @@ class StatsController extends Controller
             ->get();
 
 
-
-     
-        // dd($quiz);
-
-
-
         return view('dashboard', [
             'quiz' => $quiz,
             'certificat' => $certificat,
@@ -142,6 +138,7 @@ class StatsController extends Controller
             'platform' => $platform,
             'dailyVisit' => $dailyVisit,
             'urlVisit' => $urlVisit,
+            'formations' => $formations,
         ]);
     }
 }

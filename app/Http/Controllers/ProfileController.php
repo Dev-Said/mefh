@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Countrie;
 use App\Models\Certificat;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -34,6 +35,8 @@ class ProfileController extends Controller
 
 
             $infos_certificat = Certificat::where('user_id', $user->id)->get();
+
+            // dd($countries);
 
             return view('profile.profile', [
                 'user' => Auth::user(),

@@ -35,7 +35,12 @@
 
         <div class="editCertificatRight">
             <label for="pays">Pays</label>
-            <input type="text" name="pays" id="pays" value="{{ $user->pays }}">
+            <select name="pays" id="pays">
+                <option value="{{ $user->pays }}">{{ $user->pays }}</option>
+                @foreach($countries as $pays)
+                <option value="{{ $pays->langFR }}">{{ $pays->langFR }}</option>
+                @endforeach
+            </select>
             @error('pays')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -49,26 +54,26 @@
             <select name="tranche_age" id="tranche_age">
                 <option value="{{ $user->tranche_age }}">
                     @switch($user->tranche_age)
-                        @case('moins de 25 ans')
-                        moins de 25 ans
-                            @break
-                        @case('entre 25 et 35 ans')
-                        entre 25 et 35 ans
-                            @break
-                        @case('entre 35 et 45 ans')
-                            entre 35 et 45 ans
-                            @break
-                        @case('entre 45 et 55 ans')
-                            entre 45 et 55 ans
-                            @break
-                        @case('entre 55 et 65 ans')
-                            entre 55 et 65 ans
-                            @break
-                        @case('plus de 65 ans')
-                            plus de 65 ans
-                            @break
-                        @default
-                            
+                    @case('moins de 25 ans')
+                    moins de 25 ans
+                    @break
+                    @case('entre 25 et 35 ans')
+                    entre 25 et 35 ans
+                    @break
+                    @case('entre 35 et 45 ans')
+                    entre 35 et 45 ans
+                    @break
+                    @case('entre 45 et 55 ans')
+                    entre 45 et 55 ans
+                    @break
+                    @case('entre 55 et 65 ans')
+                    entre 55 et 65 ans
+                    @break
+                    @case('plus de 65 ans')
+                    plus de 65 ans
+                    @break
+                    @default
+
                     @endswitch
                 </option>
                 <option value="moins de 25 ans">moins de 25 ans</option>

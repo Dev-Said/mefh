@@ -2,8 +2,28 @@
 
 @section('content')
 
+<form action="{{ route('export') }}" method="get">
+        @csrf
+<p>
+    <select name="formation_id" id="formation_id">
+        <option value="">Sélectionnez une formation</option>
+        @foreach($formations as $formation)
+        <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
+        @endforeach
+    </select>
+</p>
+<input type="date">
+<input type="submit">
+<!-- <button class="btn">
+    <a href="{{ route('export', ['formation_id' => 1]) }}">Télécharger</a>
+</button> -->
+</form>
+
+
+
+
 <div class="bodyStats">
-    <div id="nbUrlVisit" style="width: 90%;height:550px;margin-bottom:50px;"></div>
+    <div id="nbUrlVisit" style="width: 90%;height:650px;margin-bottom:50px;"></div>
 
     <div class="dailyVist_Platform">
         <div id="nbPlatform" style="width: 45%;height:350px;margin-bottom:50px;"></div>
@@ -23,7 +43,7 @@
     <div id="nbQuiz" style="width: 90%;height:350px;margin-bottom:50px;"></div>
     <div id="nbCertificat" style="width: 90%;height:350px;margin-bottom:50px;"></div>
 </div>
- 
+
 
 <script type="text/javascript">
     // Quiz----------------------------------------------------------
@@ -56,7 +76,7 @@
         label: {
             show: true,
             // Text of labels.
-            fontSize: '17px',
+            fontSize: '15px',
         },
         grid: {
             left: '3%',
@@ -75,7 +95,7 @@
         yAxis: [{
             type: 'value',
             axisLabel: {
-                fontSize: 17,
+                fontSize: '15px',
                 margin: 10,
             }
         }],
@@ -119,7 +139,7 @@
         label: {
             show: true,
             // Text of labels.
-            fontSize: '17px',
+            fontSize: '15px',
         },
         grid: {
             left: '3%',
@@ -138,7 +158,7 @@
         yAxis: [{
             type: 'value',
             axisLabel: {
-                fontSize: 17,
+                fontSize: '15px',
                 margin: 10,
             }
         }],
@@ -190,7 +210,7 @@
         },
         label: {
             show: true,
-            fontSize: '17px',
+            fontSize: '15px',
         },
         yAxis: {
             type: 'category',
@@ -242,7 +262,7 @@
         },
         label: {
             show: true,
-            fontSize: '17px',
+            fontSize: '15px',
         },
         yAxis: {
             type: 'category',
@@ -295,7 +315,7 @@
         },
         label: {
             show: true,
-            fontSize: '17px',
+            fontSize: '15px',
         },
         yAxis: {
             type: 'category',
@@ -340,7 +360,7 @@
         label: {
             show: true,
             // Text of labels.
-            fontSize: '17px',
+            fontSize: '15px',
         },
         grid: {
             left: '3%',
@@ -359,7 +379,7 @@
         yAxis: [{
             type: 'value',
             axisLabel: {
-                fontSize: 17,
+                fontSize: '15px',
                 margin: 10,
             }
         }],
@@ -411,7 +431,7 @@
         },
         label: {
             show: true,
-            fontSize: '17px',
+            fontSize: '15px',
         },
         yAxis: {
             type: 'category',
@@ -456,7 +476,7 @@
         label: {
             show: true,
             // Text of labels.
-            fontSize: '17px',
+            fontSize: '15px',
         },
         grid: {
             left: '3%',
@@ -475,7 +495,7 @@
         yAxis: [{
             type: 'value',
             axisLabel: {
-                fontSize: 17,
+                fontSize: '15px',
                 margin: 10,
             }
         }],
@@ -499,7 +519,11 @@
         turlVisit_count.push(urlVisit['countUrl'])
     });
     UrlVisits.map(urlVisit => {
-        turlVisit_urlVisit.push(urlVisit['url'].replace("http://127.0.0.1:8000/", ""))
+        turlVisit_urlVisit.push(urlVisit['url'].replace("http://127.0.0.1:8000/", "").replace("http://127.0.0.1:8000", "Accueil"))
+    });
+
+    UrlVisits.map(urlVisit => {
+        console.log('urlVisit   ' + urlVisit['url']);
     });
 
     var chartUrlVisits = echarts.init(document.getElementById('nbUrlVisit'));
@@ -526,7 +550,7 @@
         },
         label: {
             show: true,
-            fontSize: '17px',
+            fontSize: '15px',
         },
         yAxis: {
             type: 'category',

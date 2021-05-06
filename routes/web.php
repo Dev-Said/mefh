@@ -2,10 +2,12 @@
 
 
 use App\Models\Langue;
+use App\Models\Countrie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExcellExport;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\QuizController;
@@ -94,10 +96,11 @@ Route::group([
     Route::middleware(['visitors'])->get('/profile', [ProfileController::class, 'getUser']);
     Route::post('/profileUpadate', [ProfileController::class, 'storeCompleteProfile']);
 
-    Route::middleware(['visitors'])->get('/edit-profile', function () {
+    Route::get('/edit-profile', function () {
         if (Auth::check()) {
             $user = Auth::user();
-            return view('profile.edit', ['user' => $user]);
+            return view('profile.edit', ['user' => $user,
+            'countries' => Countrie::select('langFR')->orderBy('langFr', 'asc')->get()]);
         }
     });
 
@@ -177,4 +180,8 @@ Route::get('/changeOrdreMChapitre', [ChapitreController::class, 'changeOrdre']);
 
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
+
+// Route::get('importExportView', [ExcellExport::class, 'importExportView']);
+Route::get('export', [ExcellExport::class, 'export'])->name('export');
+// Route::post('import', [ExcellExport::class, 'import'])->name('import');
 
