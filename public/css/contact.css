@@ -6267,6 +6267,12 @@ iframe {
   border: solid 1px #032C45;
   font-size: 16px;
   font-weight: bold;
+  transition: ease-in-out 0.2s;
+}
+
+.contenairForm button:hover {
+  background-color: whitesmoke;
+  cursor: pointer;
 }
 
 .coordonnees .fas,

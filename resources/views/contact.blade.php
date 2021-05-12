@@ -19,22 +19,28 @@
         </div>
 
 
+
         <div class="contenairForm">
-            <form action="/ma-page-de-traitement" method="post">
+            <form action="/sendmail" method="post">
+                @csrf
                 <div>
                     <label for="name">{{ __('messages.nom') }}</label>
-                    <input type="text" id="name" name="user_name">
+                    <input type="text" id="name" name="user_name" value="{{ old('user_name') }}">
                 </div>
                 <div>
                     <label for="mail">Email</label>
-                    <input type="email" id="mail" name="user_mail">
+                    <input type="email" id="mail" name="user_mail" value="{{ old('user_mail') }}">
                 </div>
                 <div>
                     <label for="msg">{{ __('messages.message') }}</label>
-                    <textarea id="msg" name="user_message"></textarea>
+                    <textarea id="msg" name="user_message">{{ old('user_message') }}</textarea>
                 </div>
                 <div>
                     <button type="submit">{{ __('messages.envoyer') }}</button>
+                    
+                    <!-- Validation Errors -->
+                    <x-auth-validation-errors :errors="$errors" style="color:red;" />
+                    <div class="g-recaptcha" data-sitekey="{{ config('captcha.v2-site') }}"></div>
                 </div>
             </form>
         </div>

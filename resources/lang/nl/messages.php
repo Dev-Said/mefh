@@ -40,6 +40,14 @@ return [
     'mdp' => 'Wachtwoord',
     'mdpconfirm' => 'Bevestig uw wachtwoord',
     'se_souvenir_de_moi' => 'Onthoud me', 
-    'mdp_oublie' => 'Je wachtwoord vergeten ?'
+    'mdp_oublie' => 'Je wachtwoord vergeten ?',
+    'inscrit_depuis' => 'U bent sindsdien geregistreerd',
+    'completer_profile' => 'Maak mijn profiel compleet',
+    'deja_reussi_quiz_suivants' => 'Je bent al geslaagd voor de quizzen van de volgende modules',
+    'formationsProfile' => 'Opleiding',
+    'modules' => 'Modules',
+    'scores' => 'Scores',
+    'vos_certificats' => 'Uw certificaten',
+    'telecharger_certificats' => 'Download het certificaat',
 ];
 

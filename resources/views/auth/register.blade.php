@@ -8,7 +8,7 @@
 </x-slot>
 
 <!-- Validation Errors -->
-<x-auth-validation-errors :errors="$errors" />
+<x-auth-validation-errors :errors="$errors" style="color:red;" />
 
 <form method="POST" action="{{ route('register') }}" class="auth auth_inscription">
     @csrf
@@ -27,8 +27,8 @@
 
     <label for="sexe" class="auth_label">{{ __('messages.sexe') }}</label>
 
-    <select name="sexe" id="sexe" class="auth_input" :value="old('sexe')" required autofocus style="width:100%; border-radius: 0.375rem; border-color: rgba(209, 213, 219, 1);">
-        <option value=""></option>
+    <select name="sexe" id="sexe" class="auth_input" required autofocus style="width:100%; border-radius: 0.375rem; border-color: rgba(209, 213, 219, 1);">
+        <option value="old('sexe')"></option>
         <option value="Féminin">Féminin</option>
         <option value="Masculin">Masculin</option>
     </select>
@@ -50,7 +50,13 @@
     <label for="password_confirmation" class="auth_label">{{ __('messages.mdpconfirm') }}</label>
 
     <x-input id="password_confirmation" class="auth_input" type="password" name="password_confirmation" required />
+    
+    <div class="rgpd">
+        <input type="checkbox" id="rgpd" name="rgpd" required>
+        <label for="rgpd" id="label_rgpd">j’ai lu et j’accepte la politique de confidentialité du site m-egalitefemmeshommes.org</label>
+    </div>
 
+    <div class="g-recaptcha" data-sitekey="{{ config('captcha.v2-site') }}" required></div>
 
     <div class="auth_footer">
         <a href="{{ route('login') }}">
@@ -63,7 +69,7 @@
     </div>
 
 
-    {!! htmlFormSnippet() !!}
+
 
 </form>
 @endsection

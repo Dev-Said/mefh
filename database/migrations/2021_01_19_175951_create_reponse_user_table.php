@@ -16,9 +16,9 @@ class CreateReponseUserTable extends Migration
         Schema::create('reponse_users', function (Blueprint $table) {
             $table->id();
             $table->integer('score');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('quiz_id');
+            $table->unsignedInteger('quiz_id');
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');
             $table->timestamps();
         });

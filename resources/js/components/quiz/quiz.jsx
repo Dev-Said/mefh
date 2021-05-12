@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     marginBottom: '10px',
   },
+  pCertificat: {
+    fontSize: 18,
+  },
 
 }));
 
@@ -297,11 +300,11 @@ const Quiz = (props) => {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // window.location = 'https://m-egalitefemmeshommes.org/profile';
+    window.location = 'https://m-egalitefemmeshommes.org/profile';
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        window.location = 'http://127.0.0.1:8000/profile';
+        // window.location = 'http://127.0.0.1:8000/profile';
   }
 
 
@@ -328,11 +331,11 @@ const Quiz = (props) => {
       modalScore.style.display = "none";
     }
 
-    var button2 = document.getElementsByClassName("button2")[1];
-    button2.onclick = function () {
-      modalScore.style.display = "none";
-      props.handleQuizClick();
-    }
+    // var button2 = document.getElementsByClassName("button2")[1];
+    // button2.onclick = function () {
+    //   modalScore.style.display = "none";
+    //   props.handleQuizClick();
+    // }
 
     window.onclick = function (event) {
       if (event.target == modalScore) {
@@ -348,12 +351,12 @@ const Quiz = (props) => {
       <div id="certificatModal" className="modal">
         <div className="modal-content">
           <div id="certificatheaderModal" className="headerModal"><span className="close"><CloseIcon /></span></div>
-          <p>Félicitations, vous avez réussi tous les quiz de la formation. Vous pouvez télécharger votre certificat de réussite sur votre page de profile.</p>
+          <p className={classes.pCertificat}>Félicitations, vous avez réussi tous les quiz de la formation. Vous pouvez télécharger votre certificat de réussite sur votre page de profile.</p>
           <div id="certificatfooterModal" className="footerModal">
-            <button class="close" onClick={downloadCertificat}>
+            <button className="closeCertificat" onClick={downloadCertificat}>
               Télécharger le certificat
             </button>
-            <button class="close" onClick={closeModal}>
+            <button className="closeCertificat" onClick={closeModal}>
               Quitter
             </button>
           </div>
@@ -393,9 +396,6 @@ const Quiz = (props) => {
       </div>
 
 
-
-
-      {/* EN FAIRE UN COMPOSANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
       <div className="quizHeader">
         <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
           Revenir sur la page de formation</Button>

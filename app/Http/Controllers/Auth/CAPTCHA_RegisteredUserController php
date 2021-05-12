@@ -41,7 +41,6 @@ class RegisteredUserController extends Controller
                     'sexe' => 'required|string|max:20',
                     'email' => 'required|string|email|max:255|unique:users',
                     'password' => 'required|string|confirmed|min:8',
-                    'rgpd' => 'required',
                     'g-recaptcha-response' => 'required',
                 ]);
                 
@@ -61,7 +60,6 @@ class RegisteredUserController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'admin' => 0,
-                    'rgpd' => 1
                 ]));
         
                 event(new Registered($user));

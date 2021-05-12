@@ -129,3 +129,23 @@
 .auth_footer .auth_footer_resetmdp {
   margin-top: 25px;
 }
+
+.rgpd {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+}
+
+#rgpd {
+  margin-right: 10px;
+  margin-left: 0;
+  width: 18px;
+}
+
+#label_rgpd {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+  line-height: 16px;
+}

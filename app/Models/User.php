@@ -22,7 +22,8 @@ class User extends Authenticatable
         'sexe',
         'email',
         'password',
-        'admin'
+        'admin',
+        'rgpd',
     ];
 
     /**

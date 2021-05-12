@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -29,9 +31,16 @@ const useStyles = makeStyles((theme) => ({
         width: "auto",
         height: "45px",
         marginTop: "20px",
+        marginLeft: 'auto',
+        marginRight: '10%',
     },
     input: {
         marginTop: "15px",
+    },
+    FormControlLabel: {
+        marginBottom: 0,
+        fontSize: '14px',
+
     }
 }));
 
@@ -42,6 +51,25 @@ export default function Register(props) {
     const [email, setEmail] = React.useState('');
     const [sexe, setSexe] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [responseCaptcha, setResponseCaptcha] = React.useState(false);
+
+    var Recaptcha = require('react-recaptcha');
+  
+
+    // specifying your onload callback function
+    var callback = function () {
+        console.log('Done!!!!');
+    };
+
+    // specifying verify callback function
+    var verifyCallback = function (response) {
+        if (response) {
+            setResponseCaptcha(true);
+        }
+        console.log('verifyCallback --->  '  + response);
+    };
+
+
 
     const handleChangeNom = (event) => {
         setNom(event.target.value);
@@ -59,36 +87,42 @@ export default function Register(props) {
         setPassword(event.target.value);
     };
 
+
     // crée un nouvel utilisateur via un formulaire proposé
     // quand on veut sauvegarder les résultats d'un quiz et 
-    // qu'on est pas déjà inscrit ensuite récupère l'user id
+    // qu'on est pas déjà inscrit. Ensuite récupère l'user id
     const handleSubmit = (event) => {
-        event.preventDefault();
-        var admin = 0;
-        axios.post(`${globalUrl}usersFromQuizForm`,
-            { nom: nom, prenom: prenom, email: email, sexe: sexe, password: password, admin: admin })
-            .then(function (response) {  // enregistre dans reponses_user les résultats du quiz
-                axios.post(`${globalUrl}reponses_user`,
-                    { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id })
-                    .then(function (response) {
-                        console.log('gotCertificat   ' + response.data);
-                        document.getElementById("myModal2").style.display = "none";
-                    })
-                    .catch(function (error) {
-                        console.log('probleme   ' + error);
-                    });
-            })
-            .catch(function (error) {
-                console.log('probleme   ' + error);
-            });
+        console.log('props.formation_id  ' + props.formation_id)
 
+        if (responseCaptcha == true) {
+            event.preventDefault();
+            axios.post(`${globalUrl}usersFromQuizForm`,
+                { nom: nom, prenom: prenom, email: email, sexe: sexe, password: password })
+                .then(function (response) {  // enregistre dans reponses_user les résultats du quiz
+                    axios.post(`${globalUrl}reponses_user`,
+                        { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id, formation_id: idFormation, password: password, email: email })
+                        .then(function (response) {
+                            console.log('gotCertificat   ' + response.data);
+                            window.location.reload();
+                        })
+                        .catch(function (error) {
+                            console.log('probleme reponses_user  ' + error);
+                        });
+                })
+                .catch(function (error) {
+                    console.log('probleme usersFromQuizForm  ' + error);
+                });
+        } else {
+            alert('Veuillez confirmer que vous n\'êtes pas un robot');
+        }
+        
     }
 
     // enlève la couleur de fond des inputs quand ils sont remplis
     const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
     return (
-        <form className={classes.root} onSubmit={handleSubmit}>
+        <form className={classes.root}>
             <h2>Inscription</h2>
             <TextField id="nom" label="Nom" variant="outlined" onChange={handleChangeNom}
                 required className={classes.input} inputProps={{ style: inputStyle }} />
@@ -114,7 +148,19 @@ export default function Register(props) {
                 type="email" required className={classes.input} inputProps={{ style: inputStyle }} />
             <TextField id="password" label="Mot de passe" variant="outlined" type="password"
                 onChange={handleChangePassword} required className={classes.input} inputProps={{ style: inputStyle }} />
-            <Button type="submit" variant="outlined" className={classes.button}>
+
+            <FormControlLabel control={<Checkbox name="checkedC" required className={classes.FormControlLabel}/>} label="j’ai lu et j’accepte la politique de confidentialité du site m-egalitefemmeshommes.org" className={classes.FormControlLabel}/>
+
+
+            <Recaptcha
+                // sitekey="6Lfq3csaAAAAABJ3CauWVXUsaPf2JKyCYAZaLLAX" // localhost
+                sitekey="6Ld6f8QaAAAAALE5IYkVKeo8X67PgMOeHZjyV9Vw" // mefh
+                render="explicit"
+                verifyCallback={verifyCallback}
+                onloadCallback={callback}
+            />
+
+            <Button type="button" variant="outlined" className={classes.button} onClick={handleSubmit}>
                 Envoyer
       </Button>
         </form>

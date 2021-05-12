@@ -21,9 +21,15 @@ class ExcellExport extends Controller
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function export(Request $request) 
+    // public function export(Request $request) 
+    // {
+    //     return Excel::download(new InfosUsersFormations($request->formation_id, $request->date), 'InfosUsersFormations.xlsx');
+    // }
+
+    public function storeExcel(Request $request) 
     {
-        return Excel::download(new InfosUsersFormations($request->formation_id), 'InfosUsersFormations.xlsx');
+        // Store on default disk
+        Excel::store(new InfosUsersFormations($request->formation_id, $request->date), 'monexcell.xlsx');
     }
      
     // /**

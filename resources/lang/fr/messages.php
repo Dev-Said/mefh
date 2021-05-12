@@ -40,5 +40,13 @@ return [
     'mdp' => 'Mot de passe',
     'mdpconfirm' => 'Confirmez votre mot de passe',
     'se_souvenir_de_moi' => 'Se souvenir de moi',
-    'mdp_oublie' => 'Mot de passe oublié ?'
+    'mdp_oublie' => 'Mot de passe oublié ?',
+    'inscrit_depuis' => 'Vous êtes inscrit(e) depuis le',
+    'completer_profile' => 'Compléter mon profile',
+    'deja_reussi_quiz_suivants' => 'Vous avez déjà réussi(e) les quiz des modules suivants',
+    'formationsProfile' => 'Formation(s)',
+    'modules' => 'Module(s)',
+    'scores' => 'Score(s)',
+    'vos_certificats' => 'Vos certificats',
+    'telecharger_certificats' => 'Télécharger le certificat',
 ];

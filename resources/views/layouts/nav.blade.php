@@ -8,6 +8,24 @@
     <meta name="csrf-token" content="{{csrf_token ()}}">
 
 
+    <meta property="fb:app_id" content="1465748217103591" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="MON TITRE" />
+    <meta property="og:description" content="MA DESCRIPTION" />
+    <meta property="og:url" content="https://m-egalitefemmeshommes.org/formation/1" />
+    <meta property="og:site_name" content="MON SITE NAME" />
+    <meta property="og:image" content="https://m-egalitefemmeshommes.org/storage/images/1616515510asia.jpg" />
+    <meta property="og:image:secure_url" content="https://m-egalitefemmeshommes.org/storage/images/1616525907voilier.jpg" />
+
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@MEFH" />
+    <meta name="twitter:title" content="Le mouvement pour l'égalité entre les femmes et les hommes" />
+    <meta name="twitter:description" content="View the album on Flickr." />
+    <meta name="twitter:image" content="https://m-egalitefemmeshommes.org/storage/images/1616515510asia.jpg" />
+
+
     <title>MEFH</title>
     <base href="/public">
     <!-- Fonts -->
@@ -36,7 +54,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
- 
+
 
     <script>
         var auth = <?= json_encode($auth); ?>
@@ -46,17 +64,23 @@
         var globalUrl = <?= json_encode('http://127.0.0.1:8000/'); ?>
     </script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js"></script>
+
+
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.0/echarts.min.js"></script>
-    
-    
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v10.0" nonce="B9S3FjFK"></script>
+
+
 </head>
 
 <body>
-    <nav class="menu">
 
+    <nav class="menu">
         <input type="checkbox" id="toggle-nav" aria-label="open/close navigation">
         <label for="toggle-nav" class="nav-button"></label>
 

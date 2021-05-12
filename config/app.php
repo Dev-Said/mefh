@@ -243,6 +243,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'FastExcel' => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
 
     ],
 

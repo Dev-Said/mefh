@@ -9,6 +9,7 @@ import './modules.scss';
 import '../quiz/quiz.scss';
 import Links from '../liens/liens';
 import Faq from '../faq/faq';
+import Social from '../social/social';
 import Ressource from '../ressource/ressource';
 
 
@@ -85,7 +86,7 @@ const Wrapper = () => {
       compo = [<Links faqs={faqs} ressources={ressources} 
       handleView={handleView} localiz={localiz}/>, <Stepper />,
       <Video />, <ListeChapitres handleView={handleView} localiz={localiz}/>,
-      <ChapitreDescription />]
+      <Social />, <ChapitreDescription />]
       break;
     case 'ressource':
       compo = <Ressource ressources={ressources} handleView={handleView} />

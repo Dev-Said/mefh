@@ -36,7 +36,7 @@ export default function Login(props) {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
+
 
     const handleChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -52,32 +52,30 @@ export default function Login(props) {
 
         axios.post(`${globalUrl}checkUser`,
             { email: email, password: password }
-        )
-            .then(res => {
-                data = res.data;
-                console.log('data   ' + data);
-                if (data != 'user not exist') {
-                    axios.post(`${globalUrl}reponses_user`,
-                        { resultat: props.resultat, id: data, quiz_id: props.quiz_id })
-                        .then(function (response) {
-                            console.log('success   ' + response.data);
-                            document.getElementById("myModal2").style.display = "none";
-                            window.location.reload();
-                        })
-                        .catch(function (error) {
-                            console.log('probleme   ' + error);
-                        });
-                } else {
-                    handelModalW();
-                }
+        ).then(res => {
+            data = res.data;
+            console.log('data checkUser  ' + data);
+            if (data != 'user not exist') {
+                axios.post(`${globalUrl}reponses_user`,
+                    { resultat: props.resultat, id: data, quiz_id: props.quiz_id, formation_id: idFormation })
+                    .then(function (response) {
+                        console.log('success   ' + response.data);
+                        window.location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log('probleme login reponses_user    ' + error);
+                    });
+            } else {
+                handelModalW();
+            }
 
-            })
+        })
             .catch(function (error) {
                 handelModalW();
-                console.log('probleme   ' + error);
+                console.log('probleme login checkUser   ' + error);
             });
 
-            props.handleView('formation');
+        props.handleView('formation');
     }
 
     // affiche et gère la modal ---------------------------------------->
@@ -118,6 +116,7 @@ export default function Login(props) {
                     required className={classes.input} inputProps={{ style: inputStyle }} />
                 <TextField id="password" label="Mot de passe" variant="outlined" type="password"
                     onChange={handleChangePassword} required className={classes.input} inputProps={{ style: inputStyle }} />
+
                 <Button type="submit" variant="outlined" className={classes.button} onClick={handleSubmit}>
                     Envoyer
                 </Button>

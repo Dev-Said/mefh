@@ -6,8 +6,8 @@
 
 <div class="contenaire_profile">
     <div class="headerProfile">
-        <h3>Vous êtes inscrit(e) depuis le {{ date('d-m-Y', strtotime($user->created_at)) }}</h3>
-        <button><a href="/edit-profile">Compléter mon profile</a></button>
+        <h3>{{ __('messages.inscrit_depuis') }} {{ date('d-m-Y', strtotime($user->created_at)) }}</h3>
+        <button><a href="/edit-profile">{{ __('messages.completer_profile') }}</a></button>
     </div>
 
     <div class="headerProfile">
@@ -17,14 +17,14 @@
 
     <div class="headerProfile tabla_list_certificat">
         <h3>
-            Vous avez déjà réussi(e) les quiz des modules suivants
+            {{ __('messages.deja_reussi_quiz_suivants') }}
         </h3>
         <table class="table_certificat">
             <thead>
                 <tr>
-                    <th>Formation(s)</th>
-                    <th>Module(s)</th>
-                    <th>Score(s)</th>
+                    <th>{{ __('messages.formationsProfile') }}</th>
+                    <th>{{ __('messages.modules') }}</th>
+                    <th>{{ __('messages.scores') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,13 +47,13 @@
 
     <div class="headerProfile tabla_list_certificat">
         <h3>
-            Vos certificats
+            {{ __('messages.vos_certificats') }}
         </h3>
         <div class="certificatDownLoad">
             <table class="table_certificat">
                 <thead>
                     <tr>
-                        <th>Formation(s)</th>
+                        <th>{{ __('messages.formationsProfile') }} </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -64,7 +64,7 @@
                             {{$info_certificat->formation}}
                         </td>
                         <td>
-                            Télécharger le certificat
+                            {{ __('messages.telecharger_certificats') }}
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="/pdf?nom={{ ucfirst(strtolower($user->nom)) }}&prenom={{ ucfirst(strtolower($user->prenom)) }}&formation={{$info_certificat->formation}}&date={{$info_certificat->created_at}}"><i class="fas fa-download"></i></a>
                         </td>

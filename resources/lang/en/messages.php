@@ -40,7 +40,15 @@ return [
     'mdp' => 'Password',
     'mdpconfirm' => 'Confirm Password',
     'se_souvenir_de_moi' => 'Remember me',  
-    'mdp_oublie' => 'Forgot your password ?'
+    'mdp_oublie' => 'Forgot your password ?',
+    'inscrit_depuis' => 'You have been registered since',
+    'completer_profile' => 'Complete my profile',
+    'deja_reussi_quiz_suivants' => 'You have already passed the quizzes of the following modules',
+    'formationsProfile' => 'Trainings',
+    'modules' => 'Modules',
+    'scores' => 'Scores',
+    'vos_certificats' => 'Your certificates',
+    'telecharger_certificats' => 'Download the certificate',
 
 ];
 

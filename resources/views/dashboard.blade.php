@@ -2,50 +2,106 @@
 
 @section('content')
 
-<form action="{{ route('export') }}" method="get">
-        @csrf
-<p>
-    <select name="formation_id" id="formation_id">
-        <option value="">Sélectionnez une formation</option>
-        @foreach($formations as $formation)
-        <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
-        @endforeach
-    </select>
-</p>
-<input type="date">
-<input type="submit">
-<!-- <button class="btn">
-    <a href="{{ route('export', ['formation_id' => 1]) }}">Télécharger</a>
-</button> -->
-</form>
-
-
-
 
 <div class="bodyStats">
-    <div id="nbUrlVisit" style="width: 90%;height:650px;margin-bottom:50px;"></div>
 
-    <div class="dailyVist_Platform">
-        <div id="nbPlatform" style="width: 45%;height:350px;margin-bottom:50px;"></div>
-        <div id="nbDailyVisit" style="width: 45%;height:350px;margin-bottom:50px;"></div>
+    <div class="tab">
+        <button class="tablinks" onclick="openStats(event, 'nbUrlVisit')">Visites par pages</button>
+        <button class="tablinks" onclick="openStats(event, 'dailyVist_Platform')">visites globales et plateforme</button>
+        <button class="tablinks" onclick="openStats(event, 'users_data')">Données utilisateurs</button>
+        <button class="tablinks" onclick="openStats(event, 'quiz_certificat')">Téléchargement, résultats des quiz et certificats</button>
     </div>
 
-    <div class="age_sexe">
-        <div id="nbUserAge" style="width: 45%;height:350px;margin-bottom:50px;"></div>
-        <div id="nbUserSexe" style="width: 45%;height:350px;margin-bottom:50px;"></div>
+
+    <div id="nbUrlVisit" class="tabcontent" style="width: 90%;height:650px;margin-bottom:50px;"></div>
+
+    <div id="dailyVist_Platform" class="tabcontent">
+        <div id="nbPlatform" style="width: 49%;height:650px;margin-bottom:50px;"></div>
+        <div id="nbDailyVisit" style="width: 49%;height:650px;margin-bottom:50px;"></div>
     </div>
 
-    <div class="pays_ville">
-        <div id="nbUserPays" style="width: 45%;height:350px;margin-bottom:50px;"></div>
-        <div id="nbUserVille" style="width: 45%;height:350px;margin-bottom:50px;"></div>
+    <div id="users_data" class="tabcontent">
+        <div class="age_sexe">
+            <div id="nbUserAge" style="width: 49%;height:300px;margin-bottom:50px;"></div>
+            <div id="nbUserSexe" style="width: 49%;height:300px;margin-bottom:50px;"></div>
+        </div>
+
+        <div class="pays_ville">
+            <div id="nbUserPays" style="width: 49%;height:350px;margin-bottom:50px;"></div>
+            <div id="nbUserVille" style="width: 49%;height:350px;margin-bottom:50px;"></div>
+        </div>
     </div>
 
-    <div id="nbQuiz" style="width: 90%;height:350px;margin-bottom:50px;"></div>
-    <div id="nbCertificat" style="width: 90%;height:350px;margin-bottom:50px;"></div>
+    <div id="quiz_certificat" class="tabcontent">
+        <div id="excell" class="excell">
+            <form action="{{ route('export') }}" method="get">
+                @csrf
+                <div class="excell_block">
+                    <div class="excell_label_field">
+                        <label for="formation_id">Téléchargement des données de formation (.xls)</label>
+                        <select name="formation_id" id="formation_id" required>
+                            <option value="" disabled selected>Sélectionnez une formation</option>
+                            @foreach($formations as $formation)
+                            <option value="{{ $formation->id }}">{{ $formation->titre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="excell_label_field">
+                        <label for="date">Date à partir de laquelle faire la sélection</label>
+                        <input type="date" name="date" id="date" value="2021-01-01" required>
+                    </div>
+                </div>
+                <input type="submit" value="Télécharger">
+            </form>
+        </div>
+        <div class="quiz_cert">
+            <div id="nbQuiz" style="width: 49%;height:300px;margin-bottom:50px;"></div>
+            <div id="nbCertificat" style="width: 49%;height:300px;margin-bottom:50px;"></div>
+        </div>
+    </div>
+
 </div>
 
-
 <script type="text/javascript">
+    // TAB-----------------------------------------------------------
+    var x = 0;
+
+    if (x == 0) {
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 1; i < tabcontent.length; i++) {
+            tabcontent[i].style.transform = "translateX(-10000px)";
+        }
+        x = 1;
+    }
+
+
+    function openStats(evt, statsId) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 1; i < tabcontent.length; i++) {
+            tabcontent[i].style.transform = "translateX(0px)";
+        }
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(statsId).style.display = "flex";
+        evt.currentTarget.className += " active";
+
+    }
+
     // Quiz----------------------------------------------------------
 
     var quizzes = <?= json_encode($quiz->toArray(), JSON_HEX_TAG); ?>;
@@ -190,7 +246,7 @@
 
     option = {
         title: {
-            text: 'Tranches d\'ages des utilisateurs',
+            text: 'Tranche d\'age',
         },
         tooltip: {
             trigger: 'axis',
@@ -242,7 +298,7 @@
 
     option = {
         title: {
-            text: 'Sexes des utilisateurs',
+            text: 'Sexe',
         },
         tooltip: {
             trigger: 'axis',
@@ -295,7 +351,7 @@
 
     option = {
         title: {
-            text: 'Pays des utilisateurs',
+            text: 'Pays',
         },
         tooltip: {
             trigger: 'axis',
@@ -348,7 +404,7 @@
 
     option = {
         title: {
-            text: 'Codes postaux des villes des utilisateurs',
+            text: 'Code postal',
             // subtext: 'MEFH'
         },
         tooltip: {
@@ -411,7 +467,7 @@
 
     option = {
         title: {
-            text: 'Plateforms utilisées',
+            text: 'Plateforme utilisée',
         },
         tooltip: {
             trigger: 'axis',
@@ -464,7 +520,7 @@
 
     option = {
         title: {
-            text: 'Visites journalières du site',
+            text: 'Visites journalières globales du site',
             // subtext: 'MEFH'
         },
         tooltip: {

@@ -6,10 +6,13 @@ use App\Models\Countrie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
+use App\Exports\InfosUsersFormations;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExcellExport;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LangController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StatsController;
@@ -44,9 +47,6 @@ Route::group([
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () {
 
-    // Route::get('/home', function () {
-    //     return view('home');
-    // });
 
     Route::middleware(['visitors'])->get('/', function () {
         return view('accueil', ['lang' => Lang::locale()]);
@@ -116,11 +116,7 @@ Route::get('visitor', [VisitorController::class, 'visit']);
 
 require __DIR__ . '/auth.php';
 
-//checker les pages CORS
-
-
-// Route::resource('modulesApi', ModuleApiController::class);
-// <--- appelé dans ListeChapitre et coursCompleted, à supprimer !!!! ??????
+// <--- appelé dans ListeChapitre et coursCompleted
 Route::resource('modulesApi', ModuleResController::class); 
 Route::post('chapitreBackNext', [ModuleResController::class, 'chapitreBackNext']); 
 
@@ -169,19 +165,22 @@ Route::get('/faqIndex/{params}', [FaqController::class, 'faqIndex']);
 
 
 
-
+// gestion des changements d'ordre dans modules, formations et chapitres
 Route::get('/changeOrdreModule', [ModuleResController::class, 'changeOrdre']);
 Route::get('/changeOrdreFormation', [FormationController::class, 'changeOrdre']);
 Route::get('/changeOrdreMChapitre', [ChapitreController::class, 'changeOrdre']);
 
-// Route::get('/getLang/{param}', [LangController::class, 'getLang']);
 
 
 
+// upload d'images pour ckeditor
 Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
+// export de fichiers excell
+Route::get('export', [ExcellExport::class, 'storeExcel'])->name('export');
+Route::get('exp', [InfosUsersFormations::class, 'collection']);
 
-// Route::get('importExportView', [ExcellExport::class, 'importExportView']);
-Route::get('export', [ExcellExport::class, 'export'])->name('export');
-// Route::post('import', [ExcellExport::class, 'import'])->name('import');
+
+Route::post('/sendmail', [MailController::class, 'sendMail']);
+
 

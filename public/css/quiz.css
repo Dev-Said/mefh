@@ -83,6 +83,15 @@
   cursor: pointer;
 }
 
+.closeCertificat {
+  color: black;
+  margin: 15px 25px;
+  padding: 7px 20px;
+  opacity: 1;
+  font-size: 16px;
+  font-weight: normal;
+}
+
 @-webkit-keyframes animatetop {
   from {
     top: -300px;

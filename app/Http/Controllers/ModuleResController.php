@@ -110,13 +110,38 @@ class ModuleResController extends Controller
                 'modules.formation_id as formation_id',
                 'quizzes.module_id as quiz_module_id',
                 'sous_titres',
+                'image_formation',
             )
             ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
             ->leftJoin('quizzes', 'modules.id', '=', 'quizzes.module_id')
+            ->join('formations', 'formations.id', '=', 'modules.formation_id')
             ->where('formation_id', $id)
             ->orderBy('module_ordre', 'asc')
             ->orderBy('ordre', 'asc')
             ->get();
+
+
+            // return DB::table('modules')
+            // ->select(
+            //     'modules.id as module_id',
+            //     'modules.ordre as module_ordre',
+            //     'chapitres.id as id',
+            //     'modules.titre as module_titre',
+            //     'modules.description as module_description',
+            //     'chapitres.titre as titre',
+            //     'chapitres.description as description',
+            //     'fichier_video',
+            //     'chapitres.ordre as ordre',
+            //     'modules.formation_id as formation_id',
+            //     'quizzes.module_id as quiz_module_id',
+            //     'sous_titres',
+            // )
+            // ->join('chapitres', 'modules.id', '=', 'chapitres.module_id')
+            // ->leftJoin('quizzes', 'modules.id', '=', 'quizzes.module_id')
+            // ->where('formation_id', $id)
+            // ->orderBy('module_ordre', 'asc')
+            // ->orderBy('ordre', 'asc')
+            // ->get();
     }
 
 

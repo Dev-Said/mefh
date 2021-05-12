@@ -67,13 +67,22 @@ class UserController extends Controller
     public function store2(Request $request)
     {
 
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'sexe' => 'required|string|max:20',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
         $user = new User;
         $user->nom = $request->nom;
         $user->prenom = $request->prenom;
         $user->sexe = $request->sexe;
-        $user->admin = $request->admin;
+        $user->admin = 0;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->rgpd = 1;
 
         $user->save();
         return json_encode($user->id);
@@ -151,10 +160,19 @@ class UserController extends Controller
     // s'il existe
     public function reponseUser(Request $request)
     {
+        $user = User::find($request->id);
+        // connexion de l'user
+        if ($request->has(['email', 'password'])) {
+            $credentials = $request->only('email', 'password');
+            Auth::attempt($credentials);
+        }
+
+        //on éfface le précédent score s'il existe
         Reponse_user::where('quiz_id', $request->quiz_id)
             ->where('user_id', $request->id)
             ->delete();
 
+        // insertion du nouveau score
         $reponse_user = new Reponse_user;
         $reponse_user->score = $request->resultat;
         $reponse_user->user_id = $request->id;
@@ -166,25 +184,25 @@ class UserController extends Controller
 
         // renvoi tous les quiz pour une formation donnée
         $allQuizFromFormation = DB::table('modules')
-        ->select(
-            'quizzes.id as quiz_id',
-        )
-        ->join('formations', 'formations.id', '=', 'modules.formation_id')
-        ->join('quizzes', 'modules.id', '=', 'quizzes.module_id')
-        ->where('formation_id', $request->formation_id)
-        ->count();
+            ->select(
+                'quizzes.id as quiz_id',
+            )
+            ->join('formations', 'formations.id', '=', 'modules.formation_id')
+            ->join('quizzes', 'modules.id', '=', 'quizzes.module_id')
+            ->where('formation_id', $request->formation_id)
+            ->count();
 
         // renvoi le nombre de quiz réussis par l'user
         $quizDone = Reponse_user::where('user_id', $request->id)
-        ->where('formation_id', $request->formation_id)
-        ->count();
+            ->where('formation_id', $request->formation_id)
+            ->count();
 
         // si user a réussi tous les quiz de la formation 
         // alors on l'enregistre dans la table certificat
-        $user = User::find(7);
+
         $hasCertificat = Certificat::where('user_id', $user->id)
-        ->where('formation_id', 1)
-        ->exists();
+            ->where('formation_id', $request->formation_id)
+            ->exists();
 
         if ($quizDone == $allQuizFromFormation && $hasCertificat == false) {
             $gotCertificat = true;
@@ -208,14 +226,32 @@ class UserController extends Controller
     // vérifie si user existe et que le password est ok
     public function checkUser(Request $request)
     {
-        
-            $credentials = $request->only('email', 'password');
 
-            if (Auth::attempt($credentials)) {
-                return  Auth::id();
-            }
+        $credentials = $request->only('email', 'password');
 
-            return 'user not exist';
+        if (Auth::attempt($credentials)) {
+            return  Auth::id();
+        }
 
+        return 'user not exist';
     }
+
+    // public function createAdmin()
+    // {
+
+
+    //     $user = new User;
+    //     $user->nom = 'said';
+    //     $user->prenom = 'said';
+    //     $user->sexe = 'Masculin';
+    //     $user->admin = '1';
+    //     $user->email = 'said@mail.com';
+    //     $user->password = Hash::make('1234aaaa');
+    //     $user->pays = 'Belgique';
+    //     $user->ville = '5030';
+    //     $user->tranche_age = 'entre 45 et 55 ans';
+    //     $user->save();
+
+
+    // }
 }
