@@ -23,6 +23,7 @@ class ProfileController extends Controller
                     'score',
                     'quizzes.titre as quiz_titre',
                     'formations.titre as formation_titre',
+                    'formations.detail as formation_detail',
                     'modules.titre as module_titre'
                 )
                 ->join('quizzes', 'quizzes.id', '=', 'reponse_users.quiz_id')
@@ -34,9 +35,16 @@ class ProfileController extends Controller
                 ->get();
 
 
-            $infos_certificat = Certificat::where('user_id', $user->id)->get();
+            $infos_certificat = DB::table('certificats')
+            ->select(
+                'certificats.*',
+                'formations.detail as detail',
+            )
+            ->join('formations', 'formations.id', '=', 'certificats.formation_id')
+            ->where('certificats.user_id', $user->id)
+            ->get();
 
-            // dd($countries);
+            // dd($infos_certificat);
 
             return view('profile.profile', [
                 'user' => Auth::user(),

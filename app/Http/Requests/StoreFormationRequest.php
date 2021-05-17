@@ -28,6 +28,7 @@ class StoreFormationRequest extends FormRequest
             'description' => 'required|max:100',
             'langue' => 'required|max:50',
             'image_formation' => 'required|image',
+            'detail' => 'required|max:400|string',
         ];
     }
 }

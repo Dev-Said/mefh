@@ -60,6 +60,7 @@ class FormationController extends Controller
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
         $formation->langue = Arr::get($validated, 'langue');
+        $formation->detail = Arr::get($validated, 'detail');
         $formationsCount = formation::all()->max('ordre') + 1;
         $formation->ordre = $formationsCount;
         if ($request->hasFile('image_formation')) {
@@ -144,6 +145,7 @@ class FormationController extends Controller
         $formation->titre = Arr::get($validated, 'titre');
         $formation->description = Arr::get($validated, 'description');
         $formation->langue = Arr::get($validated, 'langue');
+        $formation->detail = Arr::get($validated, 'detail');
         $formation->ordre = $formation->ordre;
 
         $formation->save();

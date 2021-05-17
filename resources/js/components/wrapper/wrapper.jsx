@@ -9,9 +9,9 @@ import './modules.scss';
 import '../quiz/quiz.scss';
 import Links from '../liens/liens';
 import Faq from '../faq/faq';
-import Social from '../social/social';
 import Ressource from '../ressource/ressource';
-
+import CoursCompleted from '../coursCompleted/coursCompleted';
+import Social from '../social/social';
 
 
 const Wrapper = () => {
@@ -32,7 +32,7 @@ const Wrapper = () => {
     });
   }, []);
 
-  
+
   const handleView = (vue) => {
     setView(vue);
   }
@@ -72,21 +72,20 @@ const Wrapper = () => {
     localiz['btndonetrue'] = 'Hoofdstuk voltooid';
     localiz['btndonefalse'] = 'Hoofdstuk niet af';
   }
- 
+
   var compo;
-  
-// affiche les composants en fonction de ce que contien le hook view
-// view est défini via la fonction handleView qui est appelé sur 
-// les différents composants se trouvant dans le switch ci-dessous
+
+  // affiche les composants en fonction de ce que contien le hook view
+  // view est défini via la fonction handleView qui est appelé sur 
+  // les différents composants se trouvant dans le switch ci-dessous
   switch (view) {
     case 'quiz':
-      compo = <Quiz handleView={handleView} />
+      compo = <div className="quizBase"><Quiz handleView={handleView} /></div>
       break;
     case 'formation':
-      compo = [<Links faqs={faqs} ressources={ressources} 
-      handleView={handleView} localiz={localiz}/>, <Stepper />,
-      <Video />, <ListeChapitres handleView={handleView} localiz={localiz}/>,
-      <Social />, <ChapitreDescription />]
+      compo = [<Links faqs={faqs} ressources={ressources}
+        handleView={handleView} localiz={localiz} />, <Stepper />,
+      <Video />, <ChapitreDescription />, <ListeChapitres handleView={handleView} localiz={localiz} />, <div className="completSocial"> {auth[2] && <CoursCompleted localiz={localiz} />} <Social /></div>]
       break;
     case 'ressource':
       compo = <Ressource ressources={ressources} handleView={handleView} />

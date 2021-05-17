@@ -1,0 +1,20 @@
+.liste_chapitres {
+  width: 100%;
+  grid-row: 3 / 4;
+  grid-column: 2 / 3; 
+}
+
+
+@media (max-width: 1200px) {
+  .liste_chapitres {
+    width: 98%;
+  }
+}
+
+@media (max-width: 950px) {
+  .liste_chapitres {
+    grid-row: 4 / 5;
+    grid-column: 1 / 3; 
+    margin-bottom: 7px;
+  }
+}

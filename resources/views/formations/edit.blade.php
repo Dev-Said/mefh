@@ -32,6 +32,13 @@
         @error('image_formation')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+
+        <label for="detail">Détails certificat</label>
+        <textarea id="detail" name="detail" rows="10" cols="80">{{ $formation->detail }}</textarea>
+        @error('detail')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
         <input type="hidden" name="ordre" value="{{ $formation->ordre }}">
         <input type="submit">
     </form>

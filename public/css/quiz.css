@@ -1,24 +1,26 @@
-.quizHeader {
+.root {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+  padding-bottom: 70px;
+}
+
+.quizHeader {
+  width: 400px;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 120px;
+  margin-right: auto;
+  margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.quizBackButton {
-  padding: 25px;
-  margin-bottom: 50px;
-  width: 98%;
-  height: 60px;
-  font-size: 16px;
 }
 
 .paperH1 {
   font-size: 30px;
+  margin-bottom: 40px;
 }
 
 .modal {

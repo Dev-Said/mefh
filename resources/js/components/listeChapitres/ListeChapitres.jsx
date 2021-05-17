@@ -4,21 +4,13 @@ import axios from 'axios';
 import SimpleList from '../simpleList/simpleList';
 import BackNextButton from '../backNextButton/backNextButton';
 import Button from '@material-ui/core/Button';
-import CoursCompleted from '../coursCompleted/coursCompleted';
 import { connect } from 'react-redux';
+import './ListeChapitres.scss';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
-    maxWidth: 300,
-    // minHeight: 400,
-    // paddingTop: 1,
-    // paddingBottom: 1,
-    // paddingLeft: 1,
-    // paddingRight: 1,
-    // backgroundColor: theme.palette.background.paper,
-    // boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-    // borderRadius: "0 0 10px 10px",
+    width: '100%',
   },
   headerList: {
     backgroundColor: "white",
@@ -31,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 15,
   },
   quiz: {
-    width: 300,
+    width: '100%',
     height: 50,
     marginTop: 20,
-    border: 'solid 1px blue',
-    color: "blue",
+    color: "#0F5F91",
+    fontWeight: "bold",
+    backgroundColor: "#fafafa",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
   },
 }));
 
@@ -51,16 +45,16 @@ const ListeChapitres = (props) => {
   useEffect(() => {
     axios.get(`${globalUrl}modulesApi/${idFormation}`)
       .then(res => {
-        setChapitres(Object.entries(res.data));   
+        setChapitres(Object.entries(res.data));
       }).catch(function (error) {
         console.log('error:   ' + error);
       });
-  }, []);  
-  
+  }, []);
+
   // récupère le quiz du module s'il y en a pour afficher le 
   // bouton faire le quiz. Sinon on affiche pas le bouton
   useEffect(() => {
-      axios.get(`${globalUrl}quizzes/quizApi/${props.info_chapitre.module_id}`)
+    axios.get(`${globalUrl}quizzes/quizApi/${props.info_chapitre.module_id}`)
       .then(res => {
         setQuiz(Object.values(res.data));
       });
@@ -69,14 +63,17 @@ const ListeChapitres = (props) => {
 
 
   return (
-    <div className={classes.root} >
-      <BackNextButton chapitres={chapitres} currentChap={1} localiz={props.localiz}/>
-      <SimpleList chapitres={chapitres} init_index={0} />
-      {quiz != 'hide' ? 
-      <Button className={classes.quiz} variant="outlined" onClick={() => props.handleView('quiz')}>
-      {props.localiz['btnquiz']}</Button> : ''
-      }
-      { auth[2] && <CoursCompleted localiz={props.localiz} />}
+    <div className="liste_chapitres">
+      <div className={classes.root} >
+        <BackNextButton chapitres={chapitres} currentChap={1} localiz={props.localiz} />
+        <SimpleList chapitres={chapitres} init_index={0} />
+        {quiz != 'hide' ?
+          <Button className={classes.quiz}  onClick={() => props.handleView('quiz')}>
+            {props.localiz['btnquiz']}</Button> : ''
+        }
+        {/* {auth[2] && <CoursCompleted localiz={props.localiz} />}
+        <Social /> */}
+      </div>
     </div>
   )
 }

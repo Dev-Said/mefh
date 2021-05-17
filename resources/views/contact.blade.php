@@ -25,15 +25,15 @@
                 @csrf
                 <div>
                     <label for="name">{{ __('messages.nom') }}</label>
-                    <input type="text" id="name" name="user_name" value="{{ old('user_name') }}">
+                    <input type="text" id="name" name="user_name" value="{{ old('user_name') }}" required>
                 </div>
                 <div>
                     <label for="mail">Email</label>
-                    <input type="email" id="mail" name="user_mail" value="{{ old('user_mail') }}">
+                    <input type="email" id="mail" name="user_mail" value="{{ old('user_mail') }}" required>
                 </div>
                 <div>
                     <label for="msg">{{ __('messages.message') }}</label>
-                    <textarea id="msg" name="user_message">{{ old('user_message') }}</textarea>
+                    <textarea id="msg" name="user_message" required>{{ old('user_message') }}</textarea>
                 </div>
                 <div>
                     <button type="submit">{{ __('messages.envoyer') }}</button>

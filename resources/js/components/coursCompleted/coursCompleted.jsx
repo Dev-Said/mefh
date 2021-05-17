@@ -8,12 +8,16 @@ import store from '../redux/store';
 const useStyles = makeStyles(() => ({
   root: {
     marginTop: 15,
-    width: 500,
-  }, quiz: {
-    width: 300,
+    width: "100%",
+    marginBottom: "0",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+  }, 
+  quiz: {
+    width: "100%",
     height: 50,
-    border: 'solid 1px blue',
-    color: "blue",
+    color: "#0F5F91",
+    fontWeight: "bold",
+    backgroundColor: "#fafafa",
   },
 }));
 
@@ -109,7 +113,7 @@ const CoursCompleted = (props) => {
 
   return (
     <div className={classes.root}>
-      <Button onClick={handleClick} className={classes.quiz} variant="outlined">
+      <Button onClick={handleClick} className={classes.quiz} >
         {messagelocal}
       </Button>
 

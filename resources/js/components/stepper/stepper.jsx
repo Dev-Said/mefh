@@ -8,64 +8,64 @@ import Tooltip from '@material-ui/core/Tooltip';
 import store from '../redux/store';
 import './stepper.scss';
 import { styled } from '@material-ui/core/styles';
- 
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
+import PinDropIcon from '@material-ui/icons/PinDrop';
+
 
 const MyButton = styled(Button)({
-  width: 100,
+  width: "auto",
   height: "20px",
-  flex: "1",
+  flex: 1,
   minWidth: '2px',
+  marginTop: "auto",
+  marginBottom: "5px",
 });
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    height: "100px",
+    height: "auto",
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
-    
-    // backgroundColor: 'rgb(255, 244, 244)',
-    // border: 'primary solid 2px',
+    gridRow: "2 / 3",
+    gridColumn: "1 / 3",
+    paddingBottom: "20px",
   },
   stepper: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    alignContent: "stretch",
-    // alignItems: "stretch",
-    // alignContent: "stretch",
-    // width: "100%",
-    // marginBottom: "20px",
-    // border: 'green solid 2px',
+    alignContent: "flex-end",
   },
-  // stepButton: {
-  //   height: 20,
-  //   width: 100,
-  //   "&:focus": {
-  //     outline: 'none',
-  //     backgroundColor: "blue",
-  //   },
-  //   flex: '1',
-  //   backgroundColor: "red",
-  // },
   blockTitre: {
     display: "flex",
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
+   
   },
   titre: {
     fontSize: 30,
-    marginBottom: 0,
     fontWeight: "bold",
-    marginTop: "15px",
+    marginTop: "25px",
+    color: "#4a4a4a",
   },
   selected: {
     backgroundColor: "blue",
+  },
+  iconStart: {
+    fontSize: "35px",
+    marginRight: "5px",
+    color: "#0F5F91",
+  },
+  iconEnd: {
+    fontSize: "35px",
+    marginLeft: "5px",
+    color: "#0F5F91",
   }
 }));
 
@@ -101,10 +101,10 @@ const Stepper = (props) => {
     store.dispatch({ type: 'GET_CHAPITRE', chapitreData: chapitre });
   };
 
-   
+
   const colorSelected = (idChapitre) => {
-    if (idChapitre === id) { style = { backgroundColor: "blue" } }
-    else if (props.store_dejaSuivi.includes(idChapitre)) { style = { backgroundColor: '#f1f1f1' } }
+    if (idChapitre == id) { style = { backgroundColor: "#0f5f91" } }
+    else if (props.store_dejaSuivi.includes(idChapitre)) { style = { backgroundColor: '#fafafa' } }
     else { style = { backgroundColor: '#ffffff' } }
     return style;
   }
@@ -128,17 +128,23 @@ const Stepper = (props) => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.stepper}>
-        {chapitres.map((chapitre, index) => (
-          <BootstrapTooltip key={index} title={chapitre[1].titre} placement="top">
-            <MyButton className={classes2.stepButton} 
-              onClick={() => locateStepper(chapitre[1])}
-              variant="outlined" color="primary"
-              style={colorSelected(chapitre[1].id)}
-            >
-            </MyButton>       
-          </BootstrapTooltip>
-        ))}
+      <div className="stepperContainer">
+     
+        <div className={classes.stepper}>
+        <PinDropIcon  className={classes.iconStart} />
+          {chapitres.map((chapitre, index) => (
+            <BootstrapTooltip key={index} title={chapitre[1].titre} placement="top">
+              <MyButton 
+                onClick={() => locateStepper(chapitre[1])}
+                variant="outlined" 
+                style={colorSelected(chapitre[1].id)}
+              >
+              </MyButton>
+            </BootstrapTooltip>
+          ))}
+          <EmojiEventsIcon className={classes.iconEnd} />
+        </div>
+       
       </div>
       <div className={classes.blockTitre}>
         <Typography className={classes.titre}>{props.store_chapitre.titre}</Typography>

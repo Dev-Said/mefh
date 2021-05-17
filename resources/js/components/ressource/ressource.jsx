@@ -10,24 +10,35 @@ import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles({
     root: {
-        minWidth: "80%",
-
-
+        Width: "100%",
+        gridRow: "7 / 8",
+        gridColumn: "1 / 3",
     },
     title: {
         fontSize: 14,
     },
-    pos: {
-        marginBottom: 12,
-    },
     content: {
-        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
         marginBottom: 50,
-        backgroundColor: "#fdfdfd",
+        backgroundColor: "#ffffff",
     },
     backButton: {
-        marginBottom: 50,
-        width: "100%",
+        marginRight: 15,
+        fontSize: "14px",
+        color: "#0f5f91",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fcfcfc",
+        '&:hover': {
+            cursor: "pointer",
+        },
+        marginBottom: 40,
+        marginTop: 20,
+        width: "400px",
+        height: "50px",
+        boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
     },
 });
 
@@ -41,22 +52,25 @@ export default function Ressource(props) {
 
 
     return (
-        <div>
+        <div className={classes.root}>
+
             <h1>Ressources</h1>
-            <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.backButton}>
+
+            <Button onClick={() => props.handleView('formation')} className={classes.backButton}>
                 Revenir sur la page de formation</Button>
+
             <div className={classes.root}>
                 {ressources.map((ressource, index) => (
                     <Card key={index} className={classes.root} className={classes.content}>
                         <CardContent>
-                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            <Typography className={classes.title} color="#0c0c0c" gutterBottom>
                                 {ReactHtmlParser(ressource[1].text)}
                             </Typography>
-
                         </CardContent>
                     </Card>
                 ))}
             </div>
+
         </div>
     );
 }

@@ -32,10 +32,23 @@
         @error('image_formation')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+
+        <label for="detail">Détails certificat</label>
+        <textarea   id="detail" name="detail" value="{{ old('detail') }}" rows="10" cols="80"></textarea>
+        @error('detail')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="submit">
     </form>
 
 </div>
 
+<!-- <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
+<script>
+CKEDITOR.replace( 'detail', {
+    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+    filebrowserUploadMethod: 'form'
+});
+</script> -->
 @endsection

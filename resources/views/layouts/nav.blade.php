@@ -85,13 +85,13 @@
         <label for="toggle-nav" class="nav-button"></label>
 
         <div class="logoResponsive">
-            <a href="/"><img src="/storage/images/mefhlogo.png" alt="logo" /></a>
+            <a href="/"><img src="/storage/images/mefhlogo3.png" alt="logo" /></a>
         </div>
 
         <ul class="nav">
 
             <li class="logo">
-                <a href="/"><img src="/storage/images/mefhlogo.png" alt="logo" /></a>
+                <a href="/"><img src="/storage/images/mefhlogo3.png" alt="logo" /></a>
             </li>
 
             <li class="nav-item {{ '/' == request()->path() || 'en' == request()->path() 

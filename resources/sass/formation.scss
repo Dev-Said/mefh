@@ -185,7 +185,7 @@ a.card-formation {
     color: rgb(0, 0, 0);
     font-size: 14px;
     font-weight: bold;
-    background-color: #faf3b6;
+    background-color: #e6dea8;
 }
 
 .inf-card-langue h4 strong {
@@ -220,7 +220,13 @@ a.card-formation {
     .contenaireFormations {
         width: 100%;
         border: none;
+        padding-top: 0;
 
+    }
+
+    .contenaire_text-formation {
+        width: 100%;
+        padding: 10px 5px 10px 5px;
     }
 
     .text-formation {
@@ -235,12 +241,6 @@ a.card-formation {
     .contenaireFormations {
         margin-top: 10px;
      }
-
-     .contenaire_text-formation {
-        width: 100%;
-        padding: 10px 5px 30px 5px;
-        background-color: #460000;
-    }
 
      .text-formation {
         padding-right: 1%;

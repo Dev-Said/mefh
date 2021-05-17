@@ -1,3 +1,23 @@
-.player-wrapper {
-  margin-top: 10px;
+
+.react_player {
+  width: 100%;
+  grid-row: 3 / 4;
+  grid-column: 1 / 2; 
+  margin-bottom: 0;
+  padding-bottom: 0;
+ }
+
+
+@media (max-width: 1200px) {
+  .react_player {
+   width: 98%;
+  }
+
+}
+
+@media (max-width: 950px) {
+  .react_player {
+    grid-row: 3 / 4;
+    grid-column: 1 / 3; 
+   }
 }

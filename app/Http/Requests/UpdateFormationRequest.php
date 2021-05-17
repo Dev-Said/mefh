@@ -28,6 +28,7 @@ class UpdateFormationRequest extends FormRequest
             'description' => 'required|max:100',
             'langue' => 'required|max:50',
             'ordre' => 'required|max:5',
+            'detail' => 'required|max:400|string',
         ];
     }
 }

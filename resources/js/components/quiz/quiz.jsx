@@ -14,56 +14,62 @@ import Login from '../login/login';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: "column",
-    flexWrap: "nowrap",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: '100%',
-    paddingLeft: '10%',
-    paddingRight: '10%',
-    paddingBottom: '70px',
-  },
   formLabel: {
     fontSize: '22px',
     fontWeight: 'bold',
     lineHeight: '30px',
     marginBottom: '20px',
-    marginTop: '20px',
   },
   formLabelError: {
     color: 'red',
     fontWeight: '400',
   },
-  reponses: {
-    fontSize: '16px',
-    lineHeight: '22px',
+  questionSpace: {
+    marginTop: '20px',
   },
   paper: {
-    width: '100%',
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    width: "100%",
     paddingBottom: '40px',
-    paddingTop: '50px',
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-    // marginTop: "-50px",
+    backgroundColor: "#ffffff",
   },
   submitButton: {
-    width: 'auto',
+    width: '150px',
+    height: "40px",
     marginTop: '30px',
     paddingTop: '7px',
     paddingBottom: '7px',
-    backgroundColor: 'black',
+    backgroundColor: '#920000',
+    fontSize: "15px",
+    fontWeight: "bold",
     color: 'white',
+    borderRadius: "5px",
   },
   divid: {
-    marginTop: '10px',
+    marginTop: '25px',
     marginBottom: '10px',
+    backgroundColor: "#cacaca",
   },
   pCertificat: {
     fontSize: 18,
   },
+  quizBackButton: {
+    marginRight: 15,
+    fontSize: "14px",
+    color: "#0f5f91",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fcfcfc",
+    '&:hover': {
+      cursor: "pointer",
+    },
+    marginBottom: 20,
+    marginTop: 20,
+    width: "400px",
+    height: "50px",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+  }
 
 }));
 
@@ -122,7 +128,7 @@ const Quiz = (props) => {
     }
     return questId;
   }
- 
+
   // vérifie si on a répondu à toutes les questions 
   // sinon renvoi l'id des questions sans réponse 
   var questionMissing = [];
@@ -304,7 +310,7 @@ const Quiz = (props) => {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // window.location = 'http://127.0.0.1:8000/profile';
+    // window.location = 'http://127.0.0.1:8000/profile';
   }
 
 
@@ -346,7 +352,7 @@ const Quiz = (props) => {
 
 
   return (
-    <div className={classes.root}>
+    <div className="root">
 
       <div id="certificatModal" className="modal">
         <div className="modal-content">
@@ -391,24 +397,23 @@ const Quiz = (props) => {
                 score={score}
               />
           }
-
         </div>
       </div>
 
 
       <div className="quizHeader">
-        <Button onClick={() => props.handleView('formation')} variant="outlined" className="quizBackButton">
+        <Button onClick={() => props.handleView('formation')} variant="outlined" className={classes.quizBackButton}>
           Revenir sur la page de formation</Button>
       </div>
 
 
-      <Paper className={classes.paper}>
+      <div className={classes.paper}>
         <h1 className="paperH1">Quiz du module: {props.info_chapitre.module_titre}</h1>
-        <form className={classes.container} onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit} >
           {quizzes.map((quiz) =>
             <div key={quiz[1].id}>
               {quiz[1].questions.map((question, ndx) =>
-                <div key={ndx}><FormLabel className={classes.formLabel} id={'questionId_' + question['id']}>
+                <div key={ndx} className={classes.questionSpace}><FormLabel className={classes.formLabel} id={'questionId_' + question['id']}>
                   {question['question']}</FormLabel>
                   {question.reponses.map((reponse, ndx) =>
                     <InputQuiz
@@ -420,14 +425,14 @@ const Quiz = (props) => {
                       id={reponse.id}
                       key={ndx}
                     />
-                  )} <Divider />
+                  )} <Divider className={classes.divid} />
                 </div>
               )}
             </div>
           )}
           <button className={classes.submitButton} type="submit" >Envoyer</button>
         </form>
-      </Paper>
+      </div>
     </div>
   );
 }

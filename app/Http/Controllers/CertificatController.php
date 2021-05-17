@@ -14,13 +14,15 @@ class CertificatController extends Controller
         $nom = $request->nom;
         $prenom = $request->prenom;
         $formation = $request->formation;
+        $detail = $request->detail;
         $date = date('d/m/Y', strtotime($request->date));
-        $data = ['nom' => $nom, 'prenom' => $prenom, 'date' => $date, 'formation' => $formation];
+        $data = ['nom' => $nom, 'prenom' => $prenom, 'date' => $date, 'formation' => $formation, 'detail' => $detail];
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('certificat', $data)->setPaper('a4', 'landscape');
 
         return $pdf->download('Certificat.pdf');
     }
+
 }
 
     

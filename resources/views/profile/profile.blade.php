@@ -6,7 +6,7 @@
 
 <div class="contenaire_profile">
     <div class="headerProfile">
-        <h3>{{ __('messages.inscrit_depuis') }} {{ date('d-m-Y', strtotime($user->created_at)) }}</h3>
+        <h3 class="headerProfileH3First">{{ __('messages.inscrit_depuis') }} {{ date('d-m-Y', strtotime($user->created_at)) }}</h3>
         <button><a href="/edit-profile">{{ __('messages.completer_profile') }}</a></button>
     </div>
 
@@ -66,7 +66,7 @@
                         <td>
                             {{ __('messages.telecharger_certificats') }}
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="/pdf?nom={{ ucfirst(strtolower($user->nom)) }}&prenom={{ ucfirst(strtolower($user->prenom)) }}&formation={{$info_certificat->formation}}&date={{$info_certificat->created_at}}"><i class="fas fa-download"></i></a>
+                            <a href="/pdf?nom={{ ucfirst(strtolower($user->nom)) }}&prenom={{ ucfirst(strtolower($user->prenom)) }}&formation={{$info_certificat->formation}}&date={{$info_certificat->created_at}}&detail={{$info_certificat->detail}}"><i class="fas fa-download"></i></a>
                         </td>
                     </tr>
                     @endforeach

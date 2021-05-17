@@ -1,39 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import store from '../redux/store'
 import { connect } from 'react-redux';
+import './backNextButton.scss';
 
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 300,
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-  },
-  backButton: {
-    width: 150,
-    height: 50,
-    borderRadius: `10px 0 0 0`,
-    "&:focus": {
-      outline: 'none',
-    },
-    backgroundColor: theme.palette.background.paper,
-  },
-  nextButton: {
-    width: 150,
-    height: 50,
-    borderRadius: `0 10px 0 0`,
-    "&:focus": {
-      outline: 'none',
-    },
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const BackNextButton = (props) => {
 
-  const classes = useStyles();
   const [curChapitre, setCurChapitre] = useState(0);
   const [activeStep, setActiveStep] = useState(1);
   // met le premier chapitres de chaque modules dans modTab
@@ -81,24 +54,23 @@ const BackNextButton = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <div>
+    <div className="backNextButtonRoot">
         <Button
           disabled={props.store_curChapitre < 1}
           onClick={handleBack}
-          className={classes.backButton}
+          className="backButton"
         // variant="contained"
         >
-          {props.localiz['prev']}
+        {props.localiz['prev']}
         </Button>
         <Button
           disabled={props.store_curChapitre == nbModules - 1}
           // variant="contained"
-          className={classes.nextButton}
-          onClick={handleNext}>
-          {props.localiz['next']}
+          className="nextButton"
+          onClick={handleNext}
+          >
+           {props.localiz['next']}
         </Button>
-      </div>
     </div>
   );
 }

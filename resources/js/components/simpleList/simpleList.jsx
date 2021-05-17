@@ -10,28 +10,32 @@ import { connect } from 'react-redux';
 import store from '../redux/store'
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 300,
-    maxWidth: 300,
+    width: '100%',
     minHeight: 400,
     paddingTop: 1,
     paddingBottom: 1,
     paddingLeft: 1,
     paddingRight: 1,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: "-4px 9px 25px -6px rgba(0, 0, 0, 0.1)",
-    borderRadius: "0 0 10px 10px",
-  },
+    backgroundColor: "#fafafa;",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    borderRadius: "0 0 5px 5px",
+     },
   headerList: {
-    backgroundColor: "white",
+    backgroundColor: "#fafafa;",
     padding: "20px",
     textAlign: "center",
     fontSize: "20px",
     lineHeight: "30px",
+    color: "#0f5f91",
+    fontWeight: "bold",
   },
   itemText: {
     paddingLeft: 15,
+    color: "#0f5f91",
+    fontSize: "17px",
   },
   quiz: {
     width: 300,
@@ -40,15 +44,6 @@ const useStyles = makeStyles((theme) => ({
       outline: 'none',
     },
   },
-  typo: {
-    width: 300,
-    paddingLeft: 23,
-    paddingTop: "40px",
-    paddingBottom: "20px",
-    textAlign: 'left',
-    fontSize: "16px",
-    variant: "body2",
-  }
 }));
 
 
