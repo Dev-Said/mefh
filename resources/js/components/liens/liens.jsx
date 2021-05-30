@@ -49,12 +49,12 @@ export default function Links(props) {
                 {props.faqs != 'hide' && props.faqs != '' ?
                     <Button className={classes.lien} onClick={() => props.handleView('faq')} >
                         <InfoIcon className={classes.icon} />{props.localiz['faq']}
-                    </Button> : ''
+                    </Button> : null
                 }
                 {props.ressources != 'hide' && props.ressources != '' ?
                     <Button className={classes.lien} onClick={() => props.handleView('ressource')} >
                         <PeopleIcon className={classes.icon} /> {props.localiz['res']}
-                    </Button> : ''
+                    </Button> : null
                 }
             </div>
         </div>

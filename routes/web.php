@@ -52,7 +52,7 @@ Route::group([
         return view('accueil', ['lang' => Lang::locale()]);
     });
 
-    Route::middleware(['visitors'])->get('/formations-liste', function () {
+    Route::get('/formations-liste', function () {
         return view('formations', [
             'formations' => DB::table('formations')->orderBy('ordre')->get(),
             'langue' => 'Toutes les langues',
@@ -65,19 +65,19 @@ Route::group([
     });
 
 
-    Route::middleware(['visitors'])->get('/contact', function () {
+    Route::get('/contact', function () {
         return View('contact');
     });
 
-    Route::middleware(['visitors'])->get('/vie-privee', function () {
+    Route::get('/vie-privee', function () {
         return View('legale.viePrivee');
     });
 
-    Route::middleware(['visitors'])->get('/cookies', function () {
+    Route::get('/cookies', function () {
         return View('legale.cookies');
     });
 
-    Route::middleware(['visitors'])->get('/conditionsUtilisation', function () {
+    Route::get('/conditionsUtilisation', function () {
         return View('legale.conditionsUtilisation');
     });
 
@@ -93,7 +93,7 @@ Route::group([
 
     Route::get('/formationsLangue', [FormationController::class, 'formationsLangue']);
 
-    Route::middleware(['visitors'])->get('/profile', [ProfileController::class, 'getUser']);
+    Route::get('/profile', [ProfileController::class, 'getUser']);
     Route::post('/profileUpadate', [ProfileController::class, 'storeCompleteProfile']);
 
     Route::get('/edit-profile', function () {

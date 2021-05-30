@@ -11,6 +11,8 @@
   border-radius: 5px;
   font-family: sans-serif;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  grid-row: 2/3;
+  grid-column: 1/2;
 }
 
 .auth_inscription {

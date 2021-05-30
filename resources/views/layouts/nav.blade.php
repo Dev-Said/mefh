@@ -51,6 +51,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/authentification.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/stats.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/chapitreDescription.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/backNextButton.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/listeChapitres.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/liens.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/inputQuiz.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/coursCompleted.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -112,7 +118,8 @@
             </li>
 
 
-            <li class="userLogin"><i class="fas fa-user">
+            <li class="userLogin">
+                <i class="fas fa-user">
                     <ul class="userLoginUl">
                         @if(Auth::check())
                         @if(Auth::user()->admin)
@@ -161,9 +168,6 @@
                 <a href="/register">Inscription</a>
             </li>
             @endif
-
-
-
 
 
             @php ($lang = Lang::locale())

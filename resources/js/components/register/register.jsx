@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     button: {
         width: "auto",
         height: "45px",
-        marginTop: "20px",
+        marginTop: "45px",
         marginLeft: 'auto',
         marginRight: '10%',
     },
@@ -66,7 +66,6 @@ export default function Register(props) {
         if (response) {
             setResponseCaptcha(true);
         }
-        console.log('verifyCallback --->  '  + response);
     };
 
 
@@ -92,8 +91,6 @@ export default function Register(props) {
     // quand on veut sauvegarder les résultats d'un quiz et 
     // qu'on est pas déjà inscrit. Ensuite récupère l'user id
     const handleSubmit = (event) => {
-        console.log('props.formation_id  ' + props.formation_id)
-
         if (responseCaptcha == true) {
             event.preventDefault();
             axios.post(`${globalUrl}usersFromQuizForm`,
@@ -102,7 +99,6 @@ export default function Register(props) {
                     axios.post(`${globalUrl}reponses_user`,
                         { resultat: props.resultat, id: response.data, quiz_id: props.quiz_id, formation_id: idFormation, password: password, email: email })
                         .then(function (response) {
-                            console.log('gotCertificat   ' + response.data);
                             window.location.reload();
                         })
                         .catch(function (error) {

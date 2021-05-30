@@ -8,6 +8,17 @@
   align-items: flex-start;
 }
 
+.rootDescription_textOnly {
+  width: 100%;
+  margin-top: 15px;
+  grid-row: 3/7;
+  grid-column: 1/2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 @media (max-width: 1200px) {
   .rootDescription {
     margin-top: -50px;
@@ -26,6 +37,12 @@
 @media (max-width: 950px) {
   .rootDescription {
     grid-row: 6/7;
+    grid-column: 1/3;
+    margin-top: 0;
+  }
+
+  .rootDescription_textOnly {
+    grid-row: 3/4;
     grid-column: 1/3;
     margin-top: 0;
   }

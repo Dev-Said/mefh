@@ -1,29 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import store from '../redux/store';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    marginTop: 15,
-    width: "100%",
-    marginBottom: "0",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-  }, 
-  quiz: {
-    width: "100%",
-    height: 50,
-    color: "#0F5F91",
-    fontWeight: "bold",
-    backgroundColor: "#fafafa",
-  },
-}));
+import './coursCompleted.scss';
 
 
 const CoursCompleted = (props) => {
-  const classes = useStyles();
   const [message, setMessage] = useState();
   var messagelocal = '';
   var ordreChapitres = [];
@@ -75,8 +58,8 @@ const CoursCompleted = (props) => {
               // trié selon l'ordre voulu et un index qui servira d'ordre pour le 
               // passage d'un stepper à l'autre lorsqu'on clique sur "j'ai terminé ce chapitre"
 
-              chapitres.map((chapitre, index) => {
-                ordChap = Object.create(chap, {
+              chapitres.map((chapitre, index) => { 
+                ordChap = Object.create(chap, { 
                   id: {
                     value: chapitre[1].id
                   },
@@ -112,8 +95,8 @@ const CoursCompleted = (props) => {
 
 
   return (
-    <div className={classes.root}>
-      <Button onClick={handleClick} className={classes.quiz} >
+    <div className="rootCoursCompleted">
+      <Button onClick={handleClick} className="quizCoursCompleted" >
         {messagelocal}
       </Button>
 

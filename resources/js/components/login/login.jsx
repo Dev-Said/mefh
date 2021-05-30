@@ -54,7 +54,6 @@ export default function Login(props) {
             { email: email, password: password }
         ).then(res => {
             data = res.data;
-            console.log('data checkUser  ' + data);
             if (data != 'user not exist') {
                 axios.post(`${globalUrl}reponses_user`,
                     { resultat: props.resultat, id: data, quiz_id: props.quiz_id, formation_id: idFormation })
@@ -81,7 +80,6 @@ export default function Login(props) {
     // affiche et gère la modal ---------------------------------------->
     const handelModalW = () => {
         var modalW = document.getElementById("myModalW");
-        console.log('modalW   ' + modalW)
         modalW.style.display = "block";
 
         var span = document.getElementsByClassName("closeW")[0];

@@ -23635,8 +23635,7 @@ var BackNextButton = function BackNextButton(props) {
     }
   }); // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
 
-  var nbModules = modTab.length ? modTab.length : 1;
-  console.log('nbModules   ' + nbModules); // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
+  var nbModules = modTab.length ? modTab.length : 1; // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 
   // si il y a des props.chapitres mais qu'il n'y en a pas dans le store
 
@@ -23727,9 +23726,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ChapitreDescription = function ChapitreDescription(props) {
-  // ReactHtmlParser permet d'afficher correctement du html provenant de ckeditor sans afficher les balises
+  var classSelected = 'rootDescription'; // ReactHtmlParser permet d'afficher correctement du html provenant de ckeditor sans afficher les balises
+
+  if (props.description_chapitre.fichier_video != '') {
+    classSelected = 'rootDescription';
+  } else {
+    classSelected = 'rootDescription_textOnly';
+  }
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-    className: "rootDescription",
+    className: classSelected,
     children: (0,react_html_parser__WEBPACK_IMPORTED_MODULE_2__.default)(props.description_chapitre.description)
   });
 };
@@ -23757,13 +23763,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../redux/store */ "./resources/js/components/redux/store.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _coursCompleted_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./coursCompleted.scss */ "./resources/js/components/coursCompleted/coursCompleted.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -23783,27 +23789,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(function () {
-  return {
-    root: {
-      marginTop: 15,
-      width: "100%",
-      marginBottom: "0",
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px"
-    },
-    quiz: {
-      width: "100%",
-      height: 50,
-      color: "#0F5F91",
-      fontWeight: "bold",
-      backgroundColor: "#fafafa"
-    }
-  };
-});
 
 var CoursCompleted = function CoursCompleted(props) {
-  var classes = useStyles();
-
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
       _useState2 = _slicedToArray(_useState, 2),
       message = _useState2[0],
@@ -23894,11 +23881,11 @@ var CoursCompleted = function CoursCompleted(props) {
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-    className: classes.root,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    className: "rootCoursCompleted",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
       onClick: handleClick,
-      className: classes.quiz,
+      className: "quizCoursCompleted",
       children: messagelocal
     })
   });
@@ -23977,7 +23964,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default
       minWidth: "100%",
       display: "flex",
       flexDirection: "column",
-      alignItems: "flex-start",
+      alignItems: "stretch",
       marginTop: "30px",
       gridRow: "6 / 7",
       gridColumn: "1 / 3"
@@ -24009,6 +23996,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default
       borderRadius: "5px",
       marginBottom: "20px",
       width: "100%",
+      minWidth: "100%",
       height: "auto",
       paddingBottom: "20px",
       boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px"
@@ -24236,7 +24224,7 @@ function Links(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_icons_Info__WEBPACK_IMPORTED_MODULE_5__.default, {
           className: classes.icon
         }), props.localiz['faq']]
-      }) : '', props.ressources != 'hide' && props.ressources != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default, {
+      }) : null, props.ressources != 'hide' && props.ressources != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default, {
         className: classes.lien,
         onClick: function onClick() {
           return props.handleView('ressource');
@@ -24244,7 +24232,7 @@ function Links(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_icons_People__WEBPACK_IMPORTED_MODULE_6__.default, {
           className: classes.icon
         }), " ", props.localiz['res']]
-      }) : '']
+      }) : null]
     })
   });
 }
@@ -24346,7 +24334,6 @@ function Login(props) {
       password: password
     }).then(function (res) {
       data = res.data;
-      console.log('data checkUser  ' + data);
 
       if (data != 'user not exist') {
         axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(globalUrl, "reponses_user"), {
@@ -24373,7 +24360,6 @@ function Login(props) {
 
   var handelModalW = function handelModalW() {
     var modalW = document.getElementById("myModalW");
-    console.log('modalW   ' + modalW);
     modalW.style.display = "block";
     var span = document.getElementsByClassName("closeW")[0];
 
@@ -24476,11 +24462,13 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default
         margin: theme.spacing(1)
       },
       width: "100%",
-      height: "80px",
+      height: "auto",
+      minHeight: "80px",
       backgroundColor: "#8cb393",
       display: "flex",
-      justifyContent: "flex-end",
+      justifyContent: "center",
       alignItems: "center",
+      flexWrap: "wrap",
       paddingRight: "20px",
       color: "white",
       fontSize: "18px"
@@ -24496,6 +24484,7 @@ var BootstrapButton = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.d
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 22px',
+    margin: "10px 15px",
     border: '1px solid',
     lineHeight: 1.5,
     backgroundColor: 'white',
@@ -24518,38 +24507,38 @@ var BootstrapButton = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.d
 })(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__.default);
 function ModalFooterButton(props) {
   var classes = useStyles();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     className: classes.root,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
-      children: [" ", props.message, " "]
-    }), props.func2 != 'hide' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
-      variant: "contained",
-      onClick: function onClick() {
-        return props.func2();
-      },
-      style: {
-        minWidth: '250px'
-      },
-      children: props.titre0
-    }), props.score >= 80 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
-      variant: "contained",
-      onClick: function onClick() {
-        return props.func();
-      },
-      style: {
-        minWidth: '150px'
-      },
-      children: props.titre1
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
-      variant: "contained",
-      onClick: function onClick() {
-        return props.closeModal();
-      },
-      style: {
-        minWidth: '150px'
-      },
-      children: props.titre2
-    })]
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("p", {
+      children: [" ", props.message, props.func2 != 'hide' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
+        variant: "contained",
+        onClick: function onClick() {
+          return props.func2();
+        },
+        style: {
+          minWidth: '250px'
+        },
+        children: props.titre0
+      }), props.score >= 80 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
+        variant: "contained",
+        onClick: function onClick() {
+          return props.func();
+        },
+        style: {
+          minWidth: '150px'
+        },
+        children: props.titre1
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(BootstrapButton, {
+        variant: "contained",
+        onClick: function onClick() {
+          return props.closeModal();
+        },
+        style: {
+          minWidth: '150px'
+        },
+        children: props.titre2
+      })]
+    })
   });
 }
 
@@ -24798,7 +24787,7 @@ var Quiz = function Quiz(props) {
 
       var modal = document.getElementById("myModal");
       modal.style.display = "block";
-      var span = document.getElementsByClassName("close")[0];
+      var span = document.getElementsByClassName("close")[1];
 
       span.onclick = function () {
         modal.style.display = "none";
@@ -24913,7 +24902,6 @@ var Quiz = function Quiz(props) {
     var footerModal = document.getElementById("certificatfooterModal");
     footerModal.style.backgroundColor = "#4771aa";
     var headerModal = document.getElementById("certificatModal");
-    console.log('headerModal   ' + headerModal);
     headerModal.style.display = "block";
     var span = document.getElementsByClassName("close")[0];
 
@@ -24974,7 +24962,7 @@ var Quiz = function Quiz(props) {
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-    className: "root",
+    className: "quizRoot",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
       id: "certificatModal",
       className: "modal",
@@ -25683,7 +25671,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
     button: {
       width: "auto",
       height: "45px",
-      marginTop: "20px",
+      marginTop: "45px",
       marginLeft: 'auto',
       marginRight: '10%'
     },
@@ -25741,8 +25729,6 @@ function Register(props) {
     if (response) {
       setResponseCaptcha(true);
     }
-
-    console.log('verifyCallback --->  ' + response);
   };
 
   var handleChangeNom = function handleChangeNom(event) {
@@ -25769,8 +25755,6 @@ function Register(props) {
 
 
   var handleSubmit = function handleSubmit(event) {
-    console.log('props.formation_id  ' + props.formation_id);
-
     if (responseCaptcha == true) {
       event.preventDefault();
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(globalUrl, "usersFromQuizForm"), {
@@ -25789,7 +25773,6 @@ function Register(props) {
           password: password,
           email: email
         }).then(function (response) {
-          console.log('gotCertificat   ' + response.data);
           window.location.reload();
         })["catch"](function (error) {
           console.log('probleme reponses_user  ' + error);
@@ -26317,7 +26300,7 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
       flexWrap: "wrap",
       justifyContent: "flex-start",
       alignItems: "center",
-      gridRow: "5 / 6",
+      gridRow: "4 / 5",
       gridColumn: "2 / 3"
     },
     button: {
@@ -26349,31 +26332,24 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default
   };
 });
 
-function Social(props) {
+function Social() {
   var classes = useStyles();
   var url = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search;
   var image = "https://m-egalitefemmeshommes.org/storage/images/1616525907voilier.jpg";
   var titre = "Le mouvement pour l'égalité entre les femmes et les hommes";
 
   var handleTwitter = function handleTwitter() {
-    // handleProperty();
-    console.log('url    ' + url);
-    console.log(props.info_chapitre.image_formation);
     var shareUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) + "&via=ASBL Le mouvement pour l'Egalité entre les Femmes et les Hommes";
     popupCenter(shareUrl, "Partager sur Twitter");
   };
 
   var handleFacebook = function handleFacebook() {
-    // handleProperty();
     url = "https://m-egalitefemmeshommes.org";
-    console.log('url    ' + url);
     var shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
     popupCenter(shareUrl, "Partager sur facebook");
   };
 
   var handleLinkedin = function handleLinkedin() {
-    // handleProperty();
-    console.log('url    ' + url);
     var shareUrl = "https://www.linkedin.com/shareArticle?url=" + encodeURIComponent(url) + "&via=ASBL Le mouvement pour l'Egalité entre les Femmes et les Hommes";
     popupCenter(shareUrl, "Partager sur LinkedIn");
   };
@@ -26705,35 +26681,42 @@ __webpack_require__.r(__webpack_exports__);
 
 function Video(props) {
   var sousTitre = props.info_chapitre.sous_titres;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-    className: "react_player",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_2__.default, {
-      url: "./storage/" + props.info_chapitre.fichier_video,
-      playing: false,
-      controls: true,
-      onContextMenu: function onContextMenu(e) {
-        return e.preventDefault();
-      },
-      playbackRate: 1,
-      width: "100%",
-      height: "auto",
-      config: {
-        file: {
-          attributes: {
-            crossOrigin: "anonymous",
-            controlsList: 'nodownload'
-          },
-          tracks: [{
-            kind: 'subtitles',
-            src: "./storage/" + sousTitre,
-            srcLang: 'fr',
-            "default": true,
-            mode: 'hidden'
-          }]
+
+  if (props.info_chapitre.fichier_video != '') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "react_player",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_player__WEBPACK_IMPORTED_MODULE_2__.default, {
+        url: "./storage/" + props.info_chapitre.fichier_video,
+        playing: false,
+        controls: true,
+        onContextMenu: function onContextMenu(e) {
+          return e.preventDefault();
+        },
+        playbackRate: 1,
+        width: "100%",
+        height: "auto",
+        config: {
+          file: {
+            attributes: {
+              crossOrigin: "anonymous",
+              controlsList: 'nodownload'
+            },
+            tracks: [{
+              kind: 'subtitles',
+              src: "./storage/" + sousTitre,
+              srcLang: 'fr',
+              "default": true,
+              mode: 'hidden'
+            }]
+          }
         }
-      }
-    })
-  });
+      })
+    });
+  } else {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "react_player"
+    });
+  }
 }
 
 var mapStateToProps = function mapStateToProps(_ref) {
@@ -26844,7 +26827,7 @@ var Wrapper = function Wrapper() {
   if (langue && langue == 'fr') {
     localiz['prev'] = 'Précédent';
     localiz['next'] = 'Suivant';
-    localiz['faq'] = 'Questions essentiels';
+    localiz['faq'] = 'Questions essentielles';
     localiz['res'] = 'Ressources';
     localiz['cert'] = 'Certificat';
     localiz['btnquiz'] = 'Faire le quiz';
@@ -26894,10 +26877,10 @@ var Wrapper = function Wrapper() {
         ressources: ressources,
         handleView: handleView,
         localiz: localiz
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_stepper_stepper__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_videos_Video__WEBPACK_IMPORTED_MODULE_1__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_chapitreDescription_chapitreDescription__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_ListeChapitres_ListeChapitres__WEBPACK_IMPORTED_MODULE_2__.default, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_stepper_stepper__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_videos_Video__WEBPACK_IMPORTED_MODULE_1__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_ListeChapitres_ListeChapitres__WEBPACK_IMPORTED_MODULE_2__.default, {
         handleView: handleView,
         localiz: localiz
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_chapitreDescription_chapitreDescription__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
         className: "completSocial",
         children: [" ", auth[2] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_coursCompleted_coursCompleted__WEBPACK_IMPORTED_MODULE_12__.default, {
           localiz: localiz
@@ -33426,9 +33409,9 @@ function toVal(mix) {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss":
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -33443,64 +33426,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".liste_chapitres {\n  width: 100%;\n  grid-row: 3/4;\n  grid-column: 2/3;\n}\n\n@media (max-width: 1200px) {\n  .liste_chapitres {\n    width: 98%;\n  }\n}\n@media (max-width: 950px) {\n  .liste_chapitres {\n    grid-row: 4/5;\n    grid-column: 1/3;\n    margin-bottom: 7px;\n  }\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".liste_chapitres {\n  width: 100%;\n  grid-row: 3/4;\n  grid-column: 2/3;\n}\n\n@media (max-width: 1200px) {\n  .liste_chapitres {\n    width: 98%;\n  }\n}\n@media (max-width: 950px) {\n  .liste_chapitres {\n    grid-row: 4/5;\n    grid-column: 1/3;\n    margin-bottom: 7px;\n    padding: 0 1%;\n  }\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/backNextButton/backNextButton.scss":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/backNextButton/backNextButton.scss ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".backNextButtonRoot {\n  width: 100%;\n  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;\n  background-color: #fafafa;\n}\n\n.backButton {\n  width: 50%;\n  height: 50px;\n  border-radius: 10px 0 0 0;\n  background-color: white;\n}\n\n.backButton:focus {\n  outline: none;\n}\n\n.nextButton {\n  width: 50%;\n  height: 50px;\n  border-radius: 0 10px 0 0;\n  background-color: white;\n}\n\n.nextButton:focus {\n  outline: none;\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/chapitreDescription/chapitreDescription.scss":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/chapitreDescription/chapitreDescription.scss ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".rootDescription {\n  width: 100%;\n  grid-row: 4/5;\n  grid-column: 1/2;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n}\n\n@media (max-width: 1200px) {\n  .rootDescription {\n    margin-top: -50px;\n  }\n}\n@media (max-width: 1100px) {\n  .rootDescription {\n    margin-top: -90px;\n  }\n}\n@media (max-width: 1000px) {\n  .rootDescription {\n    margin-top: -130px;\n  }\n}\n@media (max-width: 950px) {\n  .rootDescription {\n    grid-row: 6/7;\n    grid-column: 1/3;\n    margin-top: 0;\n  }\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss":
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -33522,33 +33457,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".InputQuiz {\n  width: 100%;\n  margin
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/liens/liens.scss":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/liens/liens.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "@media (max-width: 1000px) {\n  .containerLiens {\n    margin-top: 100px;\n  }\n\n  .h1_faq {\n    margin-top: 100px;\n  }\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/style/description.scss":
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/style/description.scss":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/style/description.scss ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/style/description.scss ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -69833,6 +69744,84 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************!*\
   !*** ./resources/js/components/quiz/quiz.scss ***!
   \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/chapitreDescription/chapitreDescription.scss":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/chapitreDescription/chapitreDescription.scss ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/listeChapitres/listeChapitres.scss":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/listeChapitres/listeChapitres.scss ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/backNextButton/backNextButton.scss":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/backNextButton/backNextButton.scss ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/liens/liens.scss":
+/*!**************************************************!*\
+  !*** ./resources/js/components/liens/liens.scss ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/formulaire/inputQuiz.scss":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/formulaire/inputQuiz.scss ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/js/components/coursCompleted/coursCompleted.scss":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/coursCompleted/coursCompleted.scss ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -112892,7 +112881,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./ListeChapitres.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./ListeChapitres.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/ListeChapitres/ListeChapitres.scss");
 
             
 
@@ -112901,71 +112890,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
-/***/ "./resources/js/components/backNextButton/backNextButton.scss":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/backNextButton/backNextButton.scss ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_backNextButton_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./backNextButton.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/backNextButton/backNextButton.scss");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_backNextButton_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_backNextButton_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
-/***/ "./resources/js/components/chapitreDescription/chapitreDescription.scss":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/chapitreDescription/chapitreDescription.scss ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_chapitreDescription_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./chapitreDescription.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/chapitreDescription/chapitreDescription.scss");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_chapitreDescription_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_chapitreDescription_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_ListeChapitres_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -112982,7 +112911,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./InputQuiz.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./InputQuiz.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/formulaire/InputQuiz.scss");
 
             
 
@@ -112991,41 +112920,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
-/***/ "./resources/js/components/liens/liens.scss":
-/*!**************************************************!*\
-  !*** ./resources/js/components/liens/liens.scss ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_liens_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./liens.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/liens/liens.scss");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_liens_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_liens_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_InputQuiz_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -113042,7 +112941,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./description.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[21].oneOf[1].use[3]!./resources/js/components/style/description.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./description.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[27].oneOf[1].use[3]!./resources/js/components/style/description.scss");
 
             
 
@@ -113051,11 +112950,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_21_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_27_oneOf_1_use_3_description_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -113603,6 +113502,12 @@ function warning(condition, message) {
 /******/ 			"css/formation": 0,
 /******/ 			"css/accueil": 0,
 /******/ 			"css/default": 0,
+/******/ 			"css/coursCompleted": 0,
+/******/ 			"css/inputQuiz": 0,
+/******/ 			"css/liens": 0,
+/******/ 			"css/backNextButton": 0,
+/******/ 			"css/listeChapitres": 0,
+/******/ 			"css/chapitreDescription": 0,
 /******/ 			"css/quiz": 0,
 /******/ 			"css/stepper": 0,
 /******/ 			"css/video": 0,
@@ -113660,22 +113565,28 @@ function warning(condition, message) {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/cours.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/default.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/accueil.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/formation.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/nav.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/reset.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/contact.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/legal.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/authentification.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/profile.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/stats.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/wrapper/modules.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/videos/video.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/stepper/stepper.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/quiz/quiz.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/cours.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/default.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/accueil.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/formation.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/nav.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/reset.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/contact.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/legal.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/authentification.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/profile.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/sass/stats.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/wrapper/modules.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/videos/video.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/stepper/stepper.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/quiz/quiz.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/chapitreDescription/chapitreDescription.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/listeChapitres/listeChapitres.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/backNextButton/backNextButton.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/liens/liens.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/formulaire/inputQuiz.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/nav","css/formation","css/accueil","css/default","css/coursCompleted","css/inputQuiz","css/liens","css/backNextButton","css/listeChapitres","css/chapitreDescription","css/quiz","css/stepper","css/video","css/modules","css/stats","css/profile","css/authentification","css/legal","css/contact","css/reset"], () => (__webpack_require__("./resources/js/components/coursCompleted/coursCompleted.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

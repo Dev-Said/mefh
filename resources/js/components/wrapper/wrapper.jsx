@@ -43,7 +43,7 @@ const Wrapper = () => {
   if (langue && langue == 'fr') {
     localiz['prev'] = 'Précédent';
     localiz['next'] = 'Suivant';
-    localiz['faq'] = 'Questions essentiels';
+    localiz['faq'] = 'Questions essentielles';
     localiz['res'] = 'Ressources';
     localiz['cert'] = 'Certificat';
     localiz['btnquiz'] = 'Faire le quiz';
@@ -85,7 +85,7 @@ const Wrapper = () => {
     case 'formation':
       compo = [<Links faqs={faqs} ressources={ressources}
         handleView={handleView} localiz={localiz} />, <Stepper />,
-      <Video />, <ChapitreDescription />, <ListeChapitres handleView={handleView} localiz={localiz} />, <div className="completSocial"> {auth[2] && <CoursCompleted localiz={localiz} />} <Social /></div>]
+      <Video />, <ListeChapitres handleView={handleView} localiz={localiz} /> , <ChapitreDescription />, <div className="completSocial"> {auth[2] && <CoursCompleted localiz={localiz} />} <Social /></div>]
       break;
     case 'ressource':
       compo = <Ressource ressources={ressources} handleView={handleView} />

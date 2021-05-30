@@ -2,6 +2,11 @@
 
 @section('content')
 
+<style>
+    .menu .drapeaux {
+        display: none;
+    }
+</style>
 
 <div class="bodyStats">
 

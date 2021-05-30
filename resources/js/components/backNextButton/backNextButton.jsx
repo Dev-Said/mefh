@@ -26,7 +26,6 @@ const BackNextButton = (props) => {
   })
   // récupère le nombre de modules pour désactiver le bouton "suivant" quand on atteint nbModules
   var nbModules = modTab.length ? modTab.length : 1;
-  console.log('nbModules   ' + nbModules);
 
   // INITIALISATION :envoie le premier chapitre au store pour déclencher le chargement 
   // de la 1er vidéo, titre et description du premier module 

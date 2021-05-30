@@ -28,6 +28,7 @@ class ExcellExport extends Controller
 
     public function storeExcel(Request $request) 
     {
+        // dd($request);
         // Store on default disk
         Excel::store(new InfosUsersFormations($request->formation_id, $request->date), 'monexcell.xlsx');
     }

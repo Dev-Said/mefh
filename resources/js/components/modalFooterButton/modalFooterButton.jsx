@@ -8,11 +8,13 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
     width: "100%",
-    height: "80px",
+    height: "auto",
+    minHeight: "80px",
     backgroundColor: "#8cb393",
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
+    flexWrap: "wrap",
     paddingRight: "20px",
     color: "white",
     fontSize: "18px",
@@ -29,6 +31,7 @@ const BootstrapButton = withStyles({
     textTransform: 'none',
     fontSize: 16,
     padding: '6px 22px',
+    margin: "10px 15px",
     border: '1px solid',
     lineHeight: 1.5,
     backgroundColor: 'white',
@@ -59,25 +62,25 @@ export default function ModalFooterButton(props) {
 
   return (
     <div className={classes.root}>
-    <p> { props.message } </p>
+      <p> { props.message } 
 
-    {/* teste si le score est > = 80 pour afficher les boutons s\'inscrire et ou enregistrer */}
+        {/* teste si le score est > = 80 pour afficher les boutons s\'inscrire et ou enregistrer */}
 
-      {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()} 
-      style={{minWidth: '250px'}} >
-        { props.titre0 }
-      </BootstrapButton>}    
+          {props.func2 != 'hide' && <BootstrapButton variant="contained" onClick={() => props.func2()} 
+          style={{minWidth: '250px'}} >
+            { props.titre0 }
+          </BootstrapButton>}    
 
-      {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}
-      style={{minWidth: '150px'}} >
-        { props.titre1 }
-      </BootstrapButton>}
-      
-      <BootstrapButton variant="contained" onClick={() => props.closeModal()} 
-      style={{minWidth: '150px'}} >
-      { props.titre2 }
-      </BootstrapButton>
-
+          {props.score >= 80 && <BootstrapButton variant="contained" onClick={() => props.func()}
+          style={{minWidth: '150px'}} >
+            { props.titre1 }
+          </BootstrapButton>}
+          
+          <BootstrapButton variant="contained" onClick={() => props.closeModal()} 
+          style={{minWidth: '150px'}} >
+          { props.titre2 }
+          </BootstrapButton>
+      </p>
     </div>
   );
 }

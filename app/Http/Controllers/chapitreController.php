@@ -79,8 +79,7 @@ class ChapitreController extends Controller
         }
         $chapitre->save();
 
-         return redirect('chapitres');
-  
+        return redirect('chapitres');
     }
 
     /**
@@ -124,9 +123,22 @@ class ChapitreController extends Controller
         $validated = $request->validated();
         //si il y a un fichier vidéo alors on efface l'ancien
         if ($request->hasFile('fichier_video')) {
-            Storage::delete('public/' . $chapitre->fichier_video);
+
+            if (Storage::disk('public')->exists($chapitre->fichier_video)) {
+                Storage::delete('public/' . $chapitre->fichier_video);
+            }
         } else {
             $chapitre->fichier_video = $chapitre->fichier_video;
+        }
+
+        //si il y a un fichier sous-titres alors on efface l'ancien
+        if ($request->hasFile('sous_titres')) {
+
+            if (Storage::disk('public')->exists($chapitre->sous_titres)) {
+                Storage::delete('public/' . $chapitre->sous_titres);
+            }
+        } else {
+            $chapitre->sous_titres = $chapitre->sous_titres;
         }
 
         //$validate est un tableau d'où on récupère chaque champ validé
@@ -169,7 +181,7 @@ class ChapitreController extends Controller
         //     unlink ( 'MEFH/storage/app/public/' . $chapitre->sous_titres ) ;
         // }
         // ---------------------------------------------------------------------
-        
+
         $chapitre->delete();
 
         // pour les chapitres d'un module donné
@@ -196,7 +208,7 @@ class ChapitreController extends Controller
 
     // public function deleteAll(Request $request)
     // {
-        
+
     //     $chapitre = Chapitre::find($request->chapitreId);
 
     //     // dd($chapitre);

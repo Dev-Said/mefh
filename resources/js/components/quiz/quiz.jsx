@@ -166,7 +166,7 @@ const Quiz = (props) => {
       var modal = document.getElementById("myModal");
       modal.style.display = "block";
 
-      var span = document.getElementsByClassName("close")[0];
+      var span = document.getElementsByClassName("close")[1];
       span.onclick = function () {
         modal.style.display = "none";
       }
@@ -286,7 +286,6 @@ const Quiz = (props) => {
     footerModal.style.backgroundColor = "#4771aa";
 
     var headerModal = document.getElementById("certificatModal");
-    console.log('headerModal   ' + headerModal)
     headerModal.style.display = "block";
 
     var span = document.getElementsByClassName("close")[0];
@@ -352,7 +351,7 @@ const Quiz = (props) => {
 
 
   return (
-    <div className="root">
+    <div className="quizRoot">
 
       <div id="certificatModal" className="modal">
         <div className="modal-content">

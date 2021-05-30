@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         justifyContent: "flex-start",
         alignItems: "center",
-        gridRow: "5 / 6",
+        gridRow: "4 / 5",
         gridColumn: "2 / 3",
     },
     button: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Social(props) {
+function Social() {
     const classes = useStyles();
 
     var url = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.search;
@@ -60,26 +60,19 @@ function Social(props) {
     var titre = "Le mouvement pour l'égalité entre les femmes et les hommes";
 
     const handleTwitter = () => {
-        // handleProperty();
-        console.log('url    ' + url);
-        console.log(props.info_chapitre.image_formation);
         var shareUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) +
             "&via=ASBL Le mouvement pour l'Egalité entre les Femmes et les Hommes";
         popupCenter(shareUrl, "Partager sur Twitter");
     }
 
     const handleFacebook = () => {
-        // handleProperty();
         url = "https://m-egalitefemmeshommes.org";
-        console.log('url    ' + url);
         var shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
         popupCenter(shareUrl, "Partager sur facebook");
 
     }
 
     const handleLinkedin = () => {
-        // handleProperty();
-        console.log('url    ' + url);
         var shareUrl = "https://www.linkedin.com/shareArticle?url=" + encodeURIComponent(url) +
             "&via=ASBL Le mouvement pour l'Egalité entre les Femmes et les Hommes";
         popupCenter(shareUrl, "Partager sur LinkedIn");

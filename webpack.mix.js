@@ -32,6 +32,7 @@ mix.js('resources/js/cours.js', 'public/js').react()
     .sass('resources/js/components/backNextButton/backNextButton.scss', 'public/css')
     .sass('resources/js/components/liens/liens.scss', 'public/css')
     .sass('resources/js/components/formulaire/inputQuiz.scss', 'public/css')
+    .sass('resources/js/components/coursCompleted/coursCompleted.scss', 'public/css')
 
 
 
